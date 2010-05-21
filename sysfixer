@@ -1,0 +1,250 @@
+#!/usr/local/bin/ruby
+#
+# SysFixer looks at your gems and advises you if any need fixing.
+#
+# To use SysFixer, you need rubygems 1.3.1
+#
+# You also need to install our gem:
+# gem install sixarm_gemini --source http://gemcutter.org
+#
+##
+ 
+require 'rubygems'
+require 'rubygems/rubygems_version'
+require 'rubygems/defaults'
+require 'rubygems/requirement'
+require 'sixarm_gemini'
+ 
+require 'pp'
+ 
+class SysFixer
+ 
+ 
+ADVICE='Advice: '
+FOUND='Found: '
+ISSUE='Issue: '
+MATCH='Match: '
+ 
+GEM_NAME_VERSIONING_ISSUE_ADVICE=<<END
+actionmailer <=2.3.3 outdated => gem update rails
+actionpack <=2.3.3 outdated => gem update rails
+activerecord <=2.3.3 outdated => gem update rails
+activerecord <=2.3.3 outdated => gem update rails
+activeresource <=2.3.3 outdated => gem update rails
+activesupport <=2.3.3 outdated => gem update rails
+authlogic <1.3.7 is expired => update
+bcrypt-ruby <2.1.2 outdated => update
+binarylogic-searchlogic <2.3.2 outdated => update
+bluecloth <2.0.5 outdated => update
+builder <2.1.2 outdated => update especially for gemcutter
+capistrano 2.5.1-2.5.2 bug with git deployment => update
+capistrano <2.5.9 outdated => update
+fastercsv <=1.4.0 test fails due to missing gz file => update
+facets <2.7.0 outdated => update
+fastthread <1.0.7 outdated => update
+gemcutter <0.1.6 outdated => update
+gemini <1.0.4 is expired => gem install sixarm_gemini --source http://gemcutter.org (and change your code to do require 'sixarm_gemini')
+heckle <=1.4.1 doesnt pass --test => bug reported
+highline <1.5.1 outdated => update 
+inherited_resources <0.9.2 outdated => update 
+json_pure <1.1.9 outdated => update 
+justinfrench-formtastic <0.2.0 outdated => update 
+mocha <0.9.8 outdated => update 
+net-scp <1.0.2 outdated => update 
+net-sftp <2.0.2 outdated => update 
+net-ssh <2.0.15 outdated => update 
+net-ssh-gateway <1.0.1 outdated => update 
+open4 <0.9.6 outdated => update 
+passenger <2.2.2 outdated and bug with rack 1.0 conflict => update
+passenger <2.2.5 bugs rack handling content length and short form posts => critical to update
+rack <1.0.1 bugs with passenger => critical to update
+rake <0.8.7 outdated => updated
+ramp <1.8 outdated => gem install sixarm_ramp source http://gemcutter.org (and change your code to do require 'sixarm_ramp')
+rails 2.0.0-2.1.2 security vulnerability in cross site request forgery. => Rails is a special case because there are incompatibilites among 2.0, 2.1, 2.2. Consider doing: gem uninstall rails; gem update rails
+rails 2.2.0-2.2.1 security hole in cross site request forgery. => update
+rails 2.3.0-2.3.2 outdated => update 
+rails 2.3.3 security hole in basic auth => update
+sqlite3-ruby <1.2.5 outdated => update
+rubigen <1.5.1 is incompatible with current newgem gem => update
+ryanb-acts-as-list <=0.1.2 test fails if you don't have sqlite3 => bug reported
+sixarm_commander <1.0.1 outdated => update
+sixarm_netica <1.0.5.9 outdated => update
+sixarm_ramp <1.7.1.1 outdated => update
+sixarm_ruby_active_record_migration_mock <1.0.6 outdated => update
+sixarm_ruby_colorful <1.0.4 outdated => update
+sixarm_ruby_erb_util_extensions <1.0.8 outdated => update
+sixarm_ruby_html <1.0.4 outdated => update
+sixarm_ruby_migration_helper_extensions <1.0.6 outdated => update
+sixarm_ruby_password_text <1.2.0  outdated => update
+sixarm_ruby_person_name <1.0.0  outdated => update
+sixarm_ruby_secure_random <1.1.4  outdated => update
+sixarm_ruby_secure_token <1.0.2 outdated => update
+zilkey-active_hash <0.6.1 outdated => update 
+END
+ 
+SYSTEM_VERSIONING_ISSUE_ADVICE=[
+ ['ruby', "ruby --version", /(\d+\.\d+\.\d+)/, '0.0.0'..'1.8.5',"badly out of date","the rails team recommends ruby 1.8.7 available at www.ruby-lang.org"],
+ ['ruby', "ruby --version", /(\d+\.\d+\.\d+)/, '1.8.6'..'1.8.6',"the rails team recommends ruby 1.8.7 to replace 1.8.6.","ruby 1.8.7 is available at www.ruby-lang.org"],
+ ['gem', "gem --version", /(\d+\.\d+\.\d+)/, '0.0.0'..'1.3.1',"badly out of date","download from rubyforge.org -- caution that a simple gem update may *not* work and will fail silently, so it's better to get the source"],
+ ['gem', "gem --version", /(\d+\.\d+\.\d+)/, '1.3.2'...'1.3.5',"outdated, some bugs","download from rubyforge.org, or as root run: gem udpate --system"],
+ ['git', "git --version", /(\d+\.\d+\.\d+)/, '0.0.0'...'1.6.0',"badly out of date","download git from http://git-scm.org"],
+ ['git', "git --version", /(\d+\.\d+\.\d+)/, '1.6.0'..'1.6.0',"1.6.0=>1.6.1 adds correct command exit codes","download git from http://git-scm.org"],
+ ['git', "git --version", /(\d+\.\d+\.\d+\.\d+)/, '1.6.3.0'..'1.6.3.2',"update","download git from http://git-scm.org"],
+ ['rake', "rake --version", /(\d+\.\d+\.\d+)/, '0.0.0'..'0.8.3',"has manage_gem issue and case-sensitivity problems","download from rake.rubyforge.org"],
+ ['apache', "apache2 -v", /(\d+\.\d+\.\d+)/, '0.0.0'...'2.2.9',"older","update"]
+]
+ 
+ 
+ HR="-------------------------------------------------------------------------"
+ 
+ def self.run
+  out=[]
+  out << self.check_system
+  out << self.check_gems
+  puts HR,"SysFixer Results",HR
+  out.flatten!
+  if out.size>0
+   puts out.join("\n")
+  else
+   puts "Good news, everything that we know about is fine."
+  end
+ end
+ 
+ protected
+ 
+ def self.check_system
+  out=[]
+  SYSTEM_VERSIONING_ISSUE_ADVICE.each{|check|
+   name,cmd,regex,versioning,issue,advice=check
+   if result=`#{cmd}`.chomp
+    if match=result.match(regex)
+     if version=match[0]
+      if versioning.include? version
+       out << name
+       out << FOUND + result
+       out << ISSUE + "#{name} #{versioning} #{issue}"
+       out << ADVICE + advice
+       out << HR
+      end
+     end
+    end
+   end
+  }
+  return out
+ end
+ 
+ 
+ def self.check_gems
+  out=[]
+  GEM_NAME_VERSIONING_ISSUE_ADVICE.each{|line|
+   name,versioning,issue,advice=parse_gem_line_to_gem_info(line)
+   if name
+    out << check_gem(name,versioning_to_requirements(versioning),issue,advice)
+   end
+  }
+  return out
+ end
+ 
+ 
+def self.check_gem(name,version_requirements,issue,advice)
+  gemspecs = Gemini.find(:name=>name,:version=>version_requirements)
+ 
+  return [] if (!gemspecs or gemspecs.size==0)
+ 
+  out=[]
+ 
+  out << "#{name}"
+  Gemini.find(:name=>name).each{|g|
+   out << FOUND + "#{g.name} #{g.version}"
+  }
+ 
+  out << "Issue: #{name} #{version_requirements} #{issue}"
+  gemspecs.each{|gemspec|
+   out << "Match: #{name} #{gemspec.version}"
+  }
+ 
+  sufficient_gemspecs = []
+  if advice=~/^update (\S*\d\.\d.\d)$/
+   update_version=$1
+   sufficient_gemspecs = Gemini.find(:name=>name,:version=>Gem::Requirement.create(update_version))
+  end
+ 
+  if update_version
+   if sufficient_gemspecs.size>0
+    sufficient=true
+    uninstall=true
+   else
+    if gemspecs.size>1
+     uninstall=true
+     install=true
+    else
+     update=true
+    end
+   end
+  else
+   raw=true
+  end
+ 
+  if sufficient
+   out << ADVICE + "you already have #{name} " + sufficient_gemspecs.map{|g| g.version.to_s}.join(',')
+  end
+ 
+  if uninstall
+   gemspecs.each{|gemspec|
+    out << ADVICE + "gem uninstall #{name} --version '#{gemspec.version}'"
+   }
+  end
+ 
+  if update
+   out << ADVICE + "gem update #{name} --test"
+  end
+ 
+  if install
+   out << ADVICE + "gem install #{name} --version '#{advice}' --test"
+  end
+ 
+  if raw
+   out << ADVICE + advice
+  end
+ 
+  out << HR
+  return out
+ 
+ end
+
+ def self.parse_gem_line_to_gem_info(line)
+  if line=~/^\s*(\w\S*)\s+(\S+)\s*?(.*?)\s+=>\s+(.+)$/
+   name=$1
+   versioning=$2
+   issue=$3
+   advice=$4
+    if advice=='update' then advice="update #{versioning_to_update_requirements(versioning)}" end
+   return name,versioning,issue,advice
+  else
+   return nil
+  end
+ end
+ 
+ 
+ def self.versioning_to_requirements(versioning_string)
+  if versioning_string=~/^(\d\.\d\.\d)-(\d\.\d\.\d)$/
+   v=[">=#{$1}","<=#{$2}"]
+  else
+   v=versioning_string.split(',')
+  end
+  return Gem::Requirement.create(v)
+ end
+ 
+ 
+ def self.versioning_to_update_requirements(versioning_string)
+  if versioning_string=~/-/ then return '>'+$' end
+  if versioning_string=~/^<=/ then return '>'+$' end
+  if versioning_string=~/^</ then return '>='+$' end
+ end
+   
+ 
+end
+ 
+SysFixer.run
+ 
+  

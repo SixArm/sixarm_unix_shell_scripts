@@ -1,0 +1,44 @@
+#!/bin/bash
+#
+# http://ubuntuforums.org/showthread.php?t=1193567
+#
+# Firefox stores a lot of data, for example bookmarks, into standalone 
+# sqlite [wikipedia.org] database files. They can be found in your profile 
+# directory and have the extension .sqlite (for example places.sqlite).
+#
+# While sqlite databases are very practical, because don't need a server 
+# to run, sometimes they can become very slow. I don't know exactly how
+# it happens, but some data is not completely removed when you delete
+# entries and this can increase the size of the database considerably,
+# slowing down the database performance.
+#
+# You can avoid this problem by optimizing Firefox databases to remove the junk data:
+#
+# 1) install sqlite3
+# 2) Create a new empty file in your script directory (usually ~/bin)
+# 3) rename it to firefox-optimize, then add the code below to it and save it.
+#
+# Code:
+#   killall firefox
+#   find $HOME/.mozilla/ \( -name "*.sqlite" \) -exec sqlite3  {} "vacuum" \;
+#
+# Then make it executable and run it from the terminal.
+#
+# The script above will basically search for all sqlite databases on the
+# ~/.mozilla folder and execute the vacuum command, to remove junk data.
+#
+#
+# Note: Thanks to martinbaselier for rewriting my script entirely, 
+# making it almost a single line.
+#
+# If you want to optimize a single database then run the command below, 
+# replacing the path accordingly:
+#
+# Code:
+#   sqlite3 $HOME/.mozilla/firefox/yourprofile/places.sqlite "vacuum"
+#
+# Doing this can improve performance considerably, especially if you like
+# to use bookmark extensions like TagSifter.
+
+killall firefox
+find $HOME/.mozilla/ \( -name "*.sqlite" \) -exec sqlite3  {} "vacuum" \;

@@ -1,0 +1,18 @@
+#!/bin/sh
+#
+# Get info about remote host ports and OS detection
+#
+# nmap -sS -P0 -A -v <target>
+# Where < target > may be a single IP, a hostname or a subnet
+# 
+# -sS TCP SYN scanning (also known as half-open, or stealth scanning)
+# -P0 option allows you to switch off ICMP pings.
+# -sV option enables version detection
+# -O flag attempt to identify the remote operating system
+# -A option enables both OS fingerprinting and version detection
+# -v use -v twice for more verbosity.
+#
+# From user 'starchox' at http://www.commandlinefu.com
+
+nmap -sS -P0 -A -v $1
+

@@ -1,0 +1,47 @@
+#!/bin/bash
+#
+# DANGER!
+#
+# This script will remove all ruby-related files that we know about.
+#
+# Example:
+#   cd /usr/local/bin
+#   rm-ruby
+
+rm -f -v bluecloth
+rm -f -v cap
+rm -f -v capify
+rm -f -v catstomp
+rm -f -v chef-client
+rm -f -v chef-solo
+rm -f -v edit_json.rb
+rm -f -v erb
+rm -f -v erubis
+rm -f -v gem
+rm -f -v irb
+rm -f -v ohai
+rm -f -v passenger-config
+rm -f -v passenger-install-apache2-module
+rm -f -v passenger-install-nginx-module
+rm -f -v passenger-make-enterprisey
+rm -f -v passenger-memory-stats
+rm -f -v passenger-spawn-server
+rm -f -v passenger-status
+rm -f -v passenger-stress-test
+rm -f -v prettify_json.rb
+rm -f -v rackup
+rm -f -v rails
+rm -f -v rackup
+rm -f -v rake
+rm -f -v rdoc
+rm -f -v ree-version
+rm -f -v ri
+rm -f -v ruby
+rm -f -v ruby1*
+rm -f -v stompcat
+rm -f -v testrb
+apt-get remove ruby1.8
+apt-get remove irb1.8
+apt-get remove rdoc1.8
+apt-get remove rake1.8
+apt-get remove rubygems1.8

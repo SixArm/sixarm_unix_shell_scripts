@@ -1,0 +1,1 @@
+ls -ldct /lost+found |awk '{print $6, $7}'

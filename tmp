@@ -1,0 +1,99 @@
+#!/usr/bin/perl -w
+#
+# Command-line prefix to put standard input into a temporary ordinary file
+# and use its name as the last argument.
+#
+# tmp :: String -> (FilePath -> IO ()) -> IO ()
+#
+# The tmp command puts standard input in a temporary file, 
+# then invokes the arguments as a command with the name of
+# the temporary file appended.
+#
+# This program is useful because some programs require 
+# input in the form of an ordinary file rather than a pipe. 
+#
+# For example, say that we want to retrieve a URL and 
+# display the contents using xdvi. It would be nice to be able to say
+#
+#   curl http://www.diku.dk/~andrzej/papers/RC.dvi | xdvi -
+#
+# or
+#
+#   xdvi <(curl http://www.diku.dk/~andrzej/papers/RC.dvi)
+#
+# but my xdvi only works on an ordinary file named on the command line:
+#
+#    $ curl http://www.diku.dk/~andrzej/papers/RC.dvi | xdvi -
+#    xdvi.bin: Fatal error: -: No such file,
+#              and -.dvi doesn't exist either.
+#
+#    $ xdvi <(curl http://www.diku.dk/~andrzej/papers/RC.dvi)
+#    xdvi.bin: Fatal error: /dev/fd/63: File has zero size,
+#              and /dev/fd/63.dvi doesn't exist either.
+#
+# Instead, we can use tmp to adapt xdvi to our purpose.
+#
+#    $ curl --silent http://www.diku.dk/~andrzej/papers/RC.dvi |
+#      tmp xdvi
+#
+# When the command is done, tmp deletes the temporary file.
+#
+#    $ echo foo | tmp cat
+#    foo
+#
+#    $ echo foo | tmp echo | xargs cat
+#    cat: /tmp/uyocf2fHQx: No such file or directory
+#
+# Often I use tmp when I need to process the same data twice.
+# For example, it takes two invocations of psselect to print
+# duplex using manual feed on a printer without duplex.
+#
+#    $ a2ps -o- Higher-order_shell.mdwn |
+#      tmp sh -c 'psselect -e -r $0 | lpr;
+#                 read </dev/tty;
+#                 psselect -o $0 | lpr'
+#
+# We can also use sh -c in the same way to nest multiple 
+# invocations of tmp together. 
+#
+# For example, the following command uses lynx to convert two HTML
+# files into plain text, then uses xxdiff to show how the results differ. 
+# We need to invoke tmp twice because xxdiff requires both of its 
+# arguments to name ordinary files rather than pipes.
+#
+#    $ lynx -dump Control-Monad-State-Lazy.html |
+#      tmp sh -c 'lynx -dump Control-Monad-State-Strict.html |
+#                 tmp xxdiff $0'
+#
+# Because xxdiff takes the argument - to mean standard input,
+# the following command works too.
+#
+#    $ lynx -dump Control-Monad-State-Lazy.html |
+#      tmp sh -c 'lynx -dump Control-Monad-State-Strict.html |
+#                 xxdiff $0 -'
+#
+# See http://conway.rutgers.edu/~ccshan/wiki/blog/posts/Higher-order_shell/
+
+use strict;
+use IO::Handle;
+use File::Temp 'tempfile';
+use File::Copy 'copy';
+
+@ARGV
+    or die "tmp: please provide a command to invoke\n";
+my ($fh, $tmpname) = tempfile(UNLINK => 1)
+    or die "tmp: cannot create temporary file: $!\n";
+copy(\*STDIN, $fh)
+    or die "tmp: cannot copy standard input to temporary file `$tmpname': $!\n";
+
+my $program = $ARGV[0];
+my $status = system $program (@ARGV, $tmpname);
+if ($status & 255)
+{
+    die "tmp: $program terminated abnormally: $?\n";
+}
+else
+{
+    my $code = $? >> 8;
+    exit $code;
+}

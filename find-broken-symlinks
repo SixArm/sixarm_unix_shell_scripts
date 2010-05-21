@@ -1,0 +1,3 @@
+#/bin/sh
+# From http://scotgate.org/2007/03/04/howto-find-broken-symbolic-links-gentoo-linux-wiki/
+find $1 -type l | (while read FN ; do test -e "$FN" || ls -ld "$FN"; done)

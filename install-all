@@ -1,0 +1,1 @@
+grep -v "#" | grep "\w" | xargs sudo apt-get -y install

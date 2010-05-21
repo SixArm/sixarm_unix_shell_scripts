@@ -1,0 +1,9 @@
+# Shell script to generate a secure random hex string.
+# This uses urandom to pick from 0123456789ABCDEF chars.
+#
+# Usage: random-hex [n]
+# * n is an optional length; it defaults to 16.
+#
+
+len=${1-16}
+strings /dev/urandom | grep -o '[0123456789ABCDEF]' | head -n $len | tr -d '\n'; echo

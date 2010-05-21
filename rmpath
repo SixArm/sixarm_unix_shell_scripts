@@ -1,0 +1,19 @@
+#!/sh
+
+# Remove path(s) from the PATH environment variable
+#
+# Usage: rmpath paths...
+#
+# From http://pastie.org/591350
+
+   for p in "$@"
+   do
+     p=${p%"${p##*[!/]}"} ## remove trailing slashes
+     case $PATH in
+         "$p":*) PATH=${PATH#$p:} ;; ## at beginning of PATH
+         *:"$p") PATH=${PATH%:$p} ;; ## at end of PATH
+         *:"$p":*) PATH=${PATH%":$p"*}${PATH##*"$p"} ;;
+     esac
+   done
+   export PATH
+

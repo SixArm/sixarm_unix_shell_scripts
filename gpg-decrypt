@@ -1,0 +1,1 @@
+gpg -d --no-greeting --quiet $@

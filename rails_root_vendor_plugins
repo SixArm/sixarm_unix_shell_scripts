@@ -1,0 +1,1 @@
+find vendor/plugins/* -maxdepth 0 -type d | sed s#vendor/plugins/##

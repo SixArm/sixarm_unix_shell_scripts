@@ -1,0 +1,6 @@
+#!/bin/sh
+while read dir ; do 
+ cd $dir
+ $@ 
+done
+

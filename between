@@ -1,0 +1,33 @@
+#!/bin/bash
+#
+# between: print the lines of a file that are between match $1 and match $2.
+# 
+# ==Example
+#   To show lines of foo.txt that are between the lines 'hello' and 'goodbye':
+#   cat foo.txt | between 'hello' 'goodbye'
+#
+# This script uses bash 3.2+ pattern matching for strings.
+#
+# This is similar to _sed_ which can print a section 
+# between two regular expressions (inclusive) like this:
+#   sed -n '/hello/,/goodbye/p'
+
+
+show=0 #false
+while read x
+do
+    if [[ "$x" =~ "$1" ]]
+    then 
+	show=1
+    else
+	if [[ "$x" =~ "$2" ]]
+	then 
+	    break
+	else
+	    if [ $show = 1 ]
+	    then
+		echo $x;
+	    fi
+	fi
+    fi
+done

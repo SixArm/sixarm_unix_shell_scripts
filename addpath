@@ -1,0 +1,48 @@
+#!/sh
+
+# Add path(s) to the PATH environment variable
+#
+# Usage: addpath [-i] [-q] paths...
+#   -i: Insert at the front, instead of the end
+#   -q: Don't print any error messages
+#
+# From http://pastie.org/591350
+
+   ap_prefix=0
+   ap_quiet=0
+   OPTIND=1
+   while getopts iq var
+   do
+     case "$var" in
+         i) ap_prefix=1 ;;
+         q) ap_quiet=1 ;;
+     esac
+   done
+   shift $(( $OPTIND - 1 ))
+
+   for p in "$@"
+   do
+     p=${p%"${p##*[!/]}"} ## remove trailing slashes
+     case $p in
+         ""|.) continue ;;
+     esac
+     case :$PATH: in
+         *:$p:*) [ $ap_quiet -eq 0 ] && echo "addpath: $p already in path" >&2
+                 continue
+             ;;
+     esac
+     if [ -d "$p" ]
+     then
+         if [ $ap_prefix -eq 1 ]
+         then
+             PATH="$p:$PATH"
+         else
+             PATH="$PATH:$p"
+         fi
+     else
+         [ $ap_quiet -eq 0 ] && echo "addpath: $p is not a directory" >&2
+     fi
+   done
+   export PATH
+
+

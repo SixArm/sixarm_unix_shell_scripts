@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Block known dirty hosts from reaching your machine
+#
+# Blacklisted is a compiled list of all known dirty hosts
+# (botnets, spammers, bruteforcers, etc.) which is updated
+# on an hourly basis.
+#
+# For those using ipfw, a quick fix would be:
+#   {print "add deny ip from "$1" to any}. 
+#
+# Be advised the blacklisted file itself filters out 
+# RFC1918 addresses (10.x.x.x, 172.16-31.x.x, 192.168.x.x)
+#
+# From user 'sil' at http://www.commandlinefu.com
+
+wget -qO - http://infiltrated.net/blacklisted | awk '!/#|[a-z]/&&/./{print "iptables -A INPUT -s "$1" -j DROP"}' | sh

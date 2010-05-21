@@ -1,0 +1,17 @@
+# Shell script to generate a random string.
+# This uses urandom to pick from \w characters.
+#
+# Usage: random-word-characters [n]
+# * n is an optional length; it defaults to 256.
+#
+
+len=${1-256}
+while [ ${#build} -lt $len ]
+do
+  char=`dd if=/dev/urandom count=1 bs=1 2</dev/null`
+  if [[ $char =~ [_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890] ]]
+  then
+    build="$build$char"
+  fi
+done
+echo $build

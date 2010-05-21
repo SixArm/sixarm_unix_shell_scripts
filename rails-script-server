@@ -1,0 +1,30 @@
+#~/bin/bash
+#
+# rails-script-server - A better script/server alias.
+#
+# Usage:
+#   rails-script-server <my_rails_app>
+#
+# Will
+# - cd to the project directory (if argument provided, otherwise will use current directory)
+# - kill any existing rails server instances
+# - start the rails server
+#
+# From http://gist.github.com/166994
+
+
+function rails-script-server {
+  if [ "$1" ]; then
+    # cd to the rails app directory.
+    cd ~/proj/repos; # (update the repository root location to suit your needs)
+    if [ "$1" ]; then
+      cd `ls|grep $1|sort|tail -1`
+    fi
+    echo $(pwd)
+  fi
+  # kill any existing rails server processes.
+  ps -a|grep "ruby ./script/server"|grep -v "grep"|cut -d " " -f1|xargs -n 1 kill -TERM
+  
+  # start the server.
+  ruby ./script/server
+}

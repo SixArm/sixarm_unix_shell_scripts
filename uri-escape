@@ -1,0 +1,1 @@
+perl -MURI::Escape -lne 'print uri_escape($_)' 

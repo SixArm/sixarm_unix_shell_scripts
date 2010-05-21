@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Show diagnostic details about the linux version,
+# i.e. tell me about the current operating system.
+
+echo 'uname -a'
+uname -a
+
+if [[ -e /proc/version ]]; then
+ echo ''
+  echo 'cat /proc/version'
+  cat /proc/version
+fi;
+
+if [[ -e /etc/issue ]]; then
+ echo ''
+ echo 'cat /etc/issue'
+ cat /etc/issue
+fi;
+
+
+echo ''
+echo 'lsb_release -a'
+lsb_release -a
+
+

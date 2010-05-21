@@ -1,0 +1,4 @@
+#!/usr/local/bin/ruby
+require 'rubygems'
+require 'active_support'
+puts ARGV.map{|s| s.camelize}.join(' ')

@@ -1,0 +1,18 @@
+#~/bin/sh
+#
+# Quickly (soft-)reboot skipping hardware checks
+# 
+# If you are doing some tests which require reboots
+# (e. g. startup skripts, kernel module parameters, ...),
+# this is very time intensive, if you have got a hardware
+# with a long pre-boot phase due to hardware checks.
+#
+# kexec can help, which only restarts the kernel with all related stuff.
+#
+# First the kernel to be started is loaded, then kexec -e jumps up to start it.
+#
+# Is as hard as a reboot -f, but faster (e. g. 1 min instead of 12 on some servers).
+#
+# From http://www.commandlinefu.com/commands/browse/sort-by-votes/25/50/75/100/125
+
+/sbin/kexec -l /boot/$KERNEL --append="$KERNELPARAMTERS" --initrd=/boot/$INITRD; sync; /sbin/kexec -e

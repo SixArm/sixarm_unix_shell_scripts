@@ -1,0 +1,191 @@
+## Keybindings ##
+#
+# http://cos.companionway.net/article.php?story=20071209104141602
+#
+# The following list shows the default bindings:
+#
+# break ^B b
+# clear C
+# colon :
+# copy ^[ [
+# detach ^D d
+# digraph ^V
+# displays *
+# dumptermcap .
+# fit F
+# flow ^F f
+# focus ^I
+# hardcopy h
+# help ?
+# history { }
+# info i
+# kill K k
+# lastmsg ^M m
+# license ,
+# log H
+# login L
+# meta x
+# monitor M
+# next ^@ ^N sp n
+# number N
+# only Q
+# other ^X
+# pow_break B
+# pow_detach D
+# prev ^H ^P p ^?
+# quit
+# readbuf <
+# redisplay ^L l
+# remove X
+# removebuf =
+# reset Z
+# screen ^C c
+# select " '
+# silence _
+# split S
+# suspend ^Z z
+# time ^T t
+# title A
+# vbell ^G
+# version v
+# width W
+# windows ^W w
+# wrap ^R r
+# writebuf >
+# xoff ^S s
+# xon ^Q q
+# ^] paste .
+# - select -
+# 0 select 0
+# 1 select 1
+# 2 select 2
+# 3 select 3
+# 4 select 4
+# 5 select 5
+# 6 select 6
+# 7 select 7
+# 8 select 8
+# 9 select 9
+# I login on
+# O login off
+
+# bind F7 to detach screen session from this terminal
+#bindkey -k k7 detach
+
+# bind F8 to kill current screen window.
+#bindkey -k k8 kill
+
+# bind F9 to create a new screen
+#bindkey -k k9 screen
+
+# bind F10 to rename current screen window
+#bindkey -k k; title
+
+# bind F11 to move to previous window
+bindkey -k F1 prev
+
+# bind F12 to move to next window
+bindkey -k F2 next
+
+# Turn off start message:
+startup_message off
+
+# Set messages timeout to one second:
+msgwait 1
+
+# remove annoying audible bell, please
+defscrollback 2500
+activity "Activity in %n (%t) [%w:%s]~"
+bell_msg "Trouble in %n!"
+vbell on
+vbell_msg "Beep Beep ..."
+
+# detach on hangup
+autodetach on
+pow_detach_msg "BYE"
+
+#hardstatus alwayslastline "%{=b}%{G} Screens: %{b}%w %=%{kG}%C%A %D, %M/%d/%Y "
+#hardstatus alwayslastline "Scn:%{=b}%{G} %{b}%w%=%{kG}%C%A"
+hardstatus alwayslastline '%{= kG}[ %{G}%H %{g}][%= %{= kw}%?%-Lw%?%{r}(%{W}%n*%f%t%?(%u)%?%{r})%{w}%?%+Lw%?%?%= %{g}][%{B} %d/%m%{W}%c %{g}]'
+# hardstatus alwaysignore
+# hardstatus alwayslastline "%Lw"
+# advertise hardstatus support to $TERMCAP
+# termcapinfo * '' 'hs:ts=E_:fs=E:ds=E_E'
+# special xterm hardstatus: use the window title.
+termcapinfo xterm 'hs:ts=E]2;:fs=&#65533;07:ds=E]2;screen&#65533;07'
+
+# make the shell in every window a login shell
+#shell -$SHELL
+
+# don't kill window after the process died
+#zombie "^["
+
+#xterm understands both im/ic and doesn't have a status line.
+#Note: Do not specify im and ic in the real termcap/info file as
+#some programs (e.g. vi) will not work anymore.
+termcap xterm hs@:cs=E[%i%d;%dr:im=E[4h:ei=E[4l
+terminfo xterm hs@:cs=E[%i%p1%d;%p2%dr:im=E[4h:ei=E[4l
+
+# Make the output buffer large for (fast) xterms.
+#termcapinfo xterm* OL=10000
+termcapinfo xterm* OL=100
+
+# tell screen that xterm can switch to dark background and has function keys.
+termcapinfo xterm 'VR=E[?5h:VN=E[?5l'
+termcapinfo xterm 'k1=E[11~:k2=E[12~:k3=E[13~:k4=E[14~'
+termcapinfo xterm 'kh=EOH:kI=E[2~:kD=E[3~:kH=EOF:kP=E[5~:kN=E[6~'
+#terminfo xterm 'vb=E[?5h$<200/>E[?5l'
+termcapinfo xterm 'vi=E[?25l:ve=E[34hE[?25h:vs=E[34l'
+# emulate part of the 'K' charset
+termcapinfo xterm 'XC=K%,%E(B,[304,\326,]334,{344,|366,}374,~337'
+# xterm-52 tweaks:
+# - uses background color for delete operations
+termcapinfo xterm* be
+termcapinfo linux "ve=E[?25hE[?17;0;64c"
+
+#remove some stupid / dangerous key bindings
+bind k
+bind ^k
+bind .
+bind ^
+bind
+bind ^h
+bind h
+#bind s
+#make them better
+bind 'K' kill
+bind 'I' login on
+bind 'O' login off
+bind '}' history
+
+# Prepend/append register [/] to the paste if ^a^] is pressed.
+# This lets me have autoindent mode in vi.
+register [ "&#65533;33:se noai&#65533;15a"
+register ] "&#65533;33:se ai&#65533;15a"
+bind ^] paste [.]
+# default windows
+# caption always "%3n %t%? @%u%?%? [%h]%?%=%c"
+
+# bind = resize =
+# bind + resize +1
+# bind - resize -1
+# bind _ resize max
+#
+# attrcolor u "-u b"
+# attrcolor b "R"
+
+bind T source $HOME/.screenrc-TC
+bind S source /home/gmcnamara/.screenrc-ST
+# The -t flag means that the window in which that program is running
+# closes when you exit that program
+#screen -t ZSH 0 zsh -
+#screen -t 'cpass' 1 ssh compass
+#screen -t 'ptor' 2 ssh protractor
+#screen -t 'ssors' 3 ssh scissors
+#screen -t 'spler' 4 ssh stapler
+#screen -t 'bsen' 5 ssh bunsen
+#screen -t 'bpack' 6 ssh backpack
+#screen -M -t 'local' 0
+
+# Experimental
+#bind b eval "split" "resize -13" "select 19" "redisplay" "focus" "select = 0

@@ -1,0 +1,5 @@
+gem update --system 
+gem install gemcutter
+gem tumble 
+gem sources | grep http://gems.opscode.com || gem sources --add http://gems.opscode.com 
+gem sources | grep http://sixarm.com       || gem sources --add http://sixarm.com
