@@ -1,0 +1,10 @@
+#!/bin/sh
+#
+# Find the TrackPoint Path ID.
+#
+# From http://www.thinkwiki.org/wiki/How_to_configure_the_TrackPoint
+#
+# Example
+#   ID_PATH=platform-i8042-serio-2
+
+/lib/udev/path_id $(find /sys/devices/platform/i8042 -name name | xargs grep -Fl TrackPoint | sed 's/\/sys\(.*\)\/name/\1/')
