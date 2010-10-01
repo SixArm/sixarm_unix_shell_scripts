@@ -1,0 +1,1 @@
+sudo -u gdm gconftool-2 --set /desktop/gnome/sound/event_sounds --type bool true
