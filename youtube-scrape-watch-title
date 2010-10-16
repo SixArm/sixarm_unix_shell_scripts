@@ -1,0 +1,1 @@
+grep '/watch?v=.* title=' | sed 's#.*\(/watch?v=[^"]*\).* title="\([^"]*\).*#http://www.youtube.com\1 \2#'
