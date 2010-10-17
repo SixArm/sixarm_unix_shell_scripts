@@ -1,0 +1,1 @@
+ruby -rubygems -Ilib -Itest test/*.rb

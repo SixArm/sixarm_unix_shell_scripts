@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# Fresh unix install for a typical sixarm server
+
+# Create a directory where we can download sources from git, ftp, etc.
+# We put this in /opt level to make it easy to find; it could go anywhere.
+
+mkdir -p /opt/sources
+
+## Get many git repos
+mkdir -p /opt/sources/git/
+cd /opt/sources/git/ && cat ~sixarm/github/unix/install/git_projects.txt | perl -p -e 'system("git clone $_")'
+
+## Emacs starter kit
+mkdir -p /usr/local/share/emacs/site-lisp/snippets
+mkdir ~/.emacs.d
+mkdir ~/.emacs.d/plugins
+cp -R /home/sources/git/emacs-starter-kit/* ~/.emacs.d/
+
+mkdir -p /home/sources/downloads/

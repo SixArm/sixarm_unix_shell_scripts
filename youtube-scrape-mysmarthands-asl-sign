@@ -1,0 +1,9 @@
+#!/bin/sh
+#
+# See http://www.youtube.com/user/SmartHandsCA
+#
+# This script scrapes the youtube sidebar list of videos,
+# chooses each video with a title havin "ASL sign for",
+# a list of links to videos sorted by title.
+
+cat videos.html | youtube-scrape-watch-title | grep ' - ASL sign for ' | sed 's# - ASL sign for .*##' | sort -k2 
