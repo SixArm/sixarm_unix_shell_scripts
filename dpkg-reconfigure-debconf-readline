@@ -1,0 +1,1 @@
+dpkg-reconfigure debconf
