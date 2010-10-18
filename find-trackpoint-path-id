@@ -3,8 +3,14 @@
 # Find the TrackPoint Path ID.
 #
 # From http://www.thinkwiki.org/wiki/How_to_configure_the_TrackPoint
+# See also http://sourceforge.net/projects/tpctl/
 #
 # Example
 #   ID_PATH=platform-i8042-serio-2
+#
+# See also:
+#   find-trackpoint-device-file-for-speed
+#   find-trackpoint-device-file-for-sensitivity
+
 
 /lib/udev/path_id $(find /sys/devices/platform/i8042 -name name | xargs grep -Fl TrackPoint | sed 's/\/sys\(.*\)\/name/\1/')
