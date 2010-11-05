@@ -1,1 +1,1 @@
-easytether connect
+sudo dhclient easytether0
