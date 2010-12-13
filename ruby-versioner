@@ -1,0 +1,15 @@
+#!/bin/sh
+# Set the Ruby environment to be a particular version of Ruby.
+#
+# We install all our Ruby versions in /opt/ruby/<version>
+# e.g. /opt/ruby/192p0
+#
+# To choose this version of ruby, we do:
+#   ruby-chooser 192p0
+#
+# This script does two things the the PATH environment:
+#   - remove any /opt/ruby/ paths 
+#   - append /opt/ruby/<version> 
+
+export PATH=$(echo $PATH | tr ':' '\n' | awk '$0 !~ "/opt/ruby/"' | paste -sd:):/opt/ruby/$1
+
