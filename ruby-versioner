@@ -9,7 +9,12 @@
 #
 # This script does two things the the PATH environment:
 #   - remove any /opt/ruby/ paths 
-#   - append /opt/ruby/<version> 
+#   - prepend /opt/ruby/<version> 
 
-export PATH=$(echo $PATH | tr ':' '\n' | awk '$0 !~ "/opt/ruby/"' | paste -sd:):/opt/ruby/$1
+export PATH=/opt/ruby/$1/bin:$(echo $PATH | tr ':' '\n' | awk '$0 !~ "^/opt/ruby/"' | paste -sd:)
+
+# If you want this script to also link the typical ruby commands
+# to the new version's commands, then you can uncomment these lines:
+#echo ln -s /opt/ruby/$1/bin/ruby$1 /usr/bin/ruby
+#for cmd in erb gem irb rake rdoc ri ruby testrb; do echo "ln -s /opt/ruby/$1/$cmd$1 /usr/local/bin/$cmd"; done
 

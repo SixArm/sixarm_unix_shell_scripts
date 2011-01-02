@@ -1,0 +1,8 @@
+#!/bin/sh
+
+##
+# Delete most HTML tags (accommodates multiple-line tags)
+# From http://sed.sourceforge.net/sed1line.txt
+##
+
+sed -e :a -e 's/<[^>]*>//g;/</N;//ba'

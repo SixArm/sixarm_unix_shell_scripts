@@ -1,0 +1,6 @@
+#!/bin/sh
+# Record a screencast and convert it to an mpeg movie.
+# Grab X11 input and create an MPEG at 25 fps with the resolution 800×600.
+# From http://blog.urfix.com/25-%E2%80%93-sick-linux-commands/
+
+ffmpeg -f x11grab -r 25 -s 800x600 -i :0.0 /tmp/outputFile.mpg

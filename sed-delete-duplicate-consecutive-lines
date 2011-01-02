@@ -1,0 +1,9 @@
+#!/bin/sh
+
+##
+# Delete duplicate, consecutive lines from a file (emulates "uniq").
+# First line in a set of duplicate lines is kept, rest are deleted.
+# From http://sed.sourceforge.net/sed1line.txt
+##
+
+sed '$!N; /^\(.*\)\n\1$/!P; D'

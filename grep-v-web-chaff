@@ -1,0 +1,2 @@
+grep -v "\.\(bmp\|css\|gif\|ico\|jpg\|js\|png\)\b" 
+

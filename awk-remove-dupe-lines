@@ -1,0 +1,11 @@
+#!/bin/sh
+# Remove duplicate lines in a file without sorting.
+# Using awk, we find duplicate lines in a file without sorting;
+# we remove the duplicates which we can then redirect into another file.
+#
+# Example:
+#  awk-remove-duplicate-lines myfile.txt
+#
+# From http://blog.urfix.com/25-%E2%80%93-sick-linux-commands/
+
+awk '!x[$0]++' 
