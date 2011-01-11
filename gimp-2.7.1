@@ -1,0 +1,8 @@
+#!/bin/sh
+
+PATH=/opt/gimp-2.7.1/bin:$PATH
+export PATH
+LD_LIBRARY_PATH=/opt/gimp-2.7.1/lib
+export LD_LIBRARY_PATH
+
+/opt/gimp-2.7.1/bin/gimp-2.7.1 "$@"
