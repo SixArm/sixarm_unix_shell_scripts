@@ -1,0 +1,1 @@
+mkdir -p /etc/skel/Maildir/{cur,new,tmp}
