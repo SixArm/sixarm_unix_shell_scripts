@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'net/http'
+require 'cgi'
+require 'json'
+
+while gets
+
+  # For example "1 Main St, San Francisco, CA 94111 US"
+  address = $_
+
+  begin
+
+    # We use Google's Maps API to geocode the address
+    href = 'http://maps.googleapis.com/maps/api/geocode/json?address=' + CGI.escape(address) + '&sensor=false'
+    response = Net::HTTP.get(URI.parse(href))
+    json = JSON.parse(response)
+
+    # Check for errors
+    status = json['status']
+    if status!='OK' then raise "Error status #{status}" end
+
+    # Use the first result's location and print its lat and lng
+    location = json['results'][0]['geometry']['location']
+    puts "#{location['lat']} #{location['lng']}"
+
+  rescue
+    # Print the error message to STDERR
+    $stderr.puts "#{$!} for address: #{address}"
+  end 
+
+end
