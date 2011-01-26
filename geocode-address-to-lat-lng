@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+#
+# Ruby command line script to geocode
+# from an address to latitude and longitude.
+#
+# Example:
+#   geocode-address-to-lat-lng "1 Main St, San Francisco CA 94111" 
+#   => 37.7931108 -122.3964898
+#
+# This uses the free Google geocoding API, documented here:
+# http://code.google.com/apis/maps/documentation/geocoding/
+#
+# 
+
+require 'net/http'
+require 'cgi'
+require 'json'
+
+address = ARGV.shift
+
+begin
+
+  # Google provides a geocoder web service that can process an address into a location.
+  geocoder = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address="
+
+  # Prepare the freeform address text into a valid web URI.
+  href = geocoder + CGI.escape(address)
+  uri = URI.parse(href)
+  
+  # Connect to Google API.
+  response = Net::HTTP.get(uri)
+  json = JSON.parse(response)
+
+  # Check for errors.
+  status = json['status']
+  if status!='OK' then raise "Error status #{status}" end
+
+  # Get the first result, which is the one Google thinks is the most likely match.
+  result = json['results'].first
+
+  # The result has a location field, which has the latitude and longitude fields.
+  lat = result['geometry']['location']['lat']
+  lng = result['geometry']['location']['lng']
+
+  # Print the latitude and longitude.
+  puts "#{lat} #{lng}"
+
+rescue Exception => e
+  # Print the error message to STDERR.
+  $stderr.puts "#{e.message} for address: #{address}"
+end 
+
