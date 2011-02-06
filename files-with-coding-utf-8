@@ -1,0 +1,1 @@
+xargs grep -l -m 1 -x "# -\*- coding: utf-8 -\*-"
