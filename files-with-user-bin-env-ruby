@@ -1,0 +1,1 @@
+xargs grep -l -x '#!/usr/bin/env ruby'
