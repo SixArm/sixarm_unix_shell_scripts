@@ -1,0 +1,8 @@
+#!/bin/sh
+while read path
+do 
+  echo "=== $path"
+  cd $path
+  $1
+  cd - 
+done
