@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
+=begin rdoc
+
+Prepend lines to a text file. 
+
+The lines can come from ARGV or from STDIN.
+The lines from ARGV will have "\n" automatically appended.
+
+Suppose the file my.txt is:
+  hello
+  world
+
+Example: Prepend a file with one line of text
+  prepend my.txt foo
+  =>
+  foo
+  hello
+  world
+
+Example: Prepend a file with multiple lines of text
+  prepend my.txt foo bar
+  => 
+  foo
+  bar
+  hello
+  world
+  
+Example: Prepend a file with one line of text from STDIN
+  echo "foo" | prepend my.txt 
+  =>
+  foo
+  hello
+  world
+
+Example: Prepend a file with multiple line of text from STDIN
+  { echo "foo"; echo "bar"} | prepend my.txt 
+  =>
+  foo
+  bar
+  hello
+  world
+
+Notes:
+  Many good techniques for Ruby file access are on this page:
+  http://pleac.sourceforge.net/pleac_ruby/fileaccess.html
+
+=end
+
+class File
+  # Update an open file by rewinding, then writing, then truncating.
+  def updatelines(lines)
+    self.pos = 0
+    lines.each{|line| self.print line }
+    self.truncate(self.pos)
+  end
+end
+
+path = ARGV.shift
+File.open(path, 'r+'){|file|
+  file_lines = file.readlines
+  prep_lines = (ARGV.size > 0) ? ARGV.map{|x| x + "\n"} : STDIN.readlines
+  file.updatelines(prep_lines + file_lines)
+}
+
