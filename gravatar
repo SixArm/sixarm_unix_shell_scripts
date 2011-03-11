@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Gravatar: generate a gravatar URI for a given email address.
+#
+# Syntax:
+#    gravatar <email address>
+#
+# Example:
+#    gravatar me@my.com
+#
+# To learn more about Gravatar, see http://www.gravatar
+
+echo -n 'http://www.gravatar.com/avatar/' && echo -n "$1" | md5sum | sed 's/ -$//'
