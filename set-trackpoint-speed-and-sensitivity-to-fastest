@@ -3,9 +3,9 @@
 # Set trackpoint speed and sensitivity to fastest settings;
 # this also turns on the trackpoint option for press-to-select.
 
-for i in 1 2 3
+for i in 1 2 3 
 do
- dir = /sys/devices/platform/i8042/serio1/serio$i
+ dir=/sys/devices/platform/i8042/serio1/serio$i
  if [ -d $dir ]; then
   echo -n 255 > $dir/speed
   echo -n 255 > $dir/sensitivity
