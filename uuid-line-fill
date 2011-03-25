@@ -1,0 +1,40 @@
+#!/bin/sh
+exec ruby -p "$0" "$@"
+#!ruby -p
+
+###
+# uuid-filler reads input lines and fills in secure random UUIDs.
+#
+# This looks for the text "uuid:" on a line by itself, 
+# and appends a secure random UUID in quotation marks.
+#
+# Example:
+#   cat foo.txt | uuid-filler > foo-with-uuid-filled-in.txt
+#
+# Example input:
+#   foo
+#   uuid:
+#   goo
+#   uuid:
+#   hoo
+#
+# Example output:
+#   foo
+#   uuid: "73443f62-c068-4e7d-93a1-716d3ce295e0"
+#   goo
+#   uuid: "b83f5d15-2fb1-4a8a-9329-5d4c2326aebf"
+#   hoo
+#
+# Details on the "uuid:" text:
+#   - Must be on a line by itself.
+#   - Matching is case insensitive.
+#   - Leading whitespace is preserved.
+
+BEGIN {
+ require 'securerandom'
+}
+
+$_.sub!(/^(\s*\buuid:)\s*\n/i, '\1 ' + '"' + SecureRandom.uuid + '"' + "\n")
+
+
+
