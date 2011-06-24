@@ -2,7 +2,7 @@
 #
 # How many meta-programming methods are in your Rails project?
 #
-# This script counts the occurances of these methods:
+# This script counts the occurences of these methods:
 #   * eval
 #   * method_missing
 #   * define_method
