@@ -1,0 +1,5 @@
+#/bin/sh
+# List your most-frequent history commands.
+# From @jmdugan
+
+history | awk '{print $2}' | sort | uniq -c | sort -nr
