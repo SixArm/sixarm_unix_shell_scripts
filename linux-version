@@ -6,18 +6,15 @@
 echo 'uname -a'
 uname -a
 
-if [[ -e /proc/version ]]; then
- echo ''
-  echo 'cat /proc/version'
-  cat /proc/version
-fi;
-
-if [[ -e /etc/issue ]]; then
- echo ''
- echo 'cat /etc/issue'
- cat /etc/issue
-fi;
-
+for file in /etc/redhat-release /proc/version /etc/issue
+do
+  if [[ -e $file ]]
+  then
+    echo ''
+    echo "cat $file"
+    cat $file
+  fi;
+done
 
 echo ''
 echo 'lsb_release -a'
