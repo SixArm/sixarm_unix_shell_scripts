@@ -1,0 +1,9 @@
+#!/bin/sh
+
+##
+# Change smart quotes into simple quotes,
+# smart apostrophes into simple apostrophes,
+# and various smart dashes into simple dashes.
+##
+
+xsed -i "s/[”“]/\"/g; s/’/'/g; s/–/-/g; s/—/ -- /g"
