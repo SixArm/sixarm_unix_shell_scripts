@@ -1,0 +1,1 @@
+redcarpet $1  > ${1%.md}.html
