@@ -7,8 +7,13 @@
 # and uninstalls all RVM gems. We run this script as root.
 # We run this script to clean up our system for rbenv.
 #
-# If rvm implode gives errors like this:
+# If rvm implode gives errors like this loop:
 #    line 72: /usr/local/rvm/scripts/rvm: No such file or directory
+#
+# then the rvm setup is bonked and we can delete the rvm script
+# by hand then run this script again; rvm implode won't work,
+# but the rest of the script will do a decent job of deleting
+# any lingering rvm files and reporting any remainders.
 
 echo "rvm implode"
 rvm implode
