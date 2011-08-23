@@ -1,9 +1,11 @@
 #!/bin/sh
 
 ##
-# Change smart quotes into simple quotes,
-# smart apostrophes into simple apostrophes,
-# and various smart dashes into simple dashes.
+# Change smart characters into simple characters:
+#   * curly quote => """
+#   * curly apostrophe => "'"
+#   * n-dash => "-"
+#   * m-dash => " -- "
 ##
 
-xsed -i "s/[”“]/\"/g; s/’/'/g; s/–/-/g; s/—/ -- /g"
+sed "s/[”“]/\"/g; s/’/'/g; s/–/-/g; s/—/ -- /g"

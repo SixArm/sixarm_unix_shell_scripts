@@ -1,0 +1,14 @@
+#/bin/sh
+#
+# Uninstall RVM (Ruby Version Manager). THIS IS DANGEROUS.
+#
+# This runs rvm implode, delete RVM files from the system,
+# deletes /home/*/.rvmrc files and /home/*/.rvm directories,
+# and uninstalls all RVM gems. We run this script as root.
+# We run this script to clean up our system for rbenv.
+
+rvm implode
+rm -f /etc/rvmrc
+rm -f /home/*/.rvmrc
+rm -rf /home/*/.rvm
+gem uninstall -a -q rvm
