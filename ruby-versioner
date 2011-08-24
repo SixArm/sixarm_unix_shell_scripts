@@ -5,13 +5,16 @@
 # e.g. /opt/ruby/1.9.2-p290
 #
 # To choose this version of ruby, we do:
-#   ruby-version 1.9.2-p290
+#   source ruby-version 1.9.2-p290
+#
+# Shortcut: the dot means source.
+#   . ruby-version 1.9.2-p290
 #
 # This script does two things the the PATH environment:
 #   - remove any /opt/ruby/ paths 
 #   - prepend /opt/ruby/<version> 
 
-export PATH=/opt/ruby/$1/bin:$(echo $PATH | tr ':' '\n' | awk '$0 !~ "^/opt/ruby/"' | paste -sd:)
+export PATH="/opt/ruby/$1/bin:$(echo $PATH | tr ':' '\n' | awk '$0 !~ "^/opt/ruby/"' | paste -sd:)"
 
 # If you want this script to also link the typical ruby commands
 # to the new version's commands, then you can uncomment these lines:
