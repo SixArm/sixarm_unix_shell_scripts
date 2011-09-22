@@ -1,0 +1,9 @@
+#!/bin/sh
+# Dig a domain's start of authority nameserver.
+#
+# Example:
+#   dig example.com
+#   => ns.example.com
+
+domain=$1
+dig "$domain" soa | grep "^$domain" |  awk '{print $5}'

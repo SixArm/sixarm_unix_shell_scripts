@@ -1,0 +1,11 @@
+#!/bin/sh
+# Dig a domain's subdomains
+#
+# Example:
+#   dig example.com
+#   => www.example.com, ftp.example.com, etc.
+
+
+domain=$1
+ns=`dig "$domain" soa | grep "^$domain" |  awk '{print $5}'`
+dig "@$ns" "$domain.com" axfr
