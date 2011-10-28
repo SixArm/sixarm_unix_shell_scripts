@@ -1,0 +1,1 @@
+find ~/.local/share/Trash/files/* | xargs -I{} rm -rf "{}"
