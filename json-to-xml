@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+#
+# json-to-xml is a pipe command to convert
+# from json text input to xml text output.
+#
+# Example:
+#   cat my.json | json-to-xml > my.xml
+
+require 'json'
+require 'xmlsimple'
+puts XmlSimple.xml_out(JSON.parse(STDIN.read), 'NoAttr' => true)
+
