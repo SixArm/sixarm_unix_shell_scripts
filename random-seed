@@ -1,0 +1,7 @@
+#!/bin/bash
+#
+# Seed the bash random number generator using /dev/urandom
+
+seed=$(head -c4 /dev/urandom | od -t u4 | awk '{ print $2 }')
+RANDOM=$seed
+
