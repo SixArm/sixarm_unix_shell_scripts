@@ -17,6 +17,9 @@
 #
 # This script does NOT seed the bash random variable.
 # To do this, use the random-seed script.
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+# License is GPL v2
 
 upper=${1-9}
 r=$[ ( $RANDOM % $upper ) ]

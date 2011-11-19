@@ -1,9 +1,13 @@
+#!/bin/bash
+#
 # Shell script to generate a random string.
 # This uses urandom to pick from \w characters.
 #
 # Usage: random-word-characters [n]
 # * n is an optional length; it defaults to 256.
 #
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+# License is GPL v2
 
 len=${1-256}
 while [ ${#build} -lt $len ]
