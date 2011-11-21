@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# Shows you all open files that have a link count less than 1,
+# often indicative of a cracker trying to hide something.
+#
+# http://danielmiessler.com/study/lsof/
+
+lsof +L1 

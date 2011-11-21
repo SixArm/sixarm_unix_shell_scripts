@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Show current active connections i.e. that say "ESTABLISHED".
+#
+# http://danielmiessler.com/study/lsof/
+
+lsof -i| grep ESTABLISHED

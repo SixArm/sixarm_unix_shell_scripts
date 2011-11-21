@@ -1,0 +1,7 @@
+#!/bin/sh
+#
+# Show current listening connections i.e. that say "LISTEN".
+#
+# http://danielmiessler.com/study/lsof/
+
+lsof -i| grep LISTEN 
