@@ -1,6 +1,7 @@
 #!/bin/sh
 while read dir ; do 
  cd $dir
- $@ 
+ $@
+ cd -
 done
 
