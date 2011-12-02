@@ -1,8 +1,9 @@
 #!/bin/sh
 while read dir ; do 
- echo $dir
- cd $dir
- $@
- cd $OLDPWD
+  echo "$dir"
+  cd "$dir"
+  if [ $? -eq 0 ]
+    $@
+    cd "$OLDPWD"
+  fi
 done
-
