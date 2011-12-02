@@ -2,6 +2,6 @@
 while read dir ; do 
  cd $dir
  $@
- cd -
+ cd $OLDPWD
 done
 
