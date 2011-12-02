@@ -3,6 +3,7 @@ while read dir ; do
   echo "$dir"
   cd "$dir"
   if [ $? -eq 0 ]
+  then
     $@
     cd "$OLDPWD"
   fi
