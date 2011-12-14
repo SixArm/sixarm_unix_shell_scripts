@@ -1,0 +1,2 @@
+#/bin/bash
+( find ./ -path ./.git -prune -o -type f -print0 | xargs -I{} -0 cat "{}" ) | wc -l
