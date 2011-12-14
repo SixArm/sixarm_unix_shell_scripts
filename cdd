@@ -1,6 +1,10 @@
 #!/bin/sh
 while read dir ; do 
- cd $dir
- $@ 
+  echo "$dir"
+  cd "$dir"
+  if [ $? -eq 0 ]
+  then
+    $@
+    cd "$OLDPWD"
+  fi
 done
-
