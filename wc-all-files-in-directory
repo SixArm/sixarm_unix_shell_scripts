@@ -1,2 +1,7 @@
-#/bin/bash
+#!/bin/bash
+#
+# Count the lines in all the files in a director.
+#
+# From http://stackoverflow.com/questions/1358540/how-to-count-all-the-lines-of-code-in-a-directory-recursively
+
 ( find ./ -path ./.git -prune -o -type f -print0 | xargs -I{} -0 cat "{}" ) | wc -l
