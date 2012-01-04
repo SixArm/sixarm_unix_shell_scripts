@@ -1,0 +1,96 @@
+#!/usr/bin/perl
+#
+# Copyright (c) 2004 - Jason L. Buberel - jason@buberel.org
+# Copyright (c) 2007 - Evan Boggs - etboggs@indiana.edu
+# http://www.buberel.org/linux/batch-flac-to-ogg-converter.php
+# Licensed under the GNU GPL.
+#
+# Given a source directory tree of FLAC files, this script will 
+# recreate (or add to) a new directory tree of Ogg files by 
+# recursively encoding only new FLAC files to Ogg.  The source and 
+# destination directories can be hard-coded using the $sourceDirPrefix 
+# and $destDirPrefix variables or passed on the command line.  The 
+# command line options are: 
+#   flac2ogg.pl --source=/source/dir --dest=/dest/dir --quality=n --force
+#   --source= The path to the top-most directory containing your FLAC files.
+#   --dest= The path to the directory where you want the Ogg files to go.
+#   --quality=n where n is a number between 1 and 10, 10 being the best quailty.
+#   --force Overwrite the Ogg file, even if it already exists
+#
+# If you are piping the output to a log file it would also be good to 
+# modify line 92 so that the encoder command is silent (this is done 
+# using -Q or --quiet).  
+
+use Getopt::Long;
+use File::stat;
+
+$sourceDirPrefix = "/home/user/FLAC";
+$destDirPrefix = "/home/user/Ogg";
+$quality = 6;
+GetOptions ( "source:s" => \$sourceDirPrefix,
+             "dest:s" => \$destDirPrefix,
+             "quality:i" => \$quality,
+             "force" => \$force );
+
+# Commands:
+$oggCommand = "/usr/bin/oggenc";
+$flacCommand = "/usr/bin/flac";
+
+@dirs = `cd "$sourceDirPrefix" && find . -type d -print`;
+@files = `cd "$sourceDirPrefix" && find . -type f -name "*.flac" -print`;
+
+# Check to see if our find command found anything to convert.
+if ( scalar @files == 0 ) {
+    die "Found no .flac files to convert!";
+}
+
+# Recreate the directory hierarchy.
+foreach $dir (@dirs) {
+    $dir =~ s/\n$//;
+    $dir =~ s/^\.\///;
+    
+    # check to see if the destination dir already exists
+    if ( !(stat ("$destDirPrefix/$dir")) ) {
+        # stat failed so create the directory
+        print "Creating output dir:\n   $destDirPrefix/$dir\n";
+        $dir =~ s/\`/\'/g;
+        $result = `cd "$destDirPrefix" && mkdir -p "$dir"`;
+    }
+
+}
+
+# Now process the actual sound files.
+foreach $file (@files) {
+    $file =~ s/\n$//;
+    $file =~ s/^\.\///;
+    #print "F: $destDirPrefix/$file\n";
+    
+    # Figure out what the destination file would be...
+    $destinationFile = $file;
+    $destinationFile =~ s/\.flac$/\.ogg/;
+    #print "D: $destinationFile\n";
+    
+    # Now stat the destinationFile, and see if it's date is more recent
+    # than that of the original file. If so, we re-encode.
+    # We also re-encode if the user supplied --force
+    $srcInfo = stat ("$sourceDirPrefix/$file");
+    $srcModTime = $srcInfo->mtime;
+    $destInfo = stat ("$destDirPrefix/$destinationFile");
+    if ( $destInfo ) {
+        $destModTime = $destInfo->mtime;
+        # print "DEST_MOD: $destModTime :: SRC_MOD: $srcModTime :: FORCE: $force\n"; 
+    }
+    # If the destination file does not exist, or the user specified force,
+    # or the srcfile is more recent then the dest file, we encode.
+    if ( !$destInfo || $force || ( $srcModTime > $destModTime) ) {
+        $file =~ s/\`/\'/g;
+        $inFile = "$sourceDirPrefix/$file" . "c";
+        chop ($inFile);
+        $outFile = "$destDirPrefix/$destinationFile" . "g";
+        chop ($outFile);
+        print "ENCODE: $file ==> \n\t$destinationFile\n"; 
+        $inFile =~ s/\0//g; $outFile =~ s/\0//g;
+        $result = `$oggCommand -q $quality -o "$outFile" "$inFile"`;
+    }
+        
+}
