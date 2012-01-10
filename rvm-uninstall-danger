@@ -25,7 +25,7 @@ rm -f /etc/rvmrc
 rm -f /home/*/.rvmrc
 rm -rf /home/*/.rvm
 
-echo "gem uninstall -a -a rvm"
+echo "uninstall rvm gem"
 gem uninstall -a -q rvm
 
 echo "find any remaining .rvmrc files to delete by hand"
