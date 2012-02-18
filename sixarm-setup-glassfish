@@ -9,6 +9,7 @@
 # Customized a bit with the downloadable init.d by joelparkerhenderson@gmail.com
 ##
 
+unset CDPATH
 wget http://download.java.net/glassfish/v3/promoted/latest-glassfish.zip
 unzip latest-glassfish.zip
 mv glassfishv3 /opt/

@@ -1,5 +1,6 @@
 #!/bin/bash
-#
+unset CDPATH
+
 # Fresh unix install for a typical sixarm server
 
 # Create a directory where we can download sources from git, ftp, etc.
