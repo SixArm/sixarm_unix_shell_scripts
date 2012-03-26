@@ -1,1 +1,2 @@
-xargs perl -p -i -e 
+#!/bin/bash
+echo "${@:2}"

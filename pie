@@ -1,1 +1,3 @@
-perl -p -i -e 
+echo $@
+echo "here"
+#perl -p -i -e $@
