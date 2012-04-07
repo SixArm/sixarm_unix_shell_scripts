@@ -27,7 +27,7 @@
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 # License is GPL v2
 
-upper=${1-9}
+upper=${1-10}
 count=${2-1}
 for i in $(seq 1 $count)
 do

@@ -2,17 +2,22 @@
 #
 # Generate random digits.
 #
-# Usage: random-digits [count]
+# Usage: random-digits [n] [count]
 #
-#   * count is how many digits to generate; the default is 16.
+#   * n is how many digits to generate on one line; it defaults to 16.
+#   * count is how many lines to generate; it defaults to 1.
 #
 # Example:
 #   random-digits
 #   => sixteen random digits
 #
 # Example:
-#   random-int 100
-#   => one hundred random digits
+#   random-digits 3
+#   => three random digits
+#
+# Example:
+#   random-digits 3 4
+#   => three random digits, four times 
 #
 # This script seeds the bash random variable.
 # Cf. random-seed

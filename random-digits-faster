@@ -2,17 +2,22 @@
 #
 # Generate random digits.
 #
-# Usage: random-digits-faster [count]
+# Usage: random-digits-faster [n] [count]
 #
-#   * count is how many digits to generate; the default is 16.
+#   * n is how many digits to generate on one line; it defaults to 16.
+#   * count is how many lines to generate; it defaults to 1.
 #
 # Example:
 #   random-digits-faster
 #   => sixteen random digits
 #
 # Example:
-#   random-int 100
-#   => one hundred random digits
+#   random-digits-faster 3
+#   => three random digits
+#
+# Example:
+#   random-digits-faster 3 4
+#   => three random digits, four times 
 #
 # This script does NOT seed the bash random variable.
 #
@@ -22,10 +27,14 @@
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 # License is GPL v2
 
-count=${1-16}
-for i in $(seq 1 $count)
-do
-  r=$[ ( $RANDOM % 9 ) ]
-  echo -ne $r
+n=${1-16}
+count=${2-1}
+for line in $(seq 1 $count) 
+do 
+  for i in $(seq 1 $n)
+  do
+    r=$[ ( $RANDOM % 10 ) ]
+    echo -ne $r
+  done
+  echo
 done
-echo
