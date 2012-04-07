@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# Generate random digits.
+#
+# Usage: random-digits-faster [count]
+#
+#   * count is how many digits to generate; the default is 16.
+#
+# Example:
+#   random-digits-faster
+#   => sixteen random digits
+#
+# Example:
+#   random-int 100
+#   => one hundred random digits
+#
+# This script does NOT seed the bash random variable.
+#
+#   * To seed each time, use script random-digits.
+#   * To seed once, use the script random-seed.
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+# License is GPL v2
+
+count=${1-16}
+for i in $(seq 1 $count)
+do
+  r=$[ ( $RANDOM % 9 ) ]
+  echo -ne $r
+done
+echo
