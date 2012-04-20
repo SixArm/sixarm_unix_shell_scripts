@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Summarize a text file in one line.
+#
+# This prints a line with the file name and summary like this:
+#
+#    my.txt: My Notes About Foo Bar
+#
+# To get the summary, this script finds the first line of the file that
+# starts with one or more symbol characters (i.e. non-space, non-alphanum), 
+# then one or more spaces.
+#
+# Example shell script:
+#
+#    #!/bin/foo
+#    # Hello
+#
+# Example markup text:
+#
+#    !! Hello
+#
+# The script puts a colon and space after the filename.
+
+grep "^[^A-Za-z0-9 ]* " -m 1 -H $@ | sed 's/:[^ ] */: /'
