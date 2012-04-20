@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Use SSH to copy a pub id file to a remote server into your authorized_keys.
+# SSH script to copy a pub id file to a remote server into your authorized_keys.
 #
 # Syntax:
 #   ssh-copy-id-util <pub file> <ssh login>

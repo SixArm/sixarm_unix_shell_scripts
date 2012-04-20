@@ -1,1 +1,5 @@
+#!/bin/sh
+#
+# Ubuntu script to turn off the login sound.
+
 sudo -u gdm gconftool-2 --set /desktop/gnome/sound/event_sounds --type bool false

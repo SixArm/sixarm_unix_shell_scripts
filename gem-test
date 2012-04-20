@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# Gem script to run all the test files.
+##
+
 ruby -rubygems -Ilib -Itest test/*.rb

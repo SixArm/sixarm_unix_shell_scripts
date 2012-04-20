@@ -1,2 +1,9 @@
+#!/bin/sh
+
+##
+# grep without web chaff like lines that have .css, .js, .png.
+# This is useful e.g. for grepping web server log files.
+##
+
 grep -v "\.\(bmp\|css\|gif\|ico\|jpg\|js\|png\)\b" 
 

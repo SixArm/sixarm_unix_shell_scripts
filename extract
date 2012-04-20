@@ -1,3 +1,9 @@
+#!/bin/sh
+
+##
+# Extract a file using best-guess of tar, bzip, rar, gz, zip, etc.
+##
+
 if [ -f $1 ]; then
 case $1 in
 *.tar.bz2)   tar xjf $1 ;;

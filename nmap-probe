@@ -1,6 +1,7 @@
 #!/bin/sh
-#
-# Get info about remote host ports and OS detection
+
+##
+# Get info about remote host ports and OS detection.
 #
 # nmap -sS -P0 -A -v <target>
 # Where < target > may be a single IP, a hostname or a subnet
@@ -13,6 +14,7 @@
 # -v use -v twice for more verbosity.
 #
 # From user 'starchox' at http://www.commandlinefu.com
+##
 
 nmap -sS -P0 -A -v $1
 

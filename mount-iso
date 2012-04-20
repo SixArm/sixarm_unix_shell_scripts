@@ -1,4 +1,6 @@
 #!/bin/sh
+
+##
 # Mount a .iso file.
 # N.b. “-o loop” lets you use a file as a block device
 #
@@ -6,5 +8,6 @@
 #  mount-iso /path/to/file.iso 
 #
 # From http://blog.urfix.com/25-%E2%80%93-sick-linux-commands/
+##
 
 mount $1 /mnt/cdrom -oloop

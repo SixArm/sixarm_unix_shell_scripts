@@ -1,2 +1,7 @@
 #!/bin/sh
+
+##
+# Kill a process with a given user.
+##
+
 kill -9 `lsof -t -u $1`

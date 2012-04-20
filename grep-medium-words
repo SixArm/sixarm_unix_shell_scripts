@@ -1,6 +1,8 @@
 #!/bin/bash
-#
+
+##
 # Grep for typical words, length 4-7 characters, all lowercase, a-z.
-# We excluding accented characters.
+# We exclude accented characters.
+##
 
 grep '^[abcdefghijklmnopqrstuvwxyz]\{4,7\}$' | grep -v "\(ae\|oe\|ueo\)"

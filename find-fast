@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# Find script with pruning of /dev, /proc, /tmp, .git, .svn, etc.
+##
+
 find -noleaf -path "/dev"-prune -o -path "/proc" -prune -o -path "/tmp" -o -path "/sys" -prune -o -prune -o -name ".git" -prune -o -name ".svn" -prune -o $@

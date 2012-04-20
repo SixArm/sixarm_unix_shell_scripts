@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# Shorthand for awk with max.
+##
+
 awk '$1 > max { max=$1 } END { print max }'

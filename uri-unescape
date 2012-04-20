@@ -1,1 +1,5 @@
+#!/bin/sh
+#
+# URI script to unescape text, for example a CGI query string.
+
 perl -MURI::Escape -lne 'print uri_unescape($_)' 

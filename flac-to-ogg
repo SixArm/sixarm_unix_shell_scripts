@@ -1,4 +1,7 @@
 #!/usr/bin/perl
+
+##
+# Convert sound files from FLAC format to Ogg format.
 #
 # Copyright (c) 2004 - Jason L. Buberel - jason@buberel.org
 # Copyright (c) 2007 - Evan Boggs - etboggs@indiana.edu
@@ -20,6 +23,7 @@
 # If you are piping the output to a log file it would also be good to 
 # modify line 92 so that the encoder command is silent (this is done 
 # using -Q or --quiet).  
+##
 
 use Getopt::Long;
 use File::stat;

@@ -1,1 +1,15 @@
+#!/bin/sh
+
+##
+# Make a typical user's mail directory for qmail or postfix.
+#
+# This makes these directories:
+#
+#     Maildir/cur
+#     Maildir/new
+#     Maildir/tmp
+#     Maildir/drafts
+#     Maildir/sent
+##
+
 mkdir -p Maildir/{cur,new,tmp,drafts,sent}

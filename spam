@@ -1,4 +1,8 @@
 #!/bin/sh
-# Find any mail messages in my inbox (~/Maildir/cur) that contain a given phrase,
-# and move these messages to my spambox (~/Maildir/spam) for my review or deletion.
+#
+# Move spam email messages out of my inbox folder and into my spam folder.
+#
+# This finds mail messages in my inbox (~/Maildir/cur) that contain a given phrase,
+# and moves these messages to my spambox (~/Maildir/spam) for my review or deletion.
+
 find ~/Maildir/cur | xargs grep -l "$1" | xargs -I{} mv "{}" ~/Maildir/spam/

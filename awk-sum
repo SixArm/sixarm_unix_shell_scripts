@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# Shorthand for awk with sum.
+##
+
 awk '{ sum += $1 }; END { print sum }'

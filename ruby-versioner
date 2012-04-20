@@ -1,4 +1,6 @@
 #!/bin/sh
+
+##
 # Set the Ruby environment to be a particular version of Ruby.
 #
 # We install all our Ruby versions in /opt/ruby/<version>
@@ -13,6 +15,7 @@
 # This script does two things the the PATH environment:
 #   - remove any /opt/ruby/ paths 
 #   - prepend /opt/ruby/<version> 
+##
 
 export PATH="/opt/ruby/$1/bin:$(echo $PATH | tr ':' '\n' | awk '$0 !~ "^/opt/ruby/"' | paste -sd:)"
 

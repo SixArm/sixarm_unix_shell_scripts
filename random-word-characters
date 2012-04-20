@@ -1,5 +1,6 @@
 #!/bin/bash
-#
+
+##
 # Shell script to generate a random string.
 # This uses urandom to pick from \w characters.
 #
@@ -8,8 +9,11 @@
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 # License is GPL v2
+##
 
 len=${1-256}
+cat /dev/urandom | strings -n 1 | grep -o '[_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]' | head -n $len | tr -d '\n'; echo
+exit 
 while [ ${#build} -lt $len ]
 do
   char=`dd if=/dev/urandom count=1 bs=1 2</dev/null`
@@ -19,3 +23,6 @@ do
   fi
 done
 echo $build
+
+
+

@@ -1,5 +1,9 @@
 #!/bin/sh
-# List files in your current directory recursively,
-# displayed as a graphical directory tree.
+
+##
+# List files in your current directory recursively shown as a tree.
+#
 # From http://blog.urfix.com/25-%E2%80%93-sick-linux-commands/
+##
+
 ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'

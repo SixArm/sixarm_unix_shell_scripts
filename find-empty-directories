@@ -1,2 +1,7 @@
 #!/bin/sh
+
+##
+# Find empty directories.
+##
+
 find $1 \( -type d -empty \)

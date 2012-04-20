@@ -1,12 +1,12 @@
 #!/bin/bash
-#
-# DANGER!
-#
-# This script will remove all ruby-related files that we know about.
+
+##
+# This script will remove all ruby-related files that we know about. DANGEROUS!
 #
 # Example:
 #   cd /usr/local/bin
 #   rm-ruby
+##
 
 rm -f -v bluecloth
 rm -f -v cap

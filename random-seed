@@ -1,8 +1,10 @@
 #!/bin/bash
-#
+
+##
 # Seed the bash random number generator using /dev/urandom
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 # License is GPL v2
+##
 
 RANDOM=$(head -c4 /dev/urandom | od -t u4 | awk '{ print $2 }')

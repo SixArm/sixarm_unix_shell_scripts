@@ -1,10 +1,11 @@
 #!/bin/sh
-#
+
+##
 # Convert encoding of a file to unix utf-8
 #
 # Syntax: 
 #
-#    file-encode-utf-8 foo.txt
+#     file-encode-utf-8 foo.txt
 #
 # Useful for data files that contain what would be usable ascii text
 # but are encoded as mpeg or some other encoding that prevents you
@@ -19,5 +20,6 @@
 #     $ file-encode-utf-8
 #     $ file datafile1.csv
 #     datafile1.csv: Unicode text, UTF-8
+##
 
 ex $1 "+set ff=unix fileencoding=utf-8" "+x"

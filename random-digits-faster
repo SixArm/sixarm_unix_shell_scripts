@@ -1,5 +1,6 @@
 #!/bin/bash
-#
+
+##
 # Generate random digits.
 #
 # Usage: random-digits-faster [n] [count]
@@ -26,6 +27,7 @@
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 # License is GPL v2
+##
 
 n=${1-16}
 count=${2-1}

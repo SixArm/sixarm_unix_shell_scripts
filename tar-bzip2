@@ -1,1 +1,5 @@
+#!/bin/sh
+#
+# Run tar using bzip2 compression.
+
 tar --use-compress-program /usr/local/bin/bzip2

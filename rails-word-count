@@ -1,16 +1,21 @@
 #!/bin/sh
-# Code weight bash one-liner for rails by James Golick.
-# This shows the word count of each Rails file in a subdirectory.
-# This is good for a quick estimate of which files contain the most code.
+
+##
+# Shows the word count of each file in a Rails app subdirectory.
+#
+# This is a code weight bash one-liner for rails by James Golick.
+# It's good for a quick estimate of which files contain the most code.
 #
 # Syntax:
-#  rails-word-counts models
+#
+#     rails-word-counts models
 #
 # Example in a Rails top level directory:
-#   $ rails-word-count models
-#     368 app/models/user.rb
-#      98 app/models/team.rb
-#      71 app/models/post.rb
+#
+#     $ rails-word-count models
+#       368 app/models/user.rb
+#        98 app/models/team.rb
+#        71 app/models/post.rb
+##
 
 for file in $(find app/$1/**/*.rb -type f); do wc -l $file ; done  | sort -r 
-

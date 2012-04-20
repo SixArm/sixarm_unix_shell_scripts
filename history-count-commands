@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# Count your history commands.
+##
+
 history | cut -c8- | sort | uniq -c | sort -rn | head

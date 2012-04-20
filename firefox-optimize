@@ -1,4 +1,7 @@
 #!/bin/bash
+
+##
+# Optimize Firefox by scrubbing old data.
 #
 # http://ubuntuforums.org/showthread.php?t=1193567
 #
@@ -19,8 +22,9 @@
 # 3) rename it to firefox-optimize, then add the code below to it and save it.
 #
 # Code:
-#   killall firefox
-#   find $HOME/.mozilla/ \( -name "*.sqlite" \) -exec sqlite3  {} "vacuum" \;
+#
+#     killall firefox
+#     find $HOME/.mozilla/ \( -name "*.sqlite" \) -exec sqlite3  {} "vacuum" \;
 #
 # Then make it executable and run it from the terminal.
 #

@@ -1,1 +1,8 @@
+#!/bin/sh
+
+##
+# grep without web robot strings like robots.txt, Googlebot, Mouseflow, etc.
+# This is useful e.g. for grepping web log files.
+##
+ 
 grep -v "\b\(robots.txt\|Baiduspider\|bingbot\|COMODOspider\|Googlebot\|Mouseflow\|Sosospider\)\b" 

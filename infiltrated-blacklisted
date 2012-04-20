@@ -1,5 +1,6 @@
 #!/bin/sh
-#
+
+##
 # Block known dirty hosts from reaching your machine
 #
 # Blacklisted is a compiled list of all known dirty hosts
@@ -13,5 +14,6 @@
 # RFC1918 addresses (10.x.x.x, 172.16-31.x.x, 192.168.x.x)
 #
 # From user 'sil' at http://www.commandlinefu.com
+##
 
 wget -qO - http://infiltrated.net/blacklisted | awk '!/#|[a-z]/&&/./{print "iptables -A INPUT -s "$1" -j DROP"}' | sh

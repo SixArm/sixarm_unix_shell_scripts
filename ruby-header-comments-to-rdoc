@@ -1,5 +1,9 @@
 #!/usr/bin/env ruby
 
+##
+# For each input file name, get the header comments and emit rdoc format.
+##
+
 input_ruby_filename=ARGV[0]
 
 File.exist?(input_ruby_filename) or raise "File #{input_ruby_filename} does not exist"

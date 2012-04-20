@@ -2,6 +2,7 @@
 
 ##
 # Delete duplicate, nonconsecutive lines from a file. 
+#
 # Beware not to overflow the buffer size of the hold space.
 # From http://sed.sourceforge.net/sed1line.txt
 ##

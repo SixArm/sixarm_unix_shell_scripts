@@ -1,5 +1,6 @@
 #!/bin/bash
-#
+
+##
 # Generate a random integer.
 #
 # Usage: random-int [max] [count]
@@ -26,6 +27,7 @@
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 # License is GPL v2
+##
 
 upper=${1-10}
 count=${2-1}

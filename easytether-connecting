@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# Run the easytether dhclient; call this after easytether-connect.
+##
+
 sudo dhclient easytether0

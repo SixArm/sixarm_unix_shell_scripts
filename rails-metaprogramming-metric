@@ -1,5 +1,6 @@
 #!/bin/sh
-#
+
+##
 # How many meta-programming methods are in your Rails project?
 #
 # This script counts the occurences of these methods:
@@ -21,5 +22,6 @@
 # us input arbitrary files.
 # 
 # Based on http://aaronblohowiak.com/rails-maintainability-metric
+##
 
 find app/** lib/** | grep "\b\(eval\|method_missing\|define_method\|instance_variable_set\)\b"  | wc -l

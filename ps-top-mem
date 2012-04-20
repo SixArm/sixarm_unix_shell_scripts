@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# Print the processes that are using the most RAM.
+##
+
 ps aux | sort -nk +4 | tail

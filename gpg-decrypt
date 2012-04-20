@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# GPG script to decrypt a file with our typical settings.
+##
+
 gpg -d --no-greeting --quiet $@

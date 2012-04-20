@@ -1,1 +1,16 @@
+#!/bin/sh
+
+##
+# Print the current date stamp UTC in a user-friendly format.
+#
+# Example:
+#
+#     date-stamp
+#     => 2000-12-31 12:59:59Z
+#
+# See:
+#
+#     date-stamp-shortest
+##
+
 date -u "+%Y-%m-%d %H:%M:%SZ"

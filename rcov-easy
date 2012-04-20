@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# Run rcov on our typical test files.
+##
+
 rcov -Ilib test/*.rb

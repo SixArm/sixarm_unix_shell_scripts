@@ -1,6 +1,7 @@
-#~/bin/sh
-#
-# Quickly (soft-)reboot skipping hardware checks
+#!/bin/sh
+
+##
+# Quickly (soft-)reboot skipping hardware checks.
 # 
 # If you are doing some tests which require reboots
 # (e. g. startup skripts, kernel module parameters, ...),
@@ -14,5 +15,6 @@
 # Is as hard as a reboot -f, but faster (e. g. 1 min instead of 12 on some servers).
 #
 # From http://www.commandlinefu.com/commands/browse/sort-by-votes/25/50/75/100/125
+##
 
 /sbin/kexec -l /boot/$KERNEL --append="$KERNELPARAMTERS" --initrd=/boot/$INITRD; sync; /sbin/kexec -e

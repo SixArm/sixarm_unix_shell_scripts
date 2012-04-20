@@ -1,5 +1,6 @@
 #!/bin/sh
-#
+
+##
 # How many metaprogramming methods are in your Ruby code?
 #
 # This script counts the occurences of these methods:
@@ -20,5 +21,6 @@
 # in the directories "app" and "lib/"
 #
 # From http://aaronblohowiak.com/rails-maintainability-metric
+##
 
 grep "\b\(eval\|method_missing\|define_method\|instance_variable_set\)\b"  | wc -l

@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# GPG script to encrypt a file with our typical settings.
+##
+
 gpg -c --no-greeting --quiet --cipher-algo aes256 --digest-algo sha256 --cert-digest-algo sha256 --compress-algo uncompressed --no-use-agent $@

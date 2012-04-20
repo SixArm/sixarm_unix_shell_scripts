@@ -1,1 +1,5 @@
+#!/bin/sh
+#
+# Sort command-line input by rank.
+
 sort | uniq -c | sort -g

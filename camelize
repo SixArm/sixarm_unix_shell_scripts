@@ -1,4 +1,9 @@
 #!/usr/bin/env ruby
+
+##
+# Convert text to camel-case like FooGooHoo.
+##
+
 require 'rubygems'
 require 'active_support/inflector'
 puts ARGV.map{|s| s.camelize}.join(' ')

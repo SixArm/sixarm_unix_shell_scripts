@@ -1,5 +1,10 @@
 #!/bin/sh
+
+##
+# Copy files using a command-line progress bar.
+#
 # From http://chris-lamb.co.uk/2008/01/24/can-you-get-cp-to-give-a-progress-bar-like-wget/
+##
 
 cp-progress()
 {

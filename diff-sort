@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# Shorthand to diff with sort.
+##
+
 diff <(sort $1)  <(sort $2)

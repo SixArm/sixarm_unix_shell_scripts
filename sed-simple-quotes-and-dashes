@@ -1,7 +1,10 @@
 #!/bin/sh
 
 ##
-# Change smart characters into simple characters:
+# Change smart characters into simple characters.
+#
+# Items:
+#
 #   * curly quote => """
 #   * curly apostrophe => "'"
 #   * n-dash => "-"

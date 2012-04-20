@@ -1,3 +1,9 @@
 #/bin/sh
+
+##
+# Find broken symlinks.
+#
 # From http://scotgate.org/2007/03/04/howto-find-broken-symbolic-links-gentoo-linux-wiki/
+##
+
 find $1 -type l | (while read FN ; do test -e "$FN" || echo "$FN"; done)

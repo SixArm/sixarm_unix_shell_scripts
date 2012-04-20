@@ -1,1 +1,11 @@
+#!/bin/sh
+
+##
+# Empty the trash on an Ubuntu system.
+#
+# This deletes all the files in a user's typical trash directory:
+#
+#    ~/.local/share/Trash/files
+##
+
 find ~/.local/share/Trash/files/* | xargs -I{} rm -rf "{}"

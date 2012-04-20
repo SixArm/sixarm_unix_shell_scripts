@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+# For each line of input on command line, cd into a path then run a command.
+
 unset CDPATH
 while read path
 do 

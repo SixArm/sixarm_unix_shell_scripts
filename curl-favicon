@@ -1,13 +1,17 @@
 #!/bin/sh
-#
-# curl-favicon downloads a favicon from Google's service
+
+##
+# Curl script to download a favicon from Google's service.
 #
 # Syntax:
-#   curl-favicon <domain> 
+#
+#     curl-favicon <domain> 
 #
 # Example:
-#   curl-favicon www.sixarm.com
-#   => download www.sixarm.com favicon to file www.sixarm.com.png
+#
+#     curl-favicon www.sixarm.com
+#     => download www.sixarm.com favicon to file www.sixarm.com.png
+##
 
 if [ $# -eq 0 ]
 then

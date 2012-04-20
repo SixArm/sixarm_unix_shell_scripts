@@ -1,5 +1,6 @@
-#~/bin/bash
-#
+#!/bin/bash
+
+##
 # rails-script-server - A better script/server alias.
 #
 # Usage:
@@ -11,7 +12,7 @@
 # - start the rails server
 #
 # From http://gist.github.com/166994
-
+##
 
 function rails-script-server {
   if [ "$1" ]; then

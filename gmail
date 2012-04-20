@@ -1,10 +1,14 @@
 #!/bin/sh
+
+##
 # Check your unread gmail from the command line.
 #
 # Based on http://www.commandlinefu.com/commands/browse
 #
 # For some reason sed gets stuck on OS X, so here's a Perl version for the Mac:
-#   ... | perl -pe 's/^<title>(.*)<\/title>.*<name>(.*)<\/name>.*$/$2 - $1/'
+#
+#     ... | perl -pe 's/^<title>(.*)<\/title>.*<name>(.*)<\/name>.*$/$2 - $1/'
+##
 
 username=`cat ~/.gmail-username`
 password=`cat ~/.gmail-password`

@@ -1,1 +1,5 @@
+#!/bin/sh
+#
+# Run yardoc on all our lib files.
+
 yardoc lib/**/*.rb

@@ -1,7 +1,9 @@
 #!/bin/bash
-#
-# Show diagnostic details about the linux version,
-# i.e. tell me about the current operating system.
+
+##
+# Show diagnostic details about the linux version.
+# I.e. tell me about the current operating system.
+##
 
 echo 'uname -a'
 uname -a

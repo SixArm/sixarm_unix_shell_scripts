@@ -1,1 +1,5 @@
+#!/bin/sh
+#
+# sed script to uncolor lines by removing ascii color characters.
+
 sed -r "s/\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]//g"

@@ -1,9 +1,10 @@
 #!/bin/bash
-#
-# Looking to add to the usefulness of script/server by reducing 
-# the noise and adding color to specific output?
+
+##
+# Colorize our rails server output.
 #
 # From http://blog.oneeyedgringo.com/2009/04/taming-rails-scriptserver-output.html
+##
 
 alias rails-script-server-colorizer="./script/server | grep -E 'Param|Processing|Error|KLC' --color -b1"
 function rails-script-server-colorizer () {

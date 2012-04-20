@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# Make the typical Maildir directories in /etc/skel
+##
+
 mkdir -p /etc/skel/Maildir/{cur,new,tmp}

@@ -1,1 +1,7 @@
+#!/bin/sh
+
+##
+# Shorthand to use netstat to listen and print our typical output.
+##
+
 netstat -ltnp

@@ -1,3 +1,9 @@
+#!/bin/sh
+
+##
+# Run gem update, install, tumble, and set up our typical gem sources.
+##
+
 gem update --system 
 gem install gemcutter
 gem tumble 

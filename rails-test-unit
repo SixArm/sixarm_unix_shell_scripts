@@ -1,3 +1,8 @@
 #!/bin/sh
+
+##
+# Run our typical test files
+##
+
 RAILS_ENV=test ruby -Itest "$@"
 

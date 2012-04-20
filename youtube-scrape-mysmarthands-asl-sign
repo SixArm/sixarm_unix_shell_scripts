@@ -1,5 +1,7 @@
 #!/bin/sh
 #
+# YouTube script to scrape the "MySmartHands" American Sign Language videos.
+#
 # See http://www.youtube.com/user/SmartHandsCA
 #
 # This script scrapes the youtube sidebar list of videos,

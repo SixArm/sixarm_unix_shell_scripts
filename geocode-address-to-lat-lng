@@ -1,11 +1,13 @@
 #!/usr/bin/env ruby
-#
+
+##
 # Ruby command line script to geocode
 # from an address to latitude and longitude.
 #
 # Example:
-#   geocode-address-to-lat-lng "1 Main St, San Francisco CA 94111" 
-#   => 37.7931108 -122.3964898
+#
+#     geocode-address-to-lat-lng "1 Main St, San Francisco CA 94111" 
+#     => 37.7931108 -122.3964898
 #
 # This script uses the free Google geocoding API here:
 # http://code.google.com/apis/maps/documentation/geocoding/
@@ -13,6 +15,7 @@
 # Author: Joel Parker Henderson, joel@joelparkerhenderson.com
 # License: Creative Commons Share And Share Alike
 # Version: 1.0.0
+##
 
 require 'net/http'
 require 'cgi'

@@ -1,1 +1,9 @@
+#!/bin/sh
+
+##
+# sed script to change all non-HTML characters to their HTML entity names.
+#
+# For example, if the text has the Greek letter Alpha, this script emits "&Alpha;"
+##
+
 sed 's/ƒ/&fnof;/g;s/Α/&Alpha;/g;s/Β/&Beta;/g;s/Γ/&Gamma;/g;s/Δ/&Delta;/g;s/Ε/&Epsilon;/g;s/Ζ/&Zeta;/g;s/Η/&Eta;/g;s/Θ/&Theta;/g;s/Ι/&Iota;/g;s/Κ/&Kappa;/g;s/Λ/&Lambda;/g;s/Μ/&Mu;/g;s/Ν/&Nu;/g;s/Ξ/&Xi;/g;s/Ο/&Omicron;/g;s/Π/&Pi;/g;s/Ρ/&Rho;/g;s/Σ/&Sigma;/g;s/Τ/&Tau;/g;s/Υ/&Upsilon;/g;s/Φ/&Phi;/g;s/Χ/&Chi;/g;s/Ψ/&Psi;/g;s/Ω/&Omega;/g;s/α/&alpha;/g;s/β/&beta;/g;s/γ/&gamma;/g;s/δ/&delta;/g;s/ε/&epsilon;/g;s/ζ/&zeta;/g;s/η/&eta;/g;s/θ/&theta;/g;s/ι/&iota;/g;s/κ/&kappa;/g;s/λ/&lambda;/g;s/μ/&mu;/g;s/ν/&nu;/g;s/ξ/&xi;/g;s/ο/&omicron;/g;s/π/&pi;/g;s/ρ/&rho;/g;s/ς/&sigmaf;/g;s/σ/&sigma;/g;s/τ/&tau;/g;s/υ/&upsilon;/g;s/φ/&phi;/g;s/χ/&chi;/g;s/ψ/&psi;/g;s/ω/&omega;/g;s/ϑ/&thetasym;/g;s/ϒ/&upsih;/g;s/ϖ/&piv;/g;s/•/&bull;/g;s/…/&hellip;/g;s/′/&prime;/g;s/″/&Prime;/g;s/‾/&oline;/g;s/⁄/&frasl;/g;s/℘/&weierp;/g;s/ℑ/&image;/g;s/ℜ/&real;/g;s/™/&trade;/g;s/ℵ/&alefsym;/g;s/←/&larr;/g;s/↑/&uarr;/g;s/→/&rarr;/g;s/↓/&darr;/g;s/↔/&harr;/g;s/↵/&crarr;/g;s/⇐/&lArr;/g;s/⇑/&uArr;/g;s/⇒/&rArr;/g;s/⇓/&dArr;/g;s/⇔/&hArr;/g;s/∀/&forall;/g;s/∂/&part;/g;s/∃/&exist;/g;s/∅/&empty;/g;s/∇/&nabla;/g;s/∈/&isin;/g;s/∉/&notin;/g;s/∋/&ni;/g;s/∏/&prod;/g;s/∑/&sum;/g;s/−/&minus;/g;s/∗/&lowast;/g;s/√/&radic;/g;s/∝/&prop;/g;s/∞/&infin;/g;s/∠/&ang;/g;s/∧/&and;/g;s/∨/&or;/g;s/∩/&cap;/g;s/∪/&cup;/g;s/∫/&int;/g;s/∴/&there4;/g;s/∼/&sim;/g;s/≅/&cong;/g;s/≈/&asymp;/g;s/≠/&ne;/g;s/≡/&equiv;/g;s/≤/&le;/g;s/≥/&ge;/g;s/⊂/&sub;/g;s/⊃/&sup;/g;s/⊄/&nsub;/g;s/⊆/&sube;/g;s/⊇/&supe;/g;s/⊕/&oplus;/g;s/⊗/&otimes;/g;s/⊥/&perp;/g;s/⋅/&sdot;/g;s/⌈/&lceil;/g;s/⌉/&rceil;/g;s/⌊/&lfloor;/g;s/⌋/&rfloor;/g;s/〈/&lang;/g;s/〉/&rang;/g;s/◊/&loz;/g;s/♠/&spades;/g;s/♣/&clubs;/g;s/♥/&hearts;/g;s/♦/&diams;/g;'

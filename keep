@@ -1,5 +1,6 @@
 #!/usr/bin/perl
-#
+
+##
 # Keep running a command every time any file it looks at is changed.
 #
 # keep :: (forall m. MonadIO m => m ()) -> IO a
@@ -17,6 +18,7 @@
 # but keep discovers which files to watch automatically.
 #
 # See http://conway.rutgers.edu/~ccshan/wiki/blog/posts/Higher-order_shell/
+##
 
 use strict;
 use Getopt::Std;
