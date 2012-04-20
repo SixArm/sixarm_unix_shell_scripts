@@ -160,7 +160,7 @@ This repo has lots of utility scripts.
  * <code>file-encode-utf-8</code>: Convert encoding of a file to unix utf-8.
  * <code>file-line-num</code>: Print a file's line at a given line number.
  * <code>json-to-xml</code>: json-to-xml is a pipe command to convert
- * <code>h1-links</code>: Convert the first <h1> link in a stream to an HTML list item.
+ * <code>h1-links</code>: Convert the first &lt;h1&gt; link in a stream to an HTML list item.
  * <code>summary-line</code>: Summarize a text file in one line.
 
 
