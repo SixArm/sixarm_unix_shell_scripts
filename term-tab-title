@@ -1,0 +1,13 @@
+#!/bin/bash
+
+##
+# Set an iTerm tab title
+#
+# Example: 
+#
+#   term-tab-title hello world
+#
+# From http://blog.locut.us/2009/10/30/simple-bash-script-to-name-a-tab-in-iterm/
+##
+
+echo -ne "\033];"$@"\007"
