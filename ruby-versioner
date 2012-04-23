@@ -4,20 +4,37 @@
 # Set the Ruby environment to be a particular version of Ruby.
 #
 # We install all our Ruby versions in /opt/ruby/<version>
-# e.g. /opt/ruby/1.9.2-p290
+# 
+# Examples:
 #
-# To choose this version of ruby, we do:
-#   source ruby-version 1.9.2-p290
+#    /opt/ruby/1.9.3-p194
+#    /opt/ruby/1.8.7-p358
+# 
+# We put either of these on our path.
+#
+# To choose a version of ruby, we do:
+#
+#     source ruby-versioner 1.9.3-p194
 #
 # Shortcut: the dot means source.
-#   . ruby-version 1.9.2-p290
 #
-# This script does two things the the PATH environment:
-#   - remove any /opt/ruby/ paths 
-#   - prepend /opt/ruby/<version> 
+#     . ruby-versioner 1.9.3-p194
+#
+# To make choosing a version easier,
+# we create symlinks for shortcuts:
+#
+#    ln -s 1.9.3-p194 1.9
+#    ln -s 1.8.7-p358 1.8
+#
+# Now we can switch like this:
+#
+#    . ruby-versioner 1.9
 ##
 
-export PATH="/opt/ruby/$1/bin:$(echo $PATH | tr ':' '\n' | awk '$0 !~ "^/opt/ruby/"' | paste -sd:)"
+export PATH=`echo $PATH | sed "s#/opt/ruby/[^/]*/#/opt/ruby/$1/#"`
+
+# Old strategy:
+#export PATH="/opt/ruby/$1/bin:$(echo $PATH | tr ':' '\n' | awk '$0 !~ "^/opt/ruby/"' | paste -s -d ':' -)"
 
 # If you want this script to also link the typical ruby commands
 # to the new version's commands, then you can uncomment these lines:
