@@ -8,4 +8,8 @@
 #    ~/.local/share/Trash/files
 ##
 
-find ~/.local/share/Trash/files/* | xargs -I{} rm -rf "{}"
+# Remove one-by-one, without double-quoted files, because the file list may be very long and the quote may not work
+find ~/.local/share/Trash/files/* | grep -v '"' | xargs -I{} rm -rf "{}"
+
+# Remove remainders
+rm ~/.local/share/Trash/files/*
