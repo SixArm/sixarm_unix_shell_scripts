@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Shell script to generate a secure random MD5 sum.
+# This uses urandom to generate data for the md5sum command.
+#
+# Usage: random-md5
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+# License is GPL v2                                                                                                                                                                                                                                                             
+
+dd if=/dev/urandom bs=1 count=32 2>/dev/null | md5sum | sed 's/ .*//'
+
