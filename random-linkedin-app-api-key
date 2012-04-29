@@ -1,0 +1,1 @@
+random-alphanum 12 | tr 'A-Z' 'a-z'

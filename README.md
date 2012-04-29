@@ -111,7 +111,6 @@ All these methods generate random text by using the secure /dev/urandom source.
  * <code>random-alphanum</code>: Alphanumeric A-Z a-z 0-9.
  * <code>random-digits</code>: Digits.
  * <code>random-digits-faster</code>: Digits, skipping the seed.
- * <code>random-facebook-app-api-secret</code>: Facebook App API Secret.
  * <code>random-hex</code>: Hex digits 0-9 a-z.
  * <code>random-md5</code>: MD5 sum, calling the md5sum command.
  * <code>random-int</code>: Integer from 0 to max.
@@ -121,8 +120,16 @@ All these methods generate random text by using the secure /dev/urandom source.
  * <code>random-password-words</code>: Memorable password of four random words from a text file.
  * <code>random-seed</code>: Seed the bash random number generator using /dev/urandom
  * <code>random-word-characters</code>: Word characters A-Z a-z and underscore.
- * <code>random-twitter-app-consumer-key</code>: Twitter App Consumer Key, a 21 character alphanum.
- * <code>random-twitter-app-consumer-secret</code>: Twitter App Consumer Secret, a 42 character alphanum.
+
+
+### random text generators for special needs
+
+ * <code>random-facebook-app-id</code>: Facebook App Id: digits, 15 chars.
+ * <code>random-facebook-app-api-secret</code>: Facebook App API Secret: M5 sum.
+ * <code>random-linkedin-app-api-key</code>: LinkedIn App API Key: alphanum, 12 chars lowercase.
+ * <code>random-linkedin-app-secret-key</code>: LinkedIn App Secret Key: alphanum, 16 chars.
+ * <code>random-twitter-app-consumer-key</code>: Twitter App Consumer Key: alphanum, 21 chars.
+ * <code>random-twitter-app-consumer-secret</code>: Twitter App Consumer Secret: alphanum, 42 chars.
 
 
 ### processes
