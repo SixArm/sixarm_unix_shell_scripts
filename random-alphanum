@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# Shell script to generate a secure random alphanumeric string.
+# This uses urandom to pick from among 0-9, A-Z, a-z chars.
+#
+# Usage: random-alphanum [n]
+# * n is an optional length; it defaults to 16.
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+# License is GPL v2                                                                                                                                                                                                                                                             
+
+len=${1-16}
+cat /dev/urandom | strings -n 1 | grep -o '[0-9A-Za-z]]' | head -n $len | tr -d '\n'; echo
