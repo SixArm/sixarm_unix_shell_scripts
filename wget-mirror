@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# wget a local mirror of a remote website.
+#
+# We use wget with these settings:
+#
+#  -- mirror: turn on options suitable for mirroring.
+#  -p: download all files that are necessary to properly display a given HTML page.
+#  --convert-links: after the download, convert the links in document for local viewing.
+#  -P ./LOCAL-DIR : save all the files and directories to the specified directory.
+#
+# From http://askubuntu.com/questions/20463/how-can-i-download-an-entire-website
+
+local_dir=$1
+website_url=$2
+wget --mirror -p --convert-links -P "$local_dir" "$website_url"
