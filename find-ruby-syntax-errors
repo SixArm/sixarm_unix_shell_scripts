@@ -1,0 +1,1 @@
+find $1 -type f -name "*rb" | xargs -I{} ruby -c {} | grep -v "Syntax OK"
