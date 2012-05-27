@@ -1,0 +1,5 @@
+#!/bin/sh
+#
+# Change to another user by running sudo su -
+
+sudo su - $@
