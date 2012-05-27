@@ -1,0 +1,7 @@
+#!/bin/sh
+unset CDPATH
+while read file_name
+do 
+  echo "$file_name"
+  "$@" $file_name
+done
