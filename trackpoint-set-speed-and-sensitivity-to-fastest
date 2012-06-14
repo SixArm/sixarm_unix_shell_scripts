@@ -7,8 +7,8 @@ for i in 1 2 3
 do
  dir=/sys/devices/platform/i8042/serio1/serio$i
  if [ -d $dir ]; then
-  sudo echo -n 255 > $dir/speed
-  sudo echo -n 255 > $dir/sensitivity
-  sudo echo -n 1 > $dir/press_to_select
+  echo -n 255 > $dir/speed
+  echo -n 255 > $dir/sensitivity
+  echo -n 1 > $dir/press_to_select
  fi
 done

@@ -1,5 +1,0 @@
-#!/bin/sh
-#
-# Shorthand for: sudo su -
-
-sudo su - 

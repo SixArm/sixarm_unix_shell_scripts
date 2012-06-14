@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# Remove translations for languages.
+#
+# Typically this is to save space on a server.
+#
+# To remove all except English:
+#
+#     find /usr/share/locale -mindepth 1 -maxdepth 1 \
+#     ! -name 'en' \
+#     | xargs rm -r
+#
+# To remove all except English, Spanish, Chinese:
+#
+#   find /usr/share/locale -mindepth 1 -maxdepth 1 \
+#   ! -name 'en' ! -name 'es*' ! -name 'zh*' \
+#   | xargs rm -r
+
+find /usr/share/locale -mindepth 1 -maxdepth 1 ! -name 'en' ! xargs rm -r
