@@ -16,4 +16,4 @@
 # From http://www.cyberciti.biz/faq/howto-find-out-or-learn-harddisk-size-in-linux-or-unix/
 ##
 
-fdisk -l | grep Disk
+fdisk -l | grep "Disk /"
