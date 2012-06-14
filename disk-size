@@ -1,1 +1,19 @@
+#!/bin/sh
+
+##
+# Disk size of all listed drives
+#
+# The fdisk command is partition table manipulator for Linux.
+# It can be used to display total hard disk size: 
+#
+#     fdisk -l | grep Disk
+#
+# Sample outputs:
+#
+#     Disk /dev/hda: 20.0 GB, 20060651520 bytes
+#     Disk /dev/hdb: 80.0 GB, 80060424192 bytes
+#
+# From http://www.cyberciti.biz/faq/howto-find-out-or-learn-harddisk-size-in-linux-or-unix/
+##
+
 fdisk -l | grep Disk
