@@ -12,4 +12,4 @@
 find ~/.local/share/Trash/files/* | grep -v '"' | xargs -I{} rm -rf "{}"
 
 # Remove remainders
-rm ~/.local/share/Trash/files/*
+rm -rf ~/.local/share/Trash/files/*
