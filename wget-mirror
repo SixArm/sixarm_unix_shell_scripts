@@ -4,12 +4,29 @@
 #
 # We use wget with these settings:
 #
-#  -- mirror: turn on options suitable for mirroring.
+#  --mirror: turn on options suitable for mirroring.
+#            equivalent to -r -N -l inf --no-remove-listing.
+#
 #  -p: download all files that are necessary to properly display a given HTML page.
+#
 #  --convert-links: after the download, convert the links in document for local viewing.
+#
 #  -P ./LOCAL-DIR : save all the files and directories to the specified directory.
 #
 # From http://askubuntu.com/questions/20463/how-can-i-download-an-entire-website
+#
+# N.b. another answer suggests these:
+#
+#  wget
+#     --recursive \
+#     --no-clobber \
+#     --page-requisites \
+#     --html-extension \
+#     --convert-links \
+#     --restrict-file-names=windows \
+#     --domains website.org \
+#     --no-parent \
+#
 
 local_dir=$1
 website_url=$2
