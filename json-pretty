@@ -1,0 +1,1 @@
+ruby -rjson -e 'puts JSON.pretty_generate JSON.parse STDIN.read'
