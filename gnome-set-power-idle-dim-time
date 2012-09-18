@@ -1,0 +1,3 @@
+#!/bin/sh
+len=${1-600}
+gsettings set org.gnome.settings-daemon.plugins.power idle-dim-time $seconds
