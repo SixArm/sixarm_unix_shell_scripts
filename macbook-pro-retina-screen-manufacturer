@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# This shows a MacBook Pro Retina screen model number.
+# The modile number will be something like LP154YL01001. 
+#
+#   * "LS" prefix: built by Samsung
+#
+#   * "LP" prefix: built by LG
+#
+# The screens manufactured by LG have had many problems with ghosting and image retention.
+
+ioreg -lw0 | grep \"EDID\" | sed "/[^<]*</s///" | xxd -p -r | strings -6
+

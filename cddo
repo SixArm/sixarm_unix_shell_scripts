@@ -5,7 +5,7 @@ while read dir ; do
   cd "$dir"
   if [ $? -eq 0 ]
   then
-    "$@"
+    `"$@"`
     cd "$OLDPWD"
   fi
 done
