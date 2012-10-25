@@ -1,13 +1,29 @@
 #!/bin/bash
 #
-# Shell script to generate a secure random hex string.
+# Shell script to generate a random hex string.
 # This uses urandom to pick from 0123456789ABCDEF chars.
 #
 # Usage: random-hex [n]
-# * n is an optional length; it defaults to 16.
+#
+#   * n is an optional length; it defaults to 16.
+#
+# Example:
+#
+#     $ random-hex 
+#     37004A3B3427BE452DDB8E681EAB58A6
+#
+# Alternate solution for Linux, using the tr command:
+#
+#     cat /dev/urandom | tr -cd '0-9A-F' | head -c 16; echo
+#
+# Alternate solution for BSD and Mac OS X, using the tr command:
+#
+#     cat /dev/urandom | env LC_CTYPE=C tr -cd '0-9A-F' | head -c 16; echo
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 # License is GPL v2
 
 len=${1-16}
-cat /dev/urandom | tr -cd 'A-F0-9' | head -c $len ; echo
+hexdump -n $len -v -e '/1 "%02X"' -e "/$len \"\n\"" /dev/urandom
+
+
