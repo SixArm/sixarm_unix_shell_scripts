@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# Does a command exist?
+#
+# If the command exists then exit 0, otherwise exit 1.
+#
+# Examples:
+#
+#   $ command-is-installed ls && echo "true" || echo "false"
+#   true
+#
+#   $ command-is-installed whatever && echo "true" || echo "false"
+#   false
+##
+
+command -v $1 >/dev/null 2>&1 || { exit 1; }
