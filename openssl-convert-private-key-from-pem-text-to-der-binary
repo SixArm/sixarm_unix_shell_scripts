@@ -1,0 +1,2 @@
+private_key_pem_file=$1
+openssl pkcs8 -in $private_key_pem_file -nocrypt -topk8 -outform DER 
