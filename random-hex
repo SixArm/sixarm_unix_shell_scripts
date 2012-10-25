@@ -7,7 +7,7 @@
 # * n is an optional length; it defaults to 16.
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
-# License is GPL v2                                                                                                                                                                                                                                                             
+# License is GPL v2
 
 len=${1-16}
-cat /dev/urandom | strings -n 1 | grep -o '[0123456789ABCDEF]' | head -n $len | tr -d '\n'; echo
+cat /dev/urandom | tr -cd 'A-F0-9' | head -c $len ; echo
