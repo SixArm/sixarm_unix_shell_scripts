@@ -2,6 +2,32 @@
 
 ##
 # GPG script to encrypt a file with our typical settings.
+#
+# Example:
+#
+#     $ gpg-encrypt foo.txt
+#     (prompt for password)
+#     (prompt for password again)
+#     #=> foo.txt.gpg
+#
+# Our typical settings:
+#
+#    * symmetric encryption, i.e. we use the same password for encryption and decryption.
+#    * encryption using the aes256 cipher algorithm.
+#    * digesting using the sha256 digest algorithm.
+#    * no compression, because typically our files are small or already compressed.
+#
+# To get our typical settings, we use these gpg options:
+#
+#    --quiet                       Try to be as quiet as possible.
+#    --no-greeting                 Suppress the initial copyright message but do not enter batch mode.
+#    --symmetric                   Encrypt with symmetric cipher only This command asks for a passphrase.
+#    --cipher-algo aes256          Use AES256 as the cipher algorithm
+#    --digest-algo sha256          Use SHA256 as the digest algorithm.
+#    --cert-digest-algo sha256     Use SHA256 as the message digest algorithm used when signing a key.
+#    --compress-algo uncompressed  Do not compress the file
+#    -z 0                          Compression level set to 0, i.e. set to no compression.
+#    --no-use-agent                Do not use a system agent such as Ubuntu's gnome-keyring process.
 ##
 
-gpg -c --no-greeting --quiet --cipher-algo aes256 --digest-algo sha256 --cert-digest-algo sha256 --compress-algo uncompressed --no-use-agent $@
+gpg --quiet --no-greeting --symmetric --cipher-algo aes256 --digest-algo sha256 --cert-digest-algo sha256 -z 0 --compress-algo uncompressed --no-use-agent $@
