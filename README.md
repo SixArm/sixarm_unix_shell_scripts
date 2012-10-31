@@ -155,6 +155,7 @@ All these methods generate random text by using the secure /dev/urandom source.
 ### scripting
 
  * <code>cddo</code>:  Run a command in each directory.
+ * <code>command-is-installed</code>: If a given command installed, then return true.
  * <code>keep</code>: Keep running a command every time any file it looks at is changed.
  * <code>no</code>: Shorthand to always return "n"
  * <code>while-read-do-cd</code>: For each line of input on command line, cd into a path then run a command.
@@ -249,6 +250,11 @@ All these methods generate random text by using the secure /dev/urandom source.
  * <code>find-trackpoint-device-file-for-speed</code>: Find a Thinkpad's TrackPoint speed file that sets the pointer speed.
  * <code>find-trackpoint-path-id</code>: Find a ThinkPad computer's TrackPoint Path ID.
  * <code>trackpoint-set-speed-and-sensitivity-to-fastest</code>: Set trackpoint speed and sensitivity to fastest settings.
+
+
+### Macintosh
+
+ * <code>macbook-pro-retina-screen-manufacturer</code>: Show the manfactured id on a Macbook Pro Retina.
 
 
 ### SixArm Setup
