@@ -1,14 +1,23 @@
 #!/bin/bash
 
 ##
-#
-# Do apt-get commands to update the system:
+# Run apt-get commands to uplift the system:
 #
 #   * update
 #   * upgrade with fix-missing and install-recommends
-#   * autoremove with purge
-#   * clean
-#   * autoclean
+#   * clean, autoclean, autoremove with purge
 ##
 
-apt-get update && apt-get upgrade -f --fix-missing --install-recommends && apt-get clean && apt-get autoclean && apt-get --purge autoremove
+## Scrub before uplift
+apt-get clean
+apt-get autoclean
+apt-get --purge autoremove
+
+## Uplift
+apt-get update
+apt-get upgrade -f --fix-missing --install-recommends
+
+## Scrub after uplift
+apt-get clean
+apt-get autoclean
+apt-get --purge autoremove
