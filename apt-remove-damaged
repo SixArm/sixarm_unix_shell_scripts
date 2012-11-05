@@ -1,0 +1,10 @@
+#!/bin/bash
+
+##
+# Remove a damaged debian package by using apt-get and also dpkg.
+##
+
+apt-get remove $1
+rm /var/lib/dpkg/info/$1
+dpkg --remove --force-remove-reinstreq $1
+  
