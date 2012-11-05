@@ -1,11 +1,11 @@
 #!/bin/bash
 
 ##
-# Do apt-get remove on old kernels and headers.
+# Do apt-get remove on old kernel images and headers.
 #
 # Credit: http://marc.waeckerlin.org/computer/blog/remove_all_old_kernel_images_in_ubuntu
 #
-# This script remove all old images, but keeps the running one. 
+# This script removes all old kernels while keeping the running kernel. 
 #
 # For your comfort and safety, please upgrade your system
 # then reboot before you execute this command to make sure
@@ -15,5 +15,6 @@
 # current kernel version, i.e. upgrade then reboot.
 ##
 
-sudo apt-get remove --purge 'linux-image-[0-9].*' linux-image-$(uname -r)+
-sudo apt-get remove --purge 'linux-headers-[0-9].*' linux-headers-$(uname -r)+
+apt-get remove --purge 'linux-image-[0-9].*' linux-image-$(uname -r)+
+apt-get remove --purge 'linux-headers-[0-9].*' linux-headers-$(uname -r)+
+update-grub2 
