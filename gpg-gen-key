@@ -1,0 +1,34 @@
+#!/bin/sh
+
+##
+# GPG generate key with our typical settings.
+#
+# This command prints our typical steps to set up a GPG key for an email address.
+#
+# We use a special file naming convention that uses the email address,
+# an equal sign as a separator, and then "gpg_key_rsa" for our RSA key.
+#
+#     alice@example.com=gpg_key_with_rsa_and_rsa
+##
+
+email=${1-"alice@example.com"}
+
+cat <<EOF
+
+To use GPG gen-key with our typical settings: 
+
+    gpg --gen-key --openpgp
+
+Choose RSA and RSA; this is typically the default.
+Choose 4096 bits; this is typically the strongest.
+
+To list:
+
+   gpg --list-key $email
+
+To export:
+
+   gpg --armor --export $email --output $email=gpg_public_key.txt
+   gpg --armor --export-secret-key $email --output $email=gpg_private_key.txt
+
+EOF
