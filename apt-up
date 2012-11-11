@@ -9,7 +9,6 @@
 ##
 
 ## Scrub before uplift
-apt-get clean
 apt-get autoclean
 apt-get --purge autoremove
 
@@ -18,6 +17,5 @@ apt-get update
 apt-get upgrade -f --fix-missing --install-recommends
 
 ## Scrub after uplift
-apt-get clean
 apt-get autoclean
 apt-get --purge autoremove
