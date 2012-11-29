@@ -1,5 +1,0 @@
-#!/bin/sh
-#
-# SSH script to print a server's host rsa key public fingerprint.
-
-ssh-keygen -l -f /etc/ssh/ssh_host_rsa_key.pub
