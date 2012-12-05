@@ -1,0 +1,70 @@
+#!/bin/bash
+
+help()
+{
+cat << EOF
+ruby-chooser
+
+usage: $0 options
+
+Choose a Ruby version and environment on our system.
+
+Example:
+
+    source ruby-chooser 1.9.3-p327
+
+This script modifies the environment variables:
+
+    PATH
+    GEM_HOME
+    GEM_PATH
+
+This script relies on us installing our Ruby versions
+in /opt/ruby/ subdirectories like this:
+
+    /opt/ruby/1.9.3-p327
+    /opt/ruby/2.0.0-preview2
+    /opt/ruby/jruby-1.7.1
+
+Options:
+
+   -h      Show this help message
+   -l      List versions in /opt/ruby
+   -v      Verbose messages
+EOF
+}
+
+
+VERBOSE=
+while getopts “hlv” option
+do
+     case "$option" in
+         h)
+             help
+             exit 1
+             ;;
+	 l) 
+             ls -l /opt/ruby | awk '{print $9,$10,$11;}' | grep \\w
+             exit 1
+             ;;
+         v)
+             VERBOSE=1
+             ;;
+         ?)
+             help
+             exit
+             ;;
+     esac
+done
+shift $(($OPTIND - 1))
+
+export PATH=`echo $PATH | sed "s#:/opt/ruby/[^/]*/#:/opt/ruby/$1/#"`
+export GEM_HOME=`echo $GEM_HOME | sed "s#^/opt/ruby/[^/]*/#/opt/ruby/$1/#"`
+export GEM_PATH=`echo $GEM_PATH | sed "s#^/opt/ruby/[^/]*/#/opt/ruby/$1/#"`
+
+echo $VERBOSE
+if [ "$VERBOSE" = "1" ]; then
+   echo "PATH=$PATH"
+   echo "GEM_HOME=$GEM_HOME"
+   echo "GEM_PATH=$GEM_PATH"
+fi
