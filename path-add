@@ -1,9 +1,10 @@
-#!/sh
+#!/bin/sh
 
 ##
 # Add path(s) to the PATH environment variable
 #
-# Usage: addpath [-i] [-q] paths...
+# Usage: path-add [-i] [-q] paths...
+#
 #   -i: Insert at the front, instead of the end
 #   -q: Don't print any error messages
 #
