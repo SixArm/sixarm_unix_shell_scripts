@@ -1,0 +1,4 @@
+apt-get clean
+apt-get install -f
+dpkg --configure -a
+apt-get update
