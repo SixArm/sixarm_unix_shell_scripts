@@ -5,7 +5,9 @@
 #
 # Usage: random-hex [n]
 #
-#   * n is an optional length; it defaults to 16.
+#   * n is an optional length of bytes. 
+#     It defaults to 16.
+#     Note that this means the output string is twice as long.
 #
 # Example:
 #

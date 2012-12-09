@@ -1,0 +1,5 @@
+rm -f /var/log/*.{gz,old}
+rm -f /var/log/**/*.{gz,old}
+rm -f /var/log/{btmp}.[0-9]*
+rm -f /var/log/{apport,atop}.log.[0-9]*
+

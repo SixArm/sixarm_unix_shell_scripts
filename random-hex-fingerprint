@@ -6,8 +6,8 @@
 #
 # Usage: random-hex-fingerprint [n]
 #
-#   * n is an optional length of hex characters;
-#     it defaults to 32, which is typical of our
+#   * n is an optional length in bytes.
+#     It defaults to 16 bytes, which is typical of
 #     fingerprints for ssh DSA, ECDSA, and RSA.
 #
 # Example:
@@ -18,7 +18,7 @@
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 # License is GPL v2
 
-len=${1-32}
-random-hex "$len" | sed 's/\(..\)[^$]/\1:/g'
+len=${1-16}
+random-hex "$len" | sed 's/\(..\)/\1:/g; s/:$//'
 
 
