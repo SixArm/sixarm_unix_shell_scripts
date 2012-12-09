@@ -62,7 +62,6 @@ export PATH=`echo $PATH | sed "s#:/opt/ruby/[^/]*/#:/opt/ruby/$1/#"`
 export GEM_HOME=`echo $GEM_HOME | sed "s#^/opt/ruby/[^/]*/#/opt/ruby/$1/#"`
 export GEM_PATH=`echo $GEM_PATH | sed "s#^/opt/ruby/[^/]*/#/opt/ruby/$1/#"`
 
-echo $VERBOSE
 if [ "$VERBOSE" = "1" ]; then
    echo "PATH=$PATH"
    echo "GEM_HOME=$GEM_HOME"

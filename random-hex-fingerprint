@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Shell script to generate a random hex fingerprint.
+# This uses the random-hex script, which in turn uses
+# urandom to pick from 0123456789ABCDEF chars.
+#
+# Usage: random-hex-fingerprint [n]
+#
+#   * n is an optional length of hex characters;
+#     it defaults to 32, which is typical of our
+#     fingerprints for ssh DSA, ECDSA, and RSA.
+#
+# Example:
+#
+#     $ random-hex-fingerprint 
+#     80:DA:C9:99:46:C3:F6:8C:C8:B4:D5
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+# License is GPL v2
+
+len=${1-32}
+random-hex "$len" | sed 's/\(..\)[^$]/\1:/g'
+
+
