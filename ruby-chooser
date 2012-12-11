@@ -59,8 +59,20 @@ done
 shift $(($OPTIND - 1))
 
 export PATH=`echo $PATH | sed "s#:/opt/ruby/[^/]*/#:/opt/ruby/$1/#"`
-export GEM_HOME=`echo $GEM_HOME | sed "s#^/opt/ruby/[^/]*/#/opt/ruby/$1/#"`
-export GEM_PATH=`echo $GEM_PATH | sed "s#^/opt/ruby/[^/]*/#/opt/ruby/$1/#"`
+
+if [[ "$1" == 1.8.7* ]]
+then
+  GEM_VERSION="1.8.7"
+elif [[ "$1" == 1.9* ]]
+then
+  GEM_VERSION="1.9.1"
+elif [[ "$1" == 2.0.0* ]]
+then
+  GEM_VERSION="2.0.0"
+fi
+
+export GEM_HOME=/opt/ruby/$1/lib/ruby/gems/$GEM_VERSION
+export GEM_PATH=$GEM_HOME
 
 if [ "$VERBOSE" = "1" ]; then
    echo "PATH=$PATH"
