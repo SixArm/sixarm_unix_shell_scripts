@@ -4,4 +4,4 @@
 # GPG script to decrypt a file with our typical settings.
 ##
 
-gpg -d --no-greeting --quiet $@
+gpg -d --no-greeting --no-use-agent --quiet $@
