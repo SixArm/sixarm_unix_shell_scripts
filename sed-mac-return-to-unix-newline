@@ -1,1 +1,1 @@
-sed 's/\r/\n/'
+sed 's/\r/\n/g'
