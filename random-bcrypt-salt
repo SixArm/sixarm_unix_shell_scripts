@@ -1,0 +1,24 @@
+#!/bin/bash
+
+##
+# Shell script to generate a random bcrypt salt string.
+# This uses urandom to pick from [A-Za-z0-9] characters.
+#
+# Usage: random-bcrypt-salt [n]
+# * n is an optional length; it defaults to 22.
+#
+# Be aware that bcrypt uses this salt converted to base 64,
+# which means that the final character may not be carrying
+# information; in other words, two salts can differ in the
+# final character yet still produce the same crypt text.
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+# License is GPL v2
+##
+
+len=${1-22}
+cat /dev/urandom | strings -n 1 | grep -o '[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789]' | head -n $len | tr -d '\n' | sed 's/^/$2a$07$/'; echo
+
+
+
+
