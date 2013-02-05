@@ -5,12 +5,18 @@
 # This uses urandom to pick from [A-Za-z0-9] characters.
 #
 # Usage: random-bcrypt-salt [n]
-# * n is an optional length; it defaults to 22.
+#
+#  * n is an optional length; it defaults to 22.
 #
 # Be aware that bcrypt uses this salt converted to base 64,
 # which means that the final character may not be carrying
 # information; in other words, two salts can differ in the
 # final character yet still produce the same crypt text.
+#
+# Example:
+#
+#   $ random-bcrypt-salt
+#   $2a$07$PIcjwSQgSzExwIS4Qy9sOt
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 # License is GPL v2
