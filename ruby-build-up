@@ -44,8 +44,8 @@ fi
 ## Link
 
 if [[ ! "$RUBY_VERSION" -eq "$RUBY_VERSION_SANS_PATCH_LEVEL" ]]; then
-  echo "Fix symlink $RUBY_VERSION $RUBY_VERSION_SANS_PATCH_LEVEL"
   cd $RUBY_DIR
+  echo "Fix symlink in $RUBY_DIR: ln -nsf $RUBY_VERSION $RUBY_VERSION_SANS_PATCH_LEVEL"
   ln -nsf $RUBY_VERSION $RUBY_VERSION_SANS_PATCH_LEVEL
 fi
 
