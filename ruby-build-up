@@ -45,14 +45,16 @@ fi
 
 if [[ ! "$RUBY_VERSION" -eq "$RUBY_VERSION_SANS_PATCH_LEVEL" ]]; then
   echo "Fix symlink $RUBY_VERSION $RUBY_VERSION_SANS_PATCH_LEVEL"
-  ln -sf $RUBY_VERSION $RUBY_DIR/$RUBY_VERSION_SANS_PATCH_LEVEL
+  cd $RUBY_DIR
+  ln -sf $RUBY_VERSION $RUBY_VERSION_SANS_PATCH_LEVEL
 fi
 
 
 ## Current
 
 if [[ "$CURRENT_FLAG" -eq "-c" ]]; then
-  ln -sf $RUBY_DIR/$RUBY_VERSION $RUBY_DIR/current
+  cd $RUBY_DIR
+  ln -sf $RUBY_VERSION current
   source /etc/environment
   ruby -v
 fi
