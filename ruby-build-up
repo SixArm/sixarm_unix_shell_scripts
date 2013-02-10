@@ -1,0 +1,62 @@
+#!/bin/bash 
+#
+# Ruby build using our preferred locations:
+#
+#    /opt/ruby-build is where we put the GitHub repo
+#    /opt/ruby/a.b.c-pxxx is where we install Ruby
+#
+# Syntax:
+#
+#    ruby-build-opt-ruby <version> [-c]
+##
+
+
+## Input
+
+RUBY_VERSION=$1  # e.g. "2.0.0-p123"
+RUBY_VERSION_SANS_PATCH_LEVEL=${RUBY_VERSION%%-p*}  # e.g. "2.0.0"
+CURRENT_FLAG=$2
+
+
+## Config
+
+RUBY_BUILD_DIR=/opt/ruby-build
+RUBY_DIR=/opt/ruby
+
+
+## Preflight
+
+if [[ ! -e "$RUBY_BUILD_DIR" ]]; then
+  echo "Failed. To fix this, please put the ruby-build directory here: $RUBY_BUILD_DIR" >&2
+  exit -1
+fi
+
+mkdir -p $RUBY_DIR
+
+if [[ ! -e "$RUBY_DIR/$RUBY_VERSION" ]]; then
+  cd $RUBY_BUILD_DIR
+  git pull
+  ./install.sh
+  ruby-build $RUBY_VERSION $RUBY_DIR/$RUBY_VERSION
+fi
+
+
+## Link
+
+if [[ ! "$RUBY_VERSION" -eq "$RUBY_VERSION_SANS_PATCH_LEVEL" ]]; then
+  echo "Fix symlink $RUBY_VERSION $RUBY_VERSION_SANS_PATCH_LEVEL"
+  ln -sf $RUBY_VERSION $RUBY_DIR/$RUBY_VERSION_SANS_PATCH_LEVEL
+fi
+
+
+## Current
+
+if [[ "$CURRENT_FLAG" -eq "-c" ]]; then
+  ln -sf $RUBY_DIR/$RUBY_VERSION $RUBY_DIR/current
+  source /etc/environment
+  ruby -v
+fi
+
+    
+
+ 
