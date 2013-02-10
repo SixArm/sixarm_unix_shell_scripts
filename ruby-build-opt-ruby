@@ -1,0 +1,57 @@
+#!/bin/bash 
+#
+# Ruby build using our preferred locations:
+#
+#    /opt/ruby-build is where we put the GitHub repo
+#    /opt/ruby/a.b.c-pxxx is where we install Ruby
+#
+# Syntax:
+#
+#    ruby-build-opt-ruby <version> [-c]
+##
+
+## Init
+
+RUBY_VERSION=$1
+CURRENT_FLAG=$2
+RUBY_BUILD_DIR=/opt/ruby-build
+RUBY_DIR=/opt/ruby
+RUBY_DIR_VERSION=/opt/ruby/$VERSION
+
+
+## Preflight
+
+if [[ ! -e "$RUBY_BUILD_DIR" ]]; then
+  echo "Failed. To fix this, please put the ruby-build directory here: $RUBY_BUILD_DIR" >&2
+  exit -1
+fi
+
+if [[ ! -e "$RUBY_DIR" ]]; then
+  echo "Failed. To fix this, please create Ruby directory here: $RUBY_DIR" >&2
+  exit -1
+fi
+
+if [[ -e "$RUBY_DIR_VERSION" ]]; then
+  echo "Skipped. Ruby version $VERSION already exists here: $RUBY_DIR_VERSION" >&2
+fi
+
+
+## Build
+
+cd /opt/ruby-build
+git pull
+./install.sh
+ruby-build $VERSION $RUBY_DIR_VERSION
+
+
+## Current
+
+if [ "$CURRENT_FLAG" -eq "-c" ]; then
+  ln -sf $RUBY_DIR_VERSION $RUBY_DIR/current
+  source /etc/environment
+  ruby -v
+fi
+
+    
+
+ 
