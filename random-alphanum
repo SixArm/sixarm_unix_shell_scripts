@@ -10,4 +10,4 @@
 # License is GPL v2                                                                                                                                                                                                                                                             
 
 len=${1-16}
-cat /dev/urandom | strings -n 1 | grep -o '[0-9A-Za-z]]' | head -n $len | tr -d '\n'; echo
+cat /dev/urandom | strings -n 1 | grep -o '[0-9A-Za-z]' | head -n $len | tr -d '\n'; echo
