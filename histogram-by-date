@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+# Histogram by date, on the command line
+#
+# Credit: Small labs Inc.
+# See http://www.smallmeans.com/notes/shell-history/
+#
+# How it works:
+#
+#   * grep ...           Select lines that start with YYYYMMDD (optional - or /)
+#   * sed ...            Delete everything after the date            
+#   * sort               Sort, so that similar commands come in groups
+#   * uniq -c            Count subsequent items (-c prepends count)
+#   * sort -rn           Sort in descending order (reverse)
+#   * head -20           Get the 20 most frequent commands
+#
+#   * awk '!max{max=$1;}{      Everything is nice and in order:
+#          r="";               run thru the items, format, pad, print
+#          i=s=60*$1/max;
+#          while(i-->0){
+#            r=r"#";           string concatenation, AWK-style
+#          }
+#          printf "%15s %5d %s %s",$2,$1,r,"\n";
+#        }'
+#
+# Example:
+#
+#   cat log | histogram-by-date
+#
+grep '^[0-9][0-9][0-9][0-9][-/]\?[0-9][0-9][-/]\?[0-9][0-9]\b' | sed 's/^\([0-9][0-9][0-9][0-9][-/]\?[0-9][0-9][-/]\?[0-9][0-9]\)\b.*/\1/' | histogram
