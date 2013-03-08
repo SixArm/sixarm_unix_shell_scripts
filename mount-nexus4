@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# How to mount Nexus 4 on Linux
+#
+# Enable Developer Options on the Nexus:
+#
+# 
+#   * Settings > About Phone
+#   * Tap seven times on "Build Number".
+#
+# Enable USB debugging:
+#
+#   * Settings > Developer options > Debuggins
+#   * Tap "USB debugging"
+#
+ 
+if [ `lsusb |grep Google |wc -l` == 0 ]; then
+  echo "Please plug in the device"
+  exit 1
+fi
+ 
+if [ `dpkg -l mtpfs |wc -l` == "0" ]; then
+  echo "Installing MTP: Media Transfer Protocol"
+  sudo apt-get update && sudo apt-get install mtpfs
+fi
+ 
+rules_file=/etc/udev/rules.d/60-android.rules
+if [ ! -f $rules_file ]; then
+  vp=`lsusb|grep Google|cut -d " " -f 6`
+  vendor=`echo $vp | cut -d ':' -f 1`
+  product=`echo $vp | cut -d ':' -f 2`
+  rule="SUBSYSTEM==\"usb\", ATTR{idVendor}==\"$vendor\", ATTR{idProduct}==\"$product\", MODE=\"0600\", GROUP=\"plugdev\" OWNER=\"$USER\""
+  echo "Creating $rules_file"
+  echo "For user $USER"
+  echo "---"
+  echo $rule
+  echo "---"
+  sudo bash -c "echo $rule > $rules_file"
+  sudo chmod +x $rules_file
+  sudo service udev restart
+fi  
+ 
+mount_point=/media/nexus
+if [ ! -d $mount_point ]; then
+  sudo mkdir $mount_point
+  sudo chmod 775 $mount_point
+fi  
+sudo mtpfs -o allow_other $mount_point
