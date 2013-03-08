@@ -40,9 +40,13 @@ if [ ! -f $rules_file ]; then
   sudo service udev restart
 fi  
  
-mount_point=/media/nexus
+mount_point=/media/nexus4
 if [ ! -d $mount_point ]; then
   sudo mkdir $mount_point
   sudo chmod 775 $mount_point
 fi  
 sudo mtpfs -o allow_other $mount_point
+echo "Mounting $mount_point"
+echo "This may take a minute..."
+echo "To change to this directory:"
+echo "   cd $mount_point"
