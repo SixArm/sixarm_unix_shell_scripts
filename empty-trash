@@ -6,10 +6,22 @@
 # This deletes all the files in a user's typical trash directory:
 #
 #    ~/.local/share/Trash/files
+#
+# Example:
+#
+#    empty-trash
+#
+# Any args are passed along to the rm command.
+#
+# Example:
+#
+#    empty-trash --verbose
+#
 ##
 
-# Remove one-by-one, without double-quoted files, because the file list may be very long and the quote may not work
-find ~/.local/share/Trash/files/* | grep -v '"' | xargs -I{} rm -rf "{}"
+# Remove files one-by-one, without double-quoted files, 
+# because the file list may be very long, and the quote may not work.
+find ~/.local/share/Trash/files/ -type f | grep -v '"' | xargs -I{} rm -rf "$@" "{}"
 
 # Remove remainders
-rm -rf ~/.local/share/Trash/files/*
+rm -rf "$@" ~/.local/share/Trash/files/*
