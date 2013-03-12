@@ -1,0 +1,108 @@
+#!/bin/sh
+#
+# Wipe free disk space by overwriting it with zero bytes.
+#
+# Syntax:
+#
+#   wipe-free-disk-space-with-zero-bytes [filesystem]
+#
+# Examples:
+#
+#   wipe-free-disk-space 
+#   wipe-free-disk-space /dev/sda1
+#
+# Caution: This command may take a long time to run.
+#
+# Caution: If you're on a battery-powered system, e.g. a laptop, 
+# it's best to plug in to power before running this command.
+#
+# The filesystem defaults to the first local filesystem on /dev.
+# To find the filesystem, we use _df_ and _grep_.
+#
+# This implementation does these steps:
+#
+#   1. Run a file system check to find any disk errors and fix them.
+#   2. Create a small temp file.
+#   3. Create a large temp file that fills up all the free space.
+#   4. Delete the small temp file immediately so we have some free space.
+#   5. Delete the large temp file.
+#
+# See http://superuser.com/questions/19326/how-to-wipe-free-disk-space-in-linux
+
+set -o errexit
+
+################################################################################
+#
+# Customize this section for your own system.
+#
+###
+
+# To get the best security, we use the full path to these commands.
+# You may want/need to cusomtize these for your system.
+dd='/bin/dd'
+shred='/usr/bin/shred -z'
+sync='/bin sync; sleep 60; /bin/sync'
+rm='/bin/rm'
+
+# The input source can be any byte generator, such as:
+#
+#   * /dev/zero which fills with all zeros (which is fast )
+#   * /dev/urandom which fills with random bytes (which is slow)
+#
+# If you use /dev/urandom, be aware that the resulting files and
+# the free disk space will be recognizable as being purely random;
+# a forensics tool may presume the blank space is encrypted data.
+input_src=/dev/zero
+
+# If you want to use _shred_ for more security, set _shred_flag_ to true.
+# This causes the temp files to be shredded before being removed.
+shred_flag=false
+
+# If you want to skip _fsck_, set the _danger_flag_ to true.
+# This causes a warning message. Do this only if you know your system is clean.
+danger_flag=false
+
+# We use two temporary files:
+#
+#   * the small temp file is removed first, quickly, to free up some space
+#   * the large temp file fills up the entire free space, and may be slow to remove
+#
+small_file=wipe-free-space-small-temp-file.bin
+large_file=wipe-free-space-large-temp-file.bin
+
+################################################################################
+
+if ($danger_flag); then
+    echo "DANGER: SKIPPING FSCK"
+else
+    # Detect the first local filesystem that starts with /dev
+    file_system=${1-`df --local --portability --sync 2>/dev/null | grep -m 1 /dev | awk '{print $1}'`}
+    fsck -f $file_system
+fi
+
+set -o xtrace
+
+# Do we want to use _shred_ which is likely more secure though slower?
+# N.b. we have repeated some code here to make it easy to copy/paste
+# if you want to take these lines and put them into your own code.
+
+if ($shred_flag); then
+    $dd if=$input_src of=$small_file bs=1024 count=102400
+    $sync
+    $shred $small_file
+    $dd if=$input_src of=$large_file bs=1024
+    $sync
+    $rm $small_file
+    $shred $large_file
+    $sync
+    $rm $large_file
+else
+    $dd if=$input_src of=$small_file bs=1024 count=102400
+    $dd if=$input_src of=$large_file bs=1024
+    $sync
+    $rm $small_file
+    $rm $large_file
+fi
+
+
+
