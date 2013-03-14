@@ -1,0 +1,2 @@
+df --local --portability --print-type --total 2>/dev/null
+
