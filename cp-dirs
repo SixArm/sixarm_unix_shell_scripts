@@ -1,0 +1,5 @@
+# Copy a directory recursively without data/files
+#
+# From http://grml.org/zsh/zsh-lovers.html
+
+find . -type d -exec env d="$dest_root" sh -c ' exec mkdir -p -- "$d/$1"' '{}' '{}' \;
