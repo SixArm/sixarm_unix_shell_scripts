@@ -1,0 +1,2 @@
+# Lists every executable in PATH
+print -l ${^path}/*(-*N)
