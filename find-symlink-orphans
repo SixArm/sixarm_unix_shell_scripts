@@ -1,0 +1,8 @@
+# Find (and print) all symbolic links without a target within the current dirtree
+#
+# From http://grml.org/zsh/zsh-lovers.html
+
+file **/*(D@) | fgrep broken
+for i in **/*(D@); [[ -f $i || -d $i ]] || echo $i
+echo **/*(@-^./=%p)
+print -l **/*(-@)
