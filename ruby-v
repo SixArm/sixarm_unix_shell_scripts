@@ -1,0 +1,99 @@
+#!/bin/bash
+
+help()
+{
+cat << EOF
+ruby-v
+
+usage: $0 [options]
+
+Ruby version manager for our system.
+
+Example:
+
+    source ruby-v 2.0.0-p0
+
+Options:
+
+   -h      Show this help message
+   -l      List versions in /opt/ruby
+   -v      Verbose messages
+
+This is very system-specific for our setup.
+You probably want to fine-tune this script for your own setup.
+
+We install ruby and gems in these specific directories:
+
+    /opt/ruby/<version>
+    /opt/rubygems/<version>
+
+Examples:
+
+    /opt/ruby/2.0.0-p0
+    /opt/rubygems/2.0.0-p0 
+
+This script modifies three environment variables:
+
+    PATH: replaces /opt/ruby/<version> and /opt/rubygems/<version>/
+    GEM_HOME: changes it to /opt/rubygems/<version>
+    GEM_PATH: changes it to be identical to GEM_HOME
+
+Example:
+
+    $ PATH=...:/opt/ruby/1.1.1/bin:/opt/gem/1.1.1/bin:...
+    $ GEM_HOME=/opt/rubygems/1.1.1
+    $ GEM_PATH=/opt/rubygems/1.1.1:~/.gems/...
+
+    $ source ruby-v 2.2.2
+
+    $ echo $PATH
+    ...:/opt/ruby/2.2.2/bin:/opt/gem/2.2.2/bin:...
+
+    $ echo $GEM_HOME
+    /opt/rubygems/2.2.2
+
+    $ echo $GEM_PATH
+    /opt/rubygems/2.2.2:~/.gems/...
+
+EOF
+}
+
+RUBY_TOP_DIR=/opt/ruby
+GEM_TOP_DIR=/opt/rubygems
+
+VERBOSE=
+while getopts “hlv” option
+do
+     case "$option" in
+         h)
+             help
+             exit 1
+             ;;
+	 l) 
+             ls -l $RUBY_TOP_DIR | awk '{print $9,$10,$11;}' | grep \\w
+             ls -l $RUBYGEMS_TOP_DIR | awk '{print $9,$10,$11;}' | grep \\w
+             exit 1
+             ;;
+         v)
+             VERBOSE=1
+             ;;
+         ?)
+             help
+             exit
+             ;;
+     esac
+done
+shift $(($OPTIND - 1))
+
+VERSION=$1
+
+export PATH=`echo $PATH | sed "s#:$RUBY_TOP_DIR/[^/]*/#:$RUBY_TOP_DIR/$VERSION/#; s#:$GEM_TOP_DIR/[^/]*/#:$GEM_TOP_DIR/$VERSION/#"`
+
+export GEM_HOME=$GEM_TOP_DIR/$VERSION
+export GEM_PATH=`echo $GEM_PATH | sed "s#$GEM_TOP_DIR/[^:]*#$GEM_TOP_DIR/$VERSION#"`
+
+if [ "$VERBOSE" = "1" ]; then
+   echo "PATH=$PATH"
+   echo "GEM_HOME=$GEM_HOME"
+   echo "GEM_PATH=$GEM_PATH"
+fi
