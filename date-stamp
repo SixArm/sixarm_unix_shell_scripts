@@ -13,4 +13,4 @@
 #     date-stamp-shortest
 ##
 
-date -u "+%Y-%m-%d %H:%M:%SZ"
+date -u "+%Y-%m-%dT%H:%M:%SZ"
