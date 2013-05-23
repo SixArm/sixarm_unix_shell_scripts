@@ -6,11 +6,11 @@
 # Example:
 #
 #     date-stamp
-#     => 2000-12-31 12:59:59Z
+#     => 2000-12-31T12:59:59Z
 #
 # See:
 #
 #     date-stamp-shortest
 ##
 
-date -u "+%Y-%m-%dT%H:%M:%SZ"
+date -u "+%Y-%m-%dT%H:%M:%SZ" "$@"
