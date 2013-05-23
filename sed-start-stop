@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# Start printing when we see a pattern; stop printing when we see a pattern.
+#
+# We include the line that matches the start pattern;
+# we exclude the line that matches the stop pattern.
+#
+# Example:
+#
+#    $ cat alphabet.txt | sed-start-stop c f
+#    c
+#    d
+#    e
+
+sed -n "/$1/,/$2/p" | sed '$d' 
