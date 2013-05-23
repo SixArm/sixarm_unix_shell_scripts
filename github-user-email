@@ -1,0 +1,1 @@
+curl -s https://api.github.com/users/$1/events/public | grep "\"email\":" | sed -e's/[,|"]//g' | sort | uniq -c | sort -n | awk '{print $(NF)}' | grep -v null
