@@ -1,0 +1,42 @@
+#!/bin/bash
+#
+# Select lines that have dates within a weekly window.
+#
+# Our implementation is quick-and-dirty:
+#
+#   * Start printing lines when we see a date stamp from Monday 5 weeks ago.
+#   * Stop printing lines when we see a date stamp from Monday 1 week ago.
+#
+# Our implemention relies on caveats:
+#
+#   * The input must be sorted by the date stamp.
+#   * The input must contain the start date and stop date.
+#
+# Our implementation uses these defaults, which you can change in the source:
+#
+#   * We use the ISO standard format YYYY-MM-DDT.
+#   * We select the most recent 4 weeks.
+#   * The week starts on Monday.
+#
+# Future to do:
+#
+#   * Improve implmentation so it compares date strings with >= and <.
+#   * Change the variables from defaults to command-line arguments.
+#
+
+# Our immediate need is for the most recent four weeks
+start_x_weeks_ago=5
+stop_x_weeks_ago=1
+
+# Our immediate need is for weeks that start/stop on Monday
+day=mon
+
+# Our log files all use the date stamp format YYYY-MM-DD
+date_stamp_format="+%Y-%m-%dT"
+
+# Generate date stamps
+start_date_stamp=`date -u $date_stamp_format --date="$day $start_x_weeks_ago weeks ago"`
+stop_date_stamp=`date -u $date_stamp_format --date="$day $stop_x_weeks_ago weeks ago"`
+
+# Select lines with sed, and delete the last line because it has the stop date
+sed -ne "/\b$start_date_stamp/,/\b$stop_date_stamp/p" - | sed '$d'
