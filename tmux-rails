@@ -1,0 +1,38 @@
+session=`basename \`pwd\``
+tmux -q attach -t $session 2>/dev/null && exit 0
+#tmux attach -t $session 2>/dev/null && exit 0
+
+source-file ~/.tmux.conf
+edit='emacs -nw'
+rails='bin/rails'
+rake='bin/rake'
+
+window='edit' 
+tmux new-session -s $session -n $window -d
+tmux send-keys -t $session:$window "$edit" C-m
+
+window='test'
+tmux new-window -n $window -t $session
+tmux send-keys -t $session:$window "$rake test" 
+
+window='console'
+tmux new-window -n $window -t $session
+tmux send-keys -t $session:$window "$rails console"
+
+window='log'
+tmux new-window -n $window
+tmux send-keys -t $session:$window "cd log && tail -f development.log" 
+
+window='db'
+tmux new-window -n $window
+tmux send-keys -t $session:$window "$rails db"
+
+window='server'
+tmux new-window -n $window 
+tmux send-keys -t $session:$window "$rails server" 
+
+window='deploy'
+tmux new-window -n deploy "$rake deploy"
+tmux send-keys -t $session:$window "$rake deploy" 
+
+ 
