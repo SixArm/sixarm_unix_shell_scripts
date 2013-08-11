@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Mount a .iso file.
 # N.b. “-o loop” lets you use a file as a block device

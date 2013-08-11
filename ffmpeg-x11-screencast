@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Record a screencast and convert it to an mpeg movie.
 #

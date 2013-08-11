@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Get info about remote host ports and OS detection.
 #

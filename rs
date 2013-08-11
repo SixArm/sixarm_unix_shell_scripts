@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # rsync script with our typical settings.
 ##

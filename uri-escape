@@ -1,5 +1,5 @@
-#!/bin/sh
-#
+##
 # URI script to escape text, for example a CGI query string.
+##
 
 perl -MURI::Escape -lne 'print uri_escape($_)' 

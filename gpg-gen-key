@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # GPG generate key with our typical settings.
 #

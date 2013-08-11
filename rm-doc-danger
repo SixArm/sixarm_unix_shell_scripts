@@ -1,10 +1,10 @@
-#!/bin/sh
-#
+##
 # Remove documentation files.
 #
 # Typically this is to save space on a server.
 #
 # https://wiki.ubuntu.com/ReducingDiskFootprint
+##
 
 rm -rf /usr/share/doc/*
 rm -rf /usr/share/man/*

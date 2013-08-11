@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Make a typical user's mail directory for qmail or postfix.
 #

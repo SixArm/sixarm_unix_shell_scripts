@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Convert the first <h1> link in a stream to an HTML list item.
 # This is useful for building a table of contents for a bunch of files.

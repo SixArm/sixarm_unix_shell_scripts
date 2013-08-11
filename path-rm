@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Remove path(s) from the PATH environment variable.
 #

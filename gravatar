@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Gravatar: generate a gravatar URI for a given email address.
 #

@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Print this system's IP address via whatismyip.org
 ##

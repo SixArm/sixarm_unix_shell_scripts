@@ -1,5 +1,5 @@
-#!/bin/sh
-#
+##
 # sed script to print the VERSION string from a text file.
+##
 
 sed 's/^ *VERSION[^0-9]*//; s/[^0-9A-Za-z_\.-].*//'

@@ -1,6 +1,6 @@
-#!/bin/sh
-#
+##
 # Search-and-replace the VERSION number in a text file.
+##
 
 version_file=$1
 old_version=`cat $version_file | sed 's/^ *VERSION[^0-9]*//; s/[^0-9A-Za-z_\.-].*//'`

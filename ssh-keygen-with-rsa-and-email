@@ -1,5 +1,5 @@
-#!/bin/sh
-#
+##
 # SSH script to generate our typical rsa key with a comment.
+##
 
 ssh-keygen -t rsa -C $1

@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Make the typical Maildir directories in /etc/skel
 ##

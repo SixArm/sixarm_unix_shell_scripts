@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # List files in your current directory recursively shown as a tree.
 #

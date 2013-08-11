@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Use curl with headers that accept json and set content-type to json.
 #

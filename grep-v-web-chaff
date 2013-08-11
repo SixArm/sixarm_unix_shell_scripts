@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # grep without web chaff like lines that have .css, .js, .png.
 # This is useful e.g. for grepping web server log files.

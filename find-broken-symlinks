@@ -1,5 +1,3 @@
-#/bin/sh
-
 ##
 # Find broken symlinks.
 #

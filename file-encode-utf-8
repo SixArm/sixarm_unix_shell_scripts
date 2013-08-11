@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Convert encoding of a file to unix utf-8
 #

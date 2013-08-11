@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Run rcov on our typical test files.
 ##

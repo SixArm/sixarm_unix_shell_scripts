@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Remove duplicate lines in a file without sorting.
 # Using awk, we find duplicate lines in a file without sorting;

@@ -1,6 +1,7 @@
-#!/bin/sh
+##
 # Set the correct directory permissions of the current user's ~/.ssh directory.
 # SSH security requires restricted permissions, and will block without them.
+##
 
 unset CDPATH
 cd ~/.ssh && chmod 700 . && chmod 600 *

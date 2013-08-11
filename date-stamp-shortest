@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Print the current date stamp UTC in the shortest format.
 #

@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # sed script to change all non-HTML characters to their HTML entity names.
 #

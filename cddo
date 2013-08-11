@@ -1,4 +1,3 @@
-#!/bin/sh
 unset CDPATH
 while read dir ; do 
   echo "$dir"

@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Dig a domain's start of authority nameserver.
 #

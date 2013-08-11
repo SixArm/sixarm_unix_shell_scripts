@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Make a directory with 'mkdir' then change into it with 'cd'.
 ##

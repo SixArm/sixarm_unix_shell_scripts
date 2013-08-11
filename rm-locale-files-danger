@@ -1,5 +1,4 @@
-#!/bin/sh
-#
+##
 # Remove translations for languages.
 #
 # Typically this is to save space on a server.
@@ -15,5 +14,6 @@
 #   find /usr/share/locale -mindepth 1 -maxdepth 1 \
 #   ! -name 'en' ! -name 'es*' ! -name 'zh*' \
 #   | xargs rm -r
+##
 
 find /usr/share/locale -mindepth 1 -maxdepth 1 ! -name 'en' ! xargs rm -r

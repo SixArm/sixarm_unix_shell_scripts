@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # sed script to join lines that end with equal signs.
 #

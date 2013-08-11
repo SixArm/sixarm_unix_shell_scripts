@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Print a list of the Rails plugins in ./vendor/plugins
 ##

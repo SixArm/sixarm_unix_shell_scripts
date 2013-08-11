@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # GPG script to encrypt a file with our typical settings.
 #

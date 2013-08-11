@@ -1,4 +1,3 @@
-#!/bin/sh
 #
 # Wipe free disk space by overwriting it with zero bytes.
 #

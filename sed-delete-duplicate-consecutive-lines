@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Delete duplicate, consecutive lines from a file (emulates "uniq").
 #

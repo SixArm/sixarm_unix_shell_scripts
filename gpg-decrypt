@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # GPG script to decrypt a file with our typical settings.
 ##

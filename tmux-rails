@@ -1,14 +1,16 @@
 session=`basename \`pwd\``
-tmux -q attach -t $session 2>/dev/null && exit 0
-#tmux attach -t $session 2>/dev/null && exit 0
 
-source-file ~/.tmux.conf
-edit='emacs -nw'
+#tmux -q attach -t $session && exit 0
+#tmux new-session -s $session 
+#source-file ~/.tmux.conf
+
+# Commands
+edit='emacs -nw --no-color'
 rails='bin/rails'
 rake='bin/rake'
 
 window='edit' 
-tmux new-session -s $session -n $window -d
+tmux new-window -n $window -t $session
 tmux send-keys -t $session:$window "$edit" C-m
 
 window='test'

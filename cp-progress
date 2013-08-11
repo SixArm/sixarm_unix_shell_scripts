@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Copy files using a command-line progress bar.
 #

@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Find a Thinkpad's TrackPoint speed file that sets the pointer speed.
 # From http://zedic.com/thinkpad-trackpoint-speed-linux.html

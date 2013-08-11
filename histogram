@@ -1,5 +1,4 @@
-#!/bin/sh
-#
+##
 # Histogram on the command line
 #
 # Credit: Small labs Inc.
@@ -24,5 +23,6 @@
 # Example:
 #
 #   history | awk '{print $2}' | histogram
-#
+##
+
 sort | uniq -c | sort -rn | awk '!max{max=$1;}{r="";i=s=60*$1/max;while(i-->0)r=r"#";printf "%15s %5d %s %s",$2,$1,r,"\n";}'

@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Find script with pruning of /dev, /proc, /tmp, .git, .svn, etc.
 ##

@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Shows the word count of each file in a Rails app subdirectory.
 #

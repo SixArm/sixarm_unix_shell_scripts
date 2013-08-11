@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Block known dirty hosts from reaching your machine.
 #

@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Extract a file using best-guess of tar, bzip, rar, gz, zip, etc.
 ##

@@ -1,4 +1,3 @@
-#!/bin/sh
 dir=/media/nexus4
 test -e $dir && sudo umount $dir
 if [ -e $dir ]; then

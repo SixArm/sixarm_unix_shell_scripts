@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Quickly (soft-)reboot skipping hardware checks.
 # 

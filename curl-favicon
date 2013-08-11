@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Curl script to download a favicon from Google's service.
 #

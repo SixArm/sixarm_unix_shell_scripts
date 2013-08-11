@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Delete duplicate, nonconsecutive lines from a file. 
 #

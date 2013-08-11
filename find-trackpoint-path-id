@@ -1,5 +1,3 @@
-#!/bin/sh
-
 ##
 # Find a ThinkPad computer's TrackPoint Path ID.
 #
