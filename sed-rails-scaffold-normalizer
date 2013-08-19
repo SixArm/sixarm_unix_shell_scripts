@@ -18,9 +18,9 @@
 #
 # Geolocation:
 #
-#     altitude:decimal{10-5}:index 
-#     latitude:decimal{8-5}:index 
-#     longitude:decimal{8-5}:index 
+#     altitude:decimal{8-2}:index 
+#     latitude:decimal{13-10}:index 
+#     longitude:decimal{13-10}:index 
 #
-sed 's/\baltitude:.* /altitude:decimal{5,5}:index /; s/\bemail:.* /email:string{254}:index /; s/\b\(latitude\|longitude\):.* /\1:decimal{3,5}:index /; s/\bnote:.* /note:text /; s/\bparent_id:.* /parent_id:integer:index /; s/\bposition:.* /position:integer:index /; s/\bstatus:.* /status:integer:index /; s/\btype:.* /type:string:index /; s/\buuid:.* /uuid:string{36}:uniq /;'
+sed 's/\baltitude:.* /altitude:decimal{8,2}:index /; s/\bemail:.* /email:string{254}:index /; s/\b\(latitude\|longitude\):.* /\1:decimal{13,10}:index /; s/\bnote:.* /note:text /; s/\bparent_id:.* /parent_id:integer:index /; s/\bposition:.* /position:integer:index /; s/\bstatus:.* /status:integer:index /; s/\btype:.* /type:string:index /; s/\buuid:.* /uuid:string{36}:uniq /;'
 
