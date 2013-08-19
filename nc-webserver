@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# A tiny netcat webserver. Run this and nc will serve index.html.
+# To access it: http://localhost:8080/
+
+while true; do { echo -e 'HTTP/1.1 200 OK\r\n'; cat index.html; } | nc -l 8080; done
+
+
