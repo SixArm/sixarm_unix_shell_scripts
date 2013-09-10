@@ -1,0 +1,22 @@
+#!/bin/bash
+
+NORMAL=$(tput sgr0)
+INFO=$(tput setaf 2; tput bold)
+WARN=$(tput setaf 3)
+FAIL=$(tput setaf 1)
+
+function info() {
+    echo -e "$GREEN$*$NORMAL"
+}
+
+function warn() {
+    echo -e "$YELLOW$*$NORMAL"
+}
+
+function fail() {
+    echo -e "$RED$*$NORMAL"
+}
+
+info "Hello world"
+warn "Hello World"
+fail "Hello World"
