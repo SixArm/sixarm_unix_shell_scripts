@@ -1,40 +1,57 @@
-session=`basename \`pwd\``
+#!/bin/sh
+#
+# Launch tmux windows suitable for Rails development.
+#
+# Syntax:
+#
+#     tmux-rails 
+#
+# This launches these windows with these commands:
+#
+#   * edit: $EDITOR
+#   * test: bundle exec bin/rake test
+#   * console: bundle exec bin/rails console
+#   * log: cd log && tail -f log/development.log
+#   * db: bundle exrails db
+#   * server: rails server
+#   * deploy: rake deploy
+#
+# N.b. to make tmux target a session and window:
+#
+#     tmux new-window -n $window -t $session
+#     tmux send-keys -t $session:$window "hello"
+#
+##
 
-#tmux -q attach -t $session && exit 0
-#tmux new-session -s $session 
-#source-file ~/.tmux.conf
+rake="bundle exec bin/rake"
+rails="bundle exec bin/rails"
 
-# Commands
-edit='emacs -nw --no-color'
-rails='bin/rails'
-rake='bin/rake'
-
-window='edit' 
-tmux new-window -n $window -t $session
-tmux send-keys -t $session:$window "$edit" C-m
+window='edit'
+tmux new-window -n $window
+tmux send-keys -t $window "$EDITOR" C-m
 
 window='test'
-tmux new-window -n $window -t $session
-tmux send-keys -t $session:$window "$rake test" 
+tmux new-window -n $window
+tmux -q send-keys -t $window "$rake test" C-m
 
 window='console'
-tmux new-window -n $window -t $session
-tmux send-keys -t $session:$window "$rails console"
+tmux new-window -n $window 
+tmux -q send-keys -t $window "$rails console"
 
 window='log'
 tmux new-window -n $window
-tmux send-keys -t $session:$window "cd log && tail -f development.log" 
+tmux -q send-keys -t $window "cd log && tail -f development.log" C-m
 
 window='db'
 tmux new-window -n $window
-tmux send-keys -t $session:$window "$rails db"
+tmux -q send-keys -t $window "$rails db" C-m
 
 window='server'
 tmux new-window -n $window 
-tmux send-keys -t $session:$window "$rails server" 
+tmux -q send-keys -t $window "$rails server" C-m
 
 window='deploy'
-tmux new-window -n deploy "$rake deploy"
-tmux send-keys -t $session:$window "$rake deploy" 
+tmux new-window -n $window
+tmux -q send-keys -t $window "$rake deploy" 
 
- 
+tmux -q select-window 'edit'
