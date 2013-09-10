@@ -1,0 +1,4 @@
+window=$1
+shift
+tmux new-window -n "$window"
+tmux send-keys -t "$window" "$*"
