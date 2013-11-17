@@ -15,6 +15,17 @@
 #
 # From http://askubuntu.com/questions/20463/how-can-i-download-an-entire-website
 #
+# Some flags if you want to roll your own:
+#
+#    -m turns on mirroring options for mirroring a site locally
+#
+#    -c continues a previous download in case we've already downloaded some pages
+#
+#    -k converts absolute href to point to local ones for offline viewing
+#
+#    -E ensures files have .html extension after download.
+#    -np only downloads objects under /a/section/i/ and does not cache the whole site.
+#
 # N.b. another answer suggests these:
 #
 #  wget
@@ -30,4 +41,4 @@
 
 local_dir=$1
 website_url=$2
-wget --mirror -p --convert-links -P "$local_dir" "$website_url"
+wget --mirror -p -c --convert-links -P "$local_dir" "$website_url"
