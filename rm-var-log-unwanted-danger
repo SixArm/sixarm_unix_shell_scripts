@@ -1,0 +1,20 @@
+##
+# Remove /var/log files that we don't want.
+#
+# We use this to clean up drive space.
+#
+# Remove these files:
+#
+#   * End in .gz 
+#   * End in .log.123 (any digits)
+#   * End in _log.123 (any digits)
+#   * dist-upgrade/*
+#   * nagios3/archives/*
+#   * samba/log*
+#
+##
+
+find /var/log | grep '\(\.gz\|[\._]log\.[[:digit:]]+\)$' | xargs -I{} rm "{}"
+rm -rf /var/log/dist-upgrade/*
+rm -rf /var/log/samba/log*
+rm -rf /var/log/nagios3/archives/*
