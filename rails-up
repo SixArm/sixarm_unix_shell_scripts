@@ -1,0 +1,25 @@
+#!/bin/bash
+
+##
+# Rails script to update everything from origin master:
+#
+#   * pull from origin master
+#   * update submodules (if applicable)
+#   * bundle install
+#   * rake db:migrate, db:seed, db:test:prepare
+#   * restart the server (if applicable)
+##
+
+set -o errexit
+set -o xtrace
+
+git pull origin master 
+git submodule update --init --recursive
+bundle install
+#bundle update sprockets
+bundle exec rake db:migrate
+bundle exec rake db:seed
+bundle exec rake db:test:prepare
+touch tmp/restart.txt
+
+

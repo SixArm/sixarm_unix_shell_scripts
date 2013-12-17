@@ -8,6 +8,6 @@ git pull
 git submodule update --init --recursive
 bundle install
 bundle update sprockets
-rake db:migrate
-rake db:seed
+bundle rake db:migrate
+bundle rake db:seed
 touch tmp/restart.txt
