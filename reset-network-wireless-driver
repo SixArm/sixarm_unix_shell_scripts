@@ -1,0 +1,11 @@
+# Reset the Ubuntu network wireless driver.
+# Credit to Stephen Ostermiller's blog
+#
+# Running this requires root access.
+
+set -o errexit
+set -o xtrace
+
+driver=`lshw -C network 2>&1 | grep wireless | grep driver | sed 's/.* driver=//; s/ .*//'`
+echo "driver:$driver"
+modprobe -r $driver && modprobe $driver

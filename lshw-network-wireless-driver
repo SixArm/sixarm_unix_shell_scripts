@@ -1,0 +1,1 @@
+lshw -C network 2>&1 | grep wireless | grep driver | sed 's/.* driver=//; s/ .*//'
