@@ -1,0 +1,25 @@
+#!/bin/bash
+#
+# VirtualBox resize a hard drive image.
+#
+# This does two steps:
+#
+#   1. Clone a VMDK file format disk to a VDI file format disk.
+#   2. Modify the VDI file format disk by using resize.
+#
+# Syntax:
+#
+#     VBoxManage-clone-from-vmdk-to-vdi-then-resize <src> <dst> <megabytes>
+#
+# Example:
+#   
+#     VBoxManage-clone-from-vmdk-to-vdi-then-resize My.vmdk My.vdi 10000
+#
+##
+
+src=$1
+dst=$2
+megabytes=$3
+
+VBoxManage clonehd "$src" "$dst" –format vdi
+VBoxManage modifyhd "$dst" --resize $megabytes
