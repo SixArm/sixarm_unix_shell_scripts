@@ -1,2 +1,0 @@
-session=${1-`basename \`pwd\``}
-tmux new-session -s $session 
