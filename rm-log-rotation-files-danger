@@ -2,7 +2,7 @@ rm -f /var/log/*.{gz,old}
 rm -f /var/log/*.log.[0-9]*
 rm -f /var/log/**/*.{gz,old}
 rm -f /var/log/**/*.log.[0-9]*
-rm -f /var/log/**/*.[1-9]*.log
+rm -f /var/log/**/*.[1-9].log
 rm -f /var/log/{alternatives.log,apport.log,atop.log,auth.log,btmp,dpkg.log,kern.log,mail.log,mail.err,syslog}.[0-9]*
 
 
