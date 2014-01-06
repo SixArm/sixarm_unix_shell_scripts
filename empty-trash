@@ -19,7 +19,7 @@
 
 # Remove files one-by-one, without double-quoted files, 
 # because the file list may be very long, and the quote may not work.
-find ~/.local/share/Trash/files/ -type f | grep -v '"' | xargs -I{} rm -rf "$@" "{}"
+find ~/.local/share/Trash/{files,info}/ -type f | grep -v '"' | xargs -I{} rm -rf "$@" "{}"
 
 # Remove remainders
-rm -rf "$@" ~/.local/share/Trash/files/*
+rm -rf "$@" ~/.local/share/Trash/{files,info}/*
