@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# VirtualBox share folder.
+#
+# Virtualbox shares a folder as root by default;
+# this script gets the current user's uid and gid,
+# then shares a given folder (default ~/vbox/share).
+#
+# Examples:
+#
+#    vbox-share-folder
+#    vbox-share-folder foo /media/bar
+#
+# Setup ideas for a Debian host with a Windows guest:
+#
+#   http://www.maketecheasier.com/share-files-in-virtualbox-between-vista-guest-ubuntu-host/
+#
+# Setup ideas for a Debian guest:
+#
+#   1. As root, install the virtualbox guest additons.
+#   2. Reboot the guest system (in this case a lenny install)
+#   3. Run: modprobe vboxvfs (reports nothing so all is well)
+#   4. mount.vboxsf MyVirtualDrive /media/shared 
+#
+# Setup guest additions on a Debian host:
+#
+#    apt-get install \
+#      virtualbox-guest-dkms \
+#      virtualbox-guest-utils \
+#      virtualbox-guest-x11 \
+#      virtualbox-ose-guest-utils
+#
+set -o errexit
+
+# Get the current user
+uid=`id -u`
+gid=`id -g`
+user=`id -un`
+
+# The host directory to share must be
+# a relative path in the user's directory.
+# 
+# Right:
+#
+#    foo/bar
+#
+# Wrong:
+#
+#    /home/alice/foo/bar
+#    /foo/bar
+#    ~alice/foo/bar
+#    ~/foo/bar
+#
+src=${1:-"vbox-share-folder"} 
+
+# The mount point
+mnt=${2:-"/media/vbox-share-folder"}
+
+set -o xtrace
+sudo mount -t vboxsf -o uid=$uid,gid=$gid $src $mnt
