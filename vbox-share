@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# VirtualBox share folder.
+# VirtualBox share.
 #
 # Virtualbox shares a folder as root by default;
 # this script gets the current user's uid and gid,
@@ -8,8 +8,8 @@
 #
 # Examples:
 #
-#    vbox-share-folder
-#    vbox-share-folder foo /media/bar
+#    vbox-share
+#    vbox-share foo /media/bar
 #
 # Setup ideas for a Debian host with a Windows guest:
 #
@@ -51,10 +51,10 @@ user=`id -un`
 #    ~alice/foo/bar
 #    ~/foo/bar
 #
-src=${1:-"vbox-share-folder"} 
+src=${1:-"vbox/share"} 
 
 # The mount point
-mnt=${2:-"/media/vbox-share-folder"}
+mnt=${2:-"/media/vbox-share"}
 
 set -o xtrace
 sudo mount -t vboxsf -o uid=$uid,gid=$gid $src $mnt
