@@ -1,0 +1,1 @@
+mkdir -p {I,II,III}/{A,B,C}/{1,2,3}/{a,b,c}
