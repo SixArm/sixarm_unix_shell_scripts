@@ -1,0 +1,2 @@
+mkdir -p {I,II,III}/{A,B,C}/{1,2,3}/{a,b,c}
+find | sort | perl -pe 'chomp; s#\./##; $dir=$_; s#/#-#g; $text=$_; $path="$dir/$_.txt"; $_=""; $cmd="echo $text > $path"; system($cmd); print $cmd,"\n";'
