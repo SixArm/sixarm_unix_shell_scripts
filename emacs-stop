@@ -1,0 +1,1 @@
+emacsclient -e '(client-save-kill-emacs)'
