@@ -4,20 +4,22 @@
 echo "Installing many packages..."
 
 echo "Development tools"
-apt-get install -y curl emacs gcc openssl
+apt-get install -y build-essential curl emacs gcc openssl
 
 echo "Programming languages"
 apt-get install -y erlang golang java7-jdk perl php5 python ruby1.9.3 
 
 echo "Version control systems"
-apt-get install -y cvs git mercurial subversion
+apt-get install -y cvs git git-svn mercurial subversion
 
 echo "Database servers"
 apt-get install -y postgresql redis-server sqlite3 
 
+echo "Libraries"
+apt-get install -y e2fslibs-dev libc-bin libcurl4-gnutls-dev libffi6 libffi-dev libgdbm3 libgdbm-dev libglibmm-2.4-dev libgnomeui-dev libgtk2.0-dev libicu-dev libmagic-dev libncurses5 libncurses5-dev libreadline6 libreadline6-dbg libreadline6-dev libreadline-java libruby libsdl1.2-dev libssl0.9.8 libsasl2-2 libsasl2-modules libssl-dev libtool libsvn-perl libsvn-ruby1.8 libxine1-ffmpeg libxslt1-dev zlib1g zlib1g-dev
 
 echo "System utilities"
-apt-get install -y ack-grep atop autoconf automake1.9 bashdb bison build-essential byacc bzr checkinstall cron-apt cryptsetup curl deborphan devscripts dkms e2fslibs-dev elinks fakeroot gettext ghex git git-svn gnupg gnupg-agent gnupg-curl gnupg-doc gperf graphviz groff hashalot htop intltool iproute less libc-bin libcurl4-gnutls-dev libffi6 libffi-dev libgdbm3 libgdbm-dev libglibmm-2.4-dev libgnomeui-dev libgtk2.0-dev libicu-dev libmagic-dev libncurses5 libncurses5-dev libreadline6 libreadline6-dbg libreadline6-dev libreadline-java libruby libsdl1.2-dev libssl0.9.8 libsasl2-2 libsasl2-modules libssl-dev libtool libsvn-perl libsvn-ruby1.8 libxine1-ffmpeg libxslt1-dev language-pack-en-base linux-base locales lsb lynx make makepasswd man-db mc meld mime-support most nano ncurses-term p7zip-full patch pcregrep ppp-dev pv readline-common rsync sasl2-bin screen sysfsutils tclreadline tla udev unrar-free unzip uuid uuid-dev uuid-runtime xauth zlib1g zlib1g-dev
+apt-get install -y ack-grep atop autoconf automake1.9 bashdb bison byacc bzr checkinstall cron-apt cryptsetup curl deborphan devscripts dkms elinks fakeroot gettext ghex gperf graphviz groff hashalot htop intltool iproute less language-pack-en-base linux-base locales lsb lynx make makepasswd man-db mc meld mime-support most nano ncurses-term p7zip-full patch pcregrep ppp-dev pv readline-common rsync sasl2-bin screen sysfsutils tclreadline tla udev unrar-free unzip uuid uuid-dev uuid-runtime xauth 
 
 echo "Apache webserver"
 apt-get install -y apache2 apache2-doc apache2-utils apache2.2-common apache2-mpm-prefork apache2-prefork-dev libapr1 libaprutil1 libpq5 libaprutil1-dev libapr1-dev libexpat1 ssl-cert lynx elinks
@@ -75,6 +77,9 @@ apt-get install -y libzmq1 libzmq-dev libzmq-dbg
 
 echo "Postgres"
 apt-get install -y postgresql postgresql-client pgadmin3
+
+echo "GNU PG"
+apt-get install -y gnupg gnupg-agent gnupg-curl gnupg-doc 
 
 ### The packages below this may require interactive installation
 
