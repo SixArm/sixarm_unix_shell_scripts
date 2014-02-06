@@ -4,7 +4,7 @@
 echo "Installing many packages..."
 
 echo "Development tools"
-apt-get install -y build-essential curl emacs gcc openssl
+apt-get install -y build-essential curl emacs gcc openssl vim
 
 echo "Programming languages"
 apt-get install -y erlang golang java7-jdk lua5.2 perl php5 python ruby1.9.3 
@@ -23,6 +23,9 @@ apt-get install -y ack-grep atop autoconf automake1.9 bashdb bison byacc bzr che
 
 echo "Apache webserver"
 apt-get install -y apache2 apache2-doc apache2-utils apache2.2-common apache2-mpm-prefork apache2-prefork-dev libapr1 libaprutil1 libpq5 libaprutil1-dev libapr1-dev libexpat1 ssl-cert lynx elinks
+
+echo "Vim editor"
+apt-get install -y vim vim-addon-manager vim-doc vim-runtime vim-scripts exuberant-ctags 
 
 echo "Emacs editor"
 apt-get install -y cscope cscope-el dictd emacs emacs-goodies-el emacs-jabber libgif-dev slime texinfo
