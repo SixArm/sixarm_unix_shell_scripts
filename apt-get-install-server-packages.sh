@@ -7,7 +7,7 @@ echo "Development tools"
 apt-get install -y build-essential curl emacs gcc openssl
 
 echo "Programming languages"
-apt-get install -y erlang golang java7-jdk perl php5 python ruby1.9.3 
+apt-get install -y erlang golang java7-jdk lua5.2 perl php5 python ruby1.9.3 
 
 echo "Version control systems"
 apt-get install -y cvs git git-svn mercurial subversion
@@ -44,6 +44,9 @@ apt-get install -y python python-central python-configobj python-dateutil python
 
 echo "Ruby"
 apt-get install -y ruby1.9.3 ruby1.9.1 ruby1.9.1-dev ruby1.9.1-examples ruby1.9.1-full ruby ruby-dev ruby-event-loop ruby-full ruby-pkg-tools ruby-prof rubybook rubygems rubygems-doc rake graphviz javascript-common libactiveldap-ruby libactiveldap-ruby-doc libalgorithm-diff-ruby libamazon-ruby libbluecloth-ruby libbsearch-ruby libbuilder-ruby libcmdparse-ruby libcurl4-gnutls-dev libdaemons-ruby libdbd-mysql-ruby libdbd-pg-ruby libdbd-sqlite3-ruby libescape-ruby libferret-ruby libffi6 libffi-dev libffi-ruby1.9.1 libgettext-ruby-util libgdbm3 libgdbm-dev libgdbm-ruby1.9.1 libglib2-ruby libheckle-ruby libhighline-ruby libhighline-ruby-doc libhmac-ruby libhpricot-ruby libihelp-ruby libinline-ruby libinotify-ruby libjs-prototype libjson-ruby libjson-ruby-doc liblockfile-ruby liblog4r-ruby libmagic-dev libmagickwand-dev libmaruku-ruby libmemcache-client-ruby libmime-types-ruby libmocha-ruby libncurses-ruby libnet-ssh-ruby1.8 libnspr4-dev libopen4-ruby libopenid-ruby libpgsql-ruby libqt4-ruby librack-ruby librmagick-ruby librspec-ruby libruby libsequel-ruby libsnmp-ruby libsqlite3-ruby libtext-format-ruby libtext-format-ruby-doc libtidy-ruby libvorbisfile-ruby libwww-mechanize-ruby libwww-mechanize-ruby-doc libxml-ruby libxmmsclient-ruby zlib1g-dev libhighline-ruby1.9.1 libhpricot-ruby1.9.1 libhtmlentities-ruby1.9.1 libhtree-ruby1.9.1 libhttpclient-ruby1.9.1 libi18n-ruby1.9.1 libimage-size-ruby1.9.1 libinnate-ruby1.9.1 libinotify-ruby1.9.1 libkrb5-ruby1.9.1 liblocale-ruby1.9.1 libmapscript-ruby1.9.1 libmathml-ruby1.9.1 libmecab-ruby1.9.1 libmemcache-client-ruby1.9.1 libmixlib-cli-ruby1.9.1 libmp3tag-ruby1.9.1 libmsgpack-ruby1.9.1 libmysql-ruby1.9.1 libnarray-ruby1.9.1 libnarray-ruby1.9.1-dbg libncurses-ruby1.9.1 libnet-netrc-ruby1.9.1 libnet-scp-ruby1.9.1 libnet-sftp2-ruby1.9.1 libnet-ssh-gateway-ruby1.9.1 libnet-ssh-multi-ruby1.9.1 libnet-ssh2-ruby1.9.1 libnokogiri-ruby1.9.1 liboauth-ruby1.9.1 libogginfo-ruby1.9.1 libole-ruby1.9.1 libopen4-ruby1.9.1 libopengl-ruby1.9.1 libpacket-ruby1.9.1 libpgsql-ruby1.9.1 libprawn-ruby1.9.1 libqdbm-ruby1.9.1 librack-ruby1.9.1 libramaze-ruby1.9.1 libreadline-gplv2-dev libreadline-ruby1.9.1 librb-inotify-ruby1.9.1 libredcloth-ruby1.9.1 libremctl-ruby1.9.1 librspec-ruby1.9.1 libruby1.9.1 libruby1.9.1-dbg libsdl-ruby1.9.1 libsequel-ruby1.9.1 libsexp-processor-ruby1.9.1 libsinatra-ruby1.9.1 libspreadsheet-ruby1.9.1 libsqlite3-ruby1.9.1 libstfl-ruby1.9.1 libstomp-ruby1.9.1 libsvg-graph-ruby1.9.1 libsystemu-ruby1.9.1 libtcltk-ruby1.9.1 libtokyocabinet-ruby1.9.1 libtwitter-ruby1.9.1 libtzinfo-ruby1.9.1 libuconv-ruby1.9.1 libusb-ruby1.9.1 libuuidtools-ruby1.9.1 libvalidatable-ruby1.9.1 libwirble-ruby1.9.1 libwww-mechanize-ruby1.9.1 libxml-parser-ruby1.9.1 libxml-ruby1.9.1 libyaml-dev libzip-ruby1.9.1 ri1.9.1 ruby-odbc ruby-odbc-dbg zlib1g zlib1g-dev libzlib-ruby
+
+echo "Lua"
+apt-get install -y lua5.2 liblua5.2-dev
 
 echo "Nokogiri xml libraries"
 apt-get install -y libxml2 libxml2-dev libxslt-dev
