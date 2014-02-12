@@ -45,10 +45,6 @@
 # You can tune the behavior as you like by using any 
 # of the _ag_ options; this script passes the options along.
 #
-# For example to show three lines after a match:
-#
-#    
-#
 # If you prefer using the _grep_ command, or _ack_ command, 
 # then you can easily edit this script to your taste.
 #
