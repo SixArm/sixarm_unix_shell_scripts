@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Heroku script to view SSL certs info.
+#
+# Typically to see heroku certs info, we use this command:
+#
+#    heroku certs:info --app appname does not write to STDOUT or STDERR
+#
+# This command does not write to STDOUT or STDERR;
+# instead it writes to TTY for security reaasons.
+#
+# Sometimes we do want to get STDOUT, e.g. so we can parse the results.
+# This script uses curl as a workaround.
+#
+# Syntax:
+# 
+#    heroku-certs-info <appname>
+#
+# Credit and discussion:
+# http://stackoverflow.com/questions/19336440/heroku-certsinfo-app-appname-does-not-write-to-stdout-or-stderr
+#
+curl -n -s -X GET https://api.heroku.com/apps/$1/ssl-endpoints -H "Accept: application/vnd.heroku+json; version=3"
+
