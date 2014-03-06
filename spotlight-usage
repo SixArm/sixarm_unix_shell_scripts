@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# Show Mac OSX Spotlight search indexer usage
+#
+fs_usage -w -f filesys mdworker
