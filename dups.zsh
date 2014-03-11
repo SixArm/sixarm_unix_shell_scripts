@@ -2,9 +2,13 @@
 #
 # Duplicate detector: a general-purpose line-oriented key tracker.
 #
-# The input lines and ouput lines use this format:
+# The input lines use this format:
 #
-#     <key> [note]
+#     <key> <note>
+#
+# The output lines are the duplicates and use this format:
+#
+#     <key> <note of first hit> <note of current hit>
 #
 # The key is any identifier you want to compare, such as a checksum.
 # The key must be a command line token, i.e. no spaces, no quotes, etc.
@@ -12,9 +16,23 @@
 # The note is anything you want in the printout, such as a file name.
 # The note is only for printout; the note is not used for comparison.
 #
-# Example to use a SHA 512 checksum to detect duplicate files on OSX:
+# The output prints the note from the first matching line first,
+# then the note from the second matching linee.
 #
-#     find . -type f -exec shasum -a 512 '{}' \; | dups.zsh
+# Example file demo.txt:
+#
+#     A Alice
+#     B Bob
+#     A Anna
+#
+# Example command:
+#   
+#     $ cat demo.txt | dups.zsh
+#     A Alice Anna
+#  
+# To detect duplicate files, we can use a checksum:
+#
+#     find . -type f -exec sha512sum '{}' \; | dups.zsh
 #
 # This script requires the zsh shell.
 # If you use bash instead of zsh,
@@ -28,7 +46,7 @@ unset track
 typeset -A track
 while read -r key val; do
   if (( ${+track[$key]} )); then
-    printf "$key $val\n"
+    print $key $track[$key] $val
   else
     track[$key]="$val"
   fi
