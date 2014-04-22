@@ -1,3 +1,3 @@
 # SSH script to remove a known host.
 
-ssh-keygen -R $@
+ssh-keygen -R "$@"

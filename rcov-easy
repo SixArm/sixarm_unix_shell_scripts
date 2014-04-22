@@ -1,5 +1,9 @@
-##
+#!/bin/bash
+#
 # Run rcov on our typical test files.
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 rcov -Ilib test/*.rb

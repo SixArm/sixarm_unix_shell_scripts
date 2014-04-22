@@ -1,3 +1,4 @@
+#!/bin/bash
 #
 # Print the number of lines of a file.
 #
@@ -12,5 +13,9 @@
 #
 #   wc -l /usr/share/dict/words | awk '{ print $1; }'
 #   => 100
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 echo '$=' | ed -s "$1"

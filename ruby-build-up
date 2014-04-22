@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 #
 # Ruby build using our preferred locations:
 #
@@ -8,7 +8,10 @@
 # Syntax:
 #
 #    ruby-build-opt-ruby <version> [-c]
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 
 ## Input
@@ -58,7 +61,3 @@ if [[ "$CURRENT_FLAG" == "-c" ]]; then
   source /etc/environment
   ruby -v
 fi
-
-    
-
- 

@@ -1,4 +1,5 @@
-##
+#!/bin/bash
+#
 # Find a Thinkpad's TrackPoint speed file that sets the pointer speed.
 #
 # From http://zedic.com/thinkpad-trackpoint-speed-linux.html
@@ -8,6 +9,9 @@
 #
 #     find-trackpoint-path-id
 #     find-trackpoint-device-file-for-sensitivity
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 find "/sys/devices/platform/i8042/" -iname speed -type f

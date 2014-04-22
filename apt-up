@@ -1,12 +1,14 @@
 #!/bin/bash
-
-##
+#
 # Run apt-get commands to uplift the system:
 #
 #   * update
 #   * upgrade with fix-missing and install-recommends
 #   * clean, autoclean, autoremove with purge
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 ## Scrub before uplift
 apt-get autoclean

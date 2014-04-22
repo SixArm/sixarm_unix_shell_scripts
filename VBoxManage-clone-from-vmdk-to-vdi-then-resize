@@ -12,10 +12,12 @@
 #     VBoxManage-clone-from-vmdk-to-vdi-then-resize <src> <dst> <megabytes>
 #
 # Example:
-#   
+#
 #     VBoxManage-clone-from-vmdk-to-vdi-then-resize My.vmdk My.vdi 10000
 #
-##
+set -o nounset
+set -o errexit
+set -o pipefail
 
 src=$1
 dst=$2

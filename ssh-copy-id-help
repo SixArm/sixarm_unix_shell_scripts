@@ -6,9 +6,13 @@
 #   ssh-copy-id-util <pub file> <ssh login>
 #
 # Example:
-#   ssh-copy-id-util ~/.ssh/id_rsa.pub me@foo.bar.com 
+#   ssh-copy-id-util ~/.ssh/id_rsa.pub me@foo.bar.com
 #   => cat ~/.ssh/id_rsa.pub | ssh me@foo.bar.com "cat >> ~/.ssh/authorized_keys"
 #
 # This script is a substitude for ssh-copy-id (use it if you have it).
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 cat ~/.ssh/id_dsa.pub | ssh me@remotebox "cat >> ~/.ssh/authorized_keys"

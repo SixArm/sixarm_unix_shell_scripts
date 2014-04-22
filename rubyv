@@ -1,4 +1,10 @@
 #!/bin/bash
+#
+#  Choose a Ruby version
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 help()
 {
@@ -30,7 +36,7 @@ We install ruby and gems in these specific directories:
 Examples:
 
     /opt/ruby/2.0.0-p0
-    /opt/rubygems/2.0.0-p0 
+    /opt/rubygems/2.0.0-p0
 
 This script modifies three environment variables:
 
@@ -69,7 +75,7 @@ do
              help
              exit 1
              ;;
-	 l) 
+	 l)
              ls -l $RUBY_TOP_DIR | awk '{print $9,$10,$11;}' | grep \\w
              ls -l $RUBYGEMS_TOP_DIR | awk '{print $9,$10,$11;}' | grep \\w
              exit 1

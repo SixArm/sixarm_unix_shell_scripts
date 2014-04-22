@@ -1,2 +1,9 @@
-# Lists every executable in PATH
+#!/bin/bash
+#
+# List every executable in PATH
+#
+set -o nounset
+set -o errexit
+set -o pipefail
+
 print -l ${^path}/*(-*N)

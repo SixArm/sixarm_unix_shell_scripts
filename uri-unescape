@@ -1,4 +1,9 @@
+#!/bin/bash
 #
 # URI script to unescape text, for example a CGI query string.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
-perl -MURI::Escape -lne 'print uri_unescape($_)' 
+perl -MURI::Escape -lne 'print uri_unescape($_)'

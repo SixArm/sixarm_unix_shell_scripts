@@ -21,13 +21,15 @@
 #   * ^6:deploy = rake deploy
 #   * &7:server = rails server
 #
-##
+set -o nounset
+set -o errexit
+set -o pipefail
 
 ## This section is from tmux-use-session
 session=${1-`basename \`pwd\``}
-#tmux has-session -s "$session" && 
-#tmux attach-session -t "$session" || 
-#tmux new-session -s "$session" 
+#tmux has-session -s "$session" &&
+#tmux attach-session -t "$session" ||
+#tmux new-session -s "$session"
 
 rake="bundle exec bin/rake"
 rails="bundle exec bin/rails"
@@ -41,7 +43,7 @@ function tmux-new-window-with-keys(){
 }
 
 tmux-new-window-with-keys "$session" "edit" "$EDITOR"
-tmux-new-window-with-keys "$session" "test" "$rake test" 
+tmux-new-window-with-keys "$session" "test" "$rake test"
 tmux-new-window-with-keys "$session" "console" "$rails console"
 tmux-new-window-with-keys "$session" "log" "cd log && tail -f development.log"
 tmux-new-window-with-keys "$session" "db" "$rails db" C-m

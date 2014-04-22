@@ -1,5 +1,11 @@
-# Copy a directory recursively without data/files
+#!/bin/bash
+#
+# Copy a directory structure recursively, without any files.
 #
 # From http://grml.org/zsh/zsh-lovers.html
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 find . -type d -exec env d="$dest_root" sh -c ' exec mkdir -p -- "$d/$1"' '{}' '{}' \;

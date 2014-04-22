@@ -3,7 +3,7 @@
 # Launch meld with three windows:
 #
 #   * diff from BASE to LOCAL
-#   * diff from BASE to REMOTE 
+#   * diff from BASE to REMOTE
 #   * three-pane view
 #
 # To use this, add this to your gitconfig:
@@ -15,6 +15,10 @@
 #
 # See http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
 #
+set -o nounset
+set -o errexit
+set -o pipefail
+
 meld $2 $1 &
 sleep 0.5
 meld $1 $3 &

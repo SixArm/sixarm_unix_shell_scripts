@@ -1,5 +1,14 @@
+#!/bin/bash
+#
+# For each directory, change into the directory,
+# and run a command.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
+
 unset CDPATH
-while read dir ; do 
+while read dir ; do
   echo "$dir"
   cd "$dir"
   if [ $? -eq 0 ]

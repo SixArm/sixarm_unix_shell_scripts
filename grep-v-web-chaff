@@ -1,7 +1,13 @@
-##
+#!/bin/bash
+#
 # grep without web chaff like lines that have .css, .js, .png.
 # This is useful e.g. for grepping web server log files.
-##
+#
+# If you're using this, you may be interested in trying
+# a newer search tool called The Silver Searcher.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
-grep -v "\.\(bmp\|css\|gif\|ico\|jpg\|js\|png\)\b" 
-
+grep -v "\.\(bmp\|css\|gif\|ico\|jpg\|js\|png\)\b"

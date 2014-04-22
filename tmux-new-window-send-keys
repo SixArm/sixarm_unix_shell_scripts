@@ -1,3 +1,11 @@
+#!/bin/bash
+#
+# Use tmux to send keys to a new window.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
+
 window=$1
 shift
 tmux new-window -n "$window"

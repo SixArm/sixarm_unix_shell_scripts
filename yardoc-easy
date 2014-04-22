@@ -1,5 +1,9 @@
-##
+#!/bin/bash
+#
 # Run yardoc on all our lib files.
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 yardoc lib/**/*.rb

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# OpenSSL connect to a server, 
+# OpenSSL connect to a server,
 # retrieve it's x509 certificate,
 # and show the dates that are valid.
 #
@@ -10,4 +10,8 @@
 #    notBefore=Feb 12 14:58:10 2014 GMT
 #    notAfter=Jun 12 00:00:00 2014 GMT
 #
+set -o nounset
+set -o errexit
+set -o pipefail
+
 echo | openssl s_client -connect "$1" 2>/dev/null | openssl x509 -noout -dates

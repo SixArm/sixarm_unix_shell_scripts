@@ -2,6 +2,10 @@
 #
 # dpkg-remove-damaged-libqt-DANGER
 #
+set -o nounset
+set -o errexit
+set -o pipefail
+
 dpkg -r --force-all \
  indicator-appmenu \
  libdconf-dbus-1-0 \
@@ -68,6 +72,5 @@ dpkg --purge \
 
 echo "dpkg has removed damaged libqt files, including ubuntu-desktop etc."
 echo "you probably want to run this immediately:"
-echo 
+echo
 echo "    apt-get -f dist-upgrade"
-

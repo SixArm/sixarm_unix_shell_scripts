@@ -1,4 +1,5 @@
-##
+#!/bin/bash
+#
 # How to download and install Glassfish version 3 with typical settings.
 #
 #
@@ -11,7 +12,10 @@
 #
 # From http://skytteren.blogspot.com/2009/05/installing-glassfish-v3-on-ubuntu.html
 # Customized a bit with the downloadable init.d by joelparkerhenderson@gmail.com
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 unset CDPATH
 wget http://download.java.net/glassfish/v3/promoted/latest-glassfish.zip
@@ -22,8 +26,8 @@ chown -R glassfish /opt/glassfishv3
 chgrp -R admin /opt/glassfishv3
 cd /opt/glassfishv3
 chmod -R +x bin/
-chmod -R +x glassfish/bin/ 
-sudo -u glassfish bin/asadmin start-domain domain1 
+chmod -R +x glassfish/bin/
+sudo -u glassfish bin/asadmin start-domain domain1
 wget http://webget.com/etc/init.d/glassfish -O /etc/init.d/glassfish
-chmod a+x /etc/init.d/glassfish 
+chmod a+x /etc/init.d/glassfish
 update-rc.d glassfish defaults

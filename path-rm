@@ -1,10 +1,14 @@
-##
+#!/bin/bash
+#
 # Remove path(s) from the PATH environment variable.
 #
 # Usage: rmpath paths...
 #
 # From http://pastie.org/591350
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 for p in "$@"
 do
@@ -16,4 +20,3 @@ do
     esac
 done
 export PATH
-

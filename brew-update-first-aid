@@ -1,10 +1,14 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Brew is a MacOSX package manager.
 #
 # This script does some simple first aid
 # to repair the brew repository then update.
 #
+set -o nounset
+set -o errexit
+set -o pipefail
+
 cd `brew --prefix`
 git remote add origin https://github.com/mxcl/homebrew.git
 git fetch origin

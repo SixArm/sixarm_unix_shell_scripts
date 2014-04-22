@@ -10,7 +10,12 @@
 # * n is an optional length; it defaults to 20.
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
 # License is GPL v2
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 len=${1-20}
 cat /dev/urandom | strings -n 1 | grep -o '[A-Z]' | head -n $len | tr -d '\n'; echo

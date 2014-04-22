@@ -1,9 +1,8 @@
 #!/bin/bash
-
-##
+#
 # Print a file's line at a given line number.
 #
-# Syntax: 
+# Syntax:
 #
 #     file-line-num <file path> <line number> [line number] ...
 #
@@ -18,12 +17,15 @@
 #     => prints line 10 of myfile.txt then line 20 then line 30
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
 # License is GPL v2
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 file_path="$1"
 shift
 for line_num; do
   echo "$line_num p" | ed -s "$file_path"
 done
-

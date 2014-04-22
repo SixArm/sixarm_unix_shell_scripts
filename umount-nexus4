@@ -1,10 +1,18 @@
+#!/bin/bash
+#
+# Unmount a Nexus 4 phone.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
+
 dir=/media/nexus4
 test -e $dir && sudo umount $dir
 if [ -e $dir ]; then
   echo "Path still exists: $dir"
   echo "lsof -w $dir"
   lsof -w $dir
-  echo 
+  echo
   echo "fuser $dir"
   fuser $dir
 fi

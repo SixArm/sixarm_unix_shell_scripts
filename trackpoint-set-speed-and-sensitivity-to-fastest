@@ -1,9 +1,13 @@
-##
+#!/bin/bash
+#
 # Set trackpoint speed and sensitivity to fastest settings.
 # This also turns on the trackpoint option for press-to-select.
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
-for i in 1 2 3 
+for i in 1 2 3
 do
  dir=/sys/devices/platform/i8042/serio1/serio$i
  if [ -d $dir ]; then

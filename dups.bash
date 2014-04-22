@@ -27,10 +27,10 @@
 #     A Anna
 #
 # Example command:
-#   
+#
 #     $ cat demo.txt | dups.bash
 #     A Alice Anna
-#  
+#
 # To detect duplicate files, we can use a checksum:
 #
 #     find . -type f -exec sha512sum '{}' \; | dups.zsh
@@ -43,6 +43,10 @@
 # License: Any of BSD, MIT, GPL.
 # Repo: https://github.com/SixArm/sixarm_unix_shell_scripts
 #
+set -o nounset
+set -o errexit
+set -o pipefail
+
 unset track
 declare -A track
 while read -r key val; do
@@ -52,4 +56,3 @@ while read -r key val; do
    track[$key]="$val"
  fi
 done
-

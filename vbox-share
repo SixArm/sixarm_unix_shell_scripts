@@ -20,7 +20,7 @@
 #   1. As root, install the virtualbox guest additons.
 #   2. Reboot the guest system (in this case a lenny install)
 #   3. Run: modprobe vboxvfs (reports nothing so all is well)
-#   4. mount.vboxsf MyVirtualDrive /media/shared 
+#   4. mount.vboxsf MyVirtualDrive /media/shared
 #
 # Setup guest additions on a Debian host:
 #
@@ -30,7 +30,9 @@
 #      virtualbox-guest-x11 \
 #      virtualbox-ose-guest-utils
 #
+set -o nounset
 set -o errexit
+set -o pipefail
 
 # Get the current user
 uid=`id -u`
@@ -39,7 +41,7 @@ user=`id -un`
 
 # The host directory to share must be
 # a relative path in the user's directory.
-# 
+#
 # Right:
 #
 #    foo/bar
@@ -51,7 +53,7 @@ user=`id -un`
 #    ~alice/foo/bar
 #    ~/foo/bar
 #
-src=${1:-"vbox/share"} 
+src=${1:-"vbox/share"}
 
 # The mount point
 mnt=${2:-"/media/vbox-share"}

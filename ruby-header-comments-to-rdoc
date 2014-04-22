@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
-
-##
+#
 # For each input file name, get the header comments and emit rdoc format.
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 input_ruby_filename=ARGV[0]
 

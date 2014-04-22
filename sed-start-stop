@@ -11,5 +11,9 @@
 #    c
 #    d
 #    e
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
-sed -n "/$1/,/$2/p" | sed '$d' 
+sed -n "/$1/,/$2/p" | sed '$d'

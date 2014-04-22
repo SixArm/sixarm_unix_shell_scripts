@@ -1,6 +1,5 @@
 #!/bin/bash
-
-##
+#
 # Generate random digits.
 #
 # Usage: random-digits [n] [count]
@@ -18,15 +17,19 @@
 #
 # Example:
 #   random-digits 3 4
-#   => three random digits, four times 
+#   => three random digits, four times
 #
 # This script seeds the bash random variable.
 # Cf. random-seed
 # Cf. random-int-faster
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
 # License is GPL v2
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 ./random-seed
 ./random-digits-faster $@

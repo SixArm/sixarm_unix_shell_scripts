@@ -1,5 +1,9 @@
-##
+#!/bin/bash
+#
 # Count your history commands.
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 history | cut -c8- | sort | uniq -c | sort -rn | head

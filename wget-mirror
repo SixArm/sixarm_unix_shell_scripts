@@ -38,6 +38,9 @@
 #     --domains website.org \
 #     --no-parent \
 #
+set -o nounset
+set -o errexit
+set -o pipefail
 
 local_dir=$1
 website_url=$2

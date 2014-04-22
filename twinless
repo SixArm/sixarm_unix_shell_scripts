@@ -1,7 +1,13 @@
+#!/bin/bash
+#
 # Show me all the X files for which there doesn't exist a Y file.
 #
 # To show all the .c files that don't have a corresponding .o file:
 #
 #   twinless .c .o
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 print *$1(e_'[[ ! -e $REPLY:r$2 ]]'_)

@@ -1,7 +1,11 @@
-##
+#!/bin/bash
+#
 # Show current listening connections i.e. that say "LISTEN".
 #
 # http://danielmiessler.com/study/lsof/
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
-lsof -i| grep LISTEN 
+lsof -i| grep LISTEN

@@ -1,6 +1,14 @@
+#!/bin/bash
+#
+# For each file name, run a command with the file name.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
+
 unset CDPATH
 while read file_name
-do 
+do
   echo "$file_name"
-  "$@" $file_name
+  "$@" "$file_name"
 done

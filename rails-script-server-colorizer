@@ -1,10 +1,12 @@
 #!/bin/bash
-
-##
+#
 # Colorize our rails server output.
 #
 # From http://blog.oneeyedgringo.com/2009/04/taming-rails-scriptserver-output.html
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 alias rails-script-server-colorizer="./script/server | grep -E 'Param|Processing|Error|KLC' --color -b1"
 function rails-script-server-colorizer () {

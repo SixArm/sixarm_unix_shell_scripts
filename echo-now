@@ -6,11 +6,11 @@
 # By Alex Pankratov
 # https://github.com/apankrat/now.sh/blob/master/README.md
 #
-# A simple shell script that prints current date/time while waiting 
+# A simple shell script that prints current date/time while waiting
 # for an input and echoing it to the stdout.
 #
-# It is particularly useful with [`tail`](http://en.wikipedia.org/wiki/Tail_%28Unix%29) 
-# when following log files. Instead of - 
+# It is particularly useful with [`tail`](http://en.wikipedia.org/wiki/Tail_%28Unix%29)
+# when following log files. Instead of -
 #
 #     tail -F access.log | grep "GET / "
 #
@@ -33,15 +33,15 @@
 #
 # where **the last line is reprinted every second** with current time.
 #
-# This gives 
-# an idea of when the last log activity was without needing to remember what 
+# This gives
+# an idea of when the last log activity was without needing to remember what
 # the server time zone is or what the "-0800" translates to in your local time.
 #
 # Timestamp format
 # ================
 #
-# The timestamp format can be adjusted by passing the 
-# [`date`](http://en.wikipedia.org/wiki/Date_%28Unix%29) 
+# The timestamp format can be adjusted by passing the
+# [`date`](http://en.wikipedia.org/wiki/Date_%28Unix%29)
 # format string to `now`. For example, this tweak -
 #
 #     tail -F access.log | grep "GET / "  now "[%d/%b/%Y %H:%M:%S %z]"
@@ -53,13 +53,16 @@
 #     54.251.76.xx - - [03/Mar/2013 01:16:52 -0800] "GET / HTTP/1.1" 200 2223 ...
 #     [03/Mar/2013 01:20:59 -0800]
 #
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 ##
 #	See what 'read -t' returns on timeout.
 #
-#	For that - read from stdout. Alternatively, it could read 
-#	from /dev/zero, but it's not available under Cygwin and 
+#	For that - read from stdout. Alternatively, it could read
+#	from /dev/zero, but it's not available under Cygwin and
 #	in other non-*nix environments
 #
 read -t 1 <&1
@@ -84,7 +87,7 @@ do
 	#
 	#	print the timestamp
 	#
-	if [ $# -eq 1 ]; then 
+	if [ $# -eq 1 ]; then
 		now=`date +"$1"`
 	else
 		now=`date`

@@ -23,9 +23,12 @@
 #   * Improve implmentation so it compares date strings with >= and <.
 #   * Change the variables from defaults to command-line arguments.
 #
+set -o nounset
+set -o errexit
+set -o pipefail
 
-# Our immediate need is for the most recent four weeks
-start_x_weeks_ago=5
+# Our immediate need is for the most recent whole week
+start_x_weeks_ago=2
 stop_x_weeks_ago=1
 
 # Our immediate need is for weeks that start/stop on Monday

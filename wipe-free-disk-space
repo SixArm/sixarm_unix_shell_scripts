@@ -1,3 +1,4 @@
+#!/bin/bash
 #
 # Wipe free disk space by overwriting it with zero bytes.
 #
@@ -9,7 +10,7 @@
 #
 #   * This command may take a long time to run.
 #
-#   * If you're on a battery-powered system, e.g. a laptop, 
+#   * If you're on a battery-powered system, e.g. a laptop,
 #     it's wise to switch to using a plug-in power adapter
 #     before running this command.
 #
@@ -21,6 +22,10 @@
 #   4. Delete the large temp file.
 #
 # See http://superuser.com/questions/19326/how-to-wipe-free-disk-space-in-linux
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 
 ################################################################################
@@ -68,7 +73,6 @@ large_file=wipe-free-disk-space-large-temp-file.bin
 
 ################################################################################
 
-set -o errexit
 set -o xtrace
 
 # Do we want to use _shred_ which is likely more secure though slower?
@@ -108,6 +112,3 @@ else
     $rm $large_file
 
 fi
-
-
-

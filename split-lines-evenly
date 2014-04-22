@@ -6,15 +6,18 @@
 # Syntax:
 #
 #    split-lines-evenly <filename> <number-of-output-files>
-#    
+#
 # Example:
 #
 #    split-lines-evenly hello.txt 3
-#    #=> 
+#    #=>
 #    hello.txt.0
 #    hello.txt.1
 #    hello.txt.2
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 input_file=$1  # e.g. "hello.txt"
 output_pieces=$2  # e.g. "3" to split the file into three output files

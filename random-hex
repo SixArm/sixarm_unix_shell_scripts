@@ -5,13 +5,13 @@
 #
 # Usage: random-hex [n]
 #
-#   * n is an optional length of bytes. 
+#   * n is an optional length of bytes.
 #     It defaults to 16.
 #     Note that this means the output string is twice as long.
 #
 # Example:
 #
-#     $ random-hex 
+#     $ random-hex
 #     37004A3B3427BE452DDB8E681EAB58A6
 #
 # Alternate solution for Linux, using the tr command:
@@ -23,9 +23,12 @@
 #     cat /dev/urandom | env LC_CTYPE=C tr -cd '0-9A-F' | head -c 16; echo
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
 # License is GPL v2
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 len=${1-16}
 hexdump -n $len -v -e '/1 "%02X"' -e "/$len \"\n\"" /dev/urandom
-
-

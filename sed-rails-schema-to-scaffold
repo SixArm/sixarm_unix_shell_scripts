@@ -16,5 +16,8 @@
 #     name:string \
 #     age:integer \
 #
-sed 's/^ *create_table "\?\(\w\+\).*/rails generate scaffold \1 \\/; s/^ *t.\(\w\+\) \+\"\?\(\w\+\).*/\2:\1 \\/; s/^ *end *$//; s/ \+$//' | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}' 
+set -o nounset
+set -o errexit
+set -o pipefail
 
+sed 's/^ *create_table "\?\(\w\+\).*/rails generate scaffold \1 \\/; s/^ *t.\(\w\+\) \+\"\?\(\w\+\).*/\2:\1 \\/; s/^ *end *$//; s/ \+$//' | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}'

@@ -1,3 +1,10 @@
+#!/bin/bash
+#
+# Dig for a Sender Policy Framework (SPF) record.
+#
+set -o nounset
 set -o errexit
+set -o pipefail
 set -o xtrace
+
 dig +short -ttxt $@

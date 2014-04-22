@@ -1,4 +1,5 @@
-##
+#!/bin/bash
+#
 # Use curl with headers that accept json and set content-type to json.
 #
 # Example:
@@ -7,7 +8,9 @@
 #     -X POST \
 #     -d '{"user":{"name":"Joe","email":"joe@example.com","password":"secret"}}' \
 #     http://localhost:3000/api/users
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 curl -H "Accept: application/json" -H "Content-type: application/json" $@
-

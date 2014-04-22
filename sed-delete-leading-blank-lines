@@ -1,6 +1,10 @@
-##
+#!/bin/bash
+#
 # Delete all leading blank lines at top of file.
 # From http://sed.sourceforge.net/sed1line.txt
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 sed '/./,$!d'

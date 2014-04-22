@@ -1,4 +1,5 @@
-##
+#!/bin/bash
+#
 # Uninstall RVM (Ruby Version Manager). THIS IS DANGEROUS.
 #
 # This runs rvm implode, delete RVM files from the system,
@@ -13,7 +14,10 @@
 # by hand then run this script again; rvm implode won't work,
 # but the rest of the script will do a decent job of deleting
 # any lingering rvm files and reporting any remainders.
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 echo "rvm implode"
 rvm implode

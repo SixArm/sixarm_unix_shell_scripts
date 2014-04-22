@@ -15,7 +15,7 @@
 #    #WTF
 #
 # Syntax:
-# 
+#
 #   todos [options that are passed along to _ag_]
 #
 # Example:
@@ -25,7 +25,7 @@
 # Example to show two lines of context before and after:
 #
 #   todos -C 2
-#   
+#
 # The hash can have an optional space after it;
 # this is so the search finds code comments too.
 #
@@ -39,16 +39,20 @@
 # The output will show the file names, line numbers,
 # and colorize the match hits if you have color set up.
 #
-# The search is recursive by default, and skips some directories 
+# The search is recursive by default, and skips some directories
 # such as ".git", and skips some files such as binary blogs.
 #
-# You can tune the behavior as you like by using any 
+# You can tune the behavior as you like by using any
 # of the _ag_ options; this script passes the options along.
 #
-# If you prefer using the _grep_ command, or _ack_ command, 
+# If you prefer using the _grep_ command, or _ack_ command,
 # then you can easily edit this script to your taste.
 #
 # By Joel Parker Henderson <joel@sixarm.com>.
 # Comments/feedback/improvements welcome.
 #
+set -o nounset
+set -o errexit
+set -o pipefail
+
 ag "# ?(TODO|FIXME|OPTIMIZE|DEPRECATE|REFACTOR|DELETE|AUDIT|DANGER|WTF)\b" "$@"

@@ -1,6 +1,10 @@
-##
+#!/bin/bash
+#
 # Gnome UI set power idel dim time in seconds.
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 len=${1-600}
 gsettings set org.gnome.settings-daemon.plugins.power idle-dim-time $seconds

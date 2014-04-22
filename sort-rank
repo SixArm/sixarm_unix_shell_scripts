@@ -1,3 +1,9 @@
+#!/bin/bash
+#
 # Sort command-line input by rank.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 sort | uniq -c | sort -g

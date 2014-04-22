@@ -1,5 +1,9 @@
-##
+#!/bin/bash
+#
 # Print a list of the Rails plugins in ./vendor/plugins
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 find vendor/plugins/* -maxdepth 0 -type d | sed s#vendor/plugins/##

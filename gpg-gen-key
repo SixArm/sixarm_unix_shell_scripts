@@ -1,4 +1,5 @@
-##
+#!/bin/bash
+#
 # GPG generate key with our typical settings.
 #
 # This command prints our typical steps to set up a GPG key for an email address.
@@ -7,13 +8,16 @@
 # an equal sign as a separator, and then "gpg_key_rsa" for our RSA key.
 #
 #     alice@example.com=gpg_key_with_rsa_and_rsa
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 email=${1-"alice@example.com"}
 
 cat <<EOF
 
-To use GPG gen-key with our typical settings: 
+To use GPG gen-key with our typical settings:
 
     gpg --gen-key --openpgp
 

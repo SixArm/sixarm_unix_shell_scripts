@@ -1,6 +1,10 @@
-##
+#!/bin/bash
+#
 # Delete most HTML tags (accommodates multiple-line tags)
 # From http://sed.sourceforge.net/sed1line.txt
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 sed -e :a -e 's/<[^>]*>//g;/</N;//ba'

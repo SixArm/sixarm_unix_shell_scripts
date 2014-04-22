@@ -7,7 +7,7 @@
 #    my.txt: My Notes About Foo Bar
 #
 # To get the summary, this script finds the first line of the file that
-# starts with one or more symbol characters (i.e. non-space, non-alphanum), 
+# starts with one or more symbol characters (i.e. non-space, non-alphanum),
 # then one or more spaces.
 #
 # Example shell script:
@@ -20,5 +20,9 @@
 #    !! Hello
 #
 # The script puts a colon and space after the filename.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
-grep "^[^A-Za-z0-9 ]* " -m 1 -H $@ | sed 's/:[^ ] */: /'
+grep "^[^A-Za-z0-9 ]* " -m 1 -H "$@" | sed 's/:[^ ] */: /'

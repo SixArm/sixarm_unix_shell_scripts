@@ -1,8 +1,12 @@
-##
-# Delete duplicate, nonconsecutive lines from a file. 
+#!/bin/bash
+#
+# Delete duplicate, nonconsecutive lines from a file.
 #
 # Beware not to overflow the buffer size of the hold space.
 # From http://sed.sourceforge.net/sed1line.txt
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 sed -n 'G; s/\n/&&/; /^\([ -~]*\n\).*\n\1/d; s/\n//; h; P'

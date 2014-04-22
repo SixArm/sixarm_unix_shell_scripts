@@ -1,4 +1,11 @@
 #!/bin/bash
+#
+# Print some command line color examples.
+# This is useful for reference.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 NORMAL=$(tput sgr0)
 INFO=$(tput setaf 2; tput bold)

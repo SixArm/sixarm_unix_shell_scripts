@@ -1,5 +1,9 @@
-##
+#!/bin/bash
+#
 # Ubuntu script to turn on the login sound.
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 sudo -u gdm gconftool-2 --set /desktop/gnome/sound/event_sounds --type bool true

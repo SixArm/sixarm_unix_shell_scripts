@@ -1,9 +1,11 @@
 #!/bin/bash
-
-##
+#
 # Show diagnostic details about the linux version.
 # I.e. tell me about the current operating system.
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 echo 'uname -a'
 uname -a
@@ -21,6 +23,3 @@ done
 echo ''
 echo 'lsb_release -a'
 lsb_release -a
-
-
-

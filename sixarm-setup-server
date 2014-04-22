@@ -1,7 +1,12 @@
 #!/bin/bash
-unset CDPATH
-
+#
 # Fresh unix install for a typical sixarm server.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
+
+unset CDPATH
 
 # Create a directory where we can download sources from git, ftp, etc.
 # We put this in /opt level to make it easy to find; it could go anywhere.

@@ -1,6 +1,5 @@
 #!/bin/bash
-
-##
+#
 # Generate a random integer.
 #
 # Usage: random-int [max] [count]
@@ -25,8 +24,12 @@
 # Cf. random-int-faster
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
 # License is GPL v2
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 ./random-seed
 ./random-int-faster $@

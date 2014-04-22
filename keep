@@ -11,10 +11,10 @@
 # Whenever any of the files change, keep invokes the command again.
 #
 # Internally, keep uses strace (another higher-order program)
-# to find out which files are accessed by the command, 
-# and Linux’s inotify facility to watch the files for changes. 
+# to find out which files are accessed by the command,
+# and Linux’s inotify facility to watch the files for changes.
 #
-# The incron utility also uses inotify to run a command when files change, 
+# The incron utility also uses inotify to run a command when files change,
 # but keep discovers which files to watch automatically.
 #
 # See http://conway.rutgers.edu/~ccshan/wiki/blog/posts/Higher-order_shell/

@@ -1,7 +1,11 @@
-##
+#!/bin/bash
+#
 # Set the correct directory permissions of the current user's ~/.ssh directory.
 # SSH security requires restricted permissions, and will block without them.
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 unset CDPATH
 cd ~/.ssh && chmod 700 . && chmod 600 *

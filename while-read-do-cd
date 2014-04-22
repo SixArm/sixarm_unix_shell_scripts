@@ -1,12 +1,16 @@
-##
+#!/bin/bash
+#
 # For each line of input on command line, cd into a path then run a command.
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 unset CDPATH
 while read path
-do 
+do
   echo "=== $path"
   cd $path
   $1
-  cd - 
+  cd -
 done

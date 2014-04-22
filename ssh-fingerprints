@@ -1,3 +1,9 @@
+#!/bin/bash
+#
 # SSH script to print a server's ssh host public key fingerprints.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 find /etc/ssh/ssh_host*.pub | xargs -I{} ssh-keygen -l -f {}

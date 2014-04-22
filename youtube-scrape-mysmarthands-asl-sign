@@ -1,3 +1,4 @@
+#!/bin/bash
 #
 # YouTube script to scrape the "MySmartHands" American Sign Language videos.
 #
@@ -6,5 +7,9 @@
 # This script scrapes the youtube sidebar list of videos,
 # chooses each video with a title havin "ASL sign for",
 # a list of links to videos sorted by title.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
-cat videos.html | youtube-scrape-watch-title | grep ' - ASL sign for ' | sed 's# - ASL sign for .*##' | sort -k2 
+cat videos.html | youtube-scrape-watch-title | grep ' - ASL sign for ' | sed 's# - ASL sign for .*##' | sort -k2
