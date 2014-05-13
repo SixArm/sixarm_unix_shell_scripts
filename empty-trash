@@ -17,9 +17,10 @@
 #
 ##
 
-# Remove files one-by-one, without double-quoted files, 
-# because the file list may be very long, and the quote may not work.
-find ~/.local/share/Trash/{files,info}/ -type f -exec rm -f "{}" \;
+# We do not use -delete because we want to pass args to rm.
+# We do not use -exec rm because it glitches on unusual characters.
+# We use grep to filter out quoted file names because rm glitches on these.
+find ~/.local/share/Trash/files/ ~/.local/share/Trash/info/ -type f | grep -v '"' | grep -v "'" | xargs -I{} rm -rf "$@" "{}"
 
-# Remove remainders
+# Remove any remainders by using a wildcard.
 rm -rf "$@" ~/.local/share/Trash/{files,info}/*
