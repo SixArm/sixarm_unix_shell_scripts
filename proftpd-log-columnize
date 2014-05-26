@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# ProFTPD uses this log file format:
+#
+#   date server_host daemon_name[pid] server_fqdn (client_name[ip]): message
+#
+# This script normalizes the fields to tab delimited format:
+#
+#   date server_ip daemon_name pid server_name client_name ip message
+#
+# Example input fields:
+#
+#    2014-05-18 07:01:12,278
+#    server-host-name proftpd[10000] server-name.example.com
+#    (client-host-name.example.com[2.2.2.2]):
+#    FTP session opened.
+#
+sed 's/^\(....-..-.. ..:..:..,...\) \(\S\+\) \([^[]\+\)\[\(\w\+\)\] \(\S\+\) (\([^[]\+\)/\1\t\2\t\3\t\4\t\5\t\6/
