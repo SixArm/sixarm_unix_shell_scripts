@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# How to mount Nexus 4 on Linux
+# How to mount a Nexus 5 phone on Linux.
 #
 # Enable Developer Options on the Nexus:
 #
@@ -12,6 +12,34 @@
 #
 #   * Settings > Developer options > Debuggins
 #   * Tap "USB debugging"
+#
+# Install necessary MTP modules to your computer:
+#
+#     sudo apt-get install mtp-tools mtpfs
+#
+# Configure 51-android.rules:
+#
+#     sudo gedit /etc/udev/rules.d/51-android.rules
+#
+# Paste the following at the end of the file;
+# if the file does not exist then just paste:
+#
+#     # LG - Nexus 4 phone
+#     SUBSYSTEM=="usb", ATTR{idVendor}=="1004", MODE="0666"
+#
+#     # LG - Nexus 5 phone
+#     SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", MODE="0666"
+#
+#     # Samsung - Nexus 7 & 10
+#     SUBSYSTEM=="usb", SYSFS{idVendor}=="18d1", MODE="0666"
+#
+# Make the file executable:
+#
+#     sudo chmod +x /etc/udev/rules.d/51-android.rules
+#
+# Restart udev:
+#
+#     sudo service udev restart
 #
 set -o nounset
 set -o errexit
@@ -43,7 +71,7 @@ if [ ! -f $rules_file ]; then
   sudo service udev restart
 fi
 
-mount_point=/media/nexus4
+mount_point=/media/nexus
 if [ ! -d $mount_point ]; then
   sudo mkdir $mount_point
   sudo chmod 775 $mount_point
