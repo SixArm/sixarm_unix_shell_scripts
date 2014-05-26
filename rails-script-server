@@ -1,6 +1,6 @@
 #!/bin/bash
-
-##
+#
+#
 # rails-script-server - A better script/server alias.
 #
 # Usage:
@@ -12,7 +12,10 @@
 # - start the rails server
 #
 # From http://gist.github.com/166994
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 function rails-script-server {
   if [ "$1" ]; then
@@ -25,7 +28,7 @@ function rails-script-server {
   fi
   # kill any existing rails server processes.
   ps -a|grep "ruby ./script/server"|grep -v "grep"|cut -d " " -f1|xargs -n 1 kill -TERM
-  
+
   # start the server.
   ruby ./script/server
 }

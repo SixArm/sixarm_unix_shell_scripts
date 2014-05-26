@@ -1,6 +1,9 @@
-##
-# Run our typical test files
-##
+#!/bin/bash
+#
+# Run our typical Rails test files
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 RAILS_ENV=test ruby -Itest "$@"
-

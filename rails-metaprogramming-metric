@@ -1,4 +1,5 @@
-##
+#!/bin/bash
+#
 # How many meta-programming methods are in your Rails project?
 #
 # This script counts the occurences of these methods:
@@ -14,12 +15,15 @@
 #   * Triple digits should scare you.
 #   * Quadruple digits mean run for the hills.  :)
 #
-# To use this metric on Ruby code that isn't a Rails project, 
+# To use this metric on Ruby code that isn't a Rails project,
 # or on code that isn't within the directories app/ or lib/,
 # we use the script ruby-metaprogramming-metric which lets
 # us input arbitrary files.
-# 
+#
 # Based on http://aaronblohowiak.com/rails-maintainability-metric
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 find app/** lib/** | grep "\b\(eval\|method_missing\|define_method\|instance_variable_set\)\b"  | wc -l

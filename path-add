@@ -1,4 +1,5 @@
-##
+#!/bin/bash
+#
 # Add path(s) to the PATH environment variable
 #
 # Usage: path-add [-i] [-q] paths...
@@ -7,7 +8,10 @@
 #   -q: Don't print any error messages
 #
 # From http://pastie.org/591350
-##
+#
+set -o nounset
+set -o errexit
+set -o pipefail
 
 ap_prefix=0
 ap_quiet=0
