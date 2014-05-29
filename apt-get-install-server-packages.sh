@@ -98,4 +98,4 @@ apt-get install libmysql-ruby php5-mysql python-mysqldb
 
 echo "Nagios"
 apt-get install nagios3 nagios3-cgi nagios3-common nagios3-core nagios3-doc nagios-images nagios-plugins nagios-plugins-basic nagios-plugins-extra nagios-plugins-standard 
-apt-get install nagiosgrapher nagios-nrpe-plugin nagios-nrpe-server libnagios-object-perl libnagios-plugin-perl nagios-snmp-plugins ndoutils-nagios3-mysql
+apt-get install nagios-nrpe-plugin nagios-nrpe-server libnagios-object-perl libnagios-plugin-perl nagios-snmp-plugins ndoutils-nagios3-mysql
