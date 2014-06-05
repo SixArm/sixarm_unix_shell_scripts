@@ -1,1 +1,1 @@
-tr 'A-Z' 'a-z'
+tr 'a-z' 'A-Z' 
