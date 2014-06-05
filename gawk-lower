@@ -1,0 +1,1 @@
+gawk '{print tolower($0)}'
