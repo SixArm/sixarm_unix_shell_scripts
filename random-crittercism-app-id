@@ -1,0 +1,5 @@
+#!/bin/bash
+#
+# Generate a random Crittercism.com App Id.
+#
+random-alphanum 24 | tr 'A-Z' 'a-z'
