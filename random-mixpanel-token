@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# Generaete a random Mixpanel.com token.
+# This is a 32 character lowercase hex string.
+#
+random-hex 16 | tr 'A-Z' 'a-z'
