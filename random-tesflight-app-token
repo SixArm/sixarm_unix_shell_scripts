@@ -1,0 +1,8 @@
+#!/bin/bash
+#
+# Generate a random TestFlight app_token string.
+# This is a random lowercase uuid string.
+#
+# For details, see http://testflightapp.com
+#
+random-uuid | tr 'A-F' 'a-f'
