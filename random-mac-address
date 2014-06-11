@@ -1,1 +1,24 @@
-hexdump -n 6 -e'6/1 "%02x:"' /dev/random | sed 's/:$//'
+#!/bin/bash
+#
+# Shell script to generate a random hex MAC address.
+# This uses the commands `hexdump` and `urandom`.
+#
+# Usage: random-mac-address [n]
+#
+#   * n is an optional length in bytes.
+#     It defaults to 6 bytes, which is typical.
+#
+# Example:
+#
+#     $ random-mac-address
+#     58:bc:f8:52:2b:c2
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+# License is GPL v2
+#
+set -o nounset
+set -o errexit
+set -o pipefail
+
+len=${1-6}
+hexdump -n $len -e "$len/1 \"%02x:\"" /dev/random | sed 's/:$//'
