@@ -1,1 +1,1 @@
-hexdump -n6 -e'5/1 "%02x:" 1/1 "%02x" "\n"' /dev/random
+hexdump -n 6 -e'6/1 "%02x:"' /dev/random | sed 's/:$//'
