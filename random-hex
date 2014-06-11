@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # Shell script to generate a random hex string.
-# This uses urandom to pick from 0123456789ABCDEF chars.
+# This uses the commands `hexdump` and `urandom`.
 #
 # Usage: random-hex [n]
 #
