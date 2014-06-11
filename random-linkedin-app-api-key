@@ -8,4 +8,4 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-random-alphanum 12 | tr 'A-Z' 'a-z'
+random-alphanum-lower 12
