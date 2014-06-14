@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# motion-create-demo: use RubyMotion to create a demonstration project.
+#
+# This script creates placeholders for our typical motion projects.
+# For example, we create directories similar to our Rails projects,
+# and we create file paths for iOS app store icons and screenshots.
+#
+# Customize this script as you like for your own projects.
+#
+set -o nounset
+set -o errexit
+set -o pipefail
+
+motion create demo && cd demo
+
+mkdir -p {bin,build,config,db,doc,engines,features,lib,log,public,script,vendor}
+mkdir -p {app,spec}/{assets,concerns,controllers,decorators,extensions/{ios,motion,ruby},exceptions,factories,helpers,mailers,models,states,presenters,views}
+mkdir -p config/{environments,initializers,locales}
+mkdir -p db/{migrate,seeds}
+mkdir -p doc/{ios_device_identifiers,ios_provisioning_profiles},keys,start}
+mkdir -p tmp/{cache,pids,sessions,sockets}
+mkdir -p resources/appstore/locales/{en,es}/{text,screenshots/{640x960,640x1136}}
+
+touch .gitignore Gemfile Gemfile.lock Podfile.lock Rakefile 
+touch app/testflight_launcher.rb
+touch resources/appstore/iTunesArtwork{,@2x}.png
+touch resources/appstore/locales/{en,es}/{text/{description.txt,whats_new.txt},screenshots/{640x960,640x1136}/{1,2,3,4}.png}
+touch resources/AppIcon-{29x29{,@2x},40x40{,@2x},60x60{,@2x},76x76{,@2x}}.png  
