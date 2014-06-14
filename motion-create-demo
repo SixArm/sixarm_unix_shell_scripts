@@ -16,7 +16,7 @@ motion create demo && cd demo
 
 mkdir -p {bin,build,config,db,doc,engines,features,lib,log,public,script,vendor}
 mkdir -p {app,spec}/{assets,concerns,controllers,decorators,extensions/{ios,motion,ruby},exceptions,factories,helpers,mailers,models,states,presenters,views}
-mkdir -p config/{environments,initializers,locales}
+mkdir -p config/{environments,initializers,locales/{en,es}}
 mkdir -p db/{migrate,seeds}
 mkdir -p doc/{ios_device_identifiers,ios_provisioning_profiles,keys,start}
 mkdir -p doc/keys/{apple.com,segment.io,testflightapp.com}
