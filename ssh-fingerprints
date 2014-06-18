@@ -2,8 +2,13 @@
 #
 # SSH script to print a server's ssh host public key fingerprints.
 #
+# Typical locations for fingerprints:
+#
+#   * Debian: /etc/ssh/ssh_host*.pub
+#   * OSX: /etc/ssh_host*.pub
+#
 set -o nounset
 set -o errexit
 set -o pipefail
 
-find /etc/ssh/ssh_host*.pub | xargs -I{} ssh-keygen -l -f {}
+ls -1 /etc/**/ssh_host*.pub | xargs -I{} ssh-keygen -l -f {}
