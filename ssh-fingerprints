@@ -11,4 +11,4 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-ls -1 /etc/**/ssh_host*.pub | xargs -I{} ssh-keygen -l -f {}
+find -L /etc -name 'ssh_host*.pub' | xargs -I{} ssh-keygen -l -f {}
