@@ -12,6 +12,7 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
+sudo motion update
 motion create demo && cd demo
 
 mkdir -p {bin,build,config,db,doc,engines,features,lib,log,public,script,vendor}
@@ -28,3 +29,5 @@ touch app/testflight_launcher.rb
 touch resources/appstore/iTunesArtwork{,@2x}.png
 touch resources/appstore/locales/{en,es}/{text/{description.txt,whats_new.txt},screenshots/{640x960,640x1136}/{1,2,3,4}.png}
 touch resources/AppIcon-{29x29{,@2x},40x40{,@2x},60x60{,@2x},76x76{,@2x}}.png  
+
+pod setup
