@@ -1,0 +1,10 @@
+# Download Font Awesome variables from GitHub.
+#
+# The `variables.less` input looks like this:
+#
+#     @fa-var-foo-bar: "\f1234";
+#
+# This script downloads the file then greps for the varaibles.
+#
+curl --silent https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/less/variables.less | 
+grep "^@fa-var-"
