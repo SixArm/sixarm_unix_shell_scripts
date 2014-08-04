@@ -31,5 +31,5 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-./random-seed
-./random-digits-faster $@
+random-seed
+random-digits-faster $@
