@@ -1,0 +1,23 @@
+# Download Font Awesome variables from GitHub.
+#
+# The `variables.less` input looks like this:
+#
+#     @fa-var-foo-bar: "\f1234";
+#
+# This script downloads the file then greps for the varaibles.
+#
+curl --silent https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/less/variables.less | 
+grep "^@fa-var-"
+
+# If you want to convert the lines, here are some examples
+# each with a typical `sed` commands and sample output line.
+#
+# Example:
+#
+#     ... | sed 's/^@fa-var-/font_awesome_/; s/-/_/g; s/:/ =/; s/"\\/"0x/; s/;//'
+#     font_awesome_foo_bar = "0x1234"
+#
+# Example:
+#
+#     ... | sed 's/^@fa-var-/:/; s/-/_/g; s/"\\/"0x/; s/;/,/'
+#     :foo_bar: "0xf166",
