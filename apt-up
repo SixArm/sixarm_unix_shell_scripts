@@ -3,9 +3,17 @@
 # Run apt-get commands to uplift the system:
 #
 #   * update
-#   * upgrade with fix-missing and install-recommends
+#   * upgrade
 #   * clean, autoclean, autoremove with purge
 #
+# The upgrade uses:
+#
+#   * -y yes to everything
+#   * -f force changes
+#   * --fix-missing
+#   * --install-recommends
+##
+
 set -o nounset
 set -o errexit
 set -o pipefail
