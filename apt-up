@@ -16,7 +16,7 @@ apt-get --purge autoremove
 
 ## Uplift
 apt-get update
-apt-get upgrade -f --fix-missing --install-recommends
+apt-get upgrade -y -f --fix-missing --install-recommends
 
 ## Scrub after uplift
 apt-get autoclean
