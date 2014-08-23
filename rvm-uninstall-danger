@@ -6,6 +6,13 @@
 # deletes /home/*/.rvmrc files and /home/*/.rvm directories,
 # and uninstalls all RVM gems. We run this script as root.
 #
+# Adjust as you like for your needs. 
+#
+# Some of the script lines may report missing directories.
+# For example, a Mac system typically has a /Users/ directory,
+# whereas a Linux system typically has a /home/ directory.
+# You can delete the lines that you don't need, if you like.
+#
 # If rvm implode gives errors like this loop:
 #
 #    line 72: /usr/local/rvm/scripts/rvm: No such file or directory
