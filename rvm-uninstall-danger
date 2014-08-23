@@ -6,7 +6,9 @@
 # deletes user home directory .rvmrc files and .rvm directories,
 # uninstalls RVM gems, and finally tries to find any lingering items.
 #
-# Adjust as you like for your needs. 
+# This script is not advanced; it does not do any error checking,
+# does not try to ensure anything worked, and does not guarantee
+# anything. Use as you like and adjust as you like for your needs. 
 #
 # Some of the script lines may report missing directories.
 # For example, a Mac system typically has a /Users/ directory,
