@@ -2,7 +2,19 @@
 #
 # Shellshock security fix for Mac OSX
 #
+# VERY IMPORTANT: YOU MUST REBOOT AFTER RUNNING THIS.
+#
 # Credit: http://apple.stackexchange.com/questions/146849/how-do-i-recompile-bash-to-avoid-the-remote-exploit-cve-2014-6271-and-cve-2014-7
+#
+# If you use `brew` also do this then reboot:
+#
+#     brew update
+#     brew upgrade bash
+#
+# If you use `port` also do this then reboot:
+#
+#     sudo port selfupdate
+#     sudo port upgrade bash
 #
 bash --version
 mkdir bash-fix
