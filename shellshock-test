@@ -1,0 +1,1 @@
+env X="() { :;} ; echo busted" /bin/sh -c "echo stuff"
