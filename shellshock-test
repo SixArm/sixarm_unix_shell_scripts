@@ -15,4 +15,4 @@
 # If you see the date (or errors) then you are vulnerable.
 #
 env x='() { :;}; echo vulnerable' bash -c "echo test"
-env X='() { (a)=>\' bash -c "echo date"; cat echo; rm echo
+env X='() { (a)=>\' bash -c "echo date"; cat echo; rm -f echo
