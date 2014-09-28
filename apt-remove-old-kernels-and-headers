@@ -13,6 +13,10 @@
 #
 # If you get an error, make sure you are running the 
 # current kernel version, i.e. upgrade then reboot.
+#
+# Note: The plus (+) sign behind a package name inverts the meaning.
+# So in the commands below, the plus keeps the running kernel version. 
+# The uname command finds your actual kernel package version and type.
 ##
 
 apt-get remove --purge 'linux-image-[0-9].*' linux-image-$(uname -r)+

@@ -1,0 +1,12 @@
+cd ~
+apt-get update
+apt-get upgrade -y
+apt-get install -y gcc make
+dir=tmp-bash-4.3-026
+rm -rf $dir; mkdir $dir; cd $dir
+curl https://ftp.gnu.org/gnu/bash/bash-4.3.tar.gz | tar zxf -
+cd bash-4.3
+for i in $(seq -f "%03g" 1 26); do
+  curl "http://ftp.gnu.org/gnu/bash/bash-4.3-patches/bash43-$i" | patch -p0 
+done
+./configure --prefix=/ && make && make install 

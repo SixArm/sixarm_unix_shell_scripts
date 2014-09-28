@@ -33,7 +33,7 @@
 #
 # To detect duplicate files, we can use a checksum:
 #
-#     find . -type f -exec sha512sum '{}' \; | dups.zsh
+#     find . -type f -exec sha512sum '{}' \; | dups.bash
 #
 # This script requires the bash shell.
 # If you use zsh instead of bash,

@@ -1,0 +1,18 @@
+# Shellshock test
+#
+# See https://shellshocker.net/
+#
+# To detect Exploit 1 (CVE-2014-6271) run this:
+#
+#     env x='() { :;}; echo vulnerable' bash -c "echo test"
+#
+# If you see "vulnerable" then you are vulnerable.
+#
+# To detect Exploit 2 (CVE-2014-7169) run this:
+#
+#     env X='() { (a)=>\' bash -c "echo date"; cat echo
+#
+# If you see the date (or errors) then you are vulnerable.
+#
+env x='() { :;}; echo vulnerable' bash -c "echo test"
+env X='() { (a)=>\' bash -c "echo date"; cat echo; rm -f echo

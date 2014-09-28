@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# Shellshock security fix for Mac OSX
+#
+# VERY IMPORTANT: YOU MUST REBOOT AFTER RUNNING THIS.
+#
+# Credit: http://apple.stackexchange.com/questions/146849/how-do-i-recompile-bash-to-avoid-the-remote-exploit-cve-2014-6271-and-cve-2014-7
+#
+# If you use `brew` also do this then reboot:
+#
+#     brew update
+#     brew upgrade bash
+#
+# If you use `port` also do this then reboot:
+#
+#     sudo port selfupdate
+#     sudo port upgrade bash
+#
+bash --version
+mkdir bash-fix
+cd bash-fix
+curl https://opensource.apple.com/tarballs/bash/bash-92.tar.gz | tar zxf -
+cd bash-92/bash-3.2
+curl https://ftp.gnu.org/pub/gnu/bash/bash-3.2-patches/bash32-052 | patch -p0    
+cd ..
+xcodebuild
+sudo cp /bin/bash /bin/bash.old
+sudo cp /bin/sh /bin/sh.old
+build/Release/bash --version # GNU bash, version 3.2.52(1)-release
+build/Release/sh --version   # GNU bash, version 3.2.52(1)-release
+sudo cp build/Release/bash /bin
+sudo cp build/Release/sh /bin
+bash --version
+sudo chmod a-x /bin/bash.old /bin/sh.old

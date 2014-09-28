@@ -3,8 +3,15 @@
 # Run apt-get commands to uplift the system:
 #
 #   * update
-#   * upgrade with fix-missing and install-recommends
+#   * upgrade
 #   * clean, autoclean, autoremove with purge
+#
+# The upgrade uses:
+#
+#   * -y yes to everything
+#   * -f force changes
+#   * --fix-missing
+#   * --install-recommends
 #
 set -o nounset
 set -o errexit
@@ -16,7 +23,7 @@ apt-get --purge autoremove
 
 ## Uplift
 apt-get update
-apt-get upgrade -f --fix-missing --install-recommends
+apt-get upgrade -y -f --fix-missing --install-recommends
 
 ## Scrub after uplift
 apt-get autoclean

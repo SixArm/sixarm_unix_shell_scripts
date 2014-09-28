@@ -2,18 +2,30 @@
 #
 # Uninstall RVM (Ruby Version Manager). THIS IS DANGEROUS.
 #
-# This runs rvm implode, delete RVM files from the system,
-# deletes /home/*/.rvmrc files and /home/*/.rvm directories,
-# and uninstalls all RVM gems. We run this script as root.
-# We run this script to clean up our system for rbenv.
+# This runs rvm implode, deletes various RVM files from the system,
+# deletes user home directory .rvmrc files and .rvm directories,
+# uninstalls RVM gems, and finally tries to find any lingering items.
+#
+# This script is not advanced; it does not do any error checking,
+# does not try to ensure anything worked, and does not guarantee
+# anything. Use as you like and adjust as you like for your needs. 
+#
+# Some of the script lines may report missing directories.
+# For example, a Mac system typically has a /Users/ directory,
+# whereas a Linux system typically has a /home/ directory.
+# You can delete the lines that you don't need, if you like.
 #
 # If rvm implode gives errors like this loop:
+#
 #    line 72: /usr/local/rvm/scripts/rvm: No such file or directory
 #
 # then the rvm setup is bonked and we can delete the rvm script
 # by hand then run this script again; rvm implode won't work,
 # but the rest of the script will do a decent job of deleting
 # any lingering rvm files and reporting any remainders.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
 #
 set -o nounset
 set -o errexit
@@ -22,15 +34,31 @@ set -o pipefail
 echo "rvm implode"
 rvm implode
 
-echo "removing rvm files"
-rm -f /usr/local/bin/rvm
-rm -rf /usr/local/rvm/scripts
-rm -f /etc/rvmrc
-rm -f /home/*/.rvmrc
-rm -rf /home/*/.rvm
+echo "remove rvm files from system-wide areas"
+sudo rm -rf /usr/local/bin/rvm
+sudo rm -rf /usr/local/rvm
+sudo rm -rf /etc/rvmrc
+sudo rm -rf /etc/profile.d/rvm.sh
 
-echo "uninstall rvm gem"
+echo "remove rvm files from all likely user areas"
+sudo rm -rf /home/*/.rvmrc
+sudo rm -rf /home/*/.rvm
+sudo rm -rf /Users/*/.rvmrc
+sudo rm -rf /Users/*/.rvm
+
+echo "remove rvm files from the current user's home"
+sudo rm -rf $HOME/.rvmrc
+sudo rm -rf $HOME/.rvm
+
+echo "uninstall rvm gem as current user and with sudo"
 gem uninstall -a -q rvm
+sudo gem uninstall -a -q rvm
 
-echo "find any remaining .rvmrc files to delete by hand"
-find / -name .rvmrc
+echo "delete rvm group"
+sudo /usr/sbin/groupdel rvm
+
+echo "try to find any remaining .rvmrc files, in case you want to delete them"
+sudo find -L / -name .rvmrc
+
+echo "try to find rvm text in configuration files, in case you want to edit thme"
+sudo find -L / -type f | grep "\(bash_login\|bash_profile\|bashrc\|profile\|zshenv\|zshrc\|zlogin\|zlogout\|zprofile\)$" | xargs -I{} grep -Iil "rvm" {}
