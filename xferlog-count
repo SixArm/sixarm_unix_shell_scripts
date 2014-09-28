@@ -1,0 +1,82 @@
+#!/bin/bash
+#
+
+#
+##
+
+help()
+{
+cat <<EOF
+$0 options
+
+Count the FTP transfer log items by date, with options for filtering.
+
+Options:
+
+   -h   Help
+   -r   Remote host to match
+   -f   File path to match
+   -u   User name to match
+   -c   Completion status to match, either "c" or "i"
+
+Example to count transfers of the file name `hello.txt`:
+
+    cat /var/log/proftpd/xferlog |
+    xferlog-count -f hello.txt
+
+Example to count transfers by a user name `alice`:
+
+    cat /var/log/proftpd/xferlog |
+    xferlog-count -u alice
+
+Example to count transfers with a completion status of `c` meaning complete:
+
+    cat /var/log/proftpd/xferlog |
+    xferlog-count -c c
+
+This script expects typical xferlog line format:
+
+  * start with a three-field current time, e.g. "Sat Dec 31".
+  * contain the remote host, file path, and user name.
+  * end with "c" for complete or "i" for incomplete.
+
+Version: 1.0.0
+Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+License: GPL
+
+EOF
+}
+
+REMOTE='.*'
+FILE='.*'
+USER='.*'
+COMPLETION='.'
+while getopts “r:f:u:c:” OPTION
+do
+     case $OPTION in
+         r)
+             REMOTE=$OPTARG
+             ;;
+         f)
+             FILE=$OPTARG
+             ;;
+         u)
+             USER=$OPTARG
+             ;;
+         c)
+             COMPLETION=$OPTARG
+             ;;
+         h)
+             usage
+             exit
+             ;;
+         ?)
+             usage
+             exit
+             ;;
+     esac
+done
+
+grep "$REMOTE .*$FILE.* $USER .* $COMPLETION$" |
+awk '{print $1,$2,$3}' |
+uniq -c
