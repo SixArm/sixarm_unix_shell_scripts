@@ -1,0 +1,1 @@
+sudo lsof -s | awk '$5 == "REG"' | sort -n -r -k 7,7
