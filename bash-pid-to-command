@@ -17,7 +17,7 @@
 # after the process launched, yet the process is still running 
 # on the bash that is still in memory, there's still a solution.
 #
-# To to get the content of bash from memory:
+# To get the content of bash from memory:
 #
 #     cat /proc/1234/exe > /tmp/bash-from-memory
 #
