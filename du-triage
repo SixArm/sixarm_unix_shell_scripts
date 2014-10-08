@@ -1,0 +1,6 @@
+# Disk usage triage.
+#
+#   -S to omit subdir size
+#
+# Then sorted and limited to top 25
+du -SPx . | sort -nr | head -25
