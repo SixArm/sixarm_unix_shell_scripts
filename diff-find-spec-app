@@ -12,5 +12,5 @@
 # License: GPL
 #
 diff  \
-<(find spec -type f | sed 's#^[^/]+/##; s#_spec\.[[:alnum:]]+$##') \
-<(find app  -type f | sed 's#^[^/]+/##; s#\.[[:alnum:]]+$##')
+<(find spec -type f | sed 's#^[^/]+/##; s#_spec\.[[:alnum:]]\+$##') \
+<(find app  -type f | sed 's#^[^/]+/##; s#\.[[:alnum:]]\+$##')
