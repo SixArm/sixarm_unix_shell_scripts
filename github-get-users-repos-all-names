@@ -1,0 +1,1 @@
+curl https://api.github.com/users/$1/repos?type=all | jq -r '.[] .name'
