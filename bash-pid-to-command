@@ -1,0 +1,70 @@
+#!/bin/bash
+#
+# Use a bash process id (PID) to recover its command line.
+# This script uses GDB to attach to the running bash shell,
+# write the history of the pid to a temp file, then show it.
+#
+# This script is useful when we can't remember the command that
+# we wrote to launch the process, and bash has not written the
+# command to a history file, and we can't interupt the process.
+#
+# If we can interrupt the script, it's typically easy to suspend
+# by typing `Ctrl-z` then `bg`, and then using the up arrow to 
+# get the history line from the shell, then copy/paste the line.
+#
+# In an extreme case when the process's `bash` program no longer 
+# exists on disk, e.g. when a sysadmin has upgraded bash on disk
+# after the process launched, yet the process is still running 
+# on the bash that is still in memory, there's still a solution.
+#
+# To get the content of bash from memory:
+#
+#     cat /proc/1234/exe > /tmp/bash-from-memory
+#
+# To attach the debugger:
+#
+#     gdb --pid 53165 /tmp/bash-from-memory
+#
+# Related: If bash is executing commands, then it's going to be calling
+# calling `fork()` and `exec()`, showing the full command line of every call.
+# Try `strace` with `-f` to follow child processes.
+#
+#     strace -vfF -s1000 -p [pid]
+#
+# Related: we can just dump the memory of that process and manually 
+# grep for the command (assuming we remember some parts of it):
+#
+#     gcore $pid
+#     strings core.$pid | grep $keywords
+#
+# Note that `zsh` doesn't tend to need this kind of script,
+# because `zsh` writes to history as soon as we press enter;
+# whereas `bash` writes to history when the command completes.
+#
+# Credit: Thanassis Tsiodras.
+#
+#   * See http://users.softlab.ece.ntua.gr/~ttsiod/
+#   * Git repo: https://github.com/ttsiodras/utils/blob/master/showBashCmdline.sh
+#   * Blog post: http://unix.stackexchange.com/questions/159010/how-can-i-see-the-exact-command-line-being-executed-inside-some-bash-instance#159010
+#   * Reddit discussion: http://www.reddit.com/r/programming/comments/2i6pnk/the_magic_cmdline_and_how_i_got_it_back/
+#
+if [ $# -ne 1 ] ; then
+    echo Usage: $0 BASH_PID
+    exit 1
+fi
+if [ ! -d /proc/$1 ] ; then
+    echo There is no such PID
+    exit 1
+fi
+if [ $(realpath /proc/$1/exe) != "/bin/bash" ] ; then
+    echo This is not a bash PID
+    exit 1
+fi
+TMPFILE=~/tmp/bash-pid-to-command-history
+gdb --pid $1 >/dev/null 2>&1 <<OEF
+call write_history("$TMPFILE")
+detach
+q
+OEF
+tail -1 "$TMPFILE"
+rm -f "$TMPFILE"
