@@ -1,6 +1,11 @@
 ##
 # Disk usage in easy-to-read format sorted by size.
+#
+#   -s = summerize
+#   -x = stay in one filesystem
+#   -P = don't follow symlinks
+#
+# Note: the /root directory will not be shown
 ##
-
-du -sk * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
+du -skxP * | sort -n | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'
 
