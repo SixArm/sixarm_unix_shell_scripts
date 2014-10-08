@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #
 # Compare the list of filenames in the `spec` directory and `app directory.
 #
