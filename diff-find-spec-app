@@ -1,3 +1,5 @@
+#!/bin/sh
+#
 # Compare the list of filenames in the `spec` directory and `app directory.
 #
 # This is useful for discovering specs files that need app implementation,
