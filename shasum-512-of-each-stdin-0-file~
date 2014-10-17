@@ -1,0 +1,13 @@
+#!/bin/bash
+#
+# Calculate the shasum 512 of each stdin 0-delimited line.
+#
+# Example:
+#
+#     find * -type f -print0 | xargs-0-shasum-512-line
+#
+# Cf. `shasum-512-of-each-stdin-0-file`
+#
+xargs -0 shasum -a 512 | awk '{print $1}'
+
+ xargs -0 -I{} shasum -a 512 "{}" | awk '{print $1}'
