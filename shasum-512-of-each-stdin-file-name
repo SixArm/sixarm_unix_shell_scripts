@@ -1,0 +1,1 @@
+while read line; do shasum -a 512 "$line"; done | awk '{print $1}'
