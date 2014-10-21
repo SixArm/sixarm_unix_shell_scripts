@@ -1,8 +1,7 @@
-
 #!/bin/bash
 #
 # Move a path by using rsync.
 #
 # This ensures the path is not accidentally moved over a newer version.
 #
-rsync -av "$1" "$2" && rm -rf "$1" "$2"
+rsync -av "$1" "$2" && rm -rf "$1"
