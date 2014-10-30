@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Parse a typical Ruby Gemfile to a list of gem names.
+#
+# Example:
+#
+#     cat Gemfile | gemfile-to-gem-names
+#
+sed -n "s/^\s*gem\s+['"]\([^'"]*\)['"].*/\1/p" 
