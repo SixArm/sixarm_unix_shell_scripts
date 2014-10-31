@@ -1,0 +1,28 @@
+#!/bin/bash
+#
+# Print lines that are only in file 2.
+#
+# Example:
+#
+#     cat 1.txt
+#     a
+#     b
+#
+#     cat 2.txt
+#     b
+#     c
+#       
+#     diff-2 a.txt b.txt
+#     c
+#
+# Credit: http://stackoverflow.com/users/207248/siegex
+# Detail: http://stackoverflow.com/questions/4717250/extracting-unique-values-between-2-sets-files
+#
+# This script is logically the same as:
+#
+#     comm -13 <(sort 1.txt) <(sort 2.txt)
+#
+# This script is faster than comm (especially on large files)
+# because this script doesn't need the inputs to be sorted.
+#   
+awk 'FNR==NR{a[$0]++}FNR!=NR && !a[$0]{print}' "$@"
