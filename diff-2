@@ -15,8 +15,7 @@
 #     diff-2 a.txt b.txt
 #     c
 #
-# Credit: http://stackoverflow.com/users/207248/siegex
-# Detail: http://stackoverflow.com/questions/4717250/extracting-unique-values-between-2-sets-files
+# Credit: http://stackoverflow.com/questions/4717250/extracting-unique-values-between-2-sets-files
 #
 # This script is logically the same as:
 #
@@ -25,4 +24,5 @@
 # This script is faster than comm (especially on large files)
 # because this script doesn't need the inputs to be sorted.
 #   
-awk 'FNR==NR{a[$0]++}FNR!=NR && !a[$0]{print}' "$@"
+awk 'FNR==NR{a[$0]++;next}!($0 in a)' "$@"
+
