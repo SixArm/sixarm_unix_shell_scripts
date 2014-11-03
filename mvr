@@ -4,4 +4,4 @@
 #
 # This ensures the path is not accidentally moved over a newer version.
 #
-rsync -av "$1" "$2" && rm -rf "$1"
+rsync -auv "$1" "$2" && rm -rf "$1"
