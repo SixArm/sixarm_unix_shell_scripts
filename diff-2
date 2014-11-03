@@ -23,6 +23,17 @@
 #
 # This script is faster than comm (especially on large files)
 # because this script doesn't need the inputs to be sorted.
-#   
-awk 'FNR==NR{a[$0]++;next}!($0 in a)' "$@"
+#
+# Explanation:
+#
+#   * FNR is the current file's record number
+#   * NR is the current overall record number
+#   * FNR==NR is true when we are reading file1, not file2
+#   * $0 is the line text
+#   * a[$0] is a hash that tracks that we've seen the line text
+#   * FNR==NR{a[$0];next} tracks that we've seen all the file1 line text
+#   * !($0 in a) is true when we have not seen the line text
+#   * awk default is to print the line text
+#
+awk 'FNR==NR{a[$0];next}!($0 in a)' "$@"
 
