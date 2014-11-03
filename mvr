@@ -1,7 +1,0 @@
-#!/bin/bash
-#
-# Move a path by using rsync.
-#
-# This ensures the path is not accidentally moved over a newer version.
-#
-rsync -auv "$1" "$2" && rm -rf "$1"
