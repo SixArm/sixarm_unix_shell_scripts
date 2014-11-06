@@ -18,13 +18,13 @@ set -o errexit
 set -o pipefail
 
 ## Scrub before uplift
-apt-get autoclean
-apt-get --purge autoremove
+sudo apt-get autoclean
+sudo apt-get --purge autoremove
 
 ## Uplift
-apt-get update
-apt-get upgrade -y -f --fix-missing --install-recommends
+sudo apt-get update
+sudo apt-get upgrade -y -f --fix-missing --install-recommends
 
 ## Scrub after uplift
-apt-get autoclean
-apt-get --purge autoremove
+sudo apt-get autoclean
+sudo apt-get --purge autoremove
