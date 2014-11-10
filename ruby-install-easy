@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Download the current ruby stable version,
+# and install it in our preferred directory.
+#
+# Our directory is /opt/ruby/x.y.z
+#
+set -o nounset
+set -o errexit
+set -o pipefail
+
+ruby_stable_version(){
+  curl -s --location https://www.ruby-lang.org/en/downloads/ |
+  grep 'cache.ruby-lang.org' | 
+  head -1 | 
+  sed -n 's/.*ruby-\(.*\)\.tar\.gz.*/\1/p'
+}
+
+version=$(ruby_stable_version)
+dir="/opt/ruby/$version"
+ruby-install ruby "$version" --install_dir "$dir"
