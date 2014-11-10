@@ -1,0 +1,5 @@
+cd /opt 
+test -d ruby-install || sudo git clone https://github.com/postmodern/ruby-install.git
+cd ruby-install
+sudo git pull
+sudo make install
