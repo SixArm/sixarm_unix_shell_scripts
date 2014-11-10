@@ -10,4 +10,4 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-RANDOM=$(head -c4 /dev/urandom | od -t u4 | awk '{ print $2 }')
+RANDOM=$(head -c4 /dev/random | od -t u4 | awk '{ print $2 }')

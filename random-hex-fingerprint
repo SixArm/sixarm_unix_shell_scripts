@@ -22,4 +22,4 @@ set -o errexit
 set -o pipefail
 
 len=${1-16}
-hexdump -n $len -e "$len/1 \"%02X:\"" /dev/urandom | sed 's/:$//'
+hexdump -n $len -e "$len/1 \"%02X:\"" /dev/random | sed 's/:$//'

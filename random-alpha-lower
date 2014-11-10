@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# Shell script to generate a secure random alpha string.
+# This uses /dev/random to pick from among a-z chars.
+#
+# Usage: random-alpha-lower [n]
+# * n is an optional length; it defaults to 16.
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+#
+set -o nounset
+set -o errexit
+set -o pipefail
+
+len=${1-16}
+cat /dev/random | strings -n 1 | grep -o '[a-z]' | head -n $len | tr -d '\n'; echo

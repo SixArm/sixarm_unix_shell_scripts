@@ -23,7 +23,7 @@
 ##
 
 len=${1-22}
-cat /dev/urandom | strings -n 1 | grep -o '[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789]' | head -n $len | tr -d '\n' | sed 's/^/$2a$07$/'; echo
+cat /dev/random | strings -n 1 | grep -o '[ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789]' | head -n $len | tr -d '\n' | sed 's/^/$2a$07$/'; echo
 
 
 

@@ -15,14 +15,4 @@ set -o errexit
 set -o pipefail
 
 len=${1-256}
-cat /dev/urandom | strings -n 1 | grep -o '[_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]' | head -n $len | tr -d '\n'; echo
-exit
-while [ ${#build} -lt $len ]
-do
-  char=`dd if=/dev/urandom count=1 bs=1 2</dev/null`
-  if [[ $char =~ [_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567890] ]]
-  then
-    build="$build$char"
-  fi
-done
-echo $build
+cat /dev/random | strings -n 1 | grep -o '[_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]' | head -n $len | tr -d '\n'; echo
