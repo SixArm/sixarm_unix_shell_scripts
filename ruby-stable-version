@@ -1,0 +1,5 @@
+curl -s --location https://www.ruby-lang.org/en/downloads/ |
+grep 'cache.ruby-lang.org' |
+head -1 |
+sed -n 's/.*ruby-\(.*\).tar.gz.*/\1/p'
+
