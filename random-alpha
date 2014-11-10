@@ -1,0 +1,24 @@
+#!/bin/bash
+
+##
+# Generate a secure random alphabetic string.
+#
+# Usage:
+#
+#     random-alpha [n]
+#
+# Options:
+#
+#   * `n` is the number of characters; default is 16.
+#
+# Example:
+#
+#     $ random-alpha
+#     NcgCdRmnrspdDXuA
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
+random-match A-Za-z ${1-16}
