@@ -1,8 +1,24 @@
 #!/bin/bash
-#
+
+##
 # Generate a random TestFlight app_token string.
-# This is a random lowercase uuid string.
+#
+# The string is a uuid, lowercase.
+#
+# Usage:
+#
+#     random-testflight-app-token
+#
+# Example:
+#
+#     $ random-testflight-app-token
+#     a49b80e8-8836-46a2-a7c6-5ab8f0ac9ddc
 #
 # For details, see http://testflightapp.com
 #
-random-uuid | tr 'A-F' 'a-f'
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
+random-uuid-lower

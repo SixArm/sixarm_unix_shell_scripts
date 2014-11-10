@@ -1,5 +1,24 @@
 #!/bin/bash
+
+##
+# Generate a random Crittercism.com App Id string.
 #
-# Generate a random Crittercism.com App Id.
+# The string is alphanumeric, lowercase, 24 characters.
 #
+# Usage:
+#
+#     random-crittercism-app-id
+#
+# Example:
+#
+#     $ random-crittercism-app-id
+#     rh082vn0gapaqjitzszlnc46
+#
+# See http://crittercism.com
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
 random-alphanum-lower 24

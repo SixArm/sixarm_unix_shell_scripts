@@ -1,1 +1,22 @@
+#!/bin/bash
+
+##
+# Generate a random Twitter app consumer key.
+#
+# The string is alphanumeric, mixed case, 21 characters.
+#
+# Usage:
+#
+#     random-twitter-app-consumer-key
+#
+# Example:
+#
+#     $ random-twitter-app-consumer-key
+#     NIqmCufaqpSvKyYXMRMaF
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
 random-alphanum 21

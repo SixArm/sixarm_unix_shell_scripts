@@ -1,32 +1,38 @@
 #!/bin/bash
-#
+
+##
 # Generate random digits.
 #
-# Usage: random-digits [n] [count]
+# Usage:
 #
-#   * n is how many digits to generate on one line; it defaults to 16.
-#   * count is how many lines to generate; it defaults to 1.
+#     random-digits [n] [count]
 #
-# Example:
-#   random-digits
-#   => sixteen random digits
+# Options:
 #
-# Example:
-#   random-digits 3
-#   => three random digits
+#   * `n` is the number of digits to generate on one line; default is 16.
+#   * `count` is how many lines to generate; default is 1.
 #
-# Example:
-#   random-digits 3 4
-#   => three random digits, four times
+# Examples:
+#
+#     $ random-digits
+#     #=> sixteen random digits
+#
+#     $ random-digits 3
+#     #=> three random digits
+#
+#     $ random-digits 3 4
+#     #=> three random digits, four times
 #
 # This script seeds the bash random variable.
+#
 # Cf. random-seed
 # Cf. random-int-faster
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
 # License is GPL v2
-#
+##
+
 set -o nounset
 set -o errexit
 set -o pipefail

@@ -1,1 +1,24 @@
+#!/bin/bash
+
+##
+# Generate a random Apple development id string.
+#
+# The string is alphanumeric, uppercase, 10 characters.
+#
+# Usage:
+#
+#     random-apple-development-id
+#
+# Example:
+#
+#     $ random-apple-development-id
+#     YT4K6BX2UZ
+#
+# See http://developer.apple.com
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
 random-alphanum-upper 10

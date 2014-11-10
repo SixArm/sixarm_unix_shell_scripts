@@ -1,18 +1,24 @@
 #!/bin/bash
+
+##
+# Generate a secure random alphanumeric string.
 #
-# Shell script to generate a secure random alphanumeric string.
-# This uses /dev/random to pick from among 0-9, A-Z, a-z chars.
+# Syntax:
 #
-# Usage: random-alphanum [n]
-# * n is an optional length; it defaults to 16.
+#     random-alphanum [n]
+#
+# Options:
+#
+#   * `n` is the number of characters; default is 16.
+#
+# Example:
+#
+#     $ random-alphanum
+#     RDv7pOB0Gr8s5kWd
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
 # License is GPL v2
-#
-set -o nounset
-set -o errexit
-set -o pipefail
+##
 
-len=${1-16}
-cat /dev/random | strings -n 1 | grep -o '[0-9A-Za-z]' | head -n $len | tr -d '\n'; echo
+random-match A-Za-z0-9 ${1-16}

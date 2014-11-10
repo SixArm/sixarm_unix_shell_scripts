@@ -1,11 +1,18 @@
 #!/bin/bash
-#
+
+##
 # Generate a random TestFlight API token string.
-# This is a 32 character lowercase hex string,
+#
+# The string is 32 character lowercase hex string,
 # then a dash, then a 44 character alphanum string.
 #
-# For details, see http://testflightapp.com
+# See http://testflightapp.com
 #
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
 part1=`random-hex 16 | tr 'A-Z' 'a-z'`
 part2=`random-alphaum 44` 
 echo "${part1}_${part2}"

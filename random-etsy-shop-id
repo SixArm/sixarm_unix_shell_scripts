@@ -1,0 +1,27 @@
+#!/bin/bash
+
+##
+# Generate a random Etsy shop id string.
+#
+# The string is alphabetic, mixed case, 4-64 characters.
+#
+# Syntax:
+#
+#     random-etsy-shop-id [n]
+#
+# Options:
+#
+#   * `n` is the number of characters; default is 4-64.
+#
+# Example:
+#
+#     $ random-etsy-shop-id
+#     oRcIJbwcwXHUVOyHPFeHTKicenPsxttC
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
+n=${1-$(( $RANDOM % 60 + 4 ))
+random-alpha $n

@@ -1,6 +1,24 @@
 #!/bin/bash
+
+##
+# Generate a random Mixpanel.com token.
 #
-# Generaete a random Mixpanel.com token.
 # This is a 32 character lowercase hex string.
 #
-random-hex 16 | tr 'A-Z' 'a-z'
+# Usage:
+#
+#     random-mixpanel-token
+#
+# Example:
+#
+#     $ random-mixpanel-token
+#     314aded16e28a4f9d16755ba9c6730bc
+#
+# See http://mixpanel.com
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
+random-hex 16 | tr A-Z a-z

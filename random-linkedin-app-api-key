@@ -1,11 +1,24 @@
 #!/bin/bash
-#
+
+##
 # Generate a random LinkedIn app API key,
-# which is a random alphanumeric 12-character string,
-# all lower case.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# The string is alphanumeric lowercase 12 characters.
+#
+# Usage:
+#
+#     random-linkedin-app-api-key
+#
+# Example:
+#
+#     $ random-linkedin-app-api-key
+#     voqktpwdsopxq
+#
+# See http://linkedin.com
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
 
 random-alphanum-lower 12

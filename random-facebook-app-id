@@ -1,1 +1,24 @@
+#!/bin/bash
+
+##
+# Generate a random Facebook app id string.
+#
+# The string is digits, 15 characters.
+#
+# Usage:
+#
+#     random-facebook-app-id
+#
+# Example:
+#
+#     $ random-facebook-app-id
+#     567337611380931
+#
+# See http://facebook.com
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
 random-digits 15

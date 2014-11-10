@@ -1,32 +1,38 @@
 #!/bin/bash
-#
+
+##
 # Generate a random integer.
 #
-# Usage: random-int [max] [count]
+# Usage:
 #
-#   * max is the exclusive maximum; it defaults to 10.
-#   * count is how many to generate, one per line of output
+#     random-int [max] [count]
 #
-# Example:
-#   random-int
-#   => a random integer from 0 to 9
+# Options:
 #
-# Example:
-#   random-int 100
-#   => a random integer from 0 to 99
+#   * `max` is the exclusive maximum; default is 10.
+#   * `count` is how many to generate, one per line of output
 #
-# Example:
-#   random-int 100 8
-#   => eight random integers from 0 to 99
+# Examples:
+#
+#     $ random-int
+#     #=> a random integer from 0 to 9
+#
+#     $ random-int 100
+#     #=> a random integer from 0 to 99
+#
+#     $ random-int 100 8
+#     #=> eight random integers from 0 to 99
 #
 # This script seeds the bash random variable.
+#
 # Cf. random-seed
 # Cf. random-int-faster
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
 # License is GPL v2
-#
+##
+
 set -o nounset
 set -o errexit
 set -o pipefail

@@ -1,13 +1,16 @@
 #!/bin/bash
+
+##
+# Generate a random hex string.
 #
-# Shell script to generate a random hex string.
-# This uses the commands `hexdump` and `urandom`.
+# Usage:
 #
-# Usage: random-hex [n]
+#     random-hex [n]
 #
-#   * n is an optional length of bytes.
-#     It defaults to 16.
-#     Note that this means the output string is twice as long.
+# Options:
+#
+#   * `n` is the number of bytes; default is 16.
+#      Note that this means the output string is twice as long.
 #
 # Example:
 #
@@ -16,19 +19,22 @@
 #
 # Alternate solution for Linux, using the tr command:
 #
-#     cat /dev/urandom | tr -cd '0-9A-F' | head -c 16; echo
+#     cat /dev/random | tr -cd '0-9A-F' | head -c 16; echo
 #
 # Alternate solution for BSD and Mac OS X, using the tr command:
 #
-#     cat /dev/urandom | env LC_CTYPE=C tr -cd '0-9A-F' | head -c 16; echo
+#     cat /dev/random | env LC_CTYPE=C tr -cd '0-9A-F' | head -c 16; echo
+#
+# This implemenation uses the commands `hexdump` and `/dev/random`.
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
 # License is GPL v2
-#
+##
+
 set -o nounset
 set -o errexit
 set -o pipefail
 
 len=${1-16}
-hexdump -n $len -v -e '/1 "%02X"' -e "/$len \"\n\"" /dev/urandom
+hexdump -n $len -v -e '/1 "%02X"' -e "/$len \"\n\"" /dev/random

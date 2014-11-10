@@ -1,15 +1,18 @@
 #!/bin/bash
+
+##
+# Generate a random uuid string.
 #
-# Shell script to generate a random uuid.
+# Usage:
 #
-# Usage: random-uuid
+#     random-uuid
 #
 # Example:
 #
 #     $ random-uuid
 #     63813D83-094B-4E15-A904-A28BB9CE51DB
 #
-# This script uses the commands `hexdump` and `random` 
+# This script uses the commands `hexdump` and `/dev/random` 
 # to generate secure random numbers and format them.
 #
 # If your system has the `uuidgen` tool, consider using it
@@ -20,6 +23,8 @@
 #     $ uuidgen -r
 # 
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
 # License is GPL v2
+##
 
 hexdump -n 16 -v -e '4/1 "%02X" "-" 2/1 "%02X" "-" 2/1 "%02X" "-" 2/1 "%02X" "-" 6/1 "%02X" "\n"' /dev/random

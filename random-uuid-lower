@@ -1,0 +1,20 @@
+#!/bin/bash
+
+##
+# Generate a random UUID lowercase string.
+#
+# Usage:
+#
+#     random-uuid-lower
+#
+# Example:
+#
+#     $ random-uuid-lower
+#     be09f214-7afa-4e51-bef5-6ead95071a37
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
+random-uuid | tr A-F a-f

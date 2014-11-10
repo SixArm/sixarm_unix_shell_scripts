@@ -1,22 +1,30 @@
 #!/bin/bash
+
+##
+# Generate a random hex fingerprint.
 #
-# Shell script to generate a random hex fingerprint.
-# This uses the commands `hexdump` and `urandom`.
+# Usage:
 #
-# Usage: random-hex-fingerprint [n]
+#     random-hex-fingerprint [n]
 #
-#   * n is an optional length in bytes.
-#     It defaults to 16 bytes, which is typical of
-#     fingerprints for ssh DSA, ECDSA, and RSA.
+# Options:
+#
+#   * `n` is the number of bytes; default is 16.
 #
 # Example:
 #
 #     $ random-hex-fingerprint 
 #     73:5C:6E:83:75:80:E4:04:7A:AE:AC:BA:EE:46:E6:43
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
-# License is GPL v2
+# Note: 16 bytes is typical of fingerprints for SSH DSA, ECDSA, and RSA.
 #
+# This implementation uses `hexdump` and `/dev/random`.
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
 set -o nounset
 set -o errexit
 set -o pipefail

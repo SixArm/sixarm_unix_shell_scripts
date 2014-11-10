@@ -1,11 +1,27 @@
 #!/bin/bash
-#
+
+##
 # Generate a random TestFlight team token string.
-# This is a 32 character lowercase hex string,
-# then a dash, then a 44 character alphanum string.
 #
-# For details, see http://testflightapp.com
+# The string is a 32 character lowercase hex string,
+# then an underscore, then a 44 character alphanum string.
 #
+# Usage:
+#
+#     random-testflight-team-token
+#
+# Example:
+#
+#     $ random-testflight-team-token
+#     314aded16e28a4f9d16755ba9c6730bc_9UKTvH9JV5m5RlYjW0jdUs1ODwFWQkQ5du5Qapxc9J5X
+#
+# See http://testflightapp.com
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
 part1=`random-hex 16 | tr 'A-Z' 'a-z'`
 part2=`random-alphaum 44` 
 echo "${part1}_${part2}"

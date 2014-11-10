@@ -1,1 +1,24 @@
+#!/bin/bash
+
+##
+# Generate a random Etsy API key.
+#
+# The string is alphanumeric, lowercase, 24 characters.
+#
+# Usage:
+#
+#     random-etsy-api-key
+#
+# Example:
+#
+#     $ random-etsy-api-key
+#     627af3ciipjhja1irz28j4mu
+#
+# See https://www.etsy.com/developers/
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
 random-alphanum-lower 24

@@ -1,11 +1,11 @@
 #!/bin/bash
 
 ##
-# Generate a random alphanumeric uppercase string.
+# Generate a random alphabetic uppercase string.
 #
 # Usage:
 #
-#     random-alphanum-upper [n]
+#     random-alpha-upper [n]
 #
 # Options:
 #
@@ -13,12 +13,12 @@
 #
 # Example:
 #
-#     $ random-alphanum-upper
-#     J8YUOHTPTYI8S4VK
+#     $ random-alpha-upper
+#     JBXSTSCTUEREGJVH
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
 # License is GPL v2
 ##
 
-random-match A-Z0-9 ${1-16}
+random-match A-Z ${1-16}

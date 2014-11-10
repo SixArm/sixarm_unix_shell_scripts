@@ -1,18 +1,29 @@
 #!/bin/bash
+
+##
+# Generate a random string of word characters.
 #
-# Shell script to generate a random string.
-# This uses urandom to pick from \w characters.
+# The characters are A-Z, a-z, and underscore.
 #
-# Usage: random-word-characters [n]
-# * n is an optional length; it defaults to 256.
+# Usage:
+#
+#     random-word-characters [n]
+#
+# Options:
+#
+#   * `n` is the number of characters; default is 16.
+#
+# Examples:
+#
+#     $ random-word-characters
+#     UT_QPCfk_zhQNhpB
+#
+#     $ random-word-characters 8
+#     YpGm_pmE
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
 # License is GPL v2
-#
-set -o nounset
-set -o errexit
-set -o pipefail
+##
 
-len=${1-256}
-cat /dev/random | strings -n 1 | grep -o '[_ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz]' | head -n $len | tr -d '\n'; echo
+random-match _A-Za-z ${1-16}

@@ -1,0 +1,33 @@
+#!/bin/bash
+
+##
+# Generate a secure random string.
+#
+# Usage:
+#
+#     random-match <characters> [n]
+#
+# Options:
+#
+#   * `characters` is a tr-compatible string.
+#   * `n` is the number of characters; default is 1.
+#
+# Example:
+#
+#     random-match
+#     #=> X
+#
+#     random-match A-Z 6
+#     #=> ZMFKBT
+#    
+# This implementation uses `/dev/random`
+# and `tr` to select matching characters.
+#
+# By Joel Parker Henderson, joel@joelparkerhenderson.com
+#
+# License is GPL v2
+##
+
+characters=$1
+len=${2-1}
+LC_ALL=C < /dev/random tr -dc "$characters" | head -c"$len"

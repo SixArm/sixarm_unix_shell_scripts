@@ -1,21 +1,23 @@
 #!/bin/bash
+
+##
+# Generate a random Amazon Web Services (AWS) Simple Email Service (SES)
+# Simple Mail Transfer Protocol (SMTP) username string.
 #
-# Shell script to generate a secure Amazon Web Services (AWS)
-# Simple Email Service (SES) Simple Mail Transfer Protocol (SMTP)
-# username, which is a random string of 20 uppercase letters.
+# The string is alphabetic, uppercase, 20 characters.
 #
-# This uses urandom to pick from among A-Z chars.
+# Usage:
 #
-# Usage: random-aws-ses-smtp-username [n]
-# * n is an optional length; it defaults to 20.
+#    random-aws-ses-smtp-username
+#
+# Example:
+#
+#    $ random-aws-ses-smtp-username
+#    SYEKEHQILMOKVIMZGRXJ
 #
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
 # License is GPL v2
-#
-set -o nounset
-set -o errexit
-set -o pipefail
+##
 
-len=${1-20}
-cat /dev/random | strings -n 1 | grep -o '[A-Z]' | head -n $len | tr -d '\n'; echo
+random-alpha-upper 20
