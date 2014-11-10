@@ -1,0 +1,1 @@
+find "$1" -type f -exec stat -f "%z %N" {} \;

@@ -1,0 +1,1 @@
+find "$1" -type f -printf "%s %p\n"
