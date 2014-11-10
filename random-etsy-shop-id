@@ -23,5 +23,6 @@
 # License is GPL v2
 ##
 
-n=${1-$(( $RANDOM % 60 + 4 ))
+n=${1-$(( $RANDOM % 60 + 4 ))}
+echo $n
 random-alpha $n
