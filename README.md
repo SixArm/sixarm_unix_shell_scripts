@@ -1,6 +1,6 @@
 # SixArm.com » Unix » shell scripts for sh, bash, tcsh, zsh, etc.
 
-This repo has lots of utility scripts. 
+This repo has lots of utility scripts.
 
 
 ## Command line boosters
@@ -18,7 +18,7 @@ This repo has lots of utility scripts.
  * <code>sed-char-to-html-entity-name</code>: sed script to change all non-HTML characters to their HTML entity names.
  * <code>sed-delete-blank-lines</code>: Delete all blank lines, i.e. lines with no characters.
  * <code>sed-delete-duplicate-consecutive-lines</code>: Delete duplicate, consecutive lines from a file (emulates "uniq").
- * <code>sed-delete-duplicate-nonconsecutive-lines</code>: Delete duplicate, nonconsecutive lines from a file. 
+ * <code>sed-delete-duplicate-nonconsecutive-lines</code>: Delete duplicate, nonconsecutive lines from a file.
  * <code>sed-delete-leading-and-trailing-whitespace</code>: Delete leading and trailing whitespace (spaces and tabs).
  * <code>sed-delete-leading-blank-lines</code>: Delete all leading blank lines at top of file.
  * <code>sed-delete-leading-whitespace</code>: Delete leading whitespace (spaces and tabs).
@@ -31,6 +31,17 @@ This repo has lots of utility scripts.
  * <code>sed-simple-quotes-and-dashes</code>: Change smart characters into simple characters.
  * <code>sed-uncolor</code>: sed script to uncolor lines by removing ascii color characters.
 
+### file
+
+File scripts to print a given `ls` field:
+
+ * <code>file-permissions</code>
+ * <code>file-link-count</code>
+ * <code>file-user-name</code>
+ * <code>file-user-number</code>
+ * <code>file-group-name</code>
+ * <code>file-group-number</code>
+ * <code>file-size</code>
 
 ### find
 
@@ -300,4 +311,3 @@ All these methods generate random text by using the secure /dev/urandom source.
  * <code>rails-test-unit</code>: Run our typical test files
  * <code>rails-word-count</code>: Shows the word count of each file in a Rails app subdirectory.
  * <code>rails_root_vendor_plugins</code>: Print a list of the Rails plugins in ./vendor/plugins
-

@@ -1,0 +1,1 @@
+ls -dlL "$1" | awk '{print $1}'
