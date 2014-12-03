@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# Find files and print the file size and file name.
+#
+# This script has a goal to run fast, and also run cross platform.
+#
+# Implemenations we've tried:
+#
+#   * Use `ls` and `sed`. This is our current strategy.
+#   * Use `ls` and `awk`. Hard syntax for file names with spaces.
+#   * Use `du -b`. Doesn't work on OSX.
+#   * Use `stat`. Doesn't work on Solaris.
+#   * Use `find ... -printf "%s %p\n"`. Not on BSD.
+#   * Use `find ... -exec stat -f "%z %N". Not on Solaris.
+#   * Use `wc -c`. Some implementations are very slow.
+#
+# For the `sed` regular expression, our implementation currently uses
+# basic expressions (e.g. `*`) instead of extended expressions (e.g. `+`)
+# because the basic ones are more cross-platform availble and compatible.
+#
+find "$1" -type f -exec ls -dlL {} \; |
+sed -n 's/^[^ ]* *[^ ]* *[^ ]* *[^ ]* *\([^ ]*\) *[^ ]* *[^ ]* *[^ ]* *\(.*\)$/\1 \2/p'
