@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/usr/bin/env ruby -r net/http
 #
 # Print the current Ruby stable version.
 #
@@ -13,5 +13,4 @@
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 #
-require 'net/http'
 puts Net::HTTP.get(URI("https://www.ruby-lang.org/en/downloads/"))[/http.*ruby-(.*).tar.gz/,1]
