@@ -1,5 +1,16 @@
+#!/bin/bash
+#
+# Print the current Ruby stable version.
+#
+# Example:
+#
+#    $ ruby-stable-version
+#    2.1.5
+#
+# This implementation fetches the Ruby website download page,
+# and parses the result to find the file download link and version.
+#
 curl -s --location https://www.ruby-lang.org/en/downloads/ |
-grep 'cache.ruby-lang.org' |
-head -1 |
+grep -m 1 'cache.ruby-lang.org' |
 sed -n 's/.*ruby-\(.*\).tar.gz.*/\1/p'
 
