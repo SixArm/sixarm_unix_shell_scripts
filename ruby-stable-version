@@ -10,7 +10,9 @@
 # This implementation fetches the Ruby website download page,
 # and parses the result to find the file download link and version.
 #
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+#
 curl -s --location https://www.ruby-lang.org/en/downloads/ |
-grep -m 1 'cache.ruby-lang.org' |
-sed -n 's/.*ruby-\(.*\).tar.gz.*/\1/p'
+sed -n '/.*ruby-\(.*\).tar.gz.*/{s//\1/p;q}'
 
