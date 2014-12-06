@@ -13,6 +13,6 @@
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 #
-curl -s --location https://www.ruby-lang.org/en/downloads/ |
-sed -n '/.*ruby-\(.*\).tar.gz.*/{s//\1/p;q}'
+curl --silent --location https://www.ruby-lang.org/en/downloads/ |
+sed --silent '/.*ruby-\(.*\).tar.gz.*/{s//\1/p;q}'
 
