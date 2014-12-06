@@ -4,7 +4,7 @@
 #
 # Example:
 #
-#    $ ruby ruby-stable-version.rb
+#    $ ruby-stable-version.rb
 #    2.1.5
 #
 # This implementation fetches the Ruby website download page,
@@ -14,5 +14,4 @@
 # License: GPL
 #
 require 'net/http'
-txt = Net::HTTP.get(URI("https://www.ruby-lang.org/en/downloads/"))
-ver = txt[/\/ruby-(.*?).tar.gz/,1]
+puts Net::HTTP.get(URI("https://www.ruby-lang.org/en/downloads/"))[/http.*ruby-(.*).tar.gz/,1]
