@@ -4,7 +4,7 @@
 #
 # Example:
 #
-#    $ ruby-stable-version
+#    $ ruby-stable-version.sh
 #    2.1.5
 #
 # This implementation fetches the Ruby website download page,
