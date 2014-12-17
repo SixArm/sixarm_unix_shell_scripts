@@ -1,5 +1,5 @@
 ##
-# Shorthand for awk with max.
+# Input a list of numbers, output the maximum value.
 ##
 
-awk '$1 > max { max=$1 } END { print max }'
+awk 'NR == 1 || $1 > max { max = $1} END { print max }'
