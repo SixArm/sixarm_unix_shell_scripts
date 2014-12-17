@@ -1,3 +1,7 @@
+##
+# Input a lit of numbers, output statistics
+##
+
 sort -n |
 awk '{
   sum += $1
@@ -21,5 +25,5 @@ END{
     median = (a[(NR / 2)] + a[(NR / 2) + 1]) / 2.0;
   }
 
-  print "min:", min, "mean:", mean, "median:", median, "max:", max, "range:", range, "sum:", sum, "n:", n, "sd:", sd
+  print "n:", n, "min:", min, "max:", max, "range:", range, "sum:", sum, "median:", median, "mean:", mean, "sd:", sd
 }'
