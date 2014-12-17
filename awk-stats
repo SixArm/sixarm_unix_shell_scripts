@@ -1,0 +1,21 @@
+sort -n |
+awk '{sum += $1; a[NR] = $1}\
+END{
+  min = a[1]
+  max = a[NR]
+  count = NR
+  mean = sum/count
+  range = max - min
+
+  for (x = 1; x <= NR; x++){
+    sumsq += (a[x] - mean) ** 2;
+  }
+  sd = sqrt(sumsq/NR)
+
+  if (NR % 2) {
+    median = a[(NR + 1) / 2];
+  } else {
+    median = (a[(NR / 2)] + a[(NR / 2) + 1]) / 2.0;
+  }
+  print "min:", min, "mean:", mean, "median:", median, "max:", max, "range:", range, "sum:", sum, "count:", count, "sd:", sd
+}'
