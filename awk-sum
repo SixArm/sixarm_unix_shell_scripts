@@ -1,5 +1,5 @@
 ##
-# Shorthand for awk with sum.
+# Input a list of numbers, output the sum.
 ##
 
 awk '{ sum += $1 }; END { print sum }'
