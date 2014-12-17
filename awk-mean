@@ -1,0 +1,5 @@
+##
+# Input a list of numbers, output the arithmetic mean a.k.a. average.
+##
+
+awk '{ sum += $1 }; END { print sum/NR }'
