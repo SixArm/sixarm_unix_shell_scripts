@@ -13,11 +13,15 @@ ruby-v
 
 usage: $0 [options]
 
-Ruby version manager for our system.
+Ruby version chooser for our specific systems.
+
+This script is tightly coupled to our systems;
+if you are looking for a general-purpose solution,
+we suggest using `chruby` along with `ruby-install`.
 
 Example:
 
-    source ruby-v 2.0.0-p0
+    source rubyv mri 2.1.5
 
 Options:
 
@@ -25,47 +29,28 @@ Options:
    -l      List versions in /opt/ruby
    -v      Verbose messages
 
-This is very system-specific for our setup.
-You probably want to fine-tune this script for your own setup.
+We install Ruby runtimes and versions here:
 
-We install ruby and gems in these specific directories:
-
-    /opt/ruby/<version>
-    /opt/rubygems/<version>
+    /opt/ruby/<runtime>/<version>
+    /opt/gems/<runtime>/<version>
 
 Examples:
 
-    /opt/ruby/2.0.0-p0
-    /opt/rubygems/2.0.0-p0
+    /opt/ruby/mri/2.1.5
+    /opt/ruby/jruby/1.7.16.1
+    /opt/ruby/rbx/2.3.0
 
 This script modifies three environment variables:
 
-    PATH: replaces /opt/ruby/<version> and /opt/rubygems/<version>/
-    GEM_HOME: changes it to /opt/rubygems/<version>
+    PATH: replaces /opt/ruby/<runtime>/<version> and /opt/gems/<runtime>/<version>/
+    GEM_HOME: changes it to /opt/gems/<runtime>/<version>
     GEM_PATH: changes it to be identical to GEM_HOME
-
-Example:
-
-    $ PATH=...:/opt/ruby/1.1.1/bin:/opt/gem/1.1.1/bin:...
-    $ GEM_HOME=/opt/rubygems/1.1.1
-    $ GEM_PATH=/opt/rubygems/1.1.1:~/.gems/...
-
-    $ source ruby-v 2.2.2
-
-    $ echo $PATH
-    ...:/opt/ruby/2.2.2/bin:/opt/gem/2.2.2/bin:...
-
-    $ echo $GEM_HOME
-    /opt/rubygems/2.2.2
-
-    $ echo $GEM_PATH
-    /opt/rubygems/2.2.2:~/.gems/...
 
 EOF
 }
 
 RUBY_TOP_DIR=/opt/ruby
-GEM_TOP_DIR=/opt/rubygems
+GEMs_TOP_DIR=/opt/gems
 
 VERBOSE=
 while getopts “hlv” option
@@ -77,7 +62,7 @@ do
              ;;
 	 l)
              ls -l $RUBY_TOP_DIR | awk '{print $9,$10,$11;}' | grep \\w
-             ls -l $RUBYGEMS_TOP_DIR | awk '{print $9,$10,$11;}' | grep \\w
+             ls -l $GEMS_TOP_DIR | awk '{print $9,$10,$11;}' | grep \\w
              exit 1
              ;;
          v)
