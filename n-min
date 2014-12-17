@@ -2,4 +2,4 @@
 # Input a list of numbers, output the minimum value.
 ##
 
-awk 'NR == 1 || $1 < min { min = $1} END { print min }'
+awk 'NR == 1 || $1 < min { min = $1 } END { print min }'

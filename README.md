@@ -8,10 +8,17 @@ This repo has lots of utility scripts.
 
 ### awk
 
- * `awk-max`: Shorthand for awk with max.
- * `awk-remove-dupe-lines`: Remove duplicate lines in a file without sorting.
- * `awk-sum`: Shorthand for awk with sum.
+  * `awk-remove-dupe-lines`: Remove duplicate lines in a file without sorting.
 
+### awk for numbers
+
+  * `n-min`: Print the minimum number.
+  * `n-max`: Print the maxmium number.
+  * `n-mean`: Print the mean of the numbers.
+  * `n-median`: Print the median of the numbers.
+  * `n-sd`: Print the standard deviation of the numbers.
+  * `n-sum`: Print the sum of the numbers.
+  * `n-stats`: Print all of the above statistics of the numbers.
 
 ### sed
 
