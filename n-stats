@@ -1,10 +1,13 @@
 sort -n |
-awk '{ sum += $1; a[NR] = $1 }\
+awk '{
+  sum += $1
+  a[NR] = $1
+}
 END{
+  n = NR
   min = a[1]
   max = a[NR]
-  count = NR
-  mean = sum/count
+  mean = sum/n
   range = max - min
 
   for (x = 1; x <= NR; x++){
@@ -18,5 +21,5 @@ END{
     median = (a[(NR / 2)] + a[(NR / 2) + 1]) / 2.0;
   }
 
-  print "min:", min, "mean:", mean, "median:", median, "max:", max, "range:", range, "sum:", sum, "count:", count, "sd:", sd
+  print "min:", min, "mean:", mean, "median:", median, "max:", max, "range:", range, "sum:", sum, "n:", n, "sd:", sd
 }'
