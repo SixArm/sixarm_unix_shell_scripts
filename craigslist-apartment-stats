@@ -1,0 +1,77 @@
+#!/bin/sh
+
+##
+# Calculate simple statistics for Craigslist apartment listings.
+#
+# This script fetches a given URL, renders the HTML,
+# filters for the number of bedrooms, then calculates price stats.
+#
+# Example:
+#
+#     craigslist-apartment-stats http://sfbay.craigslist.org/search/sfc/apa
+#
+# The default search:
+#
+#   * San Francisco, because it's where most users are searching.
+#   * Downtown neighborhood, because this is a good baseline for the city.
+#   * One bedroom, because this is a good baseline for multipliers.
+#
+# Example URIs:
+#
+#   * New York: Brooklyn: Apartments (by owner, broker fee, broker no fee)
+#     http://newyork.craigslist.org/search/brk/aap?bedrooms=1
+#
+#   * San Francisco: Noe Valley neighborhood:
+#     http://sfbay.craigslist.org/search/sfc/apa?nh=21&housing_type=1&bedrooms=1
+#
+#   * San Francisco Bay Area: Peninsula: Palo Alto:
+#     http://sfbay.craigslist.org/search/pen/apa?nh=83&bedrooms=1
+#
+#   * US: Montana: Bozeman: downtown neighborhood:
+#     http://bozeman.craigslist.org/search/apa?query=-%22Belgrade%22+-%22Livingston%22+-%22Big+Sky%22+-%22Four+Corners%22+-%22Three+Forks%22+-%22Manhattan%22&housing_type=1&bedrooms=1=
+#
+# This script is a rough draft - you probably will want to customize it.
+#
+# This script requires:
+#
+#  * `curl` fetches the web page
+#  * `html2text`renders the web page HTML
+#  * `n-stats` calculates the stats
+#
+# The `n-stats` script in this same repository.
+#
+# Heuristics:
+#
+#   * Skip prices less than $200 because these are typically weekly prices.
+#   * Skip prices greater than $10000 because these are typically home purchases.
+#   * Skip any listings after "Few LOCAL results found".
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Download: https://github.com/sixarm/sixarm_unix_shell_scripts
+##
+
+uri=${1:-"http://sfbay.craigslist.org/search/apa"}
+shift
+
+bedroom="1"
+
+while [ "$1" != "" ]; do
+  case $1 in
+    -b | --bedroom )
+      shift
+      bedroom=$1
+      ;;
+     *)
+      printf "Unknown option %s\n" "$1"
+      exit 1
+      ;;
+  esac
+done
+
+curl "$uri" |
+html2text -nobs -width 10000 |
+sed '/Few LOCAL results found/,$d' |
+sed -n "s/^.* &#x0024;\([^ ]*\) \/ ${bedrooms}br - .*$/\1/p" |
+awk '$1 > 200 && $1 < 10000 {print $0}'
+n-stats
