@@ -73,5 +73,5 @@ curl "$uri" |
 html2text -nobs -width 10000 |
 sed '/Few LOCAL results found/,$d' |
 sed -n "s/^.* &#x0024;\([^ ]*\) \/ ${bedrooms}br - .*$/\1/p" |
-awk '$1 > 200 && $1 < 10000 {print $0}'
+awk '$1 > 200 && $1 < 10000 {print $1}' |
 n-stats
