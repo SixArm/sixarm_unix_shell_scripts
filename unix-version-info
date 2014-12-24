@@ -7,6 +7,21 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
+# Unix uses `uname` to print info like this:
+#
+# Linux:
+#
+#     Linux hostname 2.6.35.4-rscloud #8 SMP
+#     Mon Sep 20 15:54:33 UTC 2010
+#     x86_64 GNU/Linux
+#
+# OSX:
+#
+#     Darwin hostname 14.0.0
+#     Darwin Kernel Version 14.0.0:
+#     Fri Sep 19 00:26:44 PDT 2014;
+#     root:xnu-2782.1.97~2/RELEASE_X86_64 x86_64
+#
 if $(command -v uname >/dev/null 2>&1); then
     echo 'uname -a'
     uname -a
@@ -29,6 +44,13 @@ if $(command -v lsb_release >/dev/null 2>&1); then
     echo
 fi
 
+# OSX uses `sw_vers` to print info like this:
+#
+#     $ sw_vers
+#     ProductName:Mac OS X
+#     ProductVersion:10.10
+#     BuildVersion:14A389
+#
 if $(command -v sw_vers >/dev/null 2>&1); then
     echo 'sw_vers'
     sw_vers
