@@ -18,6 +18,13 @@
 #     $ file-encode-utf-8
 #     $ file datafile1.csv
 #     datafile1.csv: Unicode text, UTF-8
+#
+# How this works:
+#
+#   * Run `ex` which is typically the `vi` editor, or `vim`, or equivalent.
+#   * Set the file format to unix
+#   * Set the file encoding to UTF-8
+#   * "+x" means save the file and exit.
 ##
 
 ex $1 "+set ff=unix fileencoding=utf-8" "+x"
