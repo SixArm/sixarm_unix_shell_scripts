@@ -1,10 +1,13 @@
 #!/bin/sh
 #
-# Use sed to append a newline to the last line of stream, if it's missing.
+# Use sed to find the end-of-stream and append a newline character
+# as needed, i.e. if there is not an existing newline character.
 #
-#  * '$a\' says "match the last line of the file, and add nothing to it."
+# How this works:
+#
+#  * '$a\' matches the last line of the file.
 #
 #  * Implicitly, sed appends a newline to every line it processes,
 #    such as this $ line, if the newline is not already there.
-
+#
 sed '$a\'
