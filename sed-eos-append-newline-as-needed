@@ -10,4 +10,14 @@
 #  * Implicitly, sed appends a newline to every line it processes,
 #    such as this $ line, if the newline is not already there.
 #
+# Note: in sed, here are two different meanings of $.
+#
+#  * Inside a regex, such as with the form /<regex>/,
+#    it has the usual "match end of line" meaning.
+#
+#  * Otherwise, used as an address, sed gives it the
+#    special "last line in file" meaning.
+#
+# Credit: http://unix.stackexchange.com/questions/31947/how-to-add-a-newline-to-the-end-of-a-file
+#
 sed '$a\'
