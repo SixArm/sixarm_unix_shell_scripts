@@ -23,6 +23,11 @@
 # This implementation uses `/dev/random`
 # and `tr` to select matching characters.
 #
+# Depending on your own systems and security needs,
+# you may want to adjust this script by changing the 
+# system command `/dev/random` to `/dev/urandom`.
+# This change will make the script non-blocking.
+#
 # By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
 # License is GPL v2
