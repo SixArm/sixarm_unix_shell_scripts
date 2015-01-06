@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+require 'github/markdown'
+
+file = ARGV[0]
+text = File.read(file)
+
+html = GitHub::Markdown.render_gfm text
+puts html
