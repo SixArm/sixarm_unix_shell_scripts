@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+require 'redcarpet'
+
+file = ARGV[0]
+text = File.read(text)
+
+# We choose extensions settings that are most valuable for coding.
+# We skip extensions that feel trivial to us e.g. "highlight".
+# We may change these in the future as our needs change.
+extensions = {
+  autolink: true,
+  fenced_code_blocks: true,
+  tables: true,
+  no_intra_emphasis: true,
+  lax_spacing: true,
+  space_after_headers: true,
+  disable_indented_code_blocks: false,
+  strikethrough: false,
+  superscript: false,
+  underline: false,
+  highlight: false,
+  quote: false,
+  footnotes: false,
+}
+
+renderer = Redcarpet::Render::HTML
+markdown = Redcarpet::Markdown.new(renderer, extensions)
+html = markdown.render(text)
+puts html
