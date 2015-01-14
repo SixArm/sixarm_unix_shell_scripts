@@ -10,5 +10,4 @@ set -o nounset
 set -o errexit
 set -o pipefail
 
-email=${1-"$USER@$HOST"}
 ssh-keygen -t rsa -b 4096 -C "$email"
