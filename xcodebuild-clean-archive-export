@@ -1,0 +1,33 @@
+#!/bin/bash
+# Xcode build script to clean, archive, and export an ipa file.
+#
+# This automatically detects the project name and parameters:
+#
+#   * The name: the name of the first file that ends with ".xcodeproj"
+#   * The project: the name + ".xcodeproj"
+#   * The archivePath: the name + ".xcarchive"
+#   * The scheme: the name
+#   * The exportPath: the name
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+#
+set -euf -o pipefail
+
+base=$(basename $(find . -regex '.*\.xcodeproj' | head -1 | sed 's/\.xcodeproj$//' ))
+project="$base.xcodeproj"
+archivePath="$base.xcarchive"
+scheme="$base"
+provisioningProfile=$(basename $(find . -regex '.*mobileprovision$') | sed 's/\.mobileprovision$//' | head -1)
+exportPath="$base"
+
+echo "project:$project"
+echo "archivePath:$archivePath"
+echo "scheme:$scheme"
+echo "provisioningProfile:$provisioningProfile"
+echo "exportPath:$exportPath"
+
+# Run clean, archive, export
+XCODE_VERSION=6 xcodebuild clean -project "$project" -configuration Release -alltargets
+XCODE_VERSION=6 xcodebuild archive -project "$project" -scheme "$scheme" -archivePath "$archivePath"
+XCODE_VERSION=6 xcodebuild -exportArchive -archivePath "$archivePath" -exportPath "$exportPath" -exportFormat ipa -exportProvisioningProfile "$provisioningProfile"
