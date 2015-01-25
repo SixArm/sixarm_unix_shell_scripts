@@ -4,6 +4,16 @@ require 'redcarpet'
 file = ARGV[0]
 text = File.read(text)
 
+## Create renderer
+
+render_options = {
+  with_toc_data: true,
+  prettify: true
+}
+renderer = Redcarpet::Render::HTML(render_options)
+
+## Create Markdown processor
+
 # We choose extensions settings that are most valuable for coding.
 # We skip extensions that feel trivial to us e.g. "highlight".
 # We may change these in the future as our needs change.
@@ -21,9 +31,11 @@ extensions = {
   highlight: false,
   quote: false,
   footnotes: false,
+  with_toc_data: true,
 }
-
-renderer = Redcarpet::Render::HTML
 markdown = Redcarpet::Markdown.new(renderer, extensions)
+
+## Main
+
 html = markdown.render(text)
 puts html
