@@ -1,8 +1,14 @@
-#!/bin/bash
+#!/bin/sh
+set -euf -o pipefail
 
 ##
 # Grep for typical words, length 4-7 characters, all lowercase, a-z.
+#
 # We exclude accented characters.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 grep '^[abcdefghijklmnopqrstuvwxyz]\{4,7\}$' | grep -v "\(ae\|oe\|ueo\)"

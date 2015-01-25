@@ -1,4 +1,6 @@
 #!/bin/sh
+set -euf -o pipefail
+
 #
 # Use sed to find the end-of-stream and append a newline character
 # as needed, i.e. if there is not an existing newline character.
@@ -19,5 +21,9 @@
 #    special "last line in file" meaning.
 #
 # Credit: http://unix.stackexchange.com/questions/31947/how-to-add-a-newline-to-the-end-of-a-file
-#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 sed '$a\'

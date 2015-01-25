@@ -1,5 +1,12 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Input a list of numbers, output the minimum value.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 awk 'NR == 1 || $1 < min { min = $1 } END { print min }'

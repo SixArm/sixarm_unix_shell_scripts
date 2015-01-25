@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Add path(s) to the PATH environment variable
 #
 # Usage: path-add [-i] [-q] paths...
@@ -9,9 +11,10 @@
 #
 # From http://pastie.org/591350
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 ap_prefix=0
 ap_quiet=0

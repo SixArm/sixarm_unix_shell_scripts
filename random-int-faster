@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate a random integer.
@@ -28,9 +29,10 @@
 #   * To seed each time, use script random-int.
 #   * To seed once, use the script random-seed.
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 upper=${1-10}

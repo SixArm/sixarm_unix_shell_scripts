@@ -1,3 +1,6 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # GPG script to encrypt a file with our typical settings.
 #
@@ -26,6 +29,10 @@
 #    --compress-algo uncompressed  Do not compress the file
 #    -z 0                          Compression level set to 0, i.e. set to no compression.
 #    --no-use-agent                Do not use a system agent such as Ubuntu's gnome-keyring process.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 gpg --quiet --no-greeting --symmetric --cipher-algo aes256 --digest-algo sha256 --cert-digest-algo sha256 -z 0 --compress-algo uncompressed --no-use-agent $@

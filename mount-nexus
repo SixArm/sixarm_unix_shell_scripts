@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # How to mount a Nexus 5 phone on Linux.
 #
 # Enable Developer Options on the Nexus:
@@ -41,9 +43,10 @@
 #
 #     sudo service udev restart
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 if [ `lsusb |grep Google |wc -l` == 0 ]; then
   echo "Please plug in the device"

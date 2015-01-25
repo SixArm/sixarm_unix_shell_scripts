@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # VirtualBox resize a hard drive image.
 #
 # This does two steps:
@@ -15,9 +17,10 @@
 #
 #     VBoxManage-clone-from-vmdk-to-vdi-then-resize My.vmdk My.vdi 10000
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 src=$1
 dst=$2

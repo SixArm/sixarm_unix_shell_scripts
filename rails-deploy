@@ -1,11 +1,14 @@
 #!/bin/bash
-#
+set -euf -o pipefail -o xtrace
+
+##
 # Rails script to do a simple deployment from the command line.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
-set -o xtrace
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 git pull
 git submodule update --init --recursive

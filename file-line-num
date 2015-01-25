@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Print a file's line at a given line number.
 #
 # Syntax:
@@ -16,13 +18,10 @@
 #     file-line-num myfile.txt 10 20 30
 #     => prints line 10 of myfile.txt then line 20 then line 30
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
-#
-# License is GPL v2
-#
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 file_path="$1"
 shift

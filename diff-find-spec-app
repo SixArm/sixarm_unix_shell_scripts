@@ -1,5 +1,7 @@
-#!/bin/bash
-#
+#!/bin/sh
+set -euf -o pipefail
+
+##
 # Compare the list of filenames in the `spec` directory and `app directory.
 #
 # This is useful for discovering specs files that need app implementation,
@@ -10,7 +12,9 @@
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-#
+# Updated: 2015-01-25
+##
+
 diff  \
 <(find spec -type f | sed 's#^[^/]\+/##; s#_spec\.[[:alnum:]]\+$##') \
 <(find app  -type f | sed 's#^[^/]\+/##; s#\.[[:alnum:]]\+$##')

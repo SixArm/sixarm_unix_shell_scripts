@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Summarize a text file in one line.
 #
 # This prints a line with the file name and summary like this:
@@ -21,8 +23,9 @@
 #
 # The script puts a colon and space after the filename.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 grep "^[^A-Za-z0-9 ]* " -m 1 -H "$@" | sed 's/:[^ ] */: /'

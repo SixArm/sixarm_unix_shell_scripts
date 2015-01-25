@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate a random TestFlight API token string.
@@ -8,11 +9,11 @@
 #
 # See http://testflightapp.com
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
-#
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 part1=`random-hex 16 | tr 'A-Z' 'a-z'`
-part2=`random-alphaum 44` 
+part2=`random-alphaum 44`
 echo "${part1}_${part2}"

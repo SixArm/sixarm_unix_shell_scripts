@@ -1,9 +1,13 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Sort command-line input by rank.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 sort | uniq -c | sort -g

@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Use a bash process id (PID) to recover its command line.
 # This script uses GDB to attach to the running bash shell,
 # write the history of the pid to a temp file, then show it.
@@ -9,12 +11,12 @@
 # command to a history file, and we can't interupt the process.
 #
 # If we can interrupt the script, it's typically easy to suspend
-# by typing `Ctrl-z` then `bg`, and then using the up arrow to 
+# by typing `Ctrl-z` then `bg`, and then using the up arrow to
 # get the history line from the shell, then copy/paste the line.
 #
-# In an extreme case when the process's `bash` program no longer 
+# In an extreme case when the process's `bash` program no longer
 # exists on disk, e.g. when a sysadmin has upgraded bash on disk
-# after the process launched, yet the process is still running 
+# after the process launched, yet the process is still running
 # on the bash that is still in memory, there's still a solution.
 #
 # To get the content of bash from memory:
@@ -31,7 +33,7 @@
 #
 #     strace -vfF -s1000 -p [pid]
 #
-# Related: we can just dump the memory of that process and manually 
+# Related: we can just dump the memory of that process and manually
 # grep for the command (assuming we remember some parts of it):
 #
 #     gcore $pid
@@ -46,8 +48,13 @@
 #   * See http://users.softlab.ece.ntua.gr/~ttsiod/
 #   * Git repo: https://github.com/ttsiodras/utils/blob/master/showBashCmdline.sh
 #   * Blog post: http://unix.stackexchange.com/questions/159010/how-can-i-see-the-exact-command-line-being-executed-inside-some-bash-instance#159010
-#   * Reddit discussion: http://www.reddit.com/r/programming/comments/2i6pnk/the_magic_cmdline_and_how_i_got_it_back/
+#   * Reddit discussion: http://www.reddit.com/r/programming/comments/2i6pnk/the_magic_cmdline_and_how_i_got_it_back/#
 #
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 if [ $# -ne 1 ] ; then
     echo Usage: $0 BASH_PID
     exit 1

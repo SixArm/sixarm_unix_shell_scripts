@@ -1,2 +1,12 @@
-iconv -f UTF-8 -t ASCII-8BIT $@
+#!/bin/sh
+set -euf -o pipefail
 
+##
+# Use `iconv` to convert format from UTF-8 to ASCII-8BIT.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
+iconv -f UTF-8 -t ASCII-8BIT $@

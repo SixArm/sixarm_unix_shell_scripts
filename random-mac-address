@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+set -euf -o pipefail
 
 ##
 # Generate a random hex MAC address.
@@ -18,9 +19,9 @@
 #
 # This implementation uses `hexdump` and `/dev/random`.
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
-#
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 len=${1-6}

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-#
+
+##
 # Duplicate detector: a general-purpose line-oriented key tracker.
 #
 # The input lines use this format:
@@ -39,13 +40,11 @@
 # If you use zsh instead of bash,
 # see our repo for a zsh version.
 #
-# Author: joel@joelparkerhenderson.com
-# License: Any of BSD, MIT, GPL.
-# Repo: https://github.com/SixArm/sixarm_unix_shell_scripts
-#
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+set -euf -o pipefail
 
 unset track
 declare -A track

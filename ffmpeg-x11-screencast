@@ -1,8 +1,16 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Record a screencast and convert it to an mpeg movie.
 #
 # Grab X11 input and create an MPEG at 25 fps with the resolution 800×600.
+#
 # From http://blog.urfix.com/25-%E2%80%93-sick-linux-commands/
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 ffmpeg -f x11grab -r 25 -s 800x600 -i :0.0 /tmp/outputFile.mpg

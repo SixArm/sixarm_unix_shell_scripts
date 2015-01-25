@@ -1,5 +1,20 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
-# Shorthand to always return "n"
+# Shorthand to always return "n" for "no".
+#
+# Example:
+#
+#     $ no
+#     n
+#     n
+#     n
+#     ...
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 yes n

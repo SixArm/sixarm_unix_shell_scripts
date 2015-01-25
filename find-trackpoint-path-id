@@ -1,3 +1,6 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Find a ThinkPad computer's TrackPoint Path ID.
 #
@@ -12,6 +15,10 @@
 #
 #     find-trackpoint-device-file-for-speed
 #     find-trackpoint-device-file-for-sensitivity
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 /lib/udev/path_id $(find /sys/devices/platform/i8042 -name name | xargs grep -Fl TrackPoint | sed 's/\/sys\(.*\)\/name/\1/')

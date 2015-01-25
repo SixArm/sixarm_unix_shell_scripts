@@ -1,3 +1,7 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
 # Download Font Awesome variables from GitHub.
 #
 # The `variables.less` input looks like this:
@@ -6,9 +10,6 @@
 #
 # This script downloads the file then greps for the varaibles.
 #
-curl --silent https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/less/variables.less | 
-grep "^@fa-var-"
-
 # If you want to convert the lines, here are some examples
 # each with a typical `sed` commands and sample output line.
 #
@@ -21,3 +22,11 @@ grep "^@fa-var-"
 #
 #     ... | sed 's/^@fa-var-/:/; s/-/_/g; s/"\\/"0x/; s/;/,/'
 #     :foo_bar: "0xf166",
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
+curl --silent https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/less/variables.less |
+grep "^@fa-var-"

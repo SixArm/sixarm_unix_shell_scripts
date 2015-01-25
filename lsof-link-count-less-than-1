@@ -1,8 +1,15 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Shows you all open files that have a link count less than 1,
 # often indicative of a cracker trying to hide something.
 #
-# http://danielmiessler.com/study/lsof/
+# See http://danielmiessler.com/study/lsof/
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
-lsof +L1 
+lsof +L1

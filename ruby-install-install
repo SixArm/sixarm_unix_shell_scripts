@@ -1,4 +1,15 @@
-cd /opt 
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# Install the ruby-install program where we want it.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
+cd /opt
 test -d ruby-install || sudo git clone https://github.com/postmodern/ruby-install.git
 cd ruby-install
 sudo git pull

@@ -1,1 +1,17 @@
+#!/bin/bash
+set -euf -o pipefail
+
+##
+# Translate to upper case.
+#
+# Example:
+#
+#     $ echo "Hello World" | tr-upper
+#     HELLO WORLD
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 tr '[:lower:]' '[:upper:]'

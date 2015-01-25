@@ -1,8 +1,14 @@
 #!/bin/sh
-#
+set -euf -o pipefail
+
+##
 # A tiny netcat webserver. Run this and nc will serve index.html.
+#
 # To access it: http://localhost:8080/
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 while true; do { echo -e 'HTTP/1.1 200 OK\r\n'; cat index.html; } | nc -l 8080; done
-
-

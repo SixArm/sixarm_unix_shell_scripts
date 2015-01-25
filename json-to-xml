@@ -5,10 +5,14 @@
 # from json text input to xml text output.
 #
 # Example:
-#   cat my.json | json-to-xml > my.xml
+#
+#     cat my.json | json-to-xml > my.xml
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 require 'json'
 require 'xmlsimple'
 puts XmlSimple.xml_out(JSON.parse(STDIN.read), 'NoAttr' => true)
-

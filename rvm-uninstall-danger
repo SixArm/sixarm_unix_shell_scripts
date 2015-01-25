@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Uninstall RVM (Ruby Version Manager). THIS IS DANGEROUS.
 #
 # This runs rvm implode, deletes various RVM files from the system,
@@ -8,7 +10,7 @@
 #
 # This script is not advanced; it does not do any error checking,
 # does not try to ensure anything worked, and does not guarantee
-# anything. Use as you like and adjust as you like for your needs. 
+# anything. Use as you like and adjust as you like for your needs.
 #
 # Some of the script lines may report missing directories.
 # For example, a Mac system typically has a /Users/ directory,
@@ -26,10 +28,8 @@
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-#
-set -o nounset
-set -o errexit
-set -o pipefail
+# Updated: 2015-01-25
+##
 
 echo "rvm implode"
 rvm implode

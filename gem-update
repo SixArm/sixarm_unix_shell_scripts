@@ -1,9 +1,16 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Run gem update, install, tumble, and set up our typical gem sources.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
-gem update --system 
+gem update --system
 gem install gemcutter
-gem tumble 
-gem sources | grep http://gems.opscode.com || gem sources --add http://gems.opscode.com 
+gem tumble
+gem sources | grep http://gems.opscode.com || gem sources --add http://gems.opscode.com
 gem sources | grep http://sixarm.com       || gem sources --add http://sixarm.com

@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+set -euf -o pipefail
 
 ##
 # Generate a random LinkedIn app API key,
@@ -16,9 +17,9 @@
 #
 # See http://linkedin.com
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
-#
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 random-alphanum-lower 12

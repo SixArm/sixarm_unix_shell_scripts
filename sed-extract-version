@@ -1,5 +1,12 @@
+#!/bin/ash
+set -euf -o pipefail
+
 ##
 # sed script to print the VERSION string from a text file.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 sed 's/^ *VERSION[^0-9]*//; s/[^0-9A-Za-z_\.-].*//'

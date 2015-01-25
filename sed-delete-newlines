@@ -1,8 +1,16 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Use sed to delete all the newlines except the last one, which we want for normal output.
-#  
+#
 # By Zsolt Botykai on Stack Overflow:
 # http://stackoverflow.com/questions/1251999/sed-how-can-i-replace-a-newline-n
+#
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 sed ':a;N;$!ba;s/\n/ /g'

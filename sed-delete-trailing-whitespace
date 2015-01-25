@@ -1,6 +1,14 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Delete trailing whitespace (spaces and tabs).
+#
 # From http://sed.sourceforge.net/sed1line.txt
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 sed 's/[ \t]*$//'

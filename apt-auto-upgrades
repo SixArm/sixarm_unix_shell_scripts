@@ -1,11 +1,19 @@
-#!/bin/bash
-#
+#!/bin/sh
+set -euf -o pipefail
+
+##
 # Set apt to do automatic upgrades.
 #
 # This creates the file:
 #
-#    /etc/apt/apt.conf.d/20auto-upgrades 
+#    /etc/apt/apt.conf.d/20auto-upgrades
 #
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 sudo apt-get install -y unattended-upgrades
 sudo apt-get install -y update-notifier-common
 sudo dpkg-reconfigure -plow unattended-upgrades

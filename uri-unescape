@@ -1,9 +1,12 @@
-#!/bin/bash
-#
+#!/bin/sh
+set -euf -o pipefail
+
+##
 # URI script to unescape text, for example a CGI query string.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 perl -MURI::Escape -lne 'print uri_unescape($_)'

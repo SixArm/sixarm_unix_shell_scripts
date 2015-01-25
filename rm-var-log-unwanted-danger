@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Remove /var/log files that we don't want.
 #
 # We use this to clean up drive space.
@@ -13,10 +15,10 @@
 #   * nagios3/archives/*
 #   * samba/log*
 #
-#
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 find /var/log | grep '\(\.gz\|[\._]log\.[[:digit:]]+\)$' | xargs -I{} rm "{}"
 rm -rf /var/log/dist-upgrade/*

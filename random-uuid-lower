@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate a random UUID lowercase string.
@@ -12,9 +13,10 @@
 #     $ random-uuid-lower
 #     be09f214-7afa-4e51-bef5-6ead95071a37
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 random-uuid | tr A-F a-f

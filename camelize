@@ -1,7 +1,16 @@
 #!/usr/bin/env ruby
 
 ##
-# Convert text to camel-case like FooGooHoo.
+# Convert text to camel-case.
+#
+# Example:
+#
+#     $ echo "foo_goo_hoo" | camelize
+#     FooGooHoo
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 require 'rubygems'

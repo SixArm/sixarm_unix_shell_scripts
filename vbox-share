@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # VirtualBox share.
 #
 # Virtualbox shares a folder as root by default;
@@ -30,9 +32,11 @@
 #      virtualbox-guest-x11 \
 #      virtualbox-ose-guest-utils
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 # Get the current user
 uid=`id -u`

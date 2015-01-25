@@ -1,5 +1,7 @@
 #!/bin/sh
-#
+set -euf -o pipefail
+
+##
 # Launch meld with three windows:
 #
 #   * diff from BASE to LOCAL
@@ -15,9 +17,10 @@
 #
 # See http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 meld $2 $1 &
 sleep 0.5

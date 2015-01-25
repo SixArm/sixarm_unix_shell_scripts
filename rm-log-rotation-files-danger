@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Remove log rotation files -- DANGER.
 #
 # Please be certain you don't need
@@ -20,9 +22,10 @@
 #   * mail.err.[0-9]*
 #   * syslog.[0-9]*
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 rm -f /var/log/*.{gz,old}
 rm -f /var/log/*.log.[0-9]*

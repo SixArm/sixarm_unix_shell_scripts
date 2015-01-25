@@ -1,2 +1,40 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# Make directories suitable for an outline, and create placeholder files.
+#
+# The outline levels are:
+#
+#   * I, II, III
+#   * A, B, C
+#   * 1, 2, 3
+#   * a, b, c
+#
+# The placeholder file names contains the directory names:
+#
+#   * I-A-1-a.txt
+#   * I-A-1-b.txt
+#   * I-A-1-c.txt
+#   * ...
+#
+# The placeholder files contain the same text as the file name.
+#
+# Example:
+#
+#     $ mkdir-outline-and-placeholder-files
+#     $ find .
+#     ./I
+#     ./I/A
+#     ./I/A/1
+#     ./I/A/1/a
+#     ./I/A/1/a/I-A-1-a.txt
+#     ...
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 mkdir -p {I,II,III}/{A,B,C}/{1,2,3}/{a,b,c}
-find | sort | perl -pe 'chomp; s#\./##; $dir=$_; s#/#-#g; $text=$_; $path="$dir/$_.txt"; $_=""; $cmd="echo $text > $path"; system($cmd); print $cmd,"\n";'
+find . | sort | perl -pe 'chomp; s#\./##; $dir=$_; s#/#-#g; $text=$_; $path="$dir/$_.txt"; $_=""; $cmd="echo $text > $path"; system($cmd); print $cmd,"\n";'

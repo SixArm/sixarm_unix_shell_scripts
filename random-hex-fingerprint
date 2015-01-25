@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate a random hex fingerprint.
@@ -13,21 +14,18 @@
 #
 # Example:
 #
-#     $ random-hex-fingerprint 
+#     $ random-hex-fingerprint
 #     73:5C:6E:83:75:80:E4:04:7A:AE:AC:BA:EE:46:E6:43
 #
 # Note: 16 bytes is typical of fingerprints for SSH DSA, ECDSA, and RSA.
 #
 # This implementation uses `hexdump` and `/dev/random`.
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
-
-set -o nounset
-set -o errexit
-set -o pipefail
 
 len=${1-16}
 hexdump -n $len -e "$len/1 \"%02X:\"" /dev/random | sed 's/:$//'

@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate a secure random string.
@@ -19,18 +20,19 @@
 #
 #     random-match A-Z 6
 #     #=> ZMFKBT
-#    
+#
 # This implementation uses `/dev/random`
 # and `tr` to select matching characters.
 #
 # Depending on your own systems and security needs,
-# you may want to adjust this script by changing the 
+# you may want to adjust this script by changing the
 # system command `/dev/random` to `/dev/urandom`.
 # This change will make the script non-blocking.
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 characters=$1

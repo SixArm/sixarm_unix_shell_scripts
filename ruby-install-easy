@@ -1,18 +1,21 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Download the current ruby stable version,
 # and install it in our preferred directory.
 #
 # Our directory is /opt/ruby/x.y.z
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 ruby_stable_version(){
   curl -s --location https://www.ruby-lang.org/en/downloads/ |
-  grep 'cache.ruby-lang.org' | 
-  head -1 | 
+  grep 'cache.ruby-lang.org' |
+  head -1 |
   sed -n 's/.*ruby-\(.*\)\.tar\.gz.*/\1/p'
 }
 

@@ -1,10 +1,13 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Extract a file using best-guess of tar, bzip, rar, gz, zip, etc.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 if [ -f $1 ]; then
 case $1 in

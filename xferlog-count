@@ -1,8 +1,5 @@
 #!/bin/bash
-#
-
-#
-##
+set -euf -o pipefail
 
 help()
 {

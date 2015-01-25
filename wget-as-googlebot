@@ -1,11 +1,14 @@
 #!/bin/bash
-#
+set -o pipefail
+
+##
 # Run wget with a GoogleBot user agent string.
 # This is useful for getting web pages that
 # are publically accessible to a search engine.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 wget --user-agent="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)" "$@"

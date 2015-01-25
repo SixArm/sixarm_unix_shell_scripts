@@ -1,4 +1,5 @@
 #!/bin/sh
+set -euf -o pipefail
 
 ##
 # Convert a SmugMug.com web page URI to the corresponding image URI.
@@ -12,6 +13,10 @@
 #   $ echo "http://foo.smugmug.com/goo/i-9999/A" |
 #     smugmug-page-uri-to-image-uri
 #   http://foo.smugmug.com/goo/i-9999/0/X3/untitled-9980-X3.jpg
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 sed 's#A$#0/X3/untitled-9980-X3.jpg#'

@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail -o xtrace
+
+##
 # Rails script to update everything from origin master:
 #
 #   * pull from origin master
@@ -8,15 +10,14 @@
 #   * rake db:migrate, db:seed, db:test:prepare
 #   * restart the server (if applicable)
 #
-set -o nounset
-set -o errexit
-set -o pipefail
-set -o xtrace
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 git pull origin master
 git submodule update --init --recursive
 bundle install
-#bundle update sprockets
 bundle exec rake db:migrate
 bundle exec rake db:seed
 bundle exec rake db:test:prepare

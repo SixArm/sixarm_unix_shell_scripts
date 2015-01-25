@@ -1,9 +1,12 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Count your history commands.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 history | cut -c8- | sort | uniq -c | sort -rn | head

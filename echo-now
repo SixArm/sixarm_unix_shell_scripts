@@ -1,5 +1,7 @@
 # #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # now.sh
 # ======
 #
@@ -53,10 +55,10 @@
 #     54.251.76.xx - - [03/Mar/2013 01:16:52 -0800] "GET / HTTP/1.1" 200 2223 ...
 #     [03/Mar/2013 01:20:59 -0800]
 #
-#
-set -o nounset
-set -o errexit
-set -o pipefail
+# Maintainer: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 ##
 #	See what 'read -t' returns on timeout.

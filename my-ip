@@ -1,5 +1,12 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Print this system's IP address via whatismyip.org
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 curl whatismyip.org;echo

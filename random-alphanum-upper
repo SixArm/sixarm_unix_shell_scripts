@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+set -euf -o pipefail
 
 ##
 # Generate a random alphanumeric uppercase string.
@@ -16,9 +17,10 @@
 #     $ random-alphanum-upper
 #     J8YUOHTPTYI8S4VK
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 random-match A-Z0-9 ${1-16}

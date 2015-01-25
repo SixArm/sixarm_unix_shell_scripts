@@ -1,10 +1,16 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # sed script to join lines that end with equal signs.
 #
 # If a line ends with a backslash, join it to the next line.
 #
 # From http://sed.sourceforge.net/sed1line.txt
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 sed -e :a -e '/\\$/N; s/\\\n//; ta' file##
-

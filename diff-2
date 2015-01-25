@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Print lines that are only in file 2.
 #
 # Example:
@@ -11,7 +13,7 @@
 #     cat 2.txt
 #     b
 #     c
-#       
+#
 #     diff-2 a.txt b.txt
 #     c
 #
@@ -35,5 +37,9 @@
 #   * !($0 in a) is true when we have not seen the line text
 #   * awk default is to print the line text
 #
-awk 'FNR==NR{a[$0];next}!($0 in a)' "$@"
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
+awk 'FNR==NR{a[$0];next}!($0 in a)' "$@"

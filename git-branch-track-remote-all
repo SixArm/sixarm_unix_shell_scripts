@@ -1,1 +1,12 @@
+#!/bin/sh
+set -euf -o pipefail -o xtrace
+
+##
+# Git script to track all remote branches.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 for remote in `git branch -r `; do git branch --track $remote; done

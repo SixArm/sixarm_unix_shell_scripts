@@ -1,14 +1,16 @@
 #!/bin/bash
-#
+set -euf -o pipefail set -o xtrace
+
+##
 # Reset the Ubuntu network wireless driver.
 # Credit to Stephen Ostermiller's blog
 #
 # Running this requires root access.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
-set -o xtrace
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 driver=`lshw -C network 2>&1 | grep wireless | grep driver | sed 's/.* driver=//; s/ .*//'`
 echo "driver:$driver"

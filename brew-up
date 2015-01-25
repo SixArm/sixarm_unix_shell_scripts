@@ -1,3 +1,14 @@
+#!/bin/sh
+set -eufx -o pipefail
+
+##
+# Brew up everything we can.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 brew update
 brew upgrade
 brew-cask

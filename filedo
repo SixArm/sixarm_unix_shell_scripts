@@ -1,10 +1,14 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # For each file name, run a command with the file name.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 unset CDPATH
 while read file_name

@@ -1,6 +1,8 @@
-#!/bin/bash
-#
-# To get ssh key fingerprints from a server, 
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# To get ssh key fingerprints from a server,
 # and print them in a human readable format,
 # we use `ssh-keyscan` and `ssh-kegen`.
 #
@@ -12,6 +14,12 @@
 #
 # Credit: http://stackoverflow.com/questions/13791219/ssh-fingerprint-verification-for-amazon-aws-ec2-server-with-ecdsa
 #
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 host="$1"
 file="ssh-keyscan-$1.tmp"
 ssh-keyscan "$1" > "$file"

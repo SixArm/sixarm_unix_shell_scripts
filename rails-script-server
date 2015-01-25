@@ -1,6 +1,7 @@
 #!/bin/bash
-#
-#
+set -euf -o pipefail
+
+##
 # rails-script-server - A better script/server alias.
 #
 # Usage:
@@ -13,9 +14,11 @@
 #
 # From http://gist.github.com/166994
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 function rails-script-server {
   if [ "$1" ]; then

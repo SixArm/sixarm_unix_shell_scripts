@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Get info about remote host ports and OS detection.
 #
 # nmap -sS -P0 -A -v <target>
@@ -14,8 +16,9 @@
 #
 # From user 'starchox' at http://www.commandlinefu.com
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 nmap -sS -P0 -A -v $1

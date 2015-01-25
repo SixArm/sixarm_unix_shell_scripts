@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate a random alphabetic uppercase string.
@@ -16,9 +17,10 @@
 #     $ random-alpha-upper
 #     JBXSTSCTUEREGJVH
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 random-match A-Z ${1-16}

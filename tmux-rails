@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Launch tmux suitable for Rails development.
 #
 # Syntax:
@@ -21,9 +23,10 @@
 #   * ^6:deploy = rake deploy
 #   * &7:server = rails server
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 ## This section is from tmux-use-session
 session=${1-`basename \`pwd\``}

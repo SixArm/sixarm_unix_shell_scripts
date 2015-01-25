@@ -1,10 +1,13 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # OpenSSL script to generate a new key file
 # specifically for our SixArm.com company.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 openssl req -x509 -nodes -days 1000 -subj '/C=US/ST=California/L=San Francisco/O=SixArm/CN=sixarm.com' -newkey rsa:1024 -keyout sixarm-rsa1024-x509-private.pem -out sixarm-rsa1024-x509-public.pem

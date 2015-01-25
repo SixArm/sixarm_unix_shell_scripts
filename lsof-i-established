@@ -1,7 +1,14 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Show current active connections i.e. that say "ESTABLISHED".
 #
-# http://danielmiessler.com/study/lsof/
+# See http://danielmiessler.com/study/lsof/
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 lsof -i| grep ESTABLISHED

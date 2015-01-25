@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate a random bcrypt salt string.
@@ -15,18 +16,18 @@
 #
 # Example:
 #
-#   $ random-bcrypt-salt
-#   $2a$07$PIcjwSQgSzExwIS4Qy9sOt
+#     $ random-bcrypt-salt
+#     $2a$07$PIcjwSQgSzExwIS4Qy9sOt
 #
-
 # Be aware that bcrypt uses this salt converted to base 64,
 # which means that the final character may not be carrying
 # information; in other words, two salts can differ in the
 # final character yet still produce the same crypt text.
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 echo '$2a$07$'$(random-alphanum ${1-22})

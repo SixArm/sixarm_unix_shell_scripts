@@ -1,5 +1,8 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
-# Empty the trash on an Ubuntu system.
+# Empty the trash on a Unix system.
 #
 # This deletes all the files in a user's typical trash directory:
 #
@@ -15,6 +18,9 @@
 #
 #    empty-trash --verbose
 #
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 # We do not use -delete because we want to pass args to rm.

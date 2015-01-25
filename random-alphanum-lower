@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate a secure random alphanumeric lowercase string.
@@ -15,10 +16,11 @@
 #
 #     $ random-alphanum-lower
 #     v08774zvxlf8layk
-#   
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
-# License is GPL v2
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 random-match a-z0-9 ${1-16}

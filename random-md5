@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+set -euf -o pipefail
 
 ##
 # Generate a random MD5 string.
@@ -14,9 +15,10 @@
 #
 # This implementation uses `md5sum` or `md5`.
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 _md5=$(which md5sum md5 | grep -v "not found" | head -1)

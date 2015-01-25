@@ -1,9 +1,12 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # YouTube script to get the "watch" title.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson
+# License: GPL
+# Updated: 2015-01-25
+##
 
 grep '/watch?v=.* title=' | sed 's#.*\(/watch?v=[^"]*\).* title="\([^"]*\).*#http://www.youtube.com\1 \2#'

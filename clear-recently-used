@@ -1,46 +1,13 @@
-rm ~/.local/share/recently-used.xbel   
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# Clear recently-used file list.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
+rm ~/.local/share/recently-used.xbel
 touch ~/.local/share/recently-used.xbel
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Block known dirty hosts from reaching your machine.
 #
 # Blacklisted is a compiled list of all known dirty hosts
@@ -14,8 +16,9 @@
 #
 # From user 'sil' at http://www.commandlinefu.com
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 wget -qO - http://infiltrated.net/blacklisted | awk '!/#|[a-z]/&&/./{print "iptables -A INPUT -s "$1" -j DROP"}' | sh

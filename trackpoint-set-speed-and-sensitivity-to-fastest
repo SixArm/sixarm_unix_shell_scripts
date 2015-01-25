@@ -1,11 +1,14 @@
-#!/bin/bash
-#
+#!/bin/sh
+set -euf -o pipefail
+
+##
 # Set trackpoint speed and sensitivity to fastest settings.
 # This also turns on the trackpoint option for press-to-select.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 for i in 1 2 3
 do

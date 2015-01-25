@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Ruby build using our preferred locations:
 #
 #    /opt/ruby-build is where we put the GitHub repo
@@ -9,9 +11,10 @@
 #
 #    ruby-build-opt-ruby <version> [-c]
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 
 ## Input

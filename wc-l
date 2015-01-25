@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Print the number of lines of a file.
 #
 # Syntax:
@@ -14,8 +16,9 @@
 #   wc -l /usr/share/dict/words | awk '{ print $1; }'
 #   => 100
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 echo '$=' | ed -s "$1"

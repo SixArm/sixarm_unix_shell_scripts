@@ -1,7 +1,14 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # List your most-frequent history commands.
 #
 # From @jmdugan
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 history | awk '{print $2}' | sort | uniq -c | sort -nr

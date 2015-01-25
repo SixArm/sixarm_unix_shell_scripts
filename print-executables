@@ -1,9 +1,12 @@
 #!/bin/bash
+set -euf -o pipefail
+
+##
+# List every executable in PATH.
 #
-# List every executable in PATH
-#
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 print -l ${^path}/*(-*N)

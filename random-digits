@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate random digits.
@@ -28,14 +29,10 @@
 # Cf. random-seed
 # Cf. random-int-faster
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
-#
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
-
-set -o nounset
-set -o errexit
-set -o pipefail
 
 random-seed
 random-digits-faster $@

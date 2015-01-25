@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # sed script to join lines that end with equal signs.
 #
 # If a line begins with an equal sign, append it to the
@@ -7,8 +9,9 @@
 #
 # From http://sed.sourceforge.net/sed1line.txt
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 sed -e :a -e '$!N;s/\n=/ /;ta' -e 'P;D'

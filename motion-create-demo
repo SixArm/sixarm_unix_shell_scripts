@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # motion-create-demo: use RubyMotion to create a demonstration project.
 #
 # This script creates placeholders for our typical motion projects.
@@ -8,9 +10,10 @@
 #
 # Customize this script as you like for your own projects.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 sudo motion update
 motion create demo && cd demo
@@ -24,10 +27,10 @@ mkdir -p doc/keys/{apple.com,segment.io,testflightapp.com}
 mkdir -p tmp/{cache,pids,sessions,sockets}
 mkdir -p resources/appstore/locales/{en,es}/{text,screenshots/{640x960,640x1136}}
 
-touch .gitignore Gemfile Gemfile.lock Podfile.lock Rakefile 
+touch .gitignore Gemfile Gemfile.lock Podfile.lock Rakefile
 touch app/testflight_launcher.rb
 touch resources/appstore/iTunesArtwork{,@2x}.png
 touch resources/appstore/locales/{en,es}/{text/{description.txt,whats_new.txt},screenshots/{640x960,640x1136}/{1,2,3,4}.png}
-touch resources/AppIcon-{29x29{,@2x},40x40{,@2x},60x60{,@2x},76x76{,@2x}}.png  
+touch resources/AppIcon-{29x29{,@2x},40x40{,@2x},60x60{,@2x},76x76{,@2x}}.png
 
 pod setup

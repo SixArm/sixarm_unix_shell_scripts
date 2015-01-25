@@ -1,15 +1,12 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Seed the bash random number generator using /dev/random
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
-#
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
-
-set -o nounset
-set -o errexit
-set -o pipefail
 
 RANDOM=$(head -c4 /dev/random | od -t u4 | awk '{ print $2 }')

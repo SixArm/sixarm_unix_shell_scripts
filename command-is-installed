@@ -1,16 +1,22 @@
 #!/bin/sh
-#
+set -euf -o pipefail
+
+##
 # Does a command exist?
 #
 # If the command exists then exit 0, otherwise exit 1.
 #
 # Examples:
 #
-#   $ command-is-installed ls && echo "true" || echo "false"
-#   true
+#     $ command-is-installed ls && echo "true" || echo "false"
+#     true
 #
-#   $ command-is-installed whatever && echo "true" || echo "false"
-#   false
+#     $ command-is-installed whatever && echo "true" || echo "false"
+#     false
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 command -v $1 >/dev/null 2>&1 || { exit 1; }

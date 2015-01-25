@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate a random Twitter app consumer key.
@@ -14,9 +15,10 @@
 #     $ random-twitter-app-consumer-key
 #     NIqmCufaqpSvKyYXMRMaF
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
-#
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
+
 
 random-alphanum 21

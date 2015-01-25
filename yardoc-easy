@@ -1,9 +1,12 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Run yardoc on all our lib files.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson
+# License: GPL
+# Updated: 2015-01-25
+##
 
 yardoc lib/**/*.rb

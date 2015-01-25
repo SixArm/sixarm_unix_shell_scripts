@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Start printing when we see a pattern; stop printing when we see a pattern.
 #
 # We include the line that matches the start pattern;
@@ -7,13 +9,14 @@
 #
 # Example:
 #
-#    $ cat alphabet.txt | sed-start-stop c f
-#    c
-#    d
-#    e
+#     $ cat alphabet.txt | sed-start-stop c f
+#     c
+#     d
+#     e
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 sed -n "/$1/,/$2/p" | sed '$d'

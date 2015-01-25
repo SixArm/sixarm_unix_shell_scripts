@@ -1,9 +1,15 @@
 #!/bin/bash
-#
+
+##
 # Show the text of an x509 cert
 #
 # Example:
 #
-#   openssl-x509-show mycert.txt
+#     $ openssl-x509-show mycert.txt#
 #
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 openssl x509 -in "$1" -text

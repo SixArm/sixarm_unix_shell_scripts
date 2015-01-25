@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Select lines that have dates within a weekly window.
 #
 # Our implementation is quick-and-dirty:
@@ -23,9 +25,10 @@
 #   * Improve implmentation so it compares date strings with >= and <.
 #   * Change the variables from defaults to command-line arguments.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 # Our immediate need is for the most recent whole week
 start_x_weeks_ago=2

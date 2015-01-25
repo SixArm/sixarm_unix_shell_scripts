@@ -1,5 +1,13 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Print the processes that are using the most RAM.
+#
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 ps aux | sort -nk +4 | tail

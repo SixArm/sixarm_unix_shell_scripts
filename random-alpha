@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate a secure random alphabetic string.
@@ -16,9 +17,9 @@
 #     $ random-alpha
 #     NcgCdRmnrspdDXuA
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
-#
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 random-match A-Za-z ${1-16}

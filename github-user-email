@@ -1,10 +1,14 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Fetch a GitHub user's email address,
 # if it's in the user's profile.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 curl -s https://api.github.com/users/$1/events/public | grep "\"email\":" | sed -e's/[,|"]//g' | sort | uniq -c | sort -n | awk '{print $(NF)}' | grep -v null

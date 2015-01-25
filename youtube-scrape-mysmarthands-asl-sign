@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # YouTube script to scrape the "MySmartHands" American Sign Language videos.
 #
 # See http://www.youtube.com/user/SmartHandsCA
@@ -8,8 +10,9 @@
 # chooses each video with a title havin "ASL sign for",
 # a list of links to videos sorted by title.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 cat videos.html | youtube-scrape-watch-title | grep ' - ASL sign for ' | sed 's# - ASL sign for .*##' | sort -k2

@@ -1,14 +1,21 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Print the current date stamp UTC in a user-friendly format.
 #
 # Example:
 #
-#     date-stamp
-#     => 2000-12-31T12:59:59Z
+#     $ date-stamp
+#     2000-12-31T12:59:59Z
 #
 # See:
 #
 #     date-stamp-shortest
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 date -u "+%Y-%m-%dT%H:%M:%SZ" "$@"

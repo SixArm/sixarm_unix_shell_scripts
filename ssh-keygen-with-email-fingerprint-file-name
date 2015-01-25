@@ -1,3 +1,6 @@
+#!/bin/bash
+set -euf -o pipefail
+
 ##
 # SSH script to generate our typical key:
 #
@@ -5,11 +8,11 @@
 #   * 4096 bytes of strength; default would be 2048.
 #   * append a comment that is the user's email address.
 #   * set the file name to "<email>=<fingerprintx>=id_rsa"
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
-
-set -o nounset
-set -o errexit
-set -o pipefail
 
 email=$1
 temp=$(mktemp -t `basename $0`)

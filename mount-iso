@@ -1,11 +1,18 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Mount a .iso file.
 # N.b. “-o loop” lets you use a file as a block device
 #
 # Example:
-#  mount-iso /path/to/file.iso 
+#  mount-iso /path/to/file.iso
 #
 # From http://blog.urfix.com/25-%E2%80%93-sick-linux-commands/
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 mount $1 /mnt/cdrom -oloop

@@ -1,13 +1,16 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # SSH script to generate our typical key:
 #
-#   * rsa algorithm because it's the widest used.
+#   * RSA algorithm because it's the widest used.
 #   * 4096 bytes of strength; default would be 2048.
 #   * append a comment that is the user's email address.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
-
-set -o nounset
-set -o errexit
-set -o pipefail
 
 ssh-keygen -t rsa -b 4096 -C "$email"

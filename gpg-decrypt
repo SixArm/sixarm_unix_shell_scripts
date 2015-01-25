@@ -1,5 +1,12 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # GPG script to decrypt a file with our typical settings.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 gpg -d --no-greeting --no-use-agent --quiet $@

@@ -1,3 +1,6 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Check your unread gmail from the command line.
 #
@@ -6,6 +9,10 @@
 # For some reason sed gets stuck on OS X, so here's a Perl version for the Mac:
 #
 #     ... | perl -pe 's/^<title>(.*)<\/title>.*<name>(.*)<\/name>.*$/$2 - $1/'
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 username=`cat ~/.gmail-username`

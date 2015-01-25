@@ -1,3 +1,12 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
 # SSH script to remove a known host.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 ssh-keygen -R "$@"

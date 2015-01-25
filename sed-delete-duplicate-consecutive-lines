@@ -1,8 +1,17 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Delete duplicate, consecutive lines from a file (emulates "uniq").
 #
 # First line in a set of duplicate lines is kept, rest are deleted.
+#
 # From http://sed.sourceforge.net/sed1line.txt
+#
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 sed '$!N; /^\(.*\)\n\1$/!P; D'

@@ -1,3 +1,18 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
 # Run tar using bzip2 compression.
+#
+# Example:
+#
+#     $ tar-bzip2 mydir
+#     $ ls
+#     mydir.bz
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 tar --use-compress-program /usr/local/bin/bzip2

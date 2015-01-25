@@ -1,29 +1,36 @@
-#!/bin/bash
+#!/bin/sh
+set -euf -o pipefail
 
 ##
 # between: print the lines of a file that are between match $1 and match $2.
-# 
+#
 # Example to show lines of foo.txt that are between the lines 'hello' and 'goodbye':
 #
 #     cat foo.txt | between 'hello' 'goodbye'
 #
+# This prints multiple sections, if they exist.
+#
 # This script uses bash 3.2+ pattern matching for strings.
 #
-# This is similar to _sed_ which can print a section 
+# This is similar to `sed` which can print a section
 # between two regular expressions (inclusive) like this:
 #
 #     sed -n '/hello/,/goodbye/p'
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 show=0 #false
 while read x
 do
     if [[ "$x" =~ "$1" ]]
-    then 
+    then
 	show=1
     else
 	if [[ "$x" =~ "$2" ]]
-	then 
+	then
 	    break
 	else
 	    if [ $show = 1 ]

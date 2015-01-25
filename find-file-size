@@ -1,5 +1,7 @@
-#!/bin/bash
-#
+#!/bin/sh
+set -euf -o pipefail
+
+##
 # Find files and print the file size and file name.
 #
 # This script has a goal to run fast, and also run cross platform.
@@ -18,5 +20,11 @@
 # basic expressions (e.g. `*`) instead of extended expressions (e.g. `+`)
 # because the basic ones are more cross-platform availble and compatible.
 #
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 find "$1" -type f -exec ls -dlL {} \; |
 sed -n 's/^[^ ]* *[^ ]* *[^ ]* *[^ ]* *\([^ ]*\) *[^ ]* *[^ ]* *[^ ]* *\(.*\)$/\1 \2/p'

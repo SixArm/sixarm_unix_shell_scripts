@@ -1,14 +1,18 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Remove path(s) from the PATH environment variable.
 #
 # Usage: rmpath paths...
 #
 # From http://pastie.org/591350
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 for p in "$@"
 do

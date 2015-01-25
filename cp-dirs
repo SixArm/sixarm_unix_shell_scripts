@@ -1,11 +1,14 @@
-#!/bin/bash
-#
+#!/bin/sh
+set -euf -o pipefail
+
+##
 # Copy a directory structure recursively, without any files.
 #
 # From http://grml.org/zsh/zsh-lovers.html
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 find . -type d -exec env d="$dest_root" sh -c ' exec mkdir -p -- "$d/$1"' '{}' '{}' \;

@@ -1,11 +1,15 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Delete all blank lines, i.e. lines with no characters.
 #
 # From http://sed.sourceforge.net/sed1line.txt
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 sed '/^$/d'

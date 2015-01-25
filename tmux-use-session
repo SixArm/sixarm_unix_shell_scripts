@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Syntax: tmux-attach-session-or-new-session [session-name]
 #
 # If the tmux session name _session-name_ exists,
@@ -18,9 +20,10 @@
 #    tmux-attach-session-or-new-session
 #    #=> creates new session name "foo"
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 session=${1-`basename \`pwd\``}
 tmux has-session -s "$session" &&

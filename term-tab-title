@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Set an iTerm tab title
 #
 # Example:
@@ -8,8 +10,9 @@
 #
 # From http://blog.locut.us/2009/10/30/simple-bash-script-to-name-a-tab-in-iterm/
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 echo -ne "\033];"$@"\007"

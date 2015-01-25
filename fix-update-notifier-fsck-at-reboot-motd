@@ -1,8 +1,15 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
 # Fix the Ubuntu update notifier fsck-at-reboot message of the day.
 #
 # See http://askubuntu.com/questions/163184/persistent-disk-will-be-checked-in-the-message-of-the-day-motd-even-after
 #
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 rm /var/lib/update-notifier/fsck-at-reboot
 for file in /etc/update-motd.d/*; do $file; done
-
-

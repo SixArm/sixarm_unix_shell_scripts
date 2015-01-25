@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Our rsync safe syncrhonization, suitable for safe file copies and backups.
 #
 # Our choices:
@@ -30,4 +32,10 @@
 #   * We want symlinks as-is, thus no --safe-links, --copy-links, etc.
 #   * We want --hard-links even though this is an expensive calculation.
 #
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 rsync --archive --hard-links --update --omit-dir-times --one-file-system --compress --verbose --itemize-changes --progress

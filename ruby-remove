@@ -1,14 +1,17 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # This script will remove all ruby-related files that we know about. DANGEROUS!
 #
 # Example:
 #   cd /usr/local/bin
 #   rm-ruby
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 rm -f -v bluecloth
 rm -f -v cap

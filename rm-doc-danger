@@ -1,14 +1,17 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Remove documentation files.
 #
 # Typically this is to save space on a server.
 #
 # https://wiki.ubuntu.com/ReducingDiskFootprint
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 rm -rf /usr/share/doc/*
 rm -rf /usr/share/man/*

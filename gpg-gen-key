@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # GPG generate key with our typical settings.
 #
 # This command prints our typical steps to set up a GPG key for an email address.
@@ -9,9 +11,10 @@
 #
 #     alice@example.com=gpg_key_with_rsa_and_rsa
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 email=${1-"alice@example.com"}
 

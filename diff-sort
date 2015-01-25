@@ -1,9 +1,12 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Shorthand to diff with sort.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 diff <(sort $1)  <(sort $2)

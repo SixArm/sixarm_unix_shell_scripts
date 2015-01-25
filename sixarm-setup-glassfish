@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # How to download and install Glassfish version 3 with typical settings.
 #
 #
@@ -13,9 +15,10 @@
 # From http://skytteren.blogspot.com/2009/05/installing-glassfish-v3-on-ubuntu.html
 # Customized a bit with the downloadable init.d by joelparkerhenderson@gmail.com
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 unset CDPATH
 wget http://download.java.net/glassfish/v3/promoted/latest-glassfish.zip

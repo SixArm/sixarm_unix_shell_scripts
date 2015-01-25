@@ -1,10 +1,13 @@
 #!/bin/bash
-#
+set -euf -o pipefail -o xtrace
+
+##
 # Remove a damaged debian package by using apt-get and also dpkg.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 apt-get remove $1
 rm /var/lib/dpkg/info/$1

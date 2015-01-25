@@ -1,5 +1,12 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Show Mac OSX Spotlight search indexer usage
 #
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 fs_usage -w -f filesys mdworker

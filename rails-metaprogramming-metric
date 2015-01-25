@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # How many meta-programming methods are in your Rails project?
 #
 # This script counts the occurences of these methods:
@@ -22,8 +24,9 @@
 #
 # Based on http://aaronblohowiak.com/rails-maintainability-metric
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 find app/** lib/** | grep "\b\(eval\|method_missing\|define_method\|instance_variable_set\)\b"  | wc -l

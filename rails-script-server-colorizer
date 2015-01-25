@@ -1,12 +1,15 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Colorize our rails server output.
 #
 # From http://blog.oneeyedgringo.com/2009/04/taming-rails-scriptserver-output.html
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 alias rails-script-server-colorizer="./script/server | grep -E 'Param|Processing|Error|KLC' --color -b1"
 function rails-script-server-colorizer () {

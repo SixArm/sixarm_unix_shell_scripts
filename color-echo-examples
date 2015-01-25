@@ -1,11 +1,14 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Print some command line color examples.
 # This is useful for reference.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 NORMAL=$(tput sgr0)
 INFO=$(tput setaf 2; tput bold)

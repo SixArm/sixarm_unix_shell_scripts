@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Find TODO lines in files.
 #
 # This searches for all of these comments and tags:
@@ -48,11 +50,9 @@
 # If you prefer using the _grep_ command, or _ack_ command,
 # then you can easily edit this script to your taste.
 #
-# By Joel Parker Henderson <joel@sixarm.com>.
-# Comments/feedback/improvements welcome.
-#
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 ag "# ?(TODO|FIXME|OPTIMIZE|DEPRECATE|REFACTOR|DELETE|AUDIT|DANGER|WTF)\b" "$@"

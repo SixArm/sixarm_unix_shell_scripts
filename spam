@@ -1,12 +1,15 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Move spam email messages out of my inbox folder and into my spam folder.
 #
 # This finds mail messages in my inbox (~/Maildir/cur) that contain a given phrase,
 # and moves these messages to my spambox (~/Maildir/spam) for my review or deletion.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 find ~/Maildir/cur | xargs grep -l "$1" | xargs -I{} mv "{}" ~/Maildir/spam/

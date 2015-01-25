@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Use curl with headers that accept json and set content-type to json.
 #
 # Example:
@@ -9,8 +11,9 @@
 #     -d '{"user":{"name":"Joe","email":"joe@example.com","password":"secret"}}' \
 #     http://localhost:3000/api/users
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 curl -H "Accept: application/json" -H "Content-type: application/json" $@

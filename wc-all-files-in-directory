@@ -1,11 +1,14 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Count the lines in all the files in a directory.
 #
 # From http://stackoverflow.com/questions/1358540/how-to-count-all-the-lines-of-code-in-a-directory-recursively
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
-( find ./ -path ./.git -prune -o -type f -print0 | xargs -I{} -0 cat "{}" ) | wc -l
+(find ./ -path ./.git -prune -o -type f -print0 | xargs -I{} -0 cat "{}") | wc -l

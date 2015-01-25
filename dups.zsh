@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
-#
+
+##
 # Duplicate detector: a general-purpose line-oriented key tracker.
 #
 # The input lines use this format:
@@ -26,10 +27,10 @@
 #     A Anna
 #
 # Example command:
-#   
+#
 #     $ cat demo.txt | dups.zsh
 #     A Alice Anna
-#  
+#
 # To detect duplicate files, we can use a checksum:
 #
 #     find . -type f -exec sha512sum '{}' \; | dups.zsh
@@ -38,10 +39,11 @@
 # If you use bash instead of zsh,
 # see our repo for a bash version.
 #
-# Author: joel@joelparkerhenderson.com
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: Any of BSD, MIT, GPL.
 # Repo: https://github.com/SixArm/sixarm_unix_shell_scripts
-#
+##
+
 unset track
 typeset -A track
 while read -r key val; do

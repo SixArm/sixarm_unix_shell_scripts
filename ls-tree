@@ -1,11 +1,14 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # List files in your current directory recursively shown as a tree.
 #
 # From http://blog.urfix.com/25-%E2%80%93-sick-linux-commands/
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'

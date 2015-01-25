@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+set -euf -o pipefail
 
 ##
 # Generate a random hex string.
@@ -27,14 +28,10 @@
 #
 # This implemenation uses the commands `hexdump` and `/dev/random`.
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
-#
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
-
-set -o nounset
-set -o errexit
-set -o pipefail
 
 len=${1-16}
 hexdump -n $len -v -e '/1 "%02X"' -e "/$len \"\n\"" /dev/random

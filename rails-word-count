@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Shows the word count of each file in a Rails app subdirectory.
 #
 # This is a code weight bash one-liner for rails by James Golick.
@@ -16,8 +18,9 @@
 #        98 app/models/team.rb
 #        71 app/models/post.rb
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 for file in $(find app/$1/**/*.rb -type f); do wc -l $file ; done  | sort -r

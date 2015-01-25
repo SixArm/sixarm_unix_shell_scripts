@@ -1,11 +1,14 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Show current listening connections i.e. that say "LISTEN".
 #
-# http://danielmiessler.com/study/lsof/
+# From http://danielmiessler.com/study/lsof/
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 lsof -i| grep LISTEN

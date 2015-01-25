@@ -1,3 +1,6 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Histogram by date, on the command line
 #
@@ -7,7 +10,7 @@
 # How it works:
 #
 #   * grep ...           Select lines that start with YYYYMMDD (optional - or /)
-#   * sed ...            Delete everything after the date            
+#   * sed ...            Delete everything after the date
 #   * sort               Sort, so that similar commands come in groups
 #   * uniq -c            Count subsequent items (-c prepends count)
 #   * sort -rn           Sort in descending order (reverse)
@@ -25,6 +28,10 @@
 # Example:
 #
 #   cat log | histogram-by-date
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 grep '^ *[0-9][0-9][0-9][0-9][-/]\?[0-9][0-9][-/]\?[0-9][0-9]\b' | sed 's/^ *\([0-9][0-9][0-9][0-9][-/]\?[0-9][0-9][-/]\?[0-9][0-9]\)\b.*/\1/' | histogram

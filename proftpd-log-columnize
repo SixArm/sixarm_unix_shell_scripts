@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # ProFTPD uses this log file format:
 #
 #   date server_host daemon_name[pid] server_fqdn (client_name[ip]): message
@@ -15,4 +17,10 @@
 #    (client-host-name.example.com[2.2.2.2]):
 #    FTP session opened.
 #
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
 sed 's/^\(....-..-.. ..:..:..,...\) \(\S\+\) \([^[]\+\)\[\(\w\+\)\] \(\S\+\) (\([^[]\+\)/\1\t\2\t\3\t\4\t\5\t\6/

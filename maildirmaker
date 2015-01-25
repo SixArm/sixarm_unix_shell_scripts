@@ -1,3 +1,6 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Make a typical user's mail directory for qmail or postfix.
 #
@@ -8,6 +11,11 @@
 #     Maildir/tmp
 #     Maildir/drafts
 #     Maildir/sent
+#
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 mkdir -p Maildir/{cur,new,tmp,drafts,sent}

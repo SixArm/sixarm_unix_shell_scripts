@@ -1,9 +1,16 @@
-#!/bin/bash
-#
+#!/bin/sh
+set -euf -o pipefail
+
+##
 # Parse a typical Ruby Gemfile to a list of gem names.
 #
 # Example:
 #
-#     cat Gemfile | gemfile-to-gem-names
+#     $ cat Gemfile | gemfile-to-gem-names
 #
-sed -n "s/^\s*gem\s+['"]\([^'"]*\)['"].*/\1/p" 
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
+sed -n "s/^\s*gem\s+['"]\([^'"]*\)['"].*/\1/p"

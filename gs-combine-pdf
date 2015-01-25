@@ -1,7 +1,10 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Ghostscript: combine multiple PDFs into one readable, searchable, PDF
 #
-# Syntax: 
+# Syntax:
 #
 #     gs-combine-pdf <output file> <input file> ...
 #
@@ -10,10 +13,13 @@
 #     gs-combine-pdf output.pdf 1.pdf 2.pdf 3.pdf
 #
 # Credit: dbray925 on reddit.com
+#
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 output_file=$1
 shift
 gs -dNOPAUSE -sDEVICE=pdfwrite -sOUTPUTFILE=$output_file -dBATCH "$@"
-
-

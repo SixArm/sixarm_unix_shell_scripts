@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Run apt-get commands to uplift the system:
 #
 #   * update
@@ -13,9 +15,10 @@
 #   * --fix-missing
 #   * --install-recommends
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 ## Scrub before uplift
 sudo apt-get autoclean

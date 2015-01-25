@@ -1,5 +1,12 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Input a list of numbers, output the standard deviation.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 awk '{ sum += $1; a[NR] = $1 }

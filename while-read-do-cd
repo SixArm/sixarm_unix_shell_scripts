@@ -1,10 +1,13 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # For each line of input on command line, cd into a path then run a command.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 unset CDPATH
 while read path

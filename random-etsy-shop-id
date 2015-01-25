@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # Generate a random Etsy shop id string.
@@ -18,9 +19,10 @@
 #     $ random-etsy-shop-id
 #     oRcIJbwcwXHUVOyHPFeHTKicenPsxttC
 #
-# By Joel Parker Henderson, joel@joelparkerhenderson.com
 #
-# License is GPL v2
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 n=${1-$(( $RANDOM % 60 + 4 ))}

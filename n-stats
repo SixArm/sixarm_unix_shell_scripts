@@ -1,5 +1,12 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Input a lit of numbers, output statistics
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 sort -n |

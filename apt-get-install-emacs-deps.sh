@@ -1,11 +1,16 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Use apt-get to install Emacs dependencies.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
+# Install requirements
 apt-get-install-emacs-reqs
 
 # Install basic packages

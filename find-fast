@@ -1,5 +1,12 @@
+#!/bin/sh
+set -euf -o pipefail
+
 ##
 # Find script with pruning of /dev, /proc, /tmp, .git, .svn, etc.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
 ##
 
 find -noleaf -path "/dev"-prune -o -path "/proc" -prune -o -path "/tmp" -o -path "/sys" -prune -o -prune -o -name ".git" -prune -o -name ".svn" -prune -o $@

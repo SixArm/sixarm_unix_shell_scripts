@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Split a file by lines evenly to <num> new output files.
 # This uses the split command.
 #
@@ -15,9 +17,10 @@
 #    hello.txt.1
 #    hello.txt.2
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 input_file=$1  # e.g. "hello.txt"
 output_pieces=$2  # e.g. "3" to split the file into three output files

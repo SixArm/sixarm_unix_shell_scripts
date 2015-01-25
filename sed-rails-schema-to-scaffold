@@ -1,3 +1,7 @@
+#!/bin/bash
+set -euf -o pipefail
+
+##
 # Convert from a typical Rails 4 schema to a Rails 4 scaffold.
 #
 # This script suitable for a first pass;
@@ -16,8 +20,9 @@
 #     name:string \
 #     age:integer \
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 sed 's/^ *create_table "\?\(\w\+\).*/rails generate scaffold \1 \\/; s/^ *t.\(\w\+\) \+\"\?\(\w\+\).*/\2:\1 \\/; s/^ *end *$//; s/ \+$//' | sed -e :a -e '/^\n*$/{$d;N;ba' -e '}'

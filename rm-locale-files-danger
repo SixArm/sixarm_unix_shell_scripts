@@ -1,5 +1,7 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Remove translations for languages.
 #
 # Typically this is to save space on a server.
@@ -16,8 +18,9 @@
 #   ! -name 'en' ! -name 'es*' ! -name 'zh*' \
 #   | xargs rm -r
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 find /usr/share/locale -mindepth 1 -maxdepth 1 ! -name 'en' ! xargs rm -r

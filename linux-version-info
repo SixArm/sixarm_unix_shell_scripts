@@ -1,11 +1,14 @@
 #!/bin/bash
-#
+set -euf -o pipefail
+
+##
 # Show diagnostic details about the linux version.
 # I.e. tell me about the current operating system.
 #
-set -o nounset
-set -o errexit
-set -o pipefail
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
 
 echo 'uname -a'
 uname -a
