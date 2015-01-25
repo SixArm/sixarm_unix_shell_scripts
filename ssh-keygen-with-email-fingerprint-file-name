@@ -4,13 +4,20 @@
 #   * rsa algorithm because it's the widest used.
 #   * 4096 bytes of strength; default would be 2048.
 #   * append a comment that is the user's email address.
-#   * generate a ZUID to identify this key.
-#   * set the file name to "<email>=<zuid>=id_rsa"
+#   * set the file name to "<email>=<fingerprintx>=id_rsa"
 ##
 
+set -o nounset
+set -o errexit
+set -o pipefail
+
 email=$1
-zuid=$(uuid | tr 'A-Z' 'a-z' | sed 's/-//g')
-echo "zuid:$zuid"
-file="$email=$zuid=rsa"
-echo "file:$file"
-ssh-keygen -t rsa -b 4096 -C "$email" -f "$file"
+temp=$(mktemp -t `basename $0`)
+echo "temp:$temp"
+echo 'y' | ssh-keygen -t rsa -b 4096 -C "$email" -f "$temp"
+fingerprintx=$(ssh-keygen -lf "$temp.pub" | awk '{print $2}' | sed 's/://g')
+file="$email=$fingerprintx=id_rsa"
+mv "$temp" "$file"
+mv "$temp.pub" "$file.pub"
+echo "$file"
+echo "$file.pub"
