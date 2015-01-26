@@ -80,15 +80,6 @@ File scripts to print a given `ls` field:
  * `dig-subdomains`: Dig a domain's subdomains
 
 
-### ssh
-
- * `ssh-copy-id-help`: SSH script to copy a pub id file to a remote server into your authorized_keys.
- * `ssh-fingerprint`: SSH script to print a server's host rsa key public fingerprint.
- * `ssh-keygen-with-rsa-and-email`: SSH script to generate our typical rsa key with a comment.
- * `ssh-remove-known-host`: SSH script to remove a known host.
- * `ssh-set-directory-permissions`: Set the correct directory permissions of the current user's ~/.ssh directory.
-
-
 ### gpg
 
  * `gpg-decrypt`: GPG script to decrypt a file with our typical settings.
