@@ -115,20 +115,7 @@ File scripts to print a given `ls` field:
 
 ### random text generators
 
-All these methods generate random text by using the secure /dev/urandom source.
-
- * `random-alphanum`: Alphanumeric A-Z a-z 0-9.
- * `random-digits`: Digits.
- * `random-digits-faster`: Digits, skipping the seed.
- * `random-hex`: Hex digits 0-9 a-z.
- * `random-md5`: MD5 sum, calling the md5sum command.
- * `random-int`: Integer from 0 to max.
- * `random-int-faster`: Integer from 0 to max, skipping the seed.
- * `random-password`: Opimized password characters for high security needs.
- * `random-password-encrypt`: Optimized password characters for high security needs with encryption.
- * `random-password-words`: Memorable password of four random words from a text file.
- * `random-seed`: Seed the bash random number generator using /dev/urandom
- * `random-word-characters`: Word characters A-Z a-z and underscore.
+ * `random-password-encrypt`: Generate a random password and encrypt it.
 
 
 ### random text generators for special needs
