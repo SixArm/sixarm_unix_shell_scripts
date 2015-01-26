@@ -253,14 +253,6 @@ All these methods generate random text by using the secure /dev/urandom source.
  * `easytether-connecting`: Run the easytether dhclient; call this after easytether-connect.
 
 
-### Thinkpad Trackpoint
-
- * `find-trackpoint-device-file-for-sensitivity`: Find a Thinkpad's TrackPoint speed file that sets the pointer speed.
- * `find-trackpoint-device-file-for-speed`: Find a Thinkpad's TrackPoint speed file that sets the pointer speed.
- * `find-trackpoint-path-id`: Find a ThinkPad computer's TrackPoint Path ID.
- * `trackpoint-set-speed-and-sensitivity-to-fastest`: Set trackpoint speed and sensitivity to fastest settings.
-
-
 ### Macintosh
 
  * `macbook-pro-retina-screen-manufacturer`: Show the manfactured id on a Macbook Pro Retina.
