@@ -73,16 +73,6 @@ File scripts to print a given `ls` field:
  * `lsof-i-listen`: Show current listening connections i.e. that say "LISTEN".
  * `lsof-link-count-less-than-1`: Shows you all open files that have a link count less than 1.
 
-### number statistics
-
-  * `n-min`: Print the minimum number.
-  * `n-max`: Print the maxmium number.
-  * `n-mean`: Print the mean of the numbers.
-  * `n-median`: Print the median of the numbers.
-  * `n-range`: Print the range of the numbers.
-  * `n-sum`: Print the sum of the numbers.
-  * `n-sd`: Print the standard deviation of the numbers.
-  * `n-stats`: Print all of the above statistics of the numbers.
 
 ### dig
 
