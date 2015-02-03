@@ -1,0 +1,36 @@
+#!/bin/sh
+
+##
+# Parse an Apple iOS *.plist XML file to its software package URL.
+#
+# Example:
+#
+#     $ cat MyApp.plist | plist-software-package-url
+#     https://example.com/MyApp-1.0.0.ipa
+#
+# This script implemenation uses `xmlstarlet` to parse the XML.
+#
+# A plist file looks like this example:
+#
+#     <?xml version="1.0" encoding="UTF-8"?>
+#     <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+#     <plist version="1.0">
+#     <dict>
+#       <key>items</key>
+#       <array>
+#         <dict>
+#           <key>assets</key>
+#           <array>
+#             <dict>
+#               <key>kind</key>
+#               <string>software-package</string>
+#               <key>url</key>
+#               <string>https://example.com/MyApp-1.0.0.ipa</string>
+#               ...
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
+xmlstarlet sel -t -v "//dict[contains(key,'items')]/array/dict[contains(key,'assets')]/array/dict[contains(key,'kind') and contains(string,'software-package')]/key[contains(.,'url')]/following-sibling::*[position()=1]" -t -n 2>/dev/null
