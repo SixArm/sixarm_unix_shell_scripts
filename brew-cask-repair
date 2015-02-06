@@ -1,0 +1,16 @@
+#!/bin/bash
+set -euf -o pipefail
+
+##
+# brew cask repair
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-02-06
+##
+
+brew untap caskroom/cask
+brew update
+brew cleanup --force -s
+rm -rf "$(brew --cache)"
+brew tap caskroom/cask
