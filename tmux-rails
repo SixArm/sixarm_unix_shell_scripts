@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 set -euf -o pipefail
 
 ##
@@ -18,38 +18,44 @@ set -euf -o pipefail
 #   * !1:edit = $EDITOR
 #   * @2:test = bundle exec bin/rake test
 #   * #3:log = cd log && tail -f log/development.log
-#   * $4:console = rails console
+#   * $4:con = rails console
 #   * %5:db = rails db
-#   * ^6:deploy = rake deploy
-#   * &7:server = rails server
+#   * ^6:server = rails server
+#   * &6:deploy = rake deploy
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
+# Updated: 2015-02-16
 ##
 
-## This section is from tmux-use-session
-session=${1-`basename \`pwd\``}
-#tmux has-session -s "$session" &&
-#tmux attach-session -t "$session" ||
-#tmux new-session -s "$session"
+if [ -z ${TMUX+x} ]; then
+    # noop
+else
+    echo "TMUX environment variable is alread set, so exit"
+    exit 1
+fi
 
-rake="bundle exec bin/rake"
-rails="bundle exec bin/rails"
+# The session name defaults to the current directory's basename.
+s=${1-`basename \`pwd\``}
 
-function tmux-new-window-with-keys(){
-  session=$1
-  window=$2
-  keys=$3
-  tmux new-window -n "$window" -t "$session"
-  tmux send-keys -t "$session:$window" "$keys" C-m
-}
+# Create the new session.
+tmux new-session -d -s "$s"
 
-tmux-new-window-with-keys "$session" "edit" "$EDITOR"
-tmux-new-window-with-keys "$session" "test" "$rake test"
-tmux-new-window-with-keys "$session" "console" "$rails console"
-tmux-new-window-with-keys "$session" "log" "cd log && tail -f development.log"
-tmux-new-window-with-keys "$session" "db" "$rails db" C-m
-tmux-new-window-with-keys "$session" "deploy" ""
-tmux-new-window-with-keys "$session" "server" "$rails server"
-tmux -q select-window 'edit'
+# Create the windows.
+tmux rename-window  "ed"
+tmux new-window -d -n "qa"
+tmux new-window -d -n "log"
+tmux new-window -d -n "console"
+tmux new-window -d -n "db"
+tmux new-window -d -n "server"
+
+# Send keys.
+tmux send-keys -t "ed" "$EDITOR" C-m
+tmux send-keys -t "qa" "bundle exec rake spec" C-m
+tmux send-keys -t "log" "cd log && tail -f development.log" C-m
+tmux send-keys -t "console" "bundle exec rails console" C-m
+tmux send-keys -t "db" "bundle exec rails db" C-m
+tmux send-keys -t "server" "bundle exec rails server" C-m
+
+# Last step: attatch to the session.
+tmux -2 attach-session -d
