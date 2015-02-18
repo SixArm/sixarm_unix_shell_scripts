@@ -38,6 +38,13 @@ fi
 # The session name defaults to the current directory's basename.
 s=${1-`basename \`pwd\``}
 
+# Set the name the terminal window to the session name.
+# This line is optional -- you may comment it out if you prefer.
+# You may prefer to set your own title, or may already be using
+# something such as zsh auto title, or OSX iTerm2 appearance settings
+# to automatically set window & tab titles, or some other approach.
+echo -e "\033]1;$s\007"
+
 # Create the new session.
 tmux new-session -d -s "$s"
 
