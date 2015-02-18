@@ -1,0 +1,26 @@
+#!/bin/sh
+
+##
+# Set the terminal window title to the given text.
+#
+# If you use zsh, then disable auto title:
+#
+#   * If you're a typical user, your settings file is  `~/.zshrc`
+#   * Edit the file and search for `DISABLE_AUTO_TITLE`.
+#   * If the line is in your settings file, but is commented out, then uncomment it.
+#   * If the line is not in your settings file, then add the line:
+#
+#        DISABLE_AUTO_TITLE="true"
+#
+# If you use iTerm or iTerm2, on OSX, then do this:
+#
+#   * iTerm → Preferences → Appearance tab → Window & Tab Titles section
+#   * Uncheck "Show window number"
+#   * Uncheck "Show current job name"
+#   * Uncheck "Show profile name"
+#
+# If you want to set the terminal tab title, then use the
+# command terminal-tab-title is this same repo.
+##
+
+echo -ne "\e]1;$@\a"
