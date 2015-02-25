@@ -2,17 +2,36 @@
 set -euf -o pipefail
 
 ##
-# Set an iTerm tab title
+# Set a terminal window title to the given text.
 #
 # Example:
 #
-#   term-tab-title hello world
+#     terminal-window-title Hello World
 #
-# From http://blog.locut.us/2009/10/30/simple-bash-script-to-name-a-tab-in-iterm/
+# If you use zsh, then disable auto title:
+#
+#   * If you're a typical user, your settings file is  `~/.zshrc`
+#   * Edit the file and search for `DISABLE_AUTO_TITLE`.
+#   * If the line is in your settings file, but is commented out, then uncomment it.
+#   * If the line is not in your settings file, then add the line:
+#
+#        DISABLE_AUTO_TITLE="true"
+#
+# If you use iTerm or iTerm2, on OSX, then do this:
+#
+#   * iTerm → Preferences → Appearance tab → Window & Tab Titles section
+#   * Uncheck "Show window number"
+#   * Uncheck "Show current job name"
+#   * Uncheck "Show profile name"
+#
+# If you want to set the terminal window title,
+# then use the command terminal-window-title.
+#
+# Thanks to http://superuser.com/questions/292652/change-iterm2-window-and-tab-titles-in-zsh
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
+# Updated: 2015-02-18
 ##
 
-echo -ne "\033];"$@"\007"
+echo -ne "\033]2;$@\007"

@@ -1,7 +1,12 @@
 #!/bin/sh
+set -euf -o pipefail
 
 ##
-# Set the terminal window title to the given text.
+# Set a terminal window title to the given text.
+#
+# Example:
+#
+#     terminal-window-title Hello World
 #
 # If you use zsh, then disable auto title:
 #
@@ -19,8 +24,14 @@
 #   * Uncheck "Show current job name"
 #   * Uncheck "Show profile name"
 #
-# If you want to set the terminal tab title, then use the
-# command terminal-tab-title is this same repo.
+# If you want to set the terminal tab title,
+# then use the command terminal-tab-title.
+#
+# Thanks to http://superuser.com/questions/292652/change-iterm2-window-and-tab-titles-in-zsh
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-02-18
 ##
 
-echo -ne "\e]1;$@\a"
+echo -ne "\033]1;$@\007"
