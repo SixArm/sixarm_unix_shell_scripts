@@ -1,4 +1,4 @@
-# SixArm.com » Unix » shell scripts for sh, bash, tcsh, zsh, etc.
+# Unix » shell scripts for sh, bash, tcsh, zsh, etc.
 
 This repo has lots of utility scripts.
 
