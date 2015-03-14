@@ -16,7 +16,7 @@
 #     * ends with *-public.pem
 ##
 
-rsync -auvC \
+rsync --archive --hard-links --update --omit-dir-times --one-file-system --compress --verbose --itemize-changes --progress \
   --include '*/' \
   --include '*.gpg' \
   --include '*.fingerprint' \
