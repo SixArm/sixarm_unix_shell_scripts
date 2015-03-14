@@ -10,6 +10,6 @@ set -euf -o pipefail
 # Updated: 2015-03-14
 ##
 
-name="sixarm-rsa2048-x509-$(date -u "+%Y%m%d")"
+name="sixarm-rsa-4096-x509-$(date -u "+%Y%m%d")"
 subj="/C=US/ST=California/L=San Francisco/O=SixArm/CN=sixarm.com"
-openssl req -x509 -nodes -days 1000 -subj "$subj" -newkey rsa:2048 -keyout $name-private.pem -out $name-public.pem
+openssl req -x509 -nodes -days 1000 -subj "$subj" -newkey rsa:4096 -keyout $name-private.pem -out $name-public.pem
