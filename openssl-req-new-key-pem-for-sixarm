@@ -7,7 +7,9 @@ set -euf -o pipefail
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
+# Updated: 2015-03-14
 ##
 
-openssl req -x509 -nodes -days 1000 -subj '/C=US/ST=California/L=San Francisco/O=SixArm/CN=sixarm.com' -newkey rsa:1024 -keyout sixarm-rsa1024-x509-private.pem -out sixarm-rsa1024-x509-public.pem
+name="sixarm-rsa2048-x509-$(date -u "+%Y%m%d")"
+subj="/C=US/ST=California/L=San Francisco/O=SixArm/CN=sixarm.com"
+openssl req -x509 -nodes -days 1000 -subj "$subj" -newkey rsa:2048 -keyout $name-private.pem -out $name-public.pem
