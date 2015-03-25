@@ -1,0 +1,56 @@
+#!/bin/zsh
+set -euf -o pipefail
+
+##
+# Run update commands for everything we use on all platforms.
+#
+#   * apt-get: for Debian systems
+#   * brew: for Mac OSX Homebrew
+#   * gem: for Ruby
+#   * npm: for Node and Javascript
+#
+# More to come. We welcome patches, pull requests, and ideas.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-03-16
+##
+
+if command -v apt-get >/dev/null 2>&1; then
+    echo "update apt-get..."
+    set -x
+    sudo apt-get autoclean
+    sudo apt-get --purge autoremove
+    sudo apt-get update
+    sudo apt-get upgrade -y -f --fix-missing --install-recommends
+    sudo apt-get autoclean
+    sudo apt-get --purge autoremove
+    set +x
+fi
+
+if command -v brew >/dev/null 2>&1; then
+    echo "update brew..."
+    set -x
+    brew update
+    brew upgrade
+    set +x
+fi
+
+if command -v gem >/dev/null 2>&1; then
+    echo "update gem..."
+    set -x
+    gem update
+    gem update --system
+    set +x
+fi
+
+if command -v npm >/dev/null 2>&1; then
+    echo "update npm..."
+    set -x
+    sudo npm cache clean -f
+    sudo npm install -g n
+    sudo n stable
+    npm update -g
+    npm update
+    set +x
+fi
