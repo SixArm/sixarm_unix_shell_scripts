@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 
 ##
-# json-to-xml converts text from JSON to XML.
+# json-to-yaml converts text from JSON to YAML.
 #
 # Example:
 #
-#     cat example.json | json-to-xml > example.xml
+#     cat example.json | json-to-yaml > example.yaml
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
@@ -13,8 +13,8 @@
 ##
 
 require 'json'
-require 'xmlsimple'
+require 'yaml'
 text = ARGF.read
 json = JSON.parse(text)
-xml = XmlSimple.xml_out(json, 'NoAttr' => true)
-puts xml
+yaml = json.to_yaml
+puts yaml
