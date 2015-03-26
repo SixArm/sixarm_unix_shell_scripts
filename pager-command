@@ -1,0 +1,1 @@
+$PAGER $(command -v $1)
