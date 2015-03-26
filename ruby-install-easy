@@ -5,7 +5,7 @@ set -euf -o pipefail
 # Download the current ruby stable version,
 # and install it in our preferred directory.
 #
-# Our directory is /opt/ruby/x.y.z
+# Our directory is /opt/ruby/kri/x.y.z
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
@@ -20,5 +20,5 @@ ruby_stable_version(){
 }
 
 version=$(ruby_stable_version)
-dir="/opt/ruby/$version"
+dir="/opt/ruby/kri/$version"
 ruby-install ruby "$version" --install-dir "$dir"
