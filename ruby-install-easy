@@ -21,4 +21,4 @@ ruby_stable_version(){
 
 version=$(ruby_stable_version)
 dir="/opt/ruby/$version"
-ruby-install ruby "$version" --install_dir "$dir"
+ruby-install ruby "$version" --install-dir "$dir"
