@@ -5,20 +5,66 @@ set -euf -o pipefail
 # Download the current ruby stable version,
 # and install it in our preferred directory.
 #
-# Our directory is /opt/ruby/kri/x.y.z
+# Syntax:
+#
+#     ruby-install-easy [vm [version]]
+#
+# Example to install the current typical Ruby:
+#
+#     ruby-install-easy
+#     #=> installs /opt/ruby/kri/2.2.1
+#
+# Example to install the current typical JRuby:
+#
+#     ruby-install-easy jruby
+#     #=> installs /opt/ruby/jruby/1.7.19
+#
+# Example to install an older version:
+#
+#     ruby-install-easy kri 2.0.0
+#     #=> installs /opt/ruby/kri/2.0.0
+#
+# ## Locations
+#
+# We put our Ruby VMs in this directory tree:
+#
+#     /opt/ruby/jruby/x.y.z
+#     /opt/ruby/kri/x.y.z
+#     /opt/ruby/rbx/x.y.z
+#
+# ## Implemenation
+#
+# We use the `ruby-install` tool to do this because it handles
+# many dependencies and in our opinion is better and simpler
+# than other ruby downloaders such as rvm, rbenv, and ruby-build.
+#
+# We clone `ruby-install` in `/opt/ruby-install`.
+# This script does a `git pull` to update the repo,
+# which includes downloading any new VM version info.
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##
+vm=${1-kri}
 
-ruby_stable_version(){
-  curl -s --location https://www.ruby-lang.org/en/downloads/ |
-  grep 'cache.ruby-lang.org' |
-  head -1 |
-  sed -n 's/.*ruby-\(.*\)\.tar\.gz.*/\1/p'
-}
+# Adjust the VM name as needed to be compatible with `ruby-install`:
+# we use the name "kri" whereas `ruby-install` uses the name "ruby".
+case "$vm" in
+    kri) vm2="ruby" ;;
+    *) vm2="$vm" ;;
+esac
 
-version=$(ruby_stable_version)
-dir="/opt/ruby/kri/$version"
-ruby-install ruby "$version" --install-dir "$dir"
+echo "Update ruby-install versions..."
+(cd /opt/ruby-install && exec git pull)
+
+version=${2-$(tail -1 /opt/ruby-install/share/ruby-install/$vm2/stable.txt)}
+dir="/opt/ruby/$vm/$version"
+
+if [[ -d "$dir" ]]; then
+    echo "Ruby is already installed at $dir"
+else
+    set -x
+    ruby-install $vm2 "$version" --install-dir "$dir"
+    set +x
+fi
