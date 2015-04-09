@@ -1,0 +1,31 @@
+#!/bin/sh
+
+##
+# Expand OSX Java JDK download, suitable for custom installations.
+#
+# Example:
+#
+#     java-jdk-pkg-to-dir /opt/jdk
+#
+# This script unpacks the *.pkg download,
+# then moves the contents to a custom directory.
+#
+##
+
+## Inputs
+src=`ls /Volumes/JDK\ *\ Update\ */JDK\ *\ Update\ *.pkg | head -1`
+dst=$1
+
+## Locals
+me=`basename $0`
+tmp_dir=`mktemp -d -t "$me"`
+
+## Unpack
+tmp_pkg="$tmp_dir/pkg"
+rm -rf "$tmp_pkg"
+pkgutil --expand  "$src" "$tmp_pkg"
+cd "$tmp_pkg"
+cpio -i < *.pkg/Payload
+
+## Move
+mv Contents/Home "$dst"
