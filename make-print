@@ -1,0 +1,62 @@
+#!/bin/sh
+
+##
+# Make with print command for debugging
+#
+# Credit: http://blog.jgc.org/2015/04/the-one-line-you-should-add-to-every.html
+#
+# If you're using GNU make and you need help debugging a makefile then
+# there's a single line your should add. And it's so useful that you
+# should add it to every makefile you create.
+#
+# It's:
+#
+#     print-%: ; @echo $*=$($*)
+#
+# It allows you to quickly get the value of any makefile variable.
+# For example, suppose you want to know the value of a variable called
+# SOURCE_FILES. You'd just type:
+#
+#     make print-SOURCE_FILES
+#
+# If you are using GNU make 3.82 or above it's not even necessary to
+# modify the makefile itself. Just do
+#
+#     make --eval="print-%: ; @echo $*=$($*)" print-SOURCE_FILES
+#
+# to get the value of SOURCE_FILES. It 'adds' the line above to the
+# makefile by evaluating it. The --eval parameter is a handy way of
+# adding to an existing makefile without modifying it.
+#
+# The line
+#
+#     print-%: ; @echo $*=$($*)
+#
+# defines a pattern-rule that matches any target in the form
+# print-% (the % is the wildcard character). So when you run make
+# print-SOURCE_FILES that rule will execute and the % will match
+# SOURCE_FILES.
+#
+# The command executed by print-% is @echo $*=$($*). Here I've used a
+# semicolon to separate the target name and the recipe (commands to be
+# executed). That makes this into a one-liner. In more traditional make
+# syntax (where a tab is used to introduce the recipe) that would be
+# written.
+#
+#     print-%:
+#       @echo $*=$($*)
+#
+# Using semicolon makes this easy to copy and paste.
+#
+# The automatic variable $* matches the % in print-% (so when
+# executing print-SOURCE_FILES, $* will be SOURCE_FILES). So $*
+# contains the name of the variable that we want to print out.
+#
+# The $($*) uses gets the value of a variable whose name is stored in
+# $*. For example, $* might expand to SOURCE_FILES and then GNU make
+# would get the value of $(SOURCE_FILES). Getting a variable by
+# storing its name in another variable turns out to be a useful
+# technique in many makefiles.
+##
+
+make --eval="print-%: ; @echo $*=$($*)" print-"$@"
