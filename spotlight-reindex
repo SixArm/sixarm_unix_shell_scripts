@@ -1,1 +1,20 @@
-sudo mdutil -E /
+#!/bin/sh
+
+##
+# Trigger the OSX Spotlight search tool to reindex.
+#
+# Example:
+#
+#     spotlight-reindex
+#
+# This will reindex everything on the local drive, i.e. on the "/" path.
+#
+# To reindex a different volume, use any args, such as:
+#
+#     spotlight-reindex /Volumes/MyHardDrive
+#
+# Cite: http://www.maclife.com/article/columns/terminal_101_rebuild_spotlight_index_fly
+##
+
+[[ $# -eq 0 ]] && args="/" || args="$@"
+sudo mdutil -E "$args"
