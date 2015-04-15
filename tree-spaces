@@ -1,0 +1,21 @@
+##
+# Adjust the output of the `tree` command,
+# replacing graphic characters with indentation spaces.
+#
+# Example:
+#
+#     tree | tree-spaces
+#     .
+#      a
+#       b
+#        c
+#      d
+#       e
+#        f
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-04-15
+##
+
+sed 's/[│├──└]/ /g; s/[[:space:]]\{4\}/ /g'
