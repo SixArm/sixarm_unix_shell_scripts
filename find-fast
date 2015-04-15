@@ -7,7 +7,6 @@ set -euf -o pipefail
 #  * Prune top-level system directores: /Applications, /Libraries, /dev, /proc, /tmp
 #  * Prune hidden items: any subpath that starts with a dot.
 #  * Use default path ".", which makes OSX find work like Linux find.
-#  * Protect xargs by using the -X flag to sideline incompatible file names.
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
@@ -15,4 +14,4 @@ set -euf -o pipefail
 ##
 
 [[ $# -eq 0 ]] && paths="." || paths="$@"
-find -X "$paths" -noleaf '(' -path /Applications -o -path /Library -o -path /dev -o -path /proc -o -path /sys -o -path /tmp -o -path '*/\.*' ')' -prune -o -print
+find "$paths" -noleaf '(' -path /Applications -o -path /Library -o -path /dev -o -path /proc -o -path /sys -o -path /tmp -o -path '*/\.*' ')' -prune -o -print
