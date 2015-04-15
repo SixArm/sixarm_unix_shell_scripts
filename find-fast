@@ -2,11 +2,17 @@
 set -euf -o pipefail
 
 ##
-# Find script with pruning of /dev, /proc, /tmp, .git, .svn, etc.
+# Find fast, with settings for typical searches.
+#
+#  * Prune top-level system directores: /Applications, /Libraries, /dev, /proc, /tmp
+#  * Prune hidden items: any subpath that starts with a dot.
+#  * Use default path ".", which makes OSX find work like Linux find.
+#  * Protect xargs by using the -X flag to sideline incompatible file names.
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
+# Updated: 2015-04-15
 ##
 
-find -noleaf -path "/dev"-prune -o -path "/proc" -prune -o -path "/tmp" -o -path "/sys" -prune -o -prune -o -name ".git" -prune -o -name ".svn" -prune -o $@
+[[ $# -eq 0 ]] && paths="." || paths="$@"
+find -X "$paths" -noleaf '(' -path /Applications -o -path /Library -o -path /dev -o -path /proc -o -path /sys -o -path /tmp -o -path '*/\.*' ')' -prune -o -print
