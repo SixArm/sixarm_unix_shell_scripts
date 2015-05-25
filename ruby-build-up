@@ -1,11 +1,26 @@
 #!/bin/bash
 set -euf -o pipefail
 
-##
-# Ruby build using our preferred locations:
+
+#!/bin/bash
 #
-#    /opt/ruby-build is where we put the GitHub repo
-#    /opt/ruby/a.b.c-pxxx is where we install Ruby
+# Install the current Ruby MRI by using ruby-build
+# and our preferred setup:
+#
+#   * Use /opt/ruby-build and git pull and install.sh to update it.
+#   * Install ruby in /opt/ruby/x.y.z  and symlink /opt/ruby/current.
+
+
+##
+# Use the `ruby-build` program to install Ruby in our preferred locations.
+#
+#    /opt/ruby-build is where we put the `ruby-build` GitHub repo.
+#    /opt/ruby/<vm>/<version> is where we install Ruby.
+#
+# Example installation directories:
+#
+#    /opt/ruby/kri/2.0.0-p111
+#    /opt/ruby/jruby/1.7.19
 #
 # Syntax:
 #
@@ -19,9 +34,12 @@ set -euf -o pipefail
 
 ## Input
 
-RUBY_VERSION=$1  # e.g. "2.0.0-p123"
+RUBY_VERSION=$1  # e.g. "2.0.0-p111"
 RUBY_VERSION_SANS_PATCH_LEVEL=${RUBY_VERSION%%-p*}  # e.g. "2.0.0"
 CURRENT_FLAG=$2
+
+# Get the current KRI version,such as X.Y.Z; this variable is currently unused
+RUBY_BUILD_CURRENT_DEFINITION=`ruby-build --definitions | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | tail -1`
 
 
 ## Config
@@ -30,21 +48,19 @@ RUBY_BUILD_DIR=/opt/ruby-build
 RUBY_DIR=/opt/ruby
 
 
-## Preflight
+## Install
 
-if [[ ! -e "$RUBY_BUILD_DIR" ]]; then
-  echo "Failed. To fix this, please put the ruby-build directory here: $RUBY_BUILD_DIR" >&2
-  exit -1
-fi
+# Install ruby-build as needed
+test -d "$RUBY_BUILD_DIR" || sudo git clone https://github.com/sstephenson/ruby-build "$RUBY_BUILD_DIR"
 
-mkdir -p $RUBY_DIR
+# Update ruby-build
+cd $RUBY_BUILD_DIR && git pull && ./install.sh
 
-if [[ ! -e "$RUBY_DIR/$RUBY_VERSION" ]]; then
-  cd $RUBY_BUILD_DIR
-  git pull
-  ./install.sh
-  ruby-build $RUBY_VERSION $RUBY_DIR/$RUBY_VERSION
-fi
+# Create ruby directory as needed
+test -d " $RUBY_DIR" || mkdir -p $RUBY_DIR
+
+# Install Ruby as needed
+test -d "$RUBY_DIR/$RUBY_VERSION" || ruby-build "$RUBY_VERSION" "$RUBY_DIR/$RUBY_VERSION"
 
 
 ## Link
@@ -64,3 +80,5 @@ if [[ "$CURRENT_FLAG" == "-c" ]]; then
   source /etc/environment
   ruby -v
 fi
+
+###############
