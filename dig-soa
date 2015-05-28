@@ -15,4 +15,4 @@ set -euf -o pipefail
 ##
 
 domain=$1
-dig "$domain" soa | grep "^$domain" |  awk '{print $5}'
+dig +short soa "$domain" | cut -d' ' -f1
