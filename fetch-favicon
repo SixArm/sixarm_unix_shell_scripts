@@ -1,0 +1,39 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# Curl script to download a favicon.
+#
+# Syntax:
+#
+#     curl-favicon <url>
+#
+# Example:
+#
+#     curl-favicon www.example.com
+#     => download favicon to file,
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
+if [ $# -eq 0 ]
+then
+  echo "Syntax: curl-favicon <url>"
+  echo "Example: curl-favicon www.example.com"
+  exit
+fi
+
+page_url=$1
+
+icon_url=$(curl -s -S -L "$page_url" | pup 'link[rel~="icon"] attr{href}' | head -1)
+icon_basename=${icon_url##*/}
+if [[ ! "$icon_url" =~ "//" ]]; then
+    echo "page_url:$page_url"
+    echo "icon_url:$icon_url"
+    icon_url="$page_url$icon_url"
+    echo "cook_url:$icon_url"
+fi
+echo "$icon_url => $icon_basename"
+curl -s -S -L "$icon_url" -o "$icon_basename"

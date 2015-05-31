@@ -1,0 +1,46 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# Parse HTML to extract the favicon URL.
+#
+# Syntax:
+#
+#     ... | html-to-favicon-href
+#
+# Example:
+#
+#     wget http://example.com | html-to-favicon-href
+#     => http://example.com/favicon.ico
+#
+# This implementation requires Ruby and the Nokogiri gem.
+#
+# We have tried other implementations that haven't worked so far,
+# such as using hxselect, or xmlstarlet, or pup, but these failed
+# on various real-world web pages e.g. www.kickstarter.com:
+#
+#   * The `pup` implementation finds the link, but the
+#     selector doesn't seem to be able to do `contains`:
+#
+#         ... | pup '//link[contains(concat(" ", @rel, " "), " icon ")]'
+#
+#   * The `tidy` approach works to clean up the HTML, but nothing
+#     later in the pipe is able to find the link and its href:
+#
+#         ... | tidy -q --show-warnings no -numeric -asxhtml
+#
+#   * The `hxselect` approach works to find the link,
+#     but the CSS selector is unable to get the href:
+#
+#         ... | hxclean 2>/dev/null | hxselect 'link[rel~="icon"]'
+#
+#   * An implmentation using ruby succeeds, but needs nokogiri:
+#
+#         ... | ruby -rnokogiri -p -e 'd=Nokogiri::HTML(STDIN.read); $_=""; puts d.xpath("//link[contains(concat(\" \", @rel, \" \"), \" icon \")]").first["href"]'
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-05-25
+##
+
+pup 'link[rel~="icon"] attr{href}'
