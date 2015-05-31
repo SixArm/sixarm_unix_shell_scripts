@@ -26,14 +26,62 @@ then
 fi
 
 page_url=$1
+echo "page_url:$page_url"
 
-icon_url=$(curl -s -S -L "$page_url" | pup 'link[rel~="icon"] attr{href}' | head -1)
-icon_basename=${icon_url##*/}
-if [[ ! "$icon_url" =~ "//" ]]; then
-    echo "page_url:$page_url"
-    echo "icon_url:$icon_url"
-    icon_url="$page_url$icon_url"
-    echo "cook_url:$icon_url"
-fi
-echo "$icon_url => $icon_basename"
-curl -s -S -L "$icon_url" -o "$icon_basename"
+page_url_to_icon_url () {
+    local page_url="$1"
+    icon_url=$(curl -s -S -L "$page_url" | pup 'link[rel~="icon"] attr{href}' | head -1)
+    echo "$icon_url"
+}
+
+## URL utilties
+
+url_to_protocol () {
+    local url="$1"
+    local protocol
+    if [[ "$url" =~ ^[A-Za-z]:// ]]; then
+        protocol="${url%%://}"
+    else
+        protocol="http"
+    fi
+    echo "$protocol"
+}
+
+url_to_hostname () {
+    local url="$1"
+    tmp="${url##://}"
+    echo "${tmp%%/*}"
+}
+
+url_to_file_name () {
+    local url="$1"
+    url=${url%%\?*}
+    url=${url##*/}
+    echo "$url"
+}
+
+base_url_and_rel_url_to_abs_url () {
+    local base="$1"
+    local rel="$2"
+    local abs=""
+    if [[ "$rel" =~ ^[A-Za-z]+:// ]]; then
+        abs="$rel"
+    elif [[ "$rel" =~ ^// ]]; then
+        abs=$(url_to_protocol "$base")":$rel"
+    else
+        echo "abs_url default"
+        abs="$base$rel"
+    fi
+    echo "$abs"
+}
+
+icon_rel_url=$(page_url_to_icon_url "$page_url")
+echo "icon_rel_url:$icon_rel_url"
+
+icon_abs_url=$(base_url_and_rel_url_to_abs_url "$page_url" "$icon_rel_url")
+echo "icon_abs_url:$icon_abs_url"
+
+icon_file_name=$(url_to_file_name "$icon_abs_url")
+echo "icon_file_name:$icon_file_name"
+
+curl -s -S -L "$icon_abs_url" -o "$icon_file_name"
