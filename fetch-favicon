@@ -30,7 +30,7 @@ echo "page_url:$page_url"
 
 page_url_to_icon_url () {
     local page_url="$1"
-    icon_url=$(curl -s -S -L "$page_url" | pup 'link[rel~="icon"] attr{href}' | head -1)
+    local icon_url=$(curl -s -S -L "$page_url" | pup 'link[rel~="icon"] attr{href}' | head -1)
     echo "$icon_url"
 }
 
