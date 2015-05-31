@@ -1,0 +1,1 @@
+glue --algorithm vertical --ordering filename --recursive --source . --output .glue.d
