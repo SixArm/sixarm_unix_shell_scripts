@@ -1,0 +1,27 @@
+#!/bin/bash
+set -euf -o pipefail
+
+##
+# convert-ico-to-png
+#
+# Convert an ICO image file to a PNG image file.
+#
+# Syntax:
+#
+#   convert-ico-to-png <ico input file name> <png output file name> [pixel width]
+#
+# Example:
+#
+#   convert-ico-to-png foo.ico foo.png 32
+#
+# The pixel width defaults to 16.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-02-06
+##
+
+input_file_name=$1
+output_file_name=$2
+pixel_width=${$3:-16}
+convert "$input_file_name" -thumbnail "${pixel_width}x${pixel_width} -alpha on -background none -flatten "$output_file_name"
