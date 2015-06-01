@@ -17,7 +17,7 @@ set -euf -o pipefail
 ##
 
 if command -v apt-get >/dev/null 2>&1; then
-    echo "update apt-get..."
+    #echo "update apt-get..."
     set -x
     sudo apt-get autoclean
     sudo apt-get --purge autoremove
@@ -29,7 +29,7 @@ if command -v apt-get >/dev/null 2>&1; then
 fi
 
 if command -v brew >/dev/null 2>&1; then
-    echo "update brew..."
+    #echo "update brew..."
     set -x
     brew update
     brew upgrade
@@ -37,7 +37,7 @@ if command -v brew >/dev/null 2>&1; then
 fi
 
 if command -v gem >/dev/null 2>&1; then
-    echo "update gem..."
+    #echo "update gem..."
     set -x
     gem update
     gem update --system
@@ -45,12 +45,19 @@ if command -v gem >/dev/null 2>&1; then
 fi
 
 if command -v npm >/dev/null 2>&1; then
-    echo "update npm..."
+    #echo "update npm..."
     set -x
     sudo npm cache clean -f
     sudo npm install -g n
     sudo n stable
     npm update -g
     npm update
+    set +x
+fi
+
+if command -v npm >/dev/null 2>&1; then
+    #echo "update osx..."
+    set -x
+    softwareupdate
     set +x
 fi
