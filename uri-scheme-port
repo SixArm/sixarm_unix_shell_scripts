@@ -1,1 +1,1 @@
-url-scheme | grep '^port: ' | cut -c 6-
+uri-scheme | grep '^port: ' | cut -c 6-

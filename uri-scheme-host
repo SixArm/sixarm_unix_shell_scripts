@@ -1,1 +1,1 @@
-url-scheme | grep '^host: ' | cut -c 6-
+uri-scheme | grep '^host: ' | cut -c 6-

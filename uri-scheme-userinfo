@@ -1,1 +1,1 @@
-url-scheme | grep '^userinfo: ' | cut -c 10-
+uri-scheme | grep '^userinfo: ' | cut -c 10-

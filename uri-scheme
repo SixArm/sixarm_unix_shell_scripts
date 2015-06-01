@@ -4,10 +4,10 @@
 # uri-scheme
 #
 # Output the URI scheme parts.
-
+#
 # Syntax:
 #
-#    <url> | url-scheme
+#    <uri> | uri-scheme
 #
 # See http://en.wikipedia.org/wiki/URI_scheme
 #
