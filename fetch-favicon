@@ -31,10 +31,13 @@ echo "page_url:$page_url"
 icon_url=$(curl -s -S -L "$page_url" | html-to-favicon-url)
 echo "icon_url:$icon_url"
 
+echo "$icon_url" | uri-scheme file
+echo "ook"
+
+icon_file_name=$(echo "$icon_url" | uri-scheme file)
+echo "icon_file_name:$icon_file_name"
+
 icon_abs_url=$(uri-relate "$page_url" "$icon_url")
 echo "icon_abs_url:$icon_abs_url"
-
-icon_file_name=$(echo "$icon_uri" | uri-scheme file)
-echo "icon_file_name:$icon_file_name"
 
 curl -s -S -L "$icon_abs_url" -o "$icon_file_name"
