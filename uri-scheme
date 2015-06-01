@@ -7,11 +7,29 @@
 #
 # Syntax:
 #
-#    <uri> | uri-scheme
+#    <uri> | uri-scheme [selector] ...
+#
+# Example:
+#
+#   $ echo "http://www.example.com:80" | uri-scheme
+#   name: http
+#   authority: www.example.com:80
+#   host: www.example.com
+#   port: 80
+#
+# Example with a selector:
+#
+#   $ echo "http://www.example.com:80" | uri-scheme host
+#   www.example.com
+#
+# Example with multiple selectors:
+#
+#   $ echo "http://www.example.com:80" | uri-scheme port host name
+#   80 www.example.com http
 #
 # See http://en.wikipedia.org/wiki/URI_scheme
 #
-# Examples:
+# Scheme parts:
 #
 #   * uri: "http://user:pass@www.example.com:80/a/b/c.html?d=e&f=g#hi"
 #   * scheme: "http"
@@ -19,7 +37,9 @@
 #     * authority: "user:pass@www.example.com:80"
 #       * userinfo: "user:pass"
 #       * host: "www.example.com"
-#       * port: "80"#
+#       * port: "80"
+#     * path: "/a/b/c.html"
+#       * file: "c.html"
 #   * query: "d=e&f=g"
 #   * fragment: "hi"
 #
@@ -38,7 +58,7 @@
 #    path: /a/b/c
 #
 # Caution: this current implementation is sufficient for our internal needs;
-# it is loosely accurate for typical URIs, but is not standards-compliant.
+# it is generally accurate for typical URIs, but is not standards-compliant.
 #
 # Important: if you change this script, be sure to change the related
 # scripts in this repo, i.e. all the scripts named `url-scheme-*`.
@@ -48,24 +68,87 @@
 ##
 
 read uri
-echo "uri: $uri"
 
-read scheme hierarchical query fragment < <(echo "$uri" | sed -n -E 's~^(([[:alpha:]][[:alnum:]\+\.\-]*):)([^\?\#]*)(\?([^#]*))?(#(.*?))?$~\2 \3 \5 \7~p')
-echo "scheme: $scheme"
-echo "hierarchical: $hierarchical"
-echo "query: $query"
-echo "fragment: $fragment"
+read name hierarchical query fragment < <(echo "$uri" | sed -n -E 's~^(([[:alpha:]][[:alnum:]\+\.\-]*):)([^\?\#]*)(\?([^#]*))?(#(.*?))?$~\2 \3 \5 \7~p')
 
 if [[ "$hierarchical" =~ ^// ]]; then
   read authority path < <(echo "$hierarchical" | sed -n -E 's~^(//)?([^/]*)~\2 ~p')
-  read userinfo host_and_port < <(echo "$authority" | sed -n -E 's~^(.+)@~\1 ~p')
-  read host port < <(echo "$host_and_port" | sed -n -E 's~^([^:]*)(:(.*))?~\1 \3~p')
 else
   path="${hierarchical#//}"
 fi
 
-echo "authority: $authority"
-echo "userinfo: $userinfo"
-echo "host: $host"
-echo "port: $port"
-echo "path: $path"
+if [ "$authority" ]; then
+    read userinfo < <(echo "$authority" | sed -n -E 's~^(.+)@.*$~\1~p')
+    read host     < <(echo "$authority" | sed -n -E 's~^(.*@)?([^:]*)(:.*)?$~\2~p')
+    read port     < <(echo "$authority" | sed -n -E 's~.*:([[:digit:]]+)$~\1~p')
+fi
+
+if [ "$userinfo" ]; then
+    read username password < <(echo "$userinfo" | sed -n -E 's~^(.*):(.*)~\1 \2~p')
+fi
+
+if [ "$path" ]; then
+    read file < <(echo "$path" | sed -n -E 's~^(.*/)(.*)$~\2~p')
+fi
+
+if [ $# -eq 0 ]; then
+    if [ "$uri" ]; then echo "uri: $uri"; fi
+    if [ "$name" ]; then echo "name: $name"; fi
+    if [ "$hierarchical" ]; then echo "hierarchical: $hierarchical"; fi
+    if [ "$authority" ]; then echo "authority: $authority"; fi
+    if [ "$userinfo" ]; then echo "userinfo: $userinfo"; fi
+    if [ "$username" ]; then echo "username: $username"; fi
+    if [ "$password" ]; then echo "password: $password"; fi
+    if [ "$host" ]; then echo "host: $host"; fi
+    if [ "$port" ]; then echo "port: $port"; fi
+    if [ "$path" ]; then echo "path: $path"; fi
+    if [ "$file" ]; then echo "file: $file"; fi
+    if [ "$query" ]; then echo "query: $query"; fi
+    if [ "$fragment" ]; then echo "fragment: $fragment"; fi
+else
+    s=""
+    for selector in "$@"; do
+        case "$selector" in
+            uri )
+                s="$s $uri"
+                ;;
+            name )
+                s="$s $name"
+                ;;
+            hierarchical )
+                s="$s $hierarchical"
+                ;;
+            authority )
+                s="$s $authority"
+                ;;
+            userinfo )
+                s="$s $userinfo"
+                ;;
+            username )
+                s="$s $username"
+                ;;
+            password )
+                s="$s $password"
+                ;;
+            host )
+                s="$s $host"
+                ;;
+            port )
+                s="$s $port"
+                ;;
+            path )
+                s="$s $path"
+                ;;
+            file )
+                s="$s $file"
+                ;;
+            query )
+                s="$s $query"
+                ;;
+            fragment )
+                s="$s $fragment"
+                ;;
+        esac
+    done
+    echo "${s# }"
+fi
