@@ -63,14 +63,16 @@ set -euf -o pipefail
 # Caution: this current implementation is sufficient for our internal needs;
 # it is generally accurate for typical URIs, but is not standards-compliant.
 #
-
 # TODO: improve parsing; improve standards; improve speed.
 #
 ##
 
 read uri
+echo "uri:$uri"
 
 read name hierarchical query fragment < <(echo "$uri" | sed -n -E 's~^(([[:alpha:]][[:alnum:]\.\+\-]*):)([^\?\#]*)(\?([^#]*))?(#(.*?))?$~\2 \3 \5 \7~p')
+echo "name:$name"
+echo "hierarchical:$hierarchical"
 
 if [[ "$hierarchical" =~ ^// ]]; then
   read authority path < <(echo "$hierarchical" | sed -n -E 's~^(//)?([^/]*)~\2 ~p')
@@ -79,10 +81,12 @@ else
 fi
 
 if [ -n "$authority" ]; then
-    read userinfo < <(echo "$authority" | sed -n -E 's~^(.+)@.*$~\1~p')
-    read host     < <(echo "$authority" | sed -n -E 's~^(.*@)?([^:]*)(:.*)?$~\2~p')
-    read port     < <(echo "$authority" | sed -n -E 's~.*:([[:digit:]]+)$~\1~p')
+    userinfo=$(echo "$authority" | sed -n -E 's~^(.+)@.*$~\1~p')
+    host=$(echo "$authority" | sed -n -E 's~^(.*@)?([^:]*)(:.*)?$~\2~p')
+    port=$(echo "$authority" | sed -n -E 's~.*:([[:digit:]]+)$~\1~p')
 fi
+
+echo "authority:$authority"
 
 if [ -n "$userinfo" ]; then
     read username password < <(echo "$userinfo" | sed -n -E 's~^(.*):(.*)~\1 \2~p')
@@ -93,19 +97,19 @@ if [ -n "$path" ]; then
 fi
 
 if [ $# -eq 0 ]; then
-    if [ -n "$uri" ]; then echo "uri: $uri"; fi
-    if [ -n "$name" ]; then echo "name: $name"; fi
-    if [ -n "$hierarchical" ]; then echo "hierarchical: $hierarchical"; fi
-    if [ -n "$authority" ]; then echo "authority: $authority"; fi
-    if [ -n "$userinfo" ]; then echo "userinfo: $userinfo"; fi
-    if [ -n "$username" ]; then echo "username: $username"; fi
-    if [ -n "$password" ]; then echo "password: $password"; fi
-    if [ -n "$host" ]; then echo "host: $host"; fi
-    if [ -n "$port" ]; then echo "port: $port"; fi
-    if [ -n "$path" ]; then echo "path: $path"; fi
-    if [ -n "$file" ]; then echo "file: $file"; fi
-    if [ -n "$query" ]; then echo "query: $query"; fi
-    if [ -n "$fragment" ]; then echo "fragment: $fragment"; fi
+    if [ -n "${uri:-}" ]; then echo "uri: $uri"; fi
+    if [ -n "${name:-}" ]; then echo "name: $name"; fi
+    if [ -n "${hierarchical:-}" ]; then echo "hierarchical: $hierarchical"; fi
+    if [ -n "${authority:-}" ]; then echo "authority: $authority"; fi
+    if [ -n "${userinfo:-}" ]; then echo "userinfo: $userinfo"; fi
+    if [ -n "${username:-}" ]; then echo "username: $username"; fi
+    if [ -n "${password:-}" ]; then echo "password: $password"; fi
+    if [ -n "${host:-}" ]; then echo "host: $host"; fi
+    if [ -n "${port:-}" ]; then echo "port: <$port>"; fi
+    if [ -n "${path:-}" ]; then echo "path: $path"; fi
+    if [ -n "${file:-}" ]; then echo "file: $file"; fi
+    if [ -n "${query:-}" ]; then echo "query: $query"; fi
+    if [ -n "${fragment:-}" ]; then echo "fragment: $fragment"; fi
 else
     s=""
     for selector in "$@"; do
