@@ -1,0 +1,1 @@
+url-scheme | grep '^userinfo: ' | cut -c 10-

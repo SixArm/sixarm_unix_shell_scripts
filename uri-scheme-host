@@ -1,1 +1,1 @@
-url-parts | awk '{print $2}'
+url-scheme | grep '^host: ' | cut -c 6-
