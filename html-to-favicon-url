@@ -43,4 +43,4 @@ set -euf -o pipefail
 # Updated: 2015-05-25
 ##
 
-pup 'link[rel~="icon"] attr{href}'
+pup 'link[rel~="icon"] attr{href}' | head -1
