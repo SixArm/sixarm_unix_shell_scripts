@@ -2,7 +2,7 @@
 set -euf -o pipefail
 
 ##
-# Curl script to download a favicon.
+# Cur script to download a favicon.
 #
 # Syntax:
 #
@@ -28,37 +28,13 @@ fi
 page_url=$1
 echo "page_url:$page_url"
 
-page_url_to_icon_url () {
-    local page_url="$1"
-    local icon_url=$(curl -s -S -L "$page_url" | html-to-favicon-url)
-    echo "$icon_url"
-}
+icon_url=$(curl -s -S -L "$page_url" | html-to-favicon-url)
+echo "icon_url:$icon_url"
 
-## URL utilties
-
-
-base_url_and_rel_url_to_abs_url () {
-    local base="$1"
-    local rel="$2"
-    local abs=""
-    if [[ "$rel" =~ ^[A-Za-z]+:// ]]; then
-        abs="$rel"
-    elif [[ "$rel" =~ ^// ]]; then
-        abs=$(url-protocol "$base")":$rel"
-    else
-        echo "abs_url default"
-        abs="$base$rel"
-    fi
-    echo "$abs"
-}
-
-icon_rel_url=$(page_url_to_icon_url "$page_url")
-echo "icon_rel_url:$icon_rel_url"
-
-icon_abs_url=$(base_url_and_rel_url_to_abs_url "$page_url" "$icon_rel_url")
+icon_abs_url=$(uri-relate "$page_url" "$icon_url")
 echo "icon_abs_url:$icon_abs_url"
 
-icon_file_name=$(url-file "$icon_abs_url")
+icon_file_name=$(echo "$icon_uri" | uri-scheme file)
 echo "icon_file_name:$icon_file_name"
 
 curl -s -S -L "$icon_abs_url" -o "$icon_file_name"
