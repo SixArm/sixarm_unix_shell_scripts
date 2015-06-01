@@ -1,0 +1,17 @@
+# url-parts
+#
+# Output the protocol, host, path, params, fragment.
+#
+# Syntax:
+#
+#    <url> | url-split
+#    <protocol> <host> <path> <params> <fragment>
+#
+# Example:
+#
+#    $ echo "http://www.example.com/a/b/c.html?d=e&f=g#h" | url-split
+#    http www.example.com /a/b/c.html d=e&f=g h
+#
+# TODO: better URL parsing, such as fragments.
+#
+sed -n -E 's~^(([[:alnum:]]+)://)?([^/]+)(/[^\?#]+)(\?([^#]*?))?(#(.*?))?$~\2\t\3\t\4\t\6\t\8~p'

@@ -1,0 +1,1 @@
+url-parts | awk '{print $3}' | sed 's~^.*/~~'
