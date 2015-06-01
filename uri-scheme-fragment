@@ -1,1 +1,0 @@
-uri-scheme | grep '^fragment: ' | cut -c 11-

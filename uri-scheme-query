@@ -1,1 +1,0 @@
-uri-scheme | grep '^query: ' | cut -c 8-

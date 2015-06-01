@@ -1,1 +1,0 @@
-uri-scheme | grep '^host: ' | cut -c 7-
