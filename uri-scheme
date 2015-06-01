@@ -80,19 +80,17 @@ else
   path="${hierarchical#//}"
 fi
 
-if [ -n "$authority" ]; then
+if [ -n "${authority:-}" ]; then
     userinfo=$(echo "$authority" | sed -n -E 's~^(.+)@.*$~\1~p')
     host=$(echo "$authority" | sed -n -E 's~^(.*@)?([^:]*)(:.*)?$~\2~p')
     port=$(echo "$authority" | sed -n -E 's~.*:([[:digit:]]+)$~\1~p')
 fi
 
-echo "authority:$authority"
-
-if [ -n "$userinfo" ]; then
+if [ -n "${userinfo:-}" ]; then
     read username password < <(echo "$userinfo" | sed -n -E 's~^(.*):(.*)~\1 \2~p')
 fi
 
-if [ -n "$path" ]; then
+if [ -n "${path:-}" ]; then
     read file < <(echo "$path" | sed -n -E 's~^(.*/)(.*)$~\2~p')
 fi
 
