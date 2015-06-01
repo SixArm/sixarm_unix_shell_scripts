@@ -1,0 +1,38 @@
+#!/bin/bash
+set -euf -o pipefail
+
+##
+# Combine a base URI and relative URI to produce an absolution URI.
+#
+# Examples:
+#
+#     $ uri-relate "http://example.com/a/b/c/" "index.html"
+#     http://example.com/a/b/c/index.html"
+#
+#     $ uri-relate "http://example.com/a/b/c/" "/index.html"
+#     http://example.com/index.html"
+#
+#     $ uri-relate "http://example.com/a/b/c/" "//my.com/index.html"
+#     http://my.com/index.html"
+#
+# Important: this script merely handles a few of the common cases,
+# sufficient for our immediate needs for our current projects.
+#
+# TODO: add more syntax possiblities; implement URI standards.
+#
+##
+
+base="$1"
+rel="$2"
+abs=""
+if [[ "$rel" =~ :// ]]; then
+    abs="$rel"
+elif [[ "$rel" =~ ^// ]]; then
+    abs=$(echo "$base" | uri-scheme name)":$rel"
+elif [[ "$rel" =~ ^/ ]]; then
+    read name authority < <(echo "$base" | uri-scheme name authority)
+    abs="$name://$authority$rel"
+else
+    abs="$base/$rel"
+fi
+echo "$abs"
