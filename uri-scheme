@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euf -o pipefail
 
 ##
 # uri-scheme
@@ -17,25 +18,27 @@
 #   host: www.example.com
 #   port: 80
 #
-# Example with a selector:
+# Example with one selector:
 #
 #   $ echo "http://www.example.com:80" | uri-scheme host
 #   www.example.com
 #
 # Example with multiple selectors:
 #
-#   $ echo "http://www.example.com:80" | uri-scheme port host name
-#   80 www.example.com http
+#   $ echo "http://www.example.com:80" | uri-scheme port host
+#   80 www.example.com
 #
 # See http://en.wikipedia.org/wiki/URI_scheme
 #
 # Scheme parts:
 #
-#   * uri: "http://user:pass@www.example.com:80/a/b/c.html?d=e&f=g#hi"
-#   * scheme: "http"
+#   * uri: "http://@www.example.com:80/a/b/c.html?d=e&f=g#hi"
+#   * name: "http"
 #   * hierarchical: "//user:pass@www.example.com:80/a/b/c.html?d=e&f=g#hi"
 #     * authority: "user:pass@www.example.com:80"
 #       * userinfo: "user:pass"
+#         * username: "user"
+#         * password: "secret"
 #       * host: "www.example.com"
 #       * port: "80"
 #     * path: "/a/b/c.html"
@@ -45,7 +48,7 @@
 #
 # Example:
 #
-#    $ echo "http://user:pass@www.example.com:80/a/b/c.html?d=e&f=g#hi" | url-scheme
+#    $ echo "http://user:pass@www.example.com:80/a/b/c.html?d=e&f=g#hi" | uri-scheme
 #    uri: http://user:pass@www.example.com:80/a/b/c?d=e#fg
 #    scheme: http
 #    hierarchical: //user:pass@www.example.com:80/a/b/c
@@ -60,16 +63,14 @@
 # Caution: this current implementation is sufficient for our internal needs;
 # it is generally accurate for typical URIs, but is not standards-compliant.
 #
-# Important: if you change this script, be sure to change the related
-# scripts in this repo, i.e. all the scripts named `url-scheme-*`.
-#
+
 # TODO: improve parsing; improve standards; improve speed.
 #
 ##
 
 read uri
 
-read name hierarchical query fragment < <(echo "$uri" | sed -n -E 's~^(([[:alpha:]][[:alnum:]\+\.\-]*):)([^\?\#]*)(\?([^#]*))?(#(.*?))?$~\2 \3 \5 \7~p')
+read name hierarchical query fragment < <(echo "$uri" | sed -n -E 's~^(([[:alpha:]][[:alnum:]\.\+\-]*):)([^\?\#]*)(\?([^#]*))?(#(.*?))?$~\2 \3 \5 \7~p')
 
 if [[ "$hierarchical" =~ ^// ]]; then
   read authority path < <(echo "$hierarchical" | sed -n -E 's~^(//)?([^/]*)~\2 ~p')
@@ -77,34 +78,34 @@ else
   path="${hierarchical#//}"
 fi
 
-if [ "$authority" ]; then
+if [ -n "$authority" ]; then
     read userinfo < <(echo "$authority" | sed -n -E 's~^(.+)@.*$~\1~p')
     read host     < <(echo "$authority" | sed -n -E 's~^(.*@)?([^:]*)(:.*)?$~\2~p')
     read port     < <(echo "$authority" | sed -n -E 's~.*:([[:digit:]]+)$~\1~p')
 fi
 
-if [ "$userinfo" ]; then
+if [ -n "$userinfo" ]; then
     read username password < <(echo "$userinfo" | sed -n -E 's~^(.*):(.*)~\1 \2~p')
 fi
 
-if [ "$path" ]; then
+if [ -n "$path" ]; then
     read file < <(echo "$path" | sed -n -E 's~^(.*/)(.*)$~\2~p')
 fi
 
 if [ $# -eq 0 ]; then
-    if [ "$uri" ]; then echo "uri: $uri"; fi
-    if [ "$name" ]; then echo "name: $name"; fi
-    if [ "$hierarchical" ]; then echo "hierarchical: $hierarchical"; fi
-    if [ "$authority" ]; then echo "authority: $authority"; fi
-    if [ "$userinfo" ]; then echo "userinfo: $userinfo"; fi
-    if [ "$username" ]; then echo "username: $username"; fi
-    if [ "$password" ]; then echo "password: $password"; fi
-    if [ "$host" ]; then echo "host: $host"; fi
-    if [ "$port" ]; then echo "port: $port"; fi
-    if [ "$path" ]; then echo "path: $path"; fi
-    if [ "$file" ]; then echo "file: $file"; fi
-    if [ "$query" ]; then echo "query: $query"; fi
-    if [ "$fragment" ]; then echo "fragment: $fragment"; fi
+    if [ -n "$uri" ]; then echo "uri: $uri"; fi
+    if [ -n "$name" ]; then echo "name: $name"; fi
+    if [ -n "$hierarchical" ]; then echo "hierarchical: $hierarchical"; fi
+    if [ -n "$authority" ]; then echo "authority: $authority"; fi
+    if [ -n "$userinfo" ]; then echo "userinfo: $userinfo"; fi
+    if [ -n "$username" ]; then echo "username: $username"; fi
+    if [ -n "$password" ]; then echo "password: $password"; fi
+    if [ -n "$host" ]; then echo "host: $host"; fi
+    if [ -n "$port" ]; then echo "port: $port"; fi
+    if [ -n "$path" ]; then echo "path: $path"; fi
+    if [ -n "$file" ]; then echo "file: $file"; fi
+    if [ -n "$query" ]; then echo "query: $query"; fi
+    if [ -n "$fragment" ]; then echo "fragment: $fragment"; fi
 else
     s=""
     for selector in "$@"; do
