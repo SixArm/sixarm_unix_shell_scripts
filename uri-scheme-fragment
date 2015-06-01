@@ -1,1 +1,1 @@
-uri-scheme | grep '^fragment: ' | cut -c 10-
+uri-scheme | grep '^fragment: ' | cut -c 11-
