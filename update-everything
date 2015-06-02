@@ -11,15 +11,21 @@ set -euf -o pipefail
 #   * pip: for Python
 #   * npm: for Node and Javascript
 #
+# Heuristics:
+#
+#   1. Update OS: `apt`, `softwareupdate`, etc.
+#   2. Update OS package manager items: `apt`, `brew`, etc.
+#   3. Update language-specific packages: `gem`, `pip`, `npm`, etc.
+#
 # More to come. We welcome patches, pull requests, and ideas.
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-03-16
+# Updated: 2015-06-01
 ##
 
 if command -v apt-get >/dev/null 2>&1; then
-    #echo "update apt-get..."
+    echo "update apt-get..."
     set -x
     sudo apt-get autoclean
     sudo apt-get --purge autoremove
@@ -31,14 +37,15 @@ if command -v apt-get >/dev/null 2>&1; then
 fi
 
 if command -v softwareupdate >/dev/null 2>&1; then
-    #echo "update osx..."
-    set -x
-    softwareupdate
+    echo "update osx..."
+    softwareupdate --download
+    softwareupdate --install --recommended
+    softwareupdate --install --all
     set +x
 fi
 
 if command -v brew >/dev/null 2>&1; then
-    #echo "update brew..."
+    echo "update brew..."
     set -x
     brew update
     brew upgrade
@@ -46,7 +53,7 @@ if command -v brew >/dev/null 2>&1; then
 fi
 
 if command -v gem >/dev/null 2>&1; then
-    #echo "update gem..."
+    echo "update gem..."
     set -x
     gem update --system
     gem update
@@ -54,7 +61,7 @@ if command -v gem >/dev/null 2>&1; then
 fi
 
 if command -v pip >/dev/null 2>&1; then
-    #echo "update pip..."
+    echo "update pip..."
     set -x
     pip install --upgrade pip setuptools
     pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
@@ -62,7 +69,7 @@ if command -v pip >/dev/null 2>&1; then
 fi
 
 if command -v npm >/dev/null 2>&1; then
-    #echo "update npm..."
+    echo "update npm..."
     set -x
     sudo npm cache clean -f
     sudo npm install -g n
