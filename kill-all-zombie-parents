@@ -1,0 +1,28 @@
+/bin/sh
+set -euf -o pipefail
+
+##
+# Kill all zombie processes' parents.
+#
+# To clean up a zombie process, it must be waited on by its parent.
+# Killing the parent should work to eliminate the zombie.
+#
+# After the parent dies, the zombie will be inherited by init,
+# which will wait on it and clear its entry in the process table.
+#
+# If you have a daemon that is spwaning children that become zombies,
+# then the daemon has a bug: a daemon should notice when its children die
+# and wait on them to determine their exit status.
+#
+# Credits:
+#
+*   * http://stackoverflow.com/questions/16944886/how-to-kill-zombie-process
+#   * [William Pursell](http://stackoverflow.com/users/140750/william-pursell)
+#   * [Krisha Murti](http://stackoverflow.com/users/2841009/krishna-murti)
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-06-02
+##
+
+kill -HUP $(ps -A -ostat,ppid | awk '/[zZ]/{print $2}'#!/bin/bash
