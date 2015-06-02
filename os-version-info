@@ -1,0 +1,120 @@
+#!/bin/bash
+set -euf -o pipefail
+
+##
+# Show the operating system version information.
+#
+# Syntax:
+#
+#     os-version-info
+#
+# Example on OSX:
+#
+#     $ os-version-info
+#
+#     uname -a
+#     Darwin MacBook-Pro.local 14.4.0 Darwin Kernel Version 14.4.0: Tue May  5 14:17:52 PDT 2015; root:xnu-2782.30.4~3/RELEASE_X86_64 x86_64
+#
+#     sw_vers
+#     ProductName:Mac OS X
+#     ProductVersion:10.10.4
+#     BuildVersion:14E17e
+#
+# Example on Ubuntu:
+#
+#     $ os-version-info
+#
+#    uname -a
+#    Linux my-ubuntu-lucid 2.6.35.4-rscloud #8 SMP Mon Sep 20 15:54:33 UTC 2010 x86_64 GNU/Linux
+#
+#    lsb_release -a
+#    Distributor ID:Ubuntu
+#    Description:Ubuntu 10.04.4 LTS
+#    Release:10.04
+#    Codename:lucid
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-06-21
+##
+
+##
+# Unix name on Linux, BSD, etc.
+#
+# Example output on Ubuntu:
+#
+#     uname -a
+#     Linux my-example-lucid 2.6.35.4-rscloud #8 SMP Mon Sep 20 15:54:33 UTC 2010 x86_64 GNU/Linux
+#
+# Example output on RedHat:
+#
+#     uname -a
+#     Linux my.example.com 2.6.9-89.31.1.EL #1 Mon Oct 4 21:42:07 EDT 2010 i686 athlon i386 GNU/Linux
+#
+# Example output on OSX:
+#
+#    uname -a
+#    Darwin MacBook-Pro.local 14.4.0 Darwin Kernel Version 14.4.0: Tue May  5 14:17:52 PDT 2015; root:xnu-2782.30.4~3/RELEASE_X86_64 x86_64
+##
+if command -v uname >/dev/null 2>&1; then
+    echo; echo 'uname -a'
+    uname -a
+fi
+
+##
+# Linux Standard Base (LSB)
+#
+# Example output:
+#
+#    lsb_release -a
+#    Distributor ID:Ubuntu
+#    Description:Ubuntu 10.04.4 LTS
+#    Release:10.04
+#    Codename:lucid
+##
+if command -v lsb_release >/dev/null 2>&1; then
+    echo; echo 'lsb_release -a'
+    lsb_release -a
+fi
+
+##
+# Linux RedHat
+#
+# Example output:
+#
+#     cat /etc/redhat-release
+#     Red Hat Enterprise Linux ES release 4 (Nahant Update 9)
+#
+#     cat /proc/version
+#     Linux version 2.6.9-89.31.1.EL (mockbuild@hs20-bc2-4.build.redhat.com) (gcc version 3.4.6 20060404 (Red Hat 3.4.6-11)) #1 Mon Oct 4 21:42:07 EDT 2010
+#
+#     cat /etc/issue.net
+#     Red Hat Enterprise Linux ES release 4 (Nahant Update 9)
+#     Kernel \r on an \m
+##
+if [[ -e /etc/redhat-release ]]; then
+    for file in /etc/redhat-release /proc/version /etc/issue.net
+    do
+        if [[ -e $file ]]
+        then
+            echo ''
+            echo "cat $file"
+            cat $file
+        fi;
+    done
+fi
+
+##
+# OSX
+#
+# Example output:
+#
+#     sw_vers
+#     ProductName:Mac OS X
+#     ProductVersion:10.10.4
+#     BuildVersion:14E17e
+##
+if command -v sw_vers >/dev/null 2>&1; then
+    echo; echo 'sw_vers'
+    sw_vers
+fi
