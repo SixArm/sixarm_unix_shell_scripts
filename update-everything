@@ -5,8 +5,10 @@ set -euf -o pipefail
 # Run update commands for everything we use on all platforms.
 #
 #   * apt-get: for Debian systems
-#   * brew: for Mac OSX Homebrew
+#   * softwareupdate: for OSX systems
+#   * brew: for OSX Homebrew
 #   * gem: for Ruby
+#   * pip: for Python
 #   * npm: for Node and Javascript
 #
 # More to come. We welcome patches, pull requests, and ideas.
@@ -28,6 +30,13 @@ if command -v apt-get >/dev/null 2>&1; then
     set +x
 fi
 
+if command -v softwareupdate >/dev/null 2>&1; then
+    #echo "update osx..."
+    set -x
+    softwareupdate
+    set +x
+fi
+
 if command -v brew >/dev/null 2>&1; then
     #echo "update brew..."
     set -x
@@ -39,8 +48,16 @@ fi
 if command -v gem >/dev/null 2>&1; then
     #echo "update gem..."
     set -x
-    gem update
     gem update --system
+    gem update
+    set +x
+fi
+
+if command -v pip >/dev/null 2>&1; then
+    #echo "update pip..."
+    set -x
+    pip install --upgrade pip setuptools
+    pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
     set +x
 fi
 
@@ -52,12 +69,5 @@ if command -v npm >/dev/null 2>&1; then
     sudo n stable
     npm update -g
     npm update
-    set +x
-fi
-
-if command -v npm >/dev/null 2>&1; then
-    #echo "update osx..."
-    set -x
-    softwareupdate
     set +x
 fi
