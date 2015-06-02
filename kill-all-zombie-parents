@@ -25,4 +25,4 @@ set -euf -o pipefail
 # Updated: 2015-06-02
 ##
 
-kill -HUP $(ps -A -ostat,ppid | awk '/[zZ]/{print $2}'#!/bin/bash
+kill -HUP $(ps -A -ostat,ppid | awk '/[zZ]/{print $2}')
