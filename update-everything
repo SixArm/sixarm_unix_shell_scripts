@@ -38,18 +38,19 @@ fi
 
 if command -v softwareupdate >/dev/null 2>&1; then
     echo "update osx..."
-    softwareupdate --download
-    softwareupdate --install --recommended
+    set -x
     softwareupdate --install --all
     set +x
 fi
 
 if command -v brew >/dev/null 2>&1; then
-    echo "update brew..."
-    set -x
-    brew update
-    brew upgrade
-    set +x
+    if [[ `whoami` != "root" ]]; then
+        echo "update brew..."
+        set -x
+        brew update
+        brew upgrade
+        set +x
+    fi
 fi
 
 if command -v gem >/dev/null 2>&1; then
