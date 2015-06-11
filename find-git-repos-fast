@@ -1,0 +1,44 @@
+#!/bin/sh
+
+##
+# Find all git repositories in a directory.
+#
+# Compare the script `find-git-repos` in this same repo,
+# which is a one-liner, with the tradeoff of taking 2x time.
+#
+# Credit:
+#   * [Mike Slinn](http://stackoverflow.com/users/553865/mike-slinn)
+#   * https://gist.github.com/mslinn/3151915
+##
+
+function update {
+  local d="$1"
+  if [ -d "$d" ]; then
+    cd "$d" > /dev/null
+    if [ -d ".git" ]; then
+      printf `pwd`
+    elif [ ! -d .svn ] && [ ! -d CVS ]; then
+      scan *
+    fi
+    cd .. > /dev/null
+  fi
+}
+
+function scan {
+  for x in $*; do
+    update "$x"
+  done
+}
+
+function updater {
+  if [ "$1" != "" ]; then cd "$1" > /dev/null; fi
+  scan *
+}
+
+if [ "$1" == "" ]; then
+  updater
+else
+  for dir in "$@"; do
+    updater "$dir"
+  done
+fi
