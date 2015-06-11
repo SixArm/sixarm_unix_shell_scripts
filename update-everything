@@ -16,6 +16,7 @@ set -euf -o pipefail
 #   1. Update OS: `apt`, `softwareupdate`, etc.
 #   2. Update OS package manager items: `apt`, `brew`, etc.
 #   3. Update language-specific packages: `gem`, `pip`, `npm`, etc.
+#   4. Update git repositories: `/opt`, `~/git`, etc.
 #
 # More to come. We welcome patches, pull requests, and ideas.
 #
@@ -77,5 +78,12 @@ if command -v npm >/dev/null 2>&1; then
     sudo n stable
     npm update -g
     npm update
+    set +x
+fi
+
+if command -v git >/dev/null 2>&1; then
+    echo "update git..."
+    set -x
+    find /opt ~/git -type f -name .git -perm -u=w | while read x; do cd $(dirname $x); git pull --rebase && git submodule update --init --recursive; done
     set +x
 fi

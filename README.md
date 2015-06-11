@@ -10,6 +10,7 @@ This repo has lots of utility scripts.
 
   * `awk-remove-dupe-lines`: Remove duplicate lines in a file without sorting.
 
+
 ### sed
 
  * `sed-char-to-html-entity-name`: sed script to change all non-HTML characters to their HTML entity names.
@@ -28,6 +29,7 @@ This repo has lots of utility scripts.
  * `sed-simple-quotes-and-dashes`: Change smart characters into simple characters.
  * `sed-uncolor`: sed script to uncolor lines by removing ascii color characters.
 
+
 ### file
 
 File scripts to print a given `ls` field:
@@ -39,6 +41,7 @@ File scripts to print a given `ls` field:
  * `file-group-name`
  * `file-group-number`
  * `file-size`
+
 
 ### find
 
@@ -88,10 +91,12 @@ File scripts to print a given `ls` field:
  * `gpg-encrypt`: GPG script to encrypt a file with our typical settings.
 
 
-### uri
+### uri &amp; url
 
  * `uri-escape`: URI script to escape text, for example a CGI query string.
  * `uri-unescape`: URI script to unescape text, for example a CGI query string.
+ * `uri-scheme`: Parse a URI to its fields, for example host, query, fragment.
+ * `uri-relate`: Combine a base URI and relative URI to an absolute URI.
 
 
 ### path
@@ -106,11 +111,6 @@ File scripts to print a given `ls` field:
  * `wc-l`: Print the number of lines of a file.
 
 
-### random text generators
-
- * `random-password-encrypt`: Generate a random password and encrypt it.
-
-
 ### random text generators for special needs
 
  * `random-facebook-app-id`: Facebook App Id: digits, 15 chars.
@@ -121,9 +121,15 @@ File scripts to print a given `ls` field:
  * `random-twitter-app-consumer-secret`: Twitter App Consumer Secret: alphanum, 42 chars.
 
 
+### random passwords
+
+ * `random-password-encrypt`: Generate a random password and encrypt it.
+
+
 ### processes
 
  * `kill-with-user`: Kill a process with a given user.
+ * `kill-all-zombie-parents`: Kill all processes that are parents of zombies.
  * `ps-top-mem`: Print the processes that are using the most RAM.
 
 
@@ -184,14 +190,19 @@ File scripts to print a given `ls` field:
 
 ### sysadmin
 
- * `apt-up`: Do apt-get update, upgrade, fix missing, install recommends, autoremove, autoclean.
- * `linux-version`: Show diagnostic details about the linux version.
  * `ls-tree`: List files in your current directory recursively shown as a tree.
  * `mkcd`: Make a directory with 'mkdir' then change into it with 'cd'.
+ * `os-version-info`: Show operating system version information.
  * `reboot-kernel`: Quickly (soft-)reboot skipping hardware checks.
  * `screenrc`: Keybindings.
  * `sort-rank`: Sort command-line input by rank.
  * `susu`: Shorthand for: sudo su -
+ * `update-everything`: update everything on the system, e.g. apt, brew, node, ruby, pip, etc.
+
+
+### sysadmin on OSX
+
+* `brew-cask-repair`: Repair Homebrew manager on OSX.
 
 
 ## Specific needs
@@ -199,13 +210,28 @@ File scripts to print a given `ls` field:
 
 ### Applications
 
- * `curl-favicon`: Curl script to download a favicon from Google's service.
  * `firefox-optimize`: Optimize Firefox by scrubbing old data.
- * `geocode-address-to-lat-lng`: Ruby command line script to geocode.
  * `gimp-2.7.1`: Launch GIMP 2.7.1 from our /opt directory with our library path settings.
  * `gmail`: Check your unread gmail from the command line.
  * `gravatar`: Gravatar: generate a gravatar URI for a given email address.
  * `spam`: Move spam email messages out of my inbox folder and into my spam folder.
+
+
+### Images
+
+ * `convert-ico-to-png`: Convert an ICO image file to a PNG image file.
+ * `glue-sprites`: Use the `glue` command to compress a directory of images to sprites.
+
+
+### Favicons
+
+ * `fetch-favicon`: Download a web page's favicon.
+ * `html-to-favicon-url`: Parse HTML to extract the favicon URL.
+
+
+### Location
+
+ * `geocode-address-to-lat-lng`: Geocode an addres to a latitude and longitide.
 
 
 ### Ubuntu
@@ -238,6 +264,12 @@ File scripts to print a given `ls` field:
  * `macbook-pro-retina-screen-manufacturer`: Show the manfactured id on a Macbook Pro Retina.
 
 
+### Spotlight on OSX
+
+ * `spotlight-reindex`: Trigger Spotlight to reindex of all files on the drive.
+ * `spotlight-usage`: Show the current Spotlight system resource usage.
+
+
 ### SixArm Setup
 
  * `openssl-req-new-key-pem-for-sixarm`: OpenSSL script to generate a new key file for SixArm.com
@@ -245,16 +277,13 @@ File scripts to print a given `ls` field:
  * `sixarm-setup-server`: Fresh unix install for a typical sixarm server.
 
 
-
 ## Ruby
 
 
 ### Ruby administration
 
- * `rvm-uninstall-danger`: Uninstall RVM (Ruby Version Manager). THIS IS DANGEROUS.
  * `ruby-remove`: This script will remove all ruby-related files that we know about. DANGEROUS!
  * `ruby-versioner`: Set the Ruby environment to be a particular version of Ruby.
- * `sysfixer`: SysFixer looks at your gems and advises you if any need fixing.
 
 
 ### Ruby gem
@@ -262,6 +291,15 @@ File scripts to print a given `ls` field:
  * `gem-paths`: Prints your gem paths by calling "gem env" then matching
  * `gem-test`: Gem script to run all the test files.
  * `gem-update`: Run gem update, install, tumble, and set up our typical gem sources.
+ * `gem-fixer`: Advises if any gems need fixing or updates. [Deprecated]
+
+
+### Ruby managers
+
+ * `ruby-build-install`: Install `ruby-build` where we want it.
+ * `ruby-install-install`: Install `ruby-install` where we want it.
+ * `ruby-build-update`: Use `ruby-build` to update Ruby in our preferred locations.
+ * `rvm-uninstall-danger`: Uninstall RVM (Ruby Version Manager). THIS IS DANGEROUS.
 
 
 ### Ruby testing and documentating
