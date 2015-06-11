@@ -84,6 +84,6 @@ fi
 if command -v git >/dev/null 2>&1; then
     echo "update git..."
     set -x
-    find /opt ~/git -type f -name .git -perm -u=w | while read x; do cd $(dirname $x); git pull --rebase && git submodule update --init --recursive; done
+    find /opt ~/git -type d -perm -u=w \( -exec test -d "{}/.git" -a "{}" != "." \; -print -prune -o -name .git -prune \) | while read x; do cd "$x" && git pull --rebase && git submodule update --init --recursive; done
     set +x
 fi
