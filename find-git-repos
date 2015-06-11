@@ -11,4 +11,4 @@
 #   * http://stackoverflow.com/questions/11981716/how-to-quickly-find-all-git-repos-under-a-directory
 ##
 
-find ${1:-.} -type d \( -exec /usr/bin/test -d "{}/.git" -a "{}" != "." \; -print -prune -o -name .git -prune \)
+find ${1:-.} -type d \( -exec test -d "{}/.git" -a "{}" != "." \; -print -prune -o -name .git -prune \)
