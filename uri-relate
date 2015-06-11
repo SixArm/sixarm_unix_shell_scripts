@@ -2,7 +2,7 @@
 set -euf -o pipefail
 
 ##
-# Combine a base URI and relative URI to produce an absolution URI.
+# Combine a base URI and relative URI to produce an absolute URI.
 #
 # Examples:
 #
