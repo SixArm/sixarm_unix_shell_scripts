@@ -1,3 +1,4 @@
+
 #!/bin/zsh
 set -euf -o pipefail
 
@@ -25,6 +26,7 @@ set -euf -o pipefail
 # Updated: 2015-06-01
 ##
 
+# Apt for Debian Linux, Ubuntu Linux, etc.
 if command -v apt-get >/dev/null 2>&1; then
     echo "update apt-get..."
     set -x
@@ -37,6 +39,7 @@ if command -v apt-get >/dev/null 2>&1; then
     set +x
 fi
 
+# Software Update for OSX
 if command -v softwareupdate >/dev/null 2>&1; then
     echo "update osx..."
     set -x
@@ -44,6 +47,7 @@ if command -v softwareupdate >/dev/null 2>&1; then
     set +x
 fi
 
+# Homebrew for OSX
 if command -v brew >/dev/null 2>&1; then
     if [[ `whoami` != "root" ]]; then
         echo "update brew..."
@@ -54,6 +58,15 @@ if command -v brew >/dev/null 2>&1; then
     fi
 fi
 
+# APM: Atom Package Manager
+if command -v apm >/dev/null 2>&1; then
+    echo "update apm"
+    set -x
+    apm upgrade
+    set +x
+fi
+
+# Ruby Gems
 if command -v gem >/dev/null 2>&1; then
     echo "update gem..."
     set -x
@@ -62,6 +75,7 @@ if command -v gem >/dev/null 2>&1; then
     set +x
 fi
 
+# Python pip
 if command -v pip >/dev/null 2>&1; then
     echo "update pip..."
     set -x
@@ -70,6 +84,7 @@ if command -v pip >/dev/null 2>&1; then
     set +x
 fi
 
+# NPM: Node Package Manager
 if command -v npm >/dev/null 2>&1; then
     echo "update npm..."
     set -x
@@ -81,6 +96,7 @@ if command -v npm >/dev/null 2>&1; then
     set +x
 fi
 
+# Git repositories in /opt and ~/git
 if command -v git >/dev/null 2>&1; then
     echo "update git..."
     set -x
