@@ -13,7 +13,7 @@
 #   * Is public:
 #     * in a directory '/public/'
 #     * ends with *.pub, *.public
-#     * ends with *-public.pem
+#     * ends with *-public.{pem,txt,url}
 ##
 
 rsync --archive --hard-links --update --omit-dir-times --one-file-system --compress --verbose --itemize-changes --progress \
@@ -25,7 +25,9 @@ rsync --archive --hard-links --update --omit-dir-times --one-file-system --compr
   --include 'fingerprints' \
   --include '/public/' \
   --include '*.pub' \
-    --include '*.public' \
+  --include '*.public' \
   --include '*-public.pem' \
+  --include '*-public.txt' \
+  --include '*-public.url' \
   --exclude '*' \
  "$1" "$2"
