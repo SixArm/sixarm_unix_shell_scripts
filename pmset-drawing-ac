@@ -1,0 +1,16 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# pmset-drawing-ac: is the power manager drawing from AC power?
+#
+# Example:
+#
+#     pmset-drawing-ac && echo "yes" || echo "no"
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-06-30
+##
+
+pmset -g ps | grep  -q " drawing from 'AC Power'"

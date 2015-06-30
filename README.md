@@ -202,7 +202,14 @@ File scripts to print a given `ls` field:
 
 ### sysadmin on OSX
 
-* `brew-cask-repair`: Repair Homebrew manager on OSX.
+ * `brew-cask-repair`: Repair Homebrew manager on OSX.
+
+
+### Power Manager on OSX
+
+ * `pmset-drawing`: is the computer drawing from AC power or battery power?
+ * `pmset-drawing-ac`: true iff the system is drawing from AC power.
+ * `pmset-drawing-battery`: true iff the system is drawing from battery power.
 
 
 ## Specific needs
