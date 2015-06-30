@@ -2,37 +2,34 @@
 set -euf -o pipefail
 
 ##
-# Cur script to download a favicon.
+# Download a favicon.
 #
 # Syntax:
 #
-#     curl-favicon <url>
+#     fetch-favicon <url>
 #
 # Example:
 #
-#     curl-favicon www.example.com
-#     => download favicon to file,
+#     fetch-favicon www.example.com
+#     => download favicon to file
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
+# Updated: 2015-06-30
 ##
 
 if [ $# -eq 0 ]
 then
-  echo "Syntax: curl-favicon <url>"
-  echo "Example: curl-favicon www.example.com"
+  echo "Syntax: fetch-favicon <url>"
+  echo "Example: fetch-favicon www.example.com"
   exit
 fi
 
 page_url=$1
 echo "page_url:$page_url"
 
-icon_url=$(curl -s -S -L "$page_url" | html-to-favicon-url)
+icon_url=$(curl -s -S -L "$page_url" | pup 'link[rel~="icon"] attr{href}' | head -1)
 echo "icon_url:$icon_url"
-
-echo "$icon_url" | uri-scheme file
-echo "ook"
 
 icon_file_name=$(echo "$icon_url" | uri-scheme file)
 echo "icon_file_name:$icon_file_name"
