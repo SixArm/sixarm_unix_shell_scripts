@@ -2,7 +2,7 @@
 set -euf -o pipefail
 
 ##
-# pmset-drawing: what is the power manager drawing from?
+# pmset-drawing: What is the power manager drawing from?
 #
 # The known values are:
 #
