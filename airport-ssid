@@ -1,0 +1,18 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# airport-ssid: print the OSX Airport SSID, i.e. current Wi-Fi name.
+#
+# Example:
+#
+#     airport-ssid
+#     My WiFi Network
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-06-30
+##
+
+/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport -I |
+awk -F': ' '/ SSID/ {print $2}'

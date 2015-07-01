@@ -200,16 +200,16 @@ File scripts to print a given `ls` field:
  * `update-everything`: update everything on the system, e.g. apt, brew, node, ruby, pip, etc.
 
 
-### sysadmin on OSX
+### Mac OSX
 
+ * `airport-ssid`: Show the Airport SSID, i.e. current Wi-Fi network name.
  * `brew-cask-repair`: Repair Homebrew manager on OSX.
-
-
-### Power Manager on OSX
-
- * `pmset-drawing`: is the computer drawing from AC power or battery power?
- * `pmset-drawing-ac`: true iff the system is drawing from AC power.
- * `pmset-drawing-battery`: true iff the system is drawing from battery power.
+ * `macbook-pro-retina-screen-manufacturer`: Show the manfacturer ID on a Macbook Pro Retina screen.
+ * `pmset-drawing`: Is the computer drawing from AC power or battery power?
+ * `pmset-drawing-ac`: True iff the system is drawing from AC power.
+ * `pmset-drawing-battery`: True iff the system is drawing from battery power.
+ * `spotlight-reindex`: Trigger Spotlight to reindex of all files on the drive.
+ * `spotlight-usage`: Show the current Spotlight system resource usage.
 
 
 ## Specific needs
@@ -264,17 +264,6 @@ File scripts to print a given `ls` field:
 
  * `easytether-connect`: Run the easytether connect command; after this, run easytether-connecting.
  * `easytether-connecting`: Run the easytether dhclient; call this after easytether-connect.
-
-
-### Macintosh
-
- * `macbook-pro-retina-screen-manufacturer`: Show the manfactured id on a Macbook Pro Retina.
-
-
-### Spotlight on OSX
-
- * `spotlight-reindex`: Trigger Spotlight to reindex of all files on the drive.
- * `spotlight-usage`: Show the current Spotlight system resource usage.
 
 
 ### SixArm Setup
