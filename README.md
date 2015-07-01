@@ -200,16 +200,22 @@ File scripts to print a given `ls` field:
  * `update-everything`: update everything on the system, e.g. apt, brew, node, ruby, pip, etc.
 
 
-### Mac OSX
+### OSX
 
  * `airport-ssid`: Show the Airport SSID, i.e. current Wi-Fi network name.
  * `brew-cask-repair`: Repair Homebrew manager on OSX.
  * `macbook-pro-retina-screen-manufacturer`: Show the manfacturer ID on a Macbook Pro Retina screen.
- * `pmset-drawing`: Is the computer drawing from AC power or battery power?
- * `pmset-drawing-ac`: True iff the system is drawing from AC power.
- * `pmset-drawing-battery`: True iff the system is drawing from battery power.
  * `spotlight-reindex`: Trigger Spotlight to reindex of all files on the drive.
  * `spotlight-usage`: Show the current Spotlight system resource usage.
+
+
+### OSX Power Manager
+
+ * `pmset-drawing`: What is the power manager drawing from?
+ * `pmset-drawing-ac`: Is the system is drawing from AC power?
+ * `pmset-drawing-battery`: Is the system drawing from battery power?
+ * `pmset-battery-percent`: Show the internal battery % charged.
+ * `pmset-battery-full`: Is the battery fully charged?
 
 
 ## Specific needs
