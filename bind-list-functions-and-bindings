@@ -1,4 +1,4 @@
-#!/bin/bash
+# bash
 set -euf -o pipefail
 
 ##
@@ -33,4 +33,6 @@ set -euf -o pipefail
 # Updated: 2015-06-03
 ##
 
-bind -P | sed -n 's/ can be found on "/ /p' | sed 's/", "/ /g; s/".$//; s/", .../ …/; s/\\C-/⌃/g; s/\\e/⎋/g'
+bind -P |
+sed -n 's/ can be found on "/ /p' |
+sed 's/", "/ /g; s/".$//; s/", .../ …/; s/\\C-/⌃/g; s/\\e/⎋/g'
