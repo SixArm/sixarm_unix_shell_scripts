@@ -1,0 +1,36 @@
+#!/bin/bash
+set -euf -o pipefail
+
+##
+# bind-list-functions-and-bindings: list readline functions and bindings.
+#
+# The bash shell has a built-in `bind` command that maps
+# readline function names and associated keyboard bindings.
+#
+# This script prints the functions and their current bindings.
+#
+# This script also massages the output the way we prefer:
+#
+#   * Translate the control key text "\C-" to "⌃" Unicode U+2303.
+#   * Translate the escape key text "\e" to "⎋" Unicode U+238B.
+#   * Translate the ending text "..." to "…" Unicode U+2026.
+#   * Delete extraneous text, such as quotes, comma separators, etc.
+#
+# Example:
+#
+#     bind-list-functions-and-bindings
+#
+# Example output:
+#
+#     abort ⌃g ⌃x⌃g ⎋⌃g
+#     accept-line ⌃j ⌃m
+#     backward-char ⌃b ⎋OD ⎋[D
+#     …
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Created: 2015-06-02
+# Updated: 2015-06-03
+##
+
+bind -P | sed -n 's/ can be found on "/ /p' | sed 's/", "/ /g; s/".$//; s/", .../ …/; s/\\C-/⌃/g; s/\\e/⎋/g'
