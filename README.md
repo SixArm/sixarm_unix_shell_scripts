@@ -200,6 +200,11 @@ File scripts to print a given `ls` field:
  * `update-everything`: update everything on the system, e.g. apt, brew, node, ruby, pip, etc.
 
 
+### bash
+
+ * `bind-list-functions-and-bindings`: List Bash keyboard shortcuts.
+
+
 ### OSX
 
  * `airport-ssid`: Show the Airport SSID, i.e. current Wi-Fi network name.
