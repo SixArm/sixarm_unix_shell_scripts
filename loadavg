@@ -1,0 +1,36 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# Show system load average info on every system we care about.
+#
+# This script tries the following:
+#
+#   * Run `cat /proc/loadavg` which is typical on Linux, Ubuntu, etc.
+#   * Run `sysctl vm.loadavg` which is typical on BSD, OSX, etc.
+#   * Exit with an error
+#
+# This script normalizes the output to be three numbers,
+# then any extra info provided by the commands.
+#
+#   * 1-minute load average.
+#   * 5-minute load average
+#   * 10-minute load avegage
+#   * Any extra info, e.g. Linux provides more info
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-01-25
+##
+
+if [ -r /proc/loadavg ]; then
+   cat /proc/loadavg
+   exit 0
+fi
+
+if command -v sysctl >/dev/null 2>&1; then
+   sysctl vm.loadavg | awk '{print $3 " " $4 " " $5}'
+   exit 0
+fi
+
+exit 1
