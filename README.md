@@ -202,7 +202,8 @@ File scripts to print a given `ls` field:
 
 ### bash
 
- * `bind-list-functions-and-bindings`: List Bash keyboard shortcuts.
+ * `bind-list-functions-and-bindings`: List Bash bind keyboard shortcuts.
+ * `stty-list-functions-and-bindings`: List Bash stty keyboard shortcuts.
 
 
 ### OSX

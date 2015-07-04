@@ -1,0 +1,38 @@
+# bash
+set -euf -o pipefail
+
+##
+# ssty-list-functions-and-bindings: show keyboard shortcuts.
+#
+# The bash shell has a command `stty` that sets the teletype,
+# including teletype functions and keyboard shortcut bindings.
+#
+# This script prints the functions and their current bindings.
+#
+# This script also massages the output the way we prefer:
+#
+#   * Translate the control key text "^" to "⌃" Unicode U+2303.
+#   * Delete extraneous text, such as quotes, field separators, etc.
+#   * One function per line.
+#
+# Example:
+#
+#     stty-list-functions-and-bindings
+#
+# Example output:
+#
+#     discard ⌃O
+#     dsusp ⌃Y
+#     eof ⌃D
+#     …
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Created: 2015-06-02
+# Updated: 2015-06-03
+##
+
+stty -a |
+sed -n '/^cchars: /,/^[^[:space:]]/p' |
+sed -e $'s/; /\\\n/g' |
+sed 's/^cchars: //; s/^[[:space:]]\+//; s/;$//; s/ = / /g; s/\^/⌃/g'
