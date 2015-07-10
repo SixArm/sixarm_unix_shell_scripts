@@ -1,4 +1,23 @@
+# sh
+set -euf -o pipefail
+
+##
+# Get the GitHub team and repo of the current directory.
+#
+# Example:
+#
+#    github-team-repo
+#    ExampleTeamName/example_repository_name
+#
+# The implementation uses `git remote -v`
+# and finds the first GitHub link that's fetchable.
+#
+# Author: Joel Parker Henderson
+# License: GPL
+# Updated: 2015-07-10
+##
+
 git remote -v |
 grep "git@github.com:.*(fetch)" |
 head -1 |
-sed 's/.*://; s/ .*//'`
+sed 's/.*://; s/ .*//'
