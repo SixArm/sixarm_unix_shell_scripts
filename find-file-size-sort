@@ -1,0 +1,1 @@
+find-file-size "$1" | sort -n
