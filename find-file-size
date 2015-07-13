@@ -15,17 +15,20 @@ set -euf -o pipefail
 #   * Use `find ... -printf "%s %p\n"`. Not on BSD.
 #   * Use `find ... -exec stat -f "%z %N". Not on Solaris.
 #   * Use `wc -c`. Some implementations are very slow.
-#   * Use `gfind` on OSX `findutils. Not cross-platform.
+#   * Use `gfind` on OSX `findutils`. Not cross-platform.
 #
 # For the `sed` regular expression, our implementation currently uses
 # basic expressions (e.g. `*`) instead of extended expressions (e.g. `+`)
 # because the basic ones are more cross-platform availble and compatible.
 #
+# Implementation notes:
+#
+#  * The `ls` fields are: mods, 1, user, group, bytes, month, mday, time/year
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
+# Updated: 2015-07-13
 ##
 
 find "$1" -type f -exec ls -dlL {} \; |
-sed -n 's/^[^ ]* *[^ ]* *[^ ]* *[^ ]* *\([^ ]*\) *[^ ]* *[^ ]* *[^ ]* *\(.*\)$/\1 \2/p'
+sed 's/^[^ ]\+ \+[^ ]\+ \+[^ ]\+ \+[^ ]\+ \+\([^ ]\+\) \+[^ ]\+ \+[^ ]\+ \+[^ ]\+ \+/\1 /'
