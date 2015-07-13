@@ -49,6 +49,7 @@ File scripts to print a given `ls` field:
  * `find-empty-directories`: Find empty directories.
  * `find-fast`: Find script with pruning of /dev, /proc, /tmp, .git, .svn, etc .
  * `find-file-size`: Print each file's size and name.
+ * `find-file-size-sort`: Print each file's size and name, with sort by size.
  * `find-git-repos`: Find git repostitory directories.
  * `find-git-repos-fast`: Find git repostitory directories by using faster functions.
 
