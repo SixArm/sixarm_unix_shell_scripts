@@ -1,1 +1,37 @@
-ls -dlL "$1" | awk '{print $5}'
+#/bin/sh
+
+##
+# File size in bytes, using the apparent size.
+#
+# This script has a goal to be cross-platform,
+# so it tries a variety of strategies, in 
+#
+#   * Try `du`. This works on Linux.
+#   * Try `gdu`. Available in GNU coreutils.
+#   * Try `find` This works on Linux, likely many more.
+#   * Try `gfind`. Available in GNU fileutils.
+#   * Try `stat`. Not available on default Solaris.
+#   * Try `wc`. Optimized for quick `lseek` on some systems, not others.
+#
+# Example:
+#
+#     file-size example.txt
+#     1234
+#
+# Exit:
+#
+#   * 0 is success
+#   * Anything else is the error code of the command that failed.
+#
+##
+
+size=$(
+  du  --apparent-size --block-size=1 "$1" 2>/dev/null ||
+  gdu --apparent-size --block-size=1 "$1" 2>/dev/null ||
+  find  "$1" -printf "%s" 2>/dev/null ||
+  gfind "$1" -printf "%s" 2>/dev/null ||
+  stat --printf="%s" "$1" 2>/dev/null ||
+  wc -c <"$1" 2>/dev/null
+)
+q=$?; [ $q -ne 0 ] && exit $q
+echo "$size" | awk '{print $1}'
