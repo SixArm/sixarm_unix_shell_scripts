@@ -6,12 +6,12 @@
 # This script has a goal to be cross-platform,
 # so it tries a variety of strategies, in order:
 #
-#   * Try `du --apparent-size`. This works on Linux.
+#   * Try `du --apparent-size`. Standard on Linux.
 #   * Try `gdu --aparrent-size`. Available in GNU coreutils.
-#   * Try `find -printf` This works on Linux, likely many more.
+#   * Try `find -printf` Standard on Linux, and likely on others.
 #   * Try `gfind -printf`. Available in GNU fileutils.
-#   * Try `stat --printf ...`. Not available on default Solaris.
-#   * Try `stat -f%z ...`. Available on OSX, maybe BSD and others.
+#   * Try `stat --printf ...`. Not on standard OSX or Solaris.
+#   * Try `stat -f%z ...`. Standard on OSX, maybe BSD, and others.
 #   * Try `wc -c`. Fast on some systems, but slow on others.
 #
 # Example:
