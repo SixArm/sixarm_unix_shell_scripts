@@ -6,12 +6,13 @@
 # This script has a goal to be cross-platform,
 # so it tries a variety of strategies, in order:
 #
-#   * Try `du`. This works on Linux.
-#   * Try `gdu`. Available in GNU coreutils.
-#   * Try `find` This works on Linux, likely many more.
-#   * Try `gfind`. Available in GNU fileutils.
-#   * Try `stat`. Not available on default Solaris.
-#   * Try `wc`. Fast on some systems, very slow on others.
+#   * Try `du --apparent-size`. This works on Linux.
+#   * Try `gdu --aparrent-size`. Available in GNU coreutils.
+#   * Try `find -printf` This works on Linux, likely many more.
+#   * Try `gfind -printf`. Available in GNU fileutils.
+#   * Try `stat --printf ...`. Not available on default Solaris.
+#   * Try `stat -f%z ...`. Available on OSX, maybe BSD and others.
+#   * Try `wc -c`. Fast on some systems, but slow on others.
 #
 # Example:
 #
@@ -29,7 +30,7 @@
 #
 #   * DU: `du` command. Example: `DU=/usr/bin/du`
 #   * GDU: `gdu` command. Example: `GDU=/usr/local/bin/gdu`
-#   * FIND: `find` command. Example: `FIND=/usr/bin/find`
+#   * FIND: `find -printf` command. Example: `FIND=/usr/bin/find`
 #   * GFIND: `gfind` command: Example: `GFIND=/usr/local/bin/gfind`
 #   * STAT: `stat` command. Example: `STAT=//usr/bin/stat`
 #   * WC: `wc` command. Example: `WC=/usr/bin/wc`
@@ -83,9 +84,10 @@
 size=$(
   ${DU:-du}  --apparent-size --block-size=1 "$1" 2>/dev/null ||
   ${GDU:-gdu} --apparent-size --block-size=1 "$1" 2>/dev/null ||
-  ${FIND:-find} find  "$1" -printf "%s" 2>/dev/null ||
+  ${FIND:-find} "$1" -printf "%s" 2>/dev/null ||
   ${GFIND:-gfind} "$1" -printf "%s" 2>/dev/null ||
   ${STAT:-stat} --printf="%s" "$1" 2>/dev/null ||
+  ${STAT:-stat} -f%z "$file" 2>/dev/null ||
   ${WC:-wc} -c <"$1" 2>/dev/null
 )
 q=$?; [ $q -eq 0 ] || exit $q
