@@ -23,7 +23,9 @@
 #   * 0 is success
 #   * Anything else is the error code of the command that failed.
 #
-# This script uses optional environment variables for command paths.
+# ## Environment Variables
+#
+# This script tries environment variables for command paths:
 #
 #   * DU: `du` command. Example: `DU=/usr/bin/du`
 #   * GDU: `gdu` command. Example: `GDU=/usr/local/bin/gdu`
@@ -32,11 +34,11 @@
 #   * STAT: `stat` command. Example: `STAT=//usr/bin/stat`
 #   * WC: `wc` command. Example: `WC=/usr/bin/wc`
 #
-# To provide a `du` command path:
+# Example to provide a custom `du` command path:
 #
 #     DU=/foo/du file-size example.txt 
 #
-# To export a `du` command path:
+# Example to export a custom `du` command path:
 #
 #     export DU=/foo/du
 #     file-size example.txt
@@ -56,6 +58,22 @@
 # We typically set our command variables in our /etc/environment file,
 # and similar startup files such as our ~/.bashrc file and ~/.zshrc file,
 # so our command variables are available for all of our shell scripts.
+#
+# ## For OSX users
+#
+# If your system is a typical OSX system, a way to get the GNU commands
+# is by using the `brew` package manager and installing GNU packages:
+#
+#     brew install coreutils findutil
+#
+# If you want to use the GNU commands without a `g` prefix,
+# instead of your default system commands, one way is this:
+#
+#     brew install --default-names coreutils findutil
+#
+# Another way is to add the GNU commands to your PATH, such as:
+#
+#     export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
