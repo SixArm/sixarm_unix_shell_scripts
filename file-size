@@ -4,14 +4,14 @@
 # File size in bytes, using the apparent size.
 #
 # This script has a goal to be cross-platform,
-# so it tries a variety of strategies, in 
+# so it tries a variety of strategies, in order:
 #
 #   * Try `du`. This works on Linux.
 #   * Try `gdu`. Available in GNU coreutils.
 #   * Try `find` This works on Linux, likely many more.
 #   * Try `gfind`. Available in GNU fileutils.
 #   * Try `stat`. Not available on default Solaris.
-#   * Try `wc`. Optimized for quick `lseek` on some systems, not others.
+#   * Try `wc`. Fast on some systems, very slow on others.
 #
 # Example:
 #
@@ -23,15 +23,52 @@
 #   * 0 is success
 #   * Anything else is the error code of the command that failed.
 #
+# This script uses optional environment variables for command paths.
+#
+#   * DU: `du` command. Example: `DU=/usr/bin/du`
+#   * GDU: `gdu` command. Example: `GDU=/usr/local/bin/gdu`
+#   * FIND: `find` command. Example: `FIND=/usr/bin/find`
+#   * GFIND: `gfind` command: Example: `GFIND=/usr/local/bin/gfind`
+#   * STAT: `stat` command. Example: `STAT=//usr/bin/stat`
+#   * WC: `wc` command. Example: `WC=/usr/bin/wc`
+#
+# To provide a `du` command path:
+#
+#     DU=/foo/du file-size example.txt 
+#
+# To export a `du` command path:
+#
+#     export DU=/foo/du
+#     file-size example.txt
+#
+# Using an environment variable can boost the speed of this script,
+# because it able to use the correct command first, rather than probing.
+#
+# For example a typical BSD or OSX system has a system `du` that
+# doesn't have any option for `--apparent-size` or `--block-size`.
+#
+# On our systems, we install GNU `du` that does have these options,
+# and we call the command `gdu`, and we set the environment variable:
+#
+#    export DU=/usr/local/bin/gdu
+#    file-size example.txt
+#
+# We typically set our command variables in our /etc/environment file,
+# and similar startup files such as our ~/.bashrc file and ~/.zshrc file,
+# so our command variables are available for all of our shell scripts.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-07-16
 ##
 
 size=$(
-  du  --apparent-size --block-size=1 "$1" 2>/dev/null ||
-  gdu --apparent-size --block-size=1 "$1" 2>/dev/null ||
-  find  "$1" -printf "%s" 2>/dev/null ||
-  gfind "$1" -printf "%s" 2>/dev/null ||
-  stat --printf="%s" "$1" 2>/dev/null ||
-  wc -c <"$1" 2>/dev/null
+  ${DU:-du}  --apparent-size --block-size=1 "$1" 2>/dev/null ||
+  ${GDU:-gdu} --apparent-size --block-size=1 "$1" 2>/dev/null ||
+  ${FIND:-find} find  "$1" -printf "%s" 2>/dev/null ||
+  ${GFIND:-gfind} "$1" -printf "%s" 2>/dev/null ||
+  ${STAT:-stat} --printf="%s" "$1" 2>/dev/null ||
+  ${WC:-wc} -c <"$1" 2>/dev/null
 )
-q=$?; [ $q -ne 0 ] && exit $q
+q=$?; [ $q -eq 0 ] || exit $q
 echo "$size" | awk '{print $1}'
