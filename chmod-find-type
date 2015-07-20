@@ -1,0 +1,31 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# Change permissions on a specific file type, using `chmod` and `find`.
+#
+# Example:
+#
+#     chmod 750 /foo d
+#     => change mods to "rwxr-x---" on all directories, at `/foo` recursively.
+#
+#     chmod 640 /foo f
+#     => change mods to "rw-r-----" on all files, at `/foo` and within.
+# 
+# The primary goal of this script is safety, even in cases when a file name
+# has atypical characters, such as a space, leading dash, newline, etc.
+#
+# For safety, the script uses `find` with `-print0` and `xags` with `-0`,
+# which are GNU options that handle file names with atypical characters.
+# Acceptable tradeoffs are the options are slower (~2x) and not POSIX.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-07-13
+##
+
+mods="$1"
+path="$2"
+type="$3"
+
+find "$path" -type "$type" -print0 | xargs -0 chmod "mods" --
