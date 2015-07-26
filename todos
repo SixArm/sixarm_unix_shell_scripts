@@ -4,9 +4,10 @@ set -euf -o pipefail
 ##
 # Find TODO lines in files.
 #
-# This searches for all of these comments and tags:
+# This script searches for all of these:
 #
 #    #TODO
+#    #FIX
 #    #FIXME
 #    #OPTIMIZE
 #    #DEPRECATE
@@ -55,4 +56,4 @@ set -euf -o pipefail
 # Updated: 2015-01-25
 ##
 
-ag "# ?(TODO|FIXME|OPTIMIZE|DEPRECATE|REFACTOR|DELETE|AUDIT|DANGER|WTF)\b" "$@"
+ag "# *(TODO|FIX|FIXME|OPTIMIZE|DEPRECATE|REFACTOR|DELETE|AUDIT|DANGER|WTF)\b" "$@"
