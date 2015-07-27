@@ -1,0 +1,138 @@
+#!/bin/sh
+set -euf
+
+##
+# For each file, open it, prompt for a new name, then move the file.
+#
+# This script is useful for iterating on a list of file names,
+# opening each file, then prompting for a new file name.
+#
+# For example, we use this script when we get a bunch of new photos files
+# that have generic names such as `image1.jpg`, `image2.jpg`, `image3.jpg`, etc.,
+# and we want to open each image so we can see it, then move it to a more
+# useful file name, or trash it, or move it to a particular directory.
+#
+# Example to find images, open each image, and prompt for a new name:
+#
+#     find . -name "*.jpg" -print0 |
+#     while-file-open-mv
+#
+# Example console:
+#
+#     > image1.jpg
+#     ? apple.jpg
+#     = mv image1.jpg apple.jpg
+#
+#     > image2.jpg
+#     ? banana.jpg
+#     = mv image2.jpg banana.jpg
+#
+#     > image3.jpg
+#     ? cherry.jpg
+#     = mv image3 cherry.jpg
+#
+# Special names:
+#
+#   * blank: skip the file.
+#   * `.` keep the file the same.
+#   * `~` move the file to `$HOME` or `~/`.
+#   * `-` move the file to `$TRASH` or `$home/.trash`.
+#   * `'` move the file to the same place as the previous file
+#   * 1, 2, 3, ... move the file to arg name $1, $2, $3, ...
+#
+# Example of sorting files into various directories:
+#
+#     find . -name "*.jpg" -print0 |
+#     while-file-open-mv apples banana cherries
+#
+#     > image1.jpg
+#     ? 1
+#     = mv image1.jpg apples
+#
+#     > image2.jpg
+#     ? 2
+#     = mv image2.jpg bananas
+#
+#     > image3.jpg
+#     ? 3
+#     = mv image3.jpg cherries
+#
+#     > image4.jpg
+#     ? ~
+#     = mv image4.jpg ~/
+#
+#     > image5.jpg
+#     ? -
+#     = mv image5.jpg ~/.trash
+#
+#     > image6.jpg
+#     ? '
+#     = mv image6.jpg ~/.trash
+#
+#     > image7.jpg
+#     ? .
+#     = keep the file the same
+#
+# ## Environment Variables
+#
+# This script uses these environment variables:
+#
+#   * OPEN: `open` command; example: `OPEN=/usr/bin/open`.
+#   * MV: `mv` command. Example: `MV=/bin/mv`.
+#   * HOME: the home directory. Default: `~/`.
+#   * TRASH: the trash directory. Default: `$home/.trash`.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-07-26
+##
+
+open=${OPEN:-open}
+mv=${MV:-mv}
+home=${HOME:-~/}
+trash=${TRASH:-"$home/.trash"}
+
+while IFS= read -r -d '' file; do
+    echo "> $file"
+    if [ -f "$file" ]; then
+        `$open "$file"`
+        read -p "? " tty < /dev/tty
+        if [ -n "$tty" ]; then
+            case "$tty" in
+                "")
+                    log="skip"
+                    dst=""
+                    ;;
+                [1-9])
+                    log="$tty"
+                    dst="${!tty}"
+                    ;;
+                ".")
+                    log="same"
+                    dst=""
+                    ;;
+                "~")
+                    log="home"
+                    dst="$home"
+                    ;;
+                "-")
+                    log="trash"
+                    dst="$trash"
+                    ;;
+                "'")
+                    log="ditto"
+                    dst="$dst"
+                    ;;
+                *)
+                    log="tty"
+                    dst="$tty"
+                    ;;
+            esac
+            #echo "$log"
+            if [ -n "$dst" ]; then
+                echo "= $mv \"$file\" \"$dst\""
+                `$mv "$file" "$dst"`
+            fi
+        fi
+    fi
+done
