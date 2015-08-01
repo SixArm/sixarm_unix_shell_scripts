@@ -1,0 +1,5 @@
+# Git repositories: we put ours in /opt and ~/git
+if command -v git >/dev/null 2>&1; then
+  find /opt ~/git -type d -name .git -perm -u=w |
+  while read x; do cd $(dirname "$x") && git pull --rebase && git submodule update --init --recursive; done
+fi

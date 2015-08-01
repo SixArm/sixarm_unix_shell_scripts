@@ -1,0 +1,9 @@
+# Apt for Debian Linux, Ubuntu Linux, etc.
+if command -v apt-get >/dev/null 2>&1; then
+  sudo apt-get autoclean
+  sudo apt-get --purge autoremove
+  sudo apt-get update
+  sudo apt-get upgrade -y -f --fix-missing --install-recommends
+  sudo apt-get autoclean
+  sudo apt-get --purge autoremove
+fi

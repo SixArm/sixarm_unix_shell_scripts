@@ -1,0 +1,7 @@
+# Homebrew for OSX
+if command -v brew >/dev/null 2>&1; then
+  if [[ `whoami` != "root" ]]; then
+    brew update
+    brew upgrade
+  fi
+fi

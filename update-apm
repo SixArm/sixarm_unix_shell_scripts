@@ -1,0 +1,4 @@
+# APM: Atom Package Manager
+if command -v apm >/dev/null 2>&1; then
+  apm upgrade
+fi
