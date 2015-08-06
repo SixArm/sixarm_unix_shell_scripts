@@ -6,27 +6,47 @@ set -euf -o pipefail
 #
 # This deletes all the files in a user's typical trash directory:
 #
-#    ~/.local/share/Trash/files
+#    ~/.Trash/ (typical on OSX)
+#    ~/.local/share/Trash/info/ (typical on Ubuntu)
+#    ~/.local/share/Trash/files/ (typical on Ubuntu)
 #
 # Example:
 #
 #    empty-trash
 #
-# Any args are passed along to the rm command.
+# The implementation uses `find` and the `-delete` flag, for
+# the most efficiency and security, given current GNU tools.
 #
-# Example:
+# The implementation also uses `-mindepth` to ensure the trash
+# directories are not accidentally deleted, and also to solve
+# the warning "relative path potentially not safe".
 #
-#    empty-trash --verbose
+# ## Details
+#
+# As far as we know, using `find` and the `-delete` flag is the most
+# efficient and secure way to delete files that works on current GNU
+# systems, without needing to use any filesystem-specific knowledge.
+#
+# This is more efficient than using ‘-exec’ or ‘-execdir’ actions,
+# because `-delete` doesn't fork a new process using `exec` or `rm`.
+# This is normally more efficient than xargs for the same reason.
+#
+# The file deletion is performed from the directory containing the
+# entry to be deleted, so the `-delete` action has the same security
+# advantages as using an equivalent `-execdir` action has.
+#
+# The `-delete` action is not completely portable, but the only other
+# possibility as secure is using `-execdir` which is no more portable.
+#
+# The most efficient portable way is `-exec ...+`, but is insecure and
+# isn't supported by versions of GNU findutils prior to 4.2.12.
+#
+# For details about deleting files, and how to do it effectively:
+# http://www.gnu.org/software/findutils/manual/html_node/find_html/Deleting-Files.html
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
+# Updated: 2015-08-05
 ##
 
-# We do not use -delete because we want to pass args to rm.
-# We do not use -exec rm because it glitches on unusual characters.
-# We use grep to filter out quoted file names because rm glitches on these.
-find ~/.local/share/Trash/files/ ~/.local/share/Trash/info/ -type f | grep -v '"' | grep -v "'" | xargs -I{} rm -rf "$@" "{}"
-
-# Remove any remainders by using a wildcard.
-rm -rf "$@" ~/.local/share/Trash/{files,info}/*
+find $HOME/.Trash/ $HOME/.local/share/Trash/files/ $HOME/.local/share/Trash/info/ -mindepth 1 -delete
