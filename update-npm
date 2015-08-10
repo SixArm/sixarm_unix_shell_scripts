@@ -1,9 +1,0 @@
-# NPM: Node Package Manager
-if command -v npm >/dev/null 2>&1; then
-  echo "update-npm ..."
-  sudo npm cache clean -f
-  sudo npm install -g n
-  sudo n stable
-  npm update -g
-  npm update
-fi

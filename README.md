@@ -198,7 +198,6 @@ File scripts to print a given `ls` field:
  * `screenrc`: Keybindings.
  * `sort-rank`: Sort command-line input by rank.
  * `susu`: Shorthand for: sudo su -
- * `update-everything`: update everything on the system, e.g. apt, brew, node, ruby, pip, etc.
 
 
 ### bash

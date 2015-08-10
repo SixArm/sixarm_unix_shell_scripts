@@ -1,0 +1,63 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# Declone each stdin 0-delimited file stem within two directories.
+#
+# This script iterates on each file stem, and looks for the file stem
+# within each of the two directories specified on the command line.
+#
+# If both directories contain a file with the same stem and same size,
+# then the second directory's file is called a clone.
+#
+# We keep the file in the first directory as is, and delete the clone.
+#
+# This script is useful for deleting duplicate files,
+# while also giving the user full control of which files
+# are evaluated by using stdin with 0-delimited stems.
+#
+# This script skips symlinks.
+#
+# Example:
+#
+#     echo "a\0b\0c\0" | declone-each-stdin0-file-stem /originals /clones
+#
+# The example compares these pairs:
+#
+#     originals/a and clones/a
+#     originals/b and clones/b
+#     originals/c and clones/c
+#
+# Example to create file stems by using `find`:
+#
+#     find /foo/goo -type f -print0 | sed -z 's|/foo/goo/||' > stems
+#
+# The example does a typical find, then chops off the root directory;
+# the example output is the file stems and is 0-delimited as we want.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-07-13
+##
+
+a_root_path="$1"
+b_root_path="$2"
+
+file_size(){
+  stat -f %z "$1"
+}
+
+file_digest(){
+  shasum -a 512 "$1" | awk '{print $1}'
+}
+
+while read -d $'\0' stem_path; do
+  a="$a_root_path/$stem_path"
+  b="$b_root_path/$stem_path"
+  if [ -f "$a" ] && [ -f "$b" ] && [ ! -L "$a" ] && [ ! -L "$b" ] && [ `file_size "$a"` == `file_size "$b"` ]; then
+    echo "⊤ $stem_path"
+    rm "$b"
+  else
+    echo "⊥ $stem_path"
+  fi
+done
