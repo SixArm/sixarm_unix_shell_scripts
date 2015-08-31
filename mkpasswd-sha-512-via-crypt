@@ -1,0 +1,1 @@
+mkpasswd --method=SHA-512 

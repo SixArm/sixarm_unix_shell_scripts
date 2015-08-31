@@ -1,0 +1,1 @@
+python -c "import crypt, getpass, pwd; print crypt.crypt('password', '\$6\$salt\$')"
