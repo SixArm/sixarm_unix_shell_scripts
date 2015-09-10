@@ -1,1 +1,19 @@
-python -c "import crypt, getpass, pwd; print crypt.crypt('password', '\$6\$salt\$')"
+#!/usr/bin/python
+
+##
+# See `mkpasswd-sha-512-via-shell` in this repo for more explanation.
+#
+# Credit: [Belmin Fernandez](http://serverfault.com/users/53736/belmin-fernandez)
+# See: [serverfault](http://serverfault.com/questions/330069/how-to-create-an-sha-512-hashed-password-for-shadow)
+##
+
+If this utility is not installed on your system (e.g. you are using OS X) then you can still easily generate these passwords using Python. First, ensure that the Passlib password hashing library is installed.
+
+pip install passlib
+Once the library is ready, SHA512 password values can then be generated as follows:
+
+python -c "from passlib.hash import sha512_crypt; import getpass; print sha512_crypt.encrypt(getpass.getpass())"
+
+import crypt,random,string
+salt = join([random.choice(string.ascii_letters + string.digits) for _ in range(16)])
+print crypt.crypt(raw_input('clear-text password: '), '\$6\$' + salt.

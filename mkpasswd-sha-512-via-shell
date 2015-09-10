@@ -1,0 +1,79 @@
+#!/bin/sh
+
+##
+# mkpassword-sha-512-via-shell
+#
+# Example:
+#
+#     mkpassword-sha-512-via-shell secret
+#     $6$5v0zcX.rEc$Jk301qo80ky5VNcLOakMc3yI7RVouZzG51u3h3f9vd3i5gZvydQF146OLf5WGqDwTyCCfquLdNdp6TsJyfirA1My
+#
+# This script uses the `mkpasswd` command that is typically found on Debian servers,
+# within the `whois` package of utilities; the command is entirely different from OSX.
+#
+# The general format of the output is:
+#
+#     $id$rounds=n$salt$hash
+#
+#   * The "id" is the algorithm identifier.
+#
+#       Id | Algorithm Name
+#       -------------------------------------------------
+#       1  | MD5
+#       2  | Blowfish (on some Linux distributions)
+#       2a | Blowfish (on some Linux distributions)
+#       5  | SHA-256 (since glibc 2.7)
+#       6  | SHA-512 (since glibc 2.7)
+#
+#   * The "rounds" is how many times the hash runs.
+#    The more runs, the stronger the security.
+#
+#   * The "salt" is a random string, specific to this one output string.
+#    The salt is typically letters and numbers, and length 16.
+#    The salt must not contain prefix such as "$1$".
+#
+#   * The "hash" is the resulting string.
+#
+#   * For more, see `man 3 crypt`.
+#
+# Notes:
+#
+#   * To see what algorithms a system uses, view the password file.
+#     A typical way to view a password file is `sudo cat /etc/shadow`.
+#     Look for items that start with "$1$", "$2", "$2a", "$5$", "$6$".
+#
+#   * On our typical systems, we prefer to use "$6$" meaning SHA 512.
+#    We choose a different algorithm if we need to match other systems,
+#    such as being backwards-compatible or cross-compatible with systems.
+#
+#   * On our typical systems, we prefer to use "rounds=656000" because
+#    that's what the python `passlib` implemenation uses.
+#
+#   * SHA-256 and SHA-512 are part of the SHA-2 set of hash functions.
+#
+#   * The crypt hashes based on SHA-2 are not plain SHA-2, which would
+#     be bad since plain SHA-2 is weak against dictionary attacks.
+#     The SHA-2 crypt schemes use the plain hashes as building block,
+#     but add a variable work-factor to slow down dictionary attacks,
+#     and also add a salt.
+#
+# Alerts:
+#
+#   * Do not use control characters in passwords, because the `mkpasswd`
+#     command has known issues handling these characters in some uses.
+#
+# See:
+#
+#   * http://manpages.ubuntu.com/manpages/natty/man1/mkpasswd.1.html
+#
+# Credits:
+#
+#   * http://unix.stackexchange.com/questions/8229/what-methods-are-used-to-encrypt-passwords-in-etc-passwd-and-etc-shadow
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Created: 2015-08-30
+# Updated: 2015-08-31
+##
+
+mkpasswd --method=SHA-512 --rounds=656000
