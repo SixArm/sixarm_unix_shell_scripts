@@ -1,0 +1,22 @@
+#!/bin/bash
+set -euf -o pipefail
+
+##
+# brew reset clean
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-02-06
+##
+
+cd $(brew --prefix) &&
+git reset --hard FETCH_HEAD &&
+git clean -df
+
+echo "Optionally run these:"
+echo "brew --config"
+echo "brew --prefix"
+echo "brew doctor"
+echo "ls -ld \$(brew --prefix)"
+echo "ls -la \$(brew --prefix)"
+echo "cd \$(brew --prefix) && sudo chown $USER .git Library"
