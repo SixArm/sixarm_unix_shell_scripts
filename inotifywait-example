@@ -25,9 +25,14 @@ set -euf -o pipefail
 
 watch="$1"
 
+notify(){
+    dir=$1
+    action=$2
+    file=$3
+    echo "$dir $action $file"
+}
+
 while true; do
   inotifywait "$watch" -e create -e delete -e move |
-  while read dir action file; do
-    echo "$dir $action $file"
-  done
+  while read dir action file; do notify "$dir" "$action" "$file"; done
 done
