@@ -1,0 +1,59 @@
+#!/bin/bash
+set -euf -o pipefail
+
+##
+# Slack.com script that uses a webhook to send a message.
+#
+# Syntax:
+#
+#     slack-webhook-send-message <url> <channel> <username> <text>
+#
+# Example:
+#
+#     slack-webhook-send-message
+#       https://hooks.slack.com/services/mykey
+#       myusername
+#       myemoji
+#       mychannel
+#       "Hello World"
+#
+# This script uses our preferred conventions:
+#
+#   * It requires parameters for a user name, emoji, and channel.
+#   * It logs to syslog.
+#
+# ## Environment Variables
+#
+# This script can use environment variables for command paths:
+#
+#   * CURL: `curl` command. Example: `CURL=/usr/bin/curl`
+#
+# This script can use environment variables for parameter defaults:
+#
+#   * SLACK_HOOK
+#   * SLACK_USERNAME
+#   * SLACK_EMOJI
+#   * SLACK_CHANNEL
+#   * SLACK_TEXT
+#
+# ## Future Ideas
+#
+# Change from positional parameters to key=val parameters.
+#
+# ## Contact
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Created: 2015-09-19
+# Updated: 2015-09-21
+# Version: 1.1
+##
+
+hook="${1:-$SLACK_HOOK}"
+username="${2:-$SLACK_USERNAME}"
+emoji="${3:-$SLACK_EMOJI}"
+channel="${4:-$SLACK_CHANNEL}"
+text="${5:-$SLACK_TEXT}"
+
+logger "$0 $hook $username $emoji $channel $text"
+${CURL:-curl} -X POST "$hook" --data-urlencode "payload={\"username\": \"$username\", \"icon_emoji\": \"$emoji\", \"channel\": \"$channel\", \"text\": \"$text\"}"
