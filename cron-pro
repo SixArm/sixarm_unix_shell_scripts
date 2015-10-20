@@ -1,0 +1,20 @@
+# Launch a cron job like a professional.
+#
+# By https://orchestrate.io/blog/2014/03/31/cron-in-production-that-is-a-double-edged-sword/
+#
+#  1. Use `flock` file write lock
+#  2. Use `sleep` and a random number of seconds 0-59 to mitigate galloping herd.
+#  3. Use `nice` to work well with other processes
+#  4. Use `date` to timestamp the run.
+#  5. Redirect stderr to stdin, suitable for logging.
+#  6. Use `while` to read each stdin line, then timestamp it, then log it.
+#  7. Always return true.
+#
+#     1 * * * *
+#       (
+#         flock -w 0 200 &&
+#         sleep $((RANDOM%60)) &&
+#         nice /command/to/run &&
+#         date -u "+%Y%m%d%H%M%S" > /var/run/last_successful_run
+#       ) 2>&1 200> /var/run/cron_job_lock |
+#     while read line ; echo `date -u "+%Y%m%d%H%M%S"` "$line" ; done > /path/to/the/log || true
