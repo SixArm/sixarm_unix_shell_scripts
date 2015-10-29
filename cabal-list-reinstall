@@ -1,0 +1,1 @@
+cabal list --simple-output --installed | awk {print } | uniq | xargs -I {} cabal install {} --reinstall
