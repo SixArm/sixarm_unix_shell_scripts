@@ -1,0 +1,1 @@
+pandoc "$1" --output= "$2" --to=html5 --standalone --css "/assets/css/pandoc.css
