@@ -32,4 +32,7 @@ rm -f /var/log/*.log.[0-9]*
 rm -f /var/log/**/*.{gz,old}
 rm -f /var/log/**/*.log.[0-9]*
 rm -f /var/log/**/*.[0-9].log
-rm -f /var/log/{btmp,mail.err,syslog}.[0-9]*
+rm -f /var/log/{btmp,dmesg,mail.err,syslog,wtmp}.[0-9]*
+
+# TODO: preserve the most recent atop file.
+rm -f /var/log/atop/atop_[0-9]*
