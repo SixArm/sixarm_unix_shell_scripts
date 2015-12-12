@@ -11,5 +11,9 @@
 #   * An unexpected error occurred while moving files to the final destination.
 #
 sudo chflags nohidden ~/Library/
-sudo mkdir -p ~/Library/Developer/Shared/Documentation/DocSets
-sudo chmod u+rw,g+rw ~/Library/Developer/Shared/Documentation/DocSets
+for dir in ~/Library/Developer/Shared/Documentation ~/Library/Developer/Shared/Documentation/DocSets
+do
+    sudo mkdir -p "$dir"
+    sudo chown $USER "$dir"
+    sudo chmod u+rw "$dir"
+done
