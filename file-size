@@ -7,7 +7,7 @@
 # so it tries a variety of strategies, in order:
 #
 #   * Try `du --apparent-size`. Standard on Linux.
-#   * Try `gdu --aparrent-size`. Available in GNU coreutils.
+#   * Try `gdu --apparent-size`. Available in GNU coreutils.
 #   * Try `find -printf` Standard on Linux, and likely on others.
 #   * Try `gfind -printf`. Available in GNU fileutils.
 #   * Try `stat --printf ...`. Not on standard OSX or Solaris.
@@ -37,7 +37,7 @@
 #
 # Example to provide a custom `du` command path:
 #
-#     DU=/foo/du file-size example.txt 
+#     DU=/foo/du file-size example.txt
 #
 # Example to export a custom `du` command path:
 #
