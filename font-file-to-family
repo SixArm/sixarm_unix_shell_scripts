@@ -1,0 +1,20 @@
+#!/bin/sh
+set -euf -o pipefail
+
+##
+# Given a font file, output the family name.
+#
+# This script is implemented on OS X by using `otfinfo`.
+# To get this, use `brew install lcdf-typetools`.
+#
+# To Do:
+#
+#   * Implement on Linux and Windows
+#   * Get other font fields
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Updated: 2015-12-18
+##
+
+otfinfo --info "$1" | sed -n "s/^Family:\s\+//p"
