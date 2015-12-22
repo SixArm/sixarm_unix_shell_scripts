@@ -2,6 +2,8 @@
 
 This repo has lots of utility scripts.
 
+For shell script tips, see http://www.etalabs.net/sh_tricks.html
+
 
 ## Command line boosters
 
