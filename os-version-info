@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Show the operating system version information.
@@ -57,7 +58,7 @@ set -euf -o pipefail
 #    Darwin MacBook-Pro.local 14.4.0 Darwin Kernel Version 14.4.0: Tue May  5 14:17:52 PDT 2015; root:xnu-2782.30.4~3/RELEASE_X86_64 x86_64
 ##
 if command -v uname >/dev/null 2>&1; then
-    echo; echo 'uname -a'
+    out; out 'uname -a'
     uname -a
 fi
 
@@ -73,7 +74,7 @@ fi
 #    Codename:lucid
 ##
 if command -v lsb_release >/dev/null 2>&1; then
-    echo; echo 'lsb_release -a'
+    out; out 'lsb_release -a'
     lsb_release -a
 fi
 
@@ -97,8 +98,8 @@ if [[ -e /etc/redhat-release ]]; then
     do
         if [[ -e $file ]]
         then
-            echo ''
-            echo "cat $file"
+            out ''
+            out "cat $file"
             cat $file
         fi;
     done
@@ -115,6 +116,6 @@ fi
 #     BuildVersion:14E17e
 ##
 if command -v sw_vers >/dev/null 2>&1; then
-    echo; echo 'sw_vers'
+    out; out 'sw_vers'
     sw_vers
 fi

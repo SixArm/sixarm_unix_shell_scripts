@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # For each file name, run a command with the file name.
@@ -13,6 +14,6 @@ set -euf -o pipefail
 unset CDPATH
 while read file_name
 do
-  echo "$file_name"
+  out "$file_name"
   "$@" "$file_name"
 done

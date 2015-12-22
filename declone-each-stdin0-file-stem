@@ -1,5 +1,6 @@
 #!/bin/sh
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Declone each stdin 0-delimited file stem within two directories.
@@ -54,9 +55,9 @@ while read -d $'\0' stem_path; do
   a="$a_root_path/$stem_path"
   b="$b_root_path/$stem_path"
   if [ -f "$a" ] && [ -f "$b" ] && [ ! -L "$a" ] && [ ! -L "$b" ] && [ `file_size "$a"` == `file_size "$b"` ] && [ `file_digest "$a"` == `file_digest "$b"` ]; then
-    echo "⊤ $stem_path"
+    out "⊤ $stem_path"
     rm "$b"
   else
-    echo "⊥ $stem_path"
+    out "⊥ $stem_path"
   fi
 done

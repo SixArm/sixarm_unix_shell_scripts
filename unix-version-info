@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Show diagnostic details about the linux version.
@@ -26,25 +27,25 @@ set -euf -o pipefail
 #     root:xnu-2782.1.97~2/RELEASE_X86_64 x86_64
 #
 if $(command -v uname >/dev/null 2>&1); then
-    echo 'uname -a'
+    out 'uname -a'
     uname -a
-    echo
+    out
 fi
 
 for file in /etc/redhat-release /proc/version /etc/issue.net
 do
   if [[ -e $file ]]
   then
-    echo ''
-    echo "cat $file"
+    out ''
+    out "cat $file"
     cat $file
   fi;
 done
 
 if $(command -v lsb_release >/dev/null 2>&1); then
-    echo 'lsb_release -a'
+    out 'lsb_release -a'
     lsb_release -a
-    echo
+    out
 fi
 
 # OSX uses `sw_vers` to print info like this:
@@ -55,7 +56,7 @@ fi
 #     BuildVersion:14A389
 #
 if $(command -v sw_vers >/dev/null 2>&1); then
-    echo 'sw_vers'
+    out 'sw_vers'
     sw_vers
-    echo
+    out
 fi

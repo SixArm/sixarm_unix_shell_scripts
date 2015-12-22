@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Combine a base URI and relative URI to produce an absolute URI.
@@ -28,11 +29,11 @@ abs=""
 if [[ "$rel" =~ :// ]]; then
     abs="$rel"
 elif [[ "$rel" =~ ^// ]]; then
-    abs=$(echo "$base" | uri-scheme name)":$rel"
+    abs=$(out "$base" | uri-scheme name)":$rel"
 elif [[ "$rel" =~ ^/ ]]; then
-    read name authority < <(echo "$base" | uri-scheme name authority)
+    read name authority < <(out "$base" | uri-scheme name authority)
     abs="$name://$authority$rel"
 else
     abs="$base/$rel"
 fi
-echo "$abs"
+out "$abs"

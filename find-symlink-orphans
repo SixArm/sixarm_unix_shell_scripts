@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Find (and print) all symbolic links without a target within the current dirtree
@@ -12,6 +13,6 @@ set -euf -o pipefail
 ##
 
 file **/*(D@) | fgrep broken
-for i in **/*(D@); [[ -f $i || -d $i ]] || echo $i
-echo **/*(@-^./=%p)
+for i in **/*(D@); [[ -f $i || -d $i ]] || out $i
+out **/*(@-^./=%p)
 print -l **/*(-@)

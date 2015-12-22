@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail set -o xtrace
+out () { printf %s\\n "$*" ; }
 
 ##
 # Reset the Ubuntu network wireless driver.
@@ -13,5 +14,5 @@ set -euf -o pipefail set -o xtrace
 ##
 
 driver=`lshw -C network 2>&1 | grep wireless | grep driver | sed 's/.* driver=//; s/ .*//'`
-echo "driver:$driver"
+out "driver:$driver"
 modprobe -r $driver && modprobe $driver

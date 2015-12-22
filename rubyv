@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Choose a Ruby version
@@ -81,13 +82,13 @@ shift $(($OPTIND - 1))
 
 VERSION=$1
 
-export PATH=`echo $PATH | sed "s#:$RUBY_TOP_DIR/[^/]*/#:$RUBY_TOP_DIR/$VERSION/#; s#:$GEM_TOP_DIR/[^/]*/#:$GEM_TOP_DIR/$VERSION/#"`
+export PATH=`out $PATH | sed "s#:$RUBY_TOP_DIR/[^/]*/#:$RUBY_TOP_DIR/$VERSION/#; s#:$GEM_TOP_DIR/[^/]*/#:$GEM_TOP_DIR/$VERSION/#"`
 
 export GEM_HOME=$GEM_TOP_DIR/$VERSION
-export GEM_PATH=`echo $GEM_PATH | sed "s#$GEM_TOP_DIR/[^:]*#$GEM_TOP_DIR/$VERSION#"`
+export GEM_PATH=`out $GEM_PATH | sed "s#$GEM_TOP_DIR/[^:]*#$GEM_TOP_DIR/$VERSION#"`
 
 if [ "$VERBOSE" = "1" ]; then
-   echo "PATH=$PATH"
-   echo "GEM_HOME=$GEM_HOME"
-   echo "GEM_PATH=$GEM_PATH"
+   out "PATH=$PATH"
+   out "GEM_HOME=$GEM_HOME"
+   out "GEM_PATH=$GEM_PATH"
 fi

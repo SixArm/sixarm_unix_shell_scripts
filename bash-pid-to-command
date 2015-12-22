@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Use a bash process id (PID) to recover its command line.
@@ -56,15 +57,15 @@ set -euf -o pipefail
 ##
 
 if [ $# -ne 1 ] ; then
-    echo Usage: $0 BASH_PID
+    out Usage: $0 BASH_PID
     exit 1
 fi
 if [ ! -d /proc/$1 ] ; then
-    echo There is no such PID
+    out "There is no such PID"
     exit 1
 fi
 if [ $(realpath /proc/$1/exe) != "/bin/bash" ] ; then
-    echo This is not a bash PID
+    out "This is not a bash PID"
     exit 1
 fi
 TMPFILE=~/tmp/bash-pid-to-command-history

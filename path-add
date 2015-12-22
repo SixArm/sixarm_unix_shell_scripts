@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Add path(s) to the PATH environment variable
@@ -35,7 +36,7 @@ do
         ""|.) continue ;;
     esac
     case :$PATH: in
-        *:$p:*) [ $ap_quiet -eq 0 ] && echo "addpath: $p already in path" >&2
+        *:$p:*) [ $ap_quiet -eq 0 ] && out "addpath: $p already in path" >&2
         continue
         ;;
     esac
@@ -48,7 +49,7 @@ do
             PATH="$PATH:$p"
         fi
     else
-        [ $ap_quiet -eq 0 ] && echo "addpath: $p is not a directory" >&2
+        [ $ap_quiet -eq 0 ] && out "addpath: $p is not a directory" >&2
     fi
 done
 export PATH

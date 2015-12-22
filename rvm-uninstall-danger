@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Uninstall RVM (Ruby Version Manager). THIS IS DANGEROUS.
@@ -31,34 +32,34 @@ set -euf -o pipefail
 # Updated: 2015-01-25
 ##
 
-echo "rvm implode"
+out "rvm implode"
 rvm implode
 
-echo "remove rvm files from system-wide areas"
+out "remove rvm files from system-wide areas"
 sudo rm -rf /usr/local/bin/rvm
 sudo rm -rf /usr/local/rvm
 sudo rm -rf /etc/rvmrc
 sudo rm -rf /etc/profile.d/rvm.sh
 
-echo "remove rvm files from all likely user areas"
+out "remove rvm files from all likely user areas"
 sudo rm -rf /home/*/.rvmrc
 sudo rm -rf /home/*/.rvm
 sudo rm -rf /Users/*/.rvmrc
 sudo rm -rf /Users/*/.rvm
 
-echo "remove rvm files from the current user's home"
+out "remove rvm files from the current user's home"
 sudo rm -rf $HOME/.rvmrc
 sudo rm -rf $HOME/.rvm
 
-echo "uninstall rvm gem as current user and with sudo"
+out "uninstall rvm gem as current user and with sudo"
 gem uninstall -a -q rvm
 sudo gem uninstall -a -q rvm
 
-echo "delete rvm group"
+out "delete rvm group"
 sudo /usr/sbin/groupdel rvm
 
-echo "try to find any remaining .rvmrc files, in case you want to delete them"
+out "try to find any remaining .rvmrc files, in case you want to delete them"
 sudo find -L / -name .rvmrc
 
-echo "try to find rvm text in configuration files, in case you want to edit thme"
+out "try to find rvm text in configuration files, in case you want to edit thme"
 sudo find -L / -type f | grep "\(bash_login\|bash_profile\|bashrc\|profile\|zshenv\|zshrc\|zlogin\|zlogout\|zprofile\)$" | xargs -I{} grep -Iil "rvm" {}

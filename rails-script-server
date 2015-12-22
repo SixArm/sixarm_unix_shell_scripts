@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # rails-script-server - A better script/server alias.
@@ -27,7 +28,7 @@ function rails-script-server {
     if [ "$1" ]; then
       cd `ls|grep $1|sort|tail -1`
     fi
-    echo $(pwd)
+    out $(pwd)
   fi
   # kill any existing rails server processes.
   ps -a|grep "ruby ./script/server"|grep -v "grep"|cut -d " " -f1|xargs -n 1 kill -TERM

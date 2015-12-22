@@ -1,6 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
-
+out () { printf %s\\n "$*" ; }
 
 #!/bin/bash
 #
@@ -67,7 +67,7 @@ test -d "$RUBY_DIR/$RUBY_VERSION" || ruby-build "$RUBY_VERSION" "$RUBY_DIR/$RUBY
 
 if [[ "$RUBY_VERSION" != "$RUBY_VERSION_SANS_PATCH_LEVEL" ]]; then
   cd $RUBY_DIR
-  echo "Fix symlink in $RUBY_DIR: ln -nsf $RUBY_VERSION $RUBY_VERSION_SANS_PATCH_LEVEL"
+  out "Fix symlink in $RUBY_DIR: ln -nsf $RUBY_VERSION $RUBY_VERSION_SANS_PATCH_LEVEL"
   ln -nsf $RUBY_VERSION $RUBY_VERSION_SANS_PATCH_LEVEL
 fi
 

@@ -1,5 +1,6 @@
 #!/bin/sh
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Make directories suitable for an outline, and create placeholder files.
@@ -37,4 +38,4 @@ set -euf -o pipefail
 ##
 
 mkdir -p {I,II,III}/{A,B,C}/{1,2,3}/{a,b,c}
-find . | sort | perl -pe 'chomp; s#\./##; $dir=$_; s#/#-#g; $text=$_; $path="$dir/$_.txt"; $_=""; $cmd="echo $text > $path"; system($cmd); print $cmd,"\n";'
+find . | sort | perl -pe 'chomp; s#\./##; $dir=$_; s#/#-#g; $text=$_; $path="$dir/$_.txt"; $_=""; $cmd="out $text > $path"; system($cmd); print $cmd,"\n";'

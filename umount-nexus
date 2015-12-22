@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Unmount a Nexus 4 phone.
@@ -12,10 +13,10 @@ set -euf -o pipefail
 dir=/media/nexus4
 test -e $dir && sudo umount $dir
 if [ -e $dir ]; then
-  echo "Path still exists: $dir"
-  echo "lsof -w $dir"
+  out "Path still exists: $dir"
+  out "lsof -w $dir"
   lsof -w $dir
-  echo
-  echo "fuser $dir"
+  out
+  out "fuser $dir"
   fuser $dir
 fi

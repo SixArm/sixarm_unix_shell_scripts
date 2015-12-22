@@ -1,5 +1,6 @@
 # #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # now.sh
@@ -82,7 +83,7 @@ do
         do
                 read -t 1 line; rc=$?
                 if [ $rc != 0 ]; then break; fi
-                echo $line
+                out $line
         done
         if [ $rc != $timeout ]; then break; fi
 
@@ -94,5 +95,5 @@ do
 	else
 		now=`date`
 	fi
-        echo -ne "$now\r" >&2
+        out -ne "$now\r" >&2
 # done

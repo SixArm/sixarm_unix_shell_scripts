@@ -1,3 +1,9 @@
+#!/bin/sh
+out () { printf %s\\n "$*" ; }
+err () { >&2 printf %s\\n "$*" ; }
+log () { out $( now ) "$*" }
+now () { out $( date -u "+%Y-%m-%dT%H:%M:%SZ" ) }
+
 # Launch a cron job like a professional.
 #
 # By https://orchestrate.io/blog/2014/03/31/cron-in-production-that-is-a-double-edged-sword/
@@ -26,19 +32,11 @@ LOGFILE=${LOGFILE:-/var/log/$USER/$NAME.log}
 LOCKFILE=${LOCKFILE:-/var/run/$USER/$NAME.lock}
 NICE=${NICE:-/usr/bin/nice}
 
-echo "NAME" $NAME
-echo "LOGFILE" $LOGFILE
-echo "LOCKFILE" $LOCKFILE
-echo "EXITFILE" $EXITFILE
-echo "STRFTIME" $STRFTIME
-
-log() {
-  echo $( now ) "$*"
-}
-
-now() {
-  echo $( date -u "+%Y-%m-%dT%H:%M:%SZ" )
-}
+out "NAME" $NAME
+out "LOGFILE" $LOGFILE
+out "LOCKFILE" $LOCKFILE
+out "EXITFILE" $EXITFILE
+out "STRFTIME" $STRFTIME
 
 exec > "$LOGFILE" 2>&1
 exec 200>> "$LOCKFILE"

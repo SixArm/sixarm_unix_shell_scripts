@@ -1,5 +1,6 @@
 #!/bin/sh
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Download a favicon.
@@ -20,21 +21,21 @@ set -euf -o pipefail
 
 if [ $# -eq 0 ]
 then
-  echo "Syntax: fetch-favicon <url>"
-  echo "Example: fetch-favicon www.example.com"
+  out "Syntax: fetch-favicon <url>"
+  out "Example: fetch-favicon www.example.com"
   exit
 fi
 
 page_url=$1
-echo "page_url:$page_url"
+out "page_url:$page_url"
 
 icon_url=$(curl -s -S -L "$page_url" | pup 'link[rel~="icon"] attr{href}' | head -1)
-echo "icon_url:$icon_url"
+out "icon_url:$icon_url"
 
-icon_file_name=$(echo "$icon_url" | uri-scheme file)
-echo "icon_file_name:$icon_file_name"
+icon_file_name=$(out "$icon_url" | uri-scheme file)
+out "icon_file_name:$icon_file_name"
 
 icon_abs_url=$(uri-relate "$page_url" "$icon_url")
-echo "icon_abs_url:$icon_abs_url"
+out "icon_abs_url:$icon_abs_url"
 
 curl -s -S -L "$icon_abs_url" -o "$icon_file_name"

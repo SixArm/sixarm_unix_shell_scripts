@@ -1,5 +1,6 @@
 #!/bin/zsh
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Launch tmux suitable for Rails development.
@@ -31,7 +32,7 @@ set -euf -o pipefail
 if [ -z ${TMUX+x} ]; then
     # noop
 else
-    echo "TMUX environment variable is alread set, so exit"
+    out "TMUX environment variable is alread set, so exit"
     exit 1
 fi
 

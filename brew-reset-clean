@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # brew reset clean
@@ -13,10 +14,10 @@ cd $(brew --prefix) &&
 git reset --hard FETCH_HEAD &&
 git clean -df
 
-echo "Optionally run these:"
-echo "brew --config"
-echo "brew --prefix"
-echo "brew doctor"
-echo "ls -ld \$(brew --prefix)"
-echo "ls -la \$(brew --prefix)"
-echo "cd \$(brew --prefix) && sudo chown $USER .git Library"
+out "Optionally run these:"
+out "brew --config"
+out "brew --prefix"
+out "brew doctor"
+out "ls -ld \$(brew --prefix)"
+out "ls -la \$(brew --prefix)"
+out "cd \$(brew --prefix) && sudo chown $USER .git Library"

@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Download the current ruby stable version,
@@ -55,14 +56,14 @@ case "$vm" in
     *) vm2="$vm" ;;
 esac
 
-echo "Update ruby-install versions..."
+out "Update ruby-install versions..."
 (cd /opt/ruby-install && exec git pull)
 
 version=${2-$(tail -1 /opt/ruby-install/share/ruby-install/$vm2/stable.txt)}
 dir="/opt/ruby/$vm/$version"
 
 if [[ -d "$dir" ]]; then
-    echo "Ruby is already installed at $dir"
+    out "Ruby is already installed at $dir"
 else
     set -x
     ruby-install $vm2 "$version" --install-dir "$dir"

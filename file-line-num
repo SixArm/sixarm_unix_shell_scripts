@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # Print a file's line at a given line number.
@@ -26,5 +27,5 @@ set -euf -o pipefail
 file_path="$1"
 shift
 for line_num; do
-  echo "$line_num p" | ed -s "$file_path"
+  out "$line_num p" | ed -s "$file_path"
 done

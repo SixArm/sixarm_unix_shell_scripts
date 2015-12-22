@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # inotifywait example script that monitors a directory for changes.
@@ -29,7 +30,7 @@ notify(){
     dir=$1
     action=$2
     file=$3
-    echo "$dir $action $file"
+    out "$dir $action $file"
 }
 
 while true; do

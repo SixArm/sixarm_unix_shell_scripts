@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 ##
 # How to mount a Nexus 5 phone on Linux.
@@ -49,27 +50,27 @@ set -euf -o pipefail
 ##
 
 if [ `lsusb |grep Google |wc -l` == 0 ]; then
-  echo "Please plug in the device"
+  out "Please plug in the device"
   exit 1
 fi
 
 if [ `dpkg -l mtpfs |wc -l` == "0" ]; then
-  echo "Installing MTP: Media Transfer Protocol"
+  out "Installing MTP: Media Transfer Protocol"
   sudo apt-get update && sudo apt-get install mtpfs
 fi
 
 rules_file=/etc/udev/rules.d/60-android.rules
 if [ ! -f $rules_file ]; then
   vp=`lsusb|grep Google|cut -d " " -f 6`
-  vendor=`echo $vp | cut -d ':' -f 1`
-  product=`echo $vp | cut -d ':' -f 2`
+  vendor=`out $vp | cut -d ':' -f 1`
+  product=`out $vp | cut -d ':' -f 2`
   rule="SUBSYSTEM==\"usb\", ATTR{idVendor}==\"$vendor\", ATTR{idProduct}==\"$product\", MODE=\"0600\", GROUP=\"plugdev\" OWNER=\"$USER\""
-  echo "Creating $rules_file"
-  echo "For user $USER"
-  echo "---"
-  echo $rule
-  echo "---"
-  sudo bash -c "echo $rule > $rules_file"
+  out "Creating $rules_file"
+  out "For user $USER"
+  out "---"
+  out $rule
+  out "---"
+  sudo bash -c "out $rule > $rules_file"
   sudo chmod +x $rules_file
   sudo service udev restart
 fi
@@ -80,7 +81,7 @@ if [ ! -d $mount_point ]; then
   sudo chmod 775 $mount_point
 fi
 sudo mtpfs -o allow_other $mount_point
-echo "Mounting $mount_point"
-echo "This may take a minute..."
-echo "To change to this directory:"
-echo "   cd $mount_point"
+out "Mounting $mount_point"
+out "This may take a minute..."
+out "To change to this directory:"
+out "   cd $mount_point"

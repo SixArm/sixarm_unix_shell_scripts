@@ -1,5 +1,6 @@
 #!/bin/sh
 set -euf
+out () { printf %s\\n "$*" ; }
 
 ##
 # For each file, open it, prompt for a new name, then move the file.
@@ -93,7 +94,7 @@ home=${HOME:-~/}
 trash=${TRASH:-"$home/.trash"}
 
 while IFS= read -r -d '' file; do
-    echo "> $file"
+    out "> $file"
     if [ -f "$file" ]; then
         `$open "$file"`
         read -p "? " tty < /dev/tty
@@ -128,9 +129,9 @@ while IFS= read -r -d '' file; do
                     dst="$tty"
                     ;;
             esac
-            #echo "$log"
+            #out "$log"
             if [ -n "$dst" ]; then
-                echo "= $mv \"$file\" \"$dst\""
+                out "= $mv \"$file\" \"$dst\""
                 `$mv "$file" "$dst"`
             fi
         fi
