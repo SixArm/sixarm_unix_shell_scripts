@@ -4,6 +4,13 @@ This repo has lots of utility scripts.
 
 For shell script tips, see http://www.etalabs.net/sh_tricks.html
 
+Our common functions:
+
+    out () { printf %s\\n "$*" ; }
+    err () { >&2 printf %s\\n "$*" ; }
+    log () { out $( now ) "$*" ; }
+    now () { out $( date -u "+%Y-%m-%dT%H:%M:%SZ" ) ; }
+
 
 ## Command line boosters
 
