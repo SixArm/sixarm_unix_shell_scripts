@@ -1,15 +1,10 @@
 # Unix » shell scripts for sh, bash, tcsh, zsh, etc.
 
-This repo has lots of utility scripts.
+This repo has lots of small shell scripts.
 
 For shell script tips, see http://www.etalabs.net/sh_tricks.html
 
-Our common functions:
-
-    out () { printf %s\\n "$*" ; }
-    err () { >&2 printf %s\\n "$*" ; }
-    log () { out $( now ) "$*" ; }
-    now () { out $( date -u "+%Y-%m-%dT%H:%M:%SZ" ) ; }
+For helper functions, see [helpers.sh](helpers.sh)
 
 
 ## Command line boosters
