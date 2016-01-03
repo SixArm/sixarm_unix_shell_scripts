@@ -14,7 +14,7 @@ set -euf -o pipefail
 #
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-12-18
+# Updated: 2016-01-02
 ##
 
-otfinfo --info "$1" | sed -n "s/^Family:\s\+//p"
+otfinfo --info "$1"| sed -n 's/^Preferred family: */1/p; s/^Family: */2/p' | sort -u | head -1 | sed 's/^.//'
