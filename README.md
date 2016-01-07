@@ -1,10 +1,15 @@
 # Unix » shell scripts for sh, bash, tcsh, zsh, etc.
 
-This repo has lots of small shell scripts.
+This repo has lots of utility scripts.
 
 For shell script tips, see http://www.etalabs.net/sh_tricks.html
 
-For helper functions, see [helpers.sh](helpers.sh)
+Our common functions:
+
+    out () { printf %s\\n "$*" ; }
+    err () { >&2 printf %s\\n "$*" ; }
+    log () { printf '%s %s %s\n' $( now ) $$ $0 "$*" ; }
+    now () { date -u "+%Y-%m-%dT%H:%M:%SZ" ; }
 
 
 ## Command line boosters
@@ -62,6 +67,7 @@ File scripts to print a given `ls` field:
 
  * `date-stamp`: Print the current date stamp UTC in a user-friendly format.
  * `date-stamp-shortest`: Print the current date stamp UTC in the shortest format.
+
 
 
 ### history
@@ -191,6 +197,12 @@ File scripts to print a given `ls` field:
  * `flac-to-ogg`: Convert sound files from FLAC format to Ogg format.
  * `gs-combine-pdf`: Ghostscript: combine multiple PDFs into one readable, searchable, PDF
  * `mount-iso`: Mount a .iso file.
+
+
+### fonts
+
+  * `font-file-to-family`: Parse a font file to the preferred family string.
+  * `font-file-to-full-name`: Parse a font file to the full name string.
 
 
 ### sysadmin
