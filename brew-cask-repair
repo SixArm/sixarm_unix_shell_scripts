@@ -14,3 +14,4 @@ brew update
 brew cleanup --force -s
 rm -rf "$(brew --cache)"
 brew tap caskroom/cask
+for c in brew cask list; do ! brew cask info $c | grep -qF "Not installed" || brew cask install $c; done
