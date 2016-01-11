@@ -1,4 +1,0 @@
-(command -v uname >/dev/null 2>&1) &&
-(uname | grep -q Darwin) &&
-(command -v brew >/dev/null 2>&1) &&
-(brew ls --versions "$1" | grep -q "$1") || brew install "$1"
