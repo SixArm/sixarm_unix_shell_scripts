@@ -1,4 +1,5 @@
 #!/bin/sh
+set -euf
 
 ##
 # rsync-mirror items that we decide is public content.

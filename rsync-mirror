@@ -1,4 +1,5 @@
 #!/bin/sh
+set -euf
 
 ##
 # rsync-mirror: rsync with our favorite settings for mirroring.
