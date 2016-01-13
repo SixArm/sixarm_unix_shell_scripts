@@ -1,0 +1,55 @@
+#!/bin/sh
+set -euf
+
+##
+# rsync-mirror-update: rsync-mirror with update.
+#
+# Syntax:
+#
+#     rsync-mirror-update [syntax is the same as rsync]
+#
+# Example:
+#
+#     rsync-mirror-update ~/foo/ ~/bar/
+#
+# Options set:
+#
+#   -a, --archive           archive mode; same as -rlptgoD (no -H)
+#   -H, --hard-links        preserve hard links
+#   -O, --omit-dir-times    omit directories when preserving times
+#   -x, --one-file-system   don't cross filesystem boundaries
+#   -z, --compress          compress file data during the transfer
+#   -i, --itemize-changes   output a change-summary for all updates
+#   -u, --update            skip files that are newer on the receiver
+#
+# Options set by --archive:
+#
+#   -r, --recursive         recurse into directories
+#   -l, --links             copy symlinks as symlinks
+#   -p, --perms             preserve permissions
+#   -t, --times             preserve times
+#   -g, --group             preserve group
+#   -o, --owner             preserve owner (super-user only)
+#
+# Options that are deliberately not set:
+#
+#   -v, --verbose           increase verbosity
+#   --partial               keep partially transferred files
+#   --progress              show progress during transfer
+#   --copy-links            transform symlink into referent file/dir
+#   --safe-links            ignore symlinks that point outside the tree
+#
+# Reasoning:
+#
+#   * We like --hard-links even though this is an expensive calculation.
+#   * We only use --omit-dir-times because dir times fail on some systems.
+#   * We do not use --partial because temp dirs fail on some systems.
+#   * We want symlinks as-is, thus no --safe-links, --copy-links, etc.
+#
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+# Created: 2015-01-25
+# Updated: 2016-01-12
+##
+
+rsync -aHuOxzviu "$@"
