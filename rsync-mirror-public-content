@@ -1,0 +1,33 @@
+#!/bin/sh
+
+##
+# rsync-mirror items that we decide is public content.
+#
+# This syncs each file that:
+#
+#   * Is encrypted:
+#     * ends with *.gpg
+#   * Is a fingerprint:
+#     * ends with *.fingerprint, *.fingerprints
+#     * named fingerprint, fingerprints
+#   * Is public:
+#     * in a directory '/public/'
+#     * ends with *.pub, *.public
+#     * ends with *-public.{pem,txt,url}
+##
+
+rsync-mirror -aHuOxzvi \
+    --include '*/' \
+    --include '*.gpg' \
+    --include '*.fingerprint' \
+    --include '*.fingerprints' \
+    --include 'fingerprint' \
+    --include 'fingerprints' \
+    --include '/public/' \
+    --include '*.pub' \
+    --include '*.public' \
+    --include '*-public.pem' \
+    --include '*-public.txt' \
+    --include '*-public.url' \
+    --exclude '*' \
+    "$@"
