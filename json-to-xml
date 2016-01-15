@@ -7,7 +7,7 @@
 #
 #     cat example.json | json-to-xml > example.xml
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-03-24
 ##

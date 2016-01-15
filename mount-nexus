@@ -44,7 +44,7 @@ out () { printf %s\\n "$*" ; }
 #
 #     sudo service udev restart
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

@@ -14,7 +14,7 @@ set -euf -o pipefail
 #
 # To learn more about Gravatar, see http://www.gravatar
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

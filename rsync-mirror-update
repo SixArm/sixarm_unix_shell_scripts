@@ -46,7 +46,7 @@ set -euf
 #   * We do not use --partial because temp dirs fail on some systems.
 #   * We want symlinks as-is, thus no --safe-links, --copy-links, etc.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Created: 2015-01-25
 # Updated: 2016-01-12

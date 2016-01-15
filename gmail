@@ -10,7 +10,7 @@ set -euf -o pipefail
 #
 #     ... | perl -pe 's/^<title>(.*)<\/title>.*<name>(.*)<\/name>.*$/$2 - $1/'
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

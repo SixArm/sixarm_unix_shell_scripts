@@ -26,7 +26,7 @@ out () { printf %s\\n "$*" ; }
 #
 #    ruby-build-opt-ruby <version> [-c]
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

@@ -6,7 +6,7 @@ out () { printf %s\\n "$*" ; }
 # Show diagnostic details about the linux version.
 # I.e. tell me about the current operating system.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

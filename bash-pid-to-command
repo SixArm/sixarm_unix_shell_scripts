@@ -51,7 +51,7 @@ out () { printf %s\\n "$*" ; }
 #   * Blog post: http://unix.stackexchange.com/questions/159010/how-can-i-see-the-exact-command-line-being-executed-inside-some-bash-instance#159010
 #   * Reddit discussion: http://www.reddit.com/r/programming/comments/2i6pnk/the_magic_cmdline_and_how_i_got_it_back/#
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

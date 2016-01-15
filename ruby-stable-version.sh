@@ -12,7 +12,7 @@ set -euf -o pipefail
 # This implementation fetches the Ruby website download page,
 # and parses the result to find the file download link and version.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

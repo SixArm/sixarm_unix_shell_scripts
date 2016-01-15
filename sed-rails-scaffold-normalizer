@@ -27,7 +27,7 @@ set -euf -o pipefail
 #     longitude:decimal{13-10}:index
 #
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

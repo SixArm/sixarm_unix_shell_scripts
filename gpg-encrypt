@@ -30,7 +30,7 @@ set -euf -o pipefail
 #    -z 0                          Compression level set to 0, i.e. set to no compression.
 #    --no-use-agent                Do not use a system agent such as Ubuntu's gnome-keyring process.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

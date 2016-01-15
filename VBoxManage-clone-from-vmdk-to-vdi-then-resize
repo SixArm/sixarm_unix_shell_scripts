@@ -17,7 +17,7 @@ set -euf -o pipefail
 #
 #     VBoxManage-clone-from-vmdk-to-vdi-then-resize My.vmdk My.vdi 10000
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

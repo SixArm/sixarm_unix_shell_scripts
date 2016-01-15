@@ -10,7 +10,7 @@ set -euf -o pipefail
 # chooses each video with a title havin "ASL sign for",
 # a list of links to videos sorted by title.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

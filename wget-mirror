@@ -40,7 +40,7 @@ set -euf -o pipefail
 #     --domains website.org \
 #     --no-parent \
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

@@ -22,7 +22,7 @@ set -euf -o pipefail
 #   * mail.err.[0-9]*
 #   * syslog.[0-9]*
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

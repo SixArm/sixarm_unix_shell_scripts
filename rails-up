@@ -10,7 +10,7 @@ set -euf -o pipefail -o xtrace
 #   * rake db:migrate, db:seed, db:test:prepare
 #   * restart the server (if applicable)
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

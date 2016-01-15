@@ -18,7 +18,7 @@ set -euf -o pipefail
 #   * 10-minute load avegage
 #   * Any extra info, e.g. Linux provides more info
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

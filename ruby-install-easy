@@ -43,7 +43,7 @@ out () { printf %s\\n "$*" ; }
 # This script does a `git pull` to update the repo,
 # which includes downloading any new VM version info.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

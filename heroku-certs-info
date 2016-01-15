@@ -22,7 +22,7 @@ set -euf -o pipefail
 # http://stackoverflow.com/questions/19336440/heroku-certsinfo-app-appname-does-not-write-to-stdout-or-stderr
 #
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

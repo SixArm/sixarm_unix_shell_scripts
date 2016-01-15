@@ -36,7 +36,7 @@ out () { printf %s\\n "$*" ; }
 # The example does a typical find, then chops off the root directory;
 # the example output is the file stems and is 0-delimited as we want.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-07-13
 ##

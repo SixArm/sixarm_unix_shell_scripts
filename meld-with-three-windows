@@ -17,7 +17,7 @@ set -euf -o pipefail
 #
 # See http://blog.wuwon.id.au/2010/09/painless-merge-conflict-resolution-in.html
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

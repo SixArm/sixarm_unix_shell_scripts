@@ -45,7 +45,7 @@ set -euf -o pipefail
 # Doing this can improve performance considerably, especially if you like
 # to use bookmark extensions like TagSifter.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

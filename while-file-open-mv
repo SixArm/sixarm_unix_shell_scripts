@@ -83,7 +83,7 @@ out () { printf %s\\n "$*" ; }
 #   * HOME: the home directory. Default: `~/`.
 #   * TRASH: the trash directory. Default: `$home/.trash`.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-07-26
 ##

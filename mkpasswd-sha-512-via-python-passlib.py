@@ -14,7 +14,7 @@
 #
 # Credit: [Anisble](http://docs.ansible.com/ansible/faq.html#how-do-i-generate-crypted-passwords-for-the-user-module)
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Created: 2015-08-30
 # Updated: 2015-08-31

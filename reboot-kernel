@@ -17,7 +17,7 @@ set -euf -o pipefail
 #
 # From http://www.commandlinefu.com/commands/browse/sort-by-votes/25/50/75/100/125
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

@@ -27,7 +27,7 @@ out () { printf %s\\n "$*" ; }
 # but the rest of the script will do a decent job of deleting
 # any lingering rvm files and reporting any remainders.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

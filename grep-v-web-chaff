@@ -8,7 +8,7 @@ set -euf -o pipefail
 # If you're using this, you may be interested in trying
 # a newer search tool called The Silver Searcher.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

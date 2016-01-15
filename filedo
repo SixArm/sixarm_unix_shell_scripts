@@ -6,7 +6,7 @@ out () { printf %s\\n "$*" ; }
 # For each file name, run a command with the file name.
 #
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

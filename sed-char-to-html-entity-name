@@ -6,7 +6,7 @@ set -euf -o pipefail
 #
 # For example, if the text has the Greek letter Alpha, this script emits "&Alpha;"
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

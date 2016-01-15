@@ -8,7 +8,7 @@
 #     echo "H2O" | awk -f molecular-formula-to-mass.awk
 #      H2O 18.01528
 #
-# Author: Joel Parker Henderson, joel@joelparkerhenderson.com
+# Contact: Joel Parker Henderson, joel@joelparkerhenderson.com
 # License: Creative Commons Share And Share Alike
 # Version: 1.0.0
 ##

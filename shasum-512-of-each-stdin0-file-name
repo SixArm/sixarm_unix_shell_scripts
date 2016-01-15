@@ -11,7 +11,7 @@ set -euf -o pipefail
 #     c4704ff5315e2333380572d439ca655c8a87fe6d89e7e50a674b85c977e001ed9d...
 #     b43e5d55b6ee3e683a1bc7f6cdb06c539671bbf8f4bcf2f4190287f5e12c847283...
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

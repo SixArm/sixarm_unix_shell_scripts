@@ -4,7 +4,7 @@ set -euf -o pipefail
 ##
 # Helper functions that we can include in typical scripts.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-12-22
 ##

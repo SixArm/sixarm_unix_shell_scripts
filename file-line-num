@@ -19,7 +19,7 @@ out () { printf %s\\n "$*" ; }
 #     file-line-num myfile.txt 10 20 30
 #     => prints line 10 of myfile.txt then line 20 then line 30
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

@@ -9,7 +9,7 @@ set -euf -o pipefail
 #     pmset-battery-full && echo "yes" || echo "no"
 #     yes
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-07-01
 ##

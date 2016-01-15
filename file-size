@@ -77,7 +77,7 @@ out () { printf %s\\n "$*" ; }
 #
 #     export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-07-16
 ##

@@ -12,7 +12,7 @@ set -euf -o pipefail
 # The implementation uses `git remote -v`
 # and finds the first GitHub link that's fetchable.
 #
-# Author: Joel Parker Henderson
+# Contact: Joel Parker Henderson
 # License: GPL
 # Updated: 2015-07-10
 ##

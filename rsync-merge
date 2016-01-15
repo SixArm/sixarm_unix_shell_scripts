@@ -53,7 +53,7 @@
 # TODO: one source arg and no destination arg is a noop.
 # TODO: add special arg "--" which separates options and sources.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Created: 2015-01-25
 # Updated: 2016-01-12

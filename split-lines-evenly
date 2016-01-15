@@ -17,7 +17,7 @@ set -euf -o pipefail
 #    hello.txt.1
 #    hello.txt.2
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

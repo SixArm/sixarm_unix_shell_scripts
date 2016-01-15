@@ -18,7 +18,7 @@ set -euf -o pipefail
 #        98 app/models/team.rb
 #        71 app/models/post.rb
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

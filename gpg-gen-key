@@ -11,7 +11,7 @@ set -euf -o pipefail
 #
 #     alice@example.com=gpg_key_with_rsa_and_rsa
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

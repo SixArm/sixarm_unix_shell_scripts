@@ -34,7 +34,7 @@ out () { printf %s\\n "$*" ; }
 #    Release:10.04
 #    Codename:lucid
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-06-21
 ##

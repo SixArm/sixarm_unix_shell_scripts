@@ -4,7 +4,7 @@ set -euf -o pipefail
 ##
 # URI script to escape text, for example a CGI query string.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

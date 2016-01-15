@@ -14,7 +14,7 @@ out () { printf %s\\n "$*" ; }
 #     fetch-favicon www.example.com
 #     => download favicon to file
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-06-30
 ##

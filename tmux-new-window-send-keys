@@ -6,7 +6,7 @@
 # Created: 2013-09-09
 # Updated: 2015-01-25
 # License: GPL
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 set -euf
 window=$1

@@ -5,7 +5,7 @@ set -euf -o pipefail
 # Print some command line color examples.
 # This is useful for reference.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

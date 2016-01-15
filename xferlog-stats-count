@@ -38,7 +38,7 @@ This script expects typical xferlog line format:
   * end with "c" for complete or "i" for incomplete.
 
 Version: 1.0.0
-Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 License: GPL
 
 EOF

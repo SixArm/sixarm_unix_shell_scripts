@@ -5,7 +5,7 @@ out () { printf %s\\n "$*" ; }
 ##
 # Extract a file using best-guess of tar, bzip, rar, gz, zip, etc.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

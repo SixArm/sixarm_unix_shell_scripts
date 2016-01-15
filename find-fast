@@ -8,7 +8,7 @@ set -euf -o pipefail
 #  * Prune hidden items: any subpath that starts with a dot.
 #  * Use default path ".", which makes OSX find work like Linux find.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-04-15
 ##

@@ -27,7 +27,7 @@ set -euf -o pipefail
 #
 #   history | awk '{print $2}' | histogram
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

@@ -8,7 +8,7 @@
 #     $ echo "foo_goo_hoo" | camelize
 #     FooGooHoo
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

@@ -20,7 +20,7 @@ set -euf -o pipefail
 #    tmux-attach-session-or-new-session
 #    #=> creates new session name "foo"
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

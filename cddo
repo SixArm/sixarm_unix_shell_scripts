@@ -5,7 +5,7 @@ set -euf -o pipefail
 # For each directory, change into the directory,
 # and run a command.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

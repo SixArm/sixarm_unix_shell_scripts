@@ -24,7 +24,7 @@ set -euf -o pipefail
 #
 #   * The `convert` command, typically provided by ImageMagick.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-05-30
 ##

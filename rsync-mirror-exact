@@ -50,7 +50,7 @@ set -euf
 #     because we want the command to be able to copy on top of existing items
 #     that may link to each other, such as a website that has many pages.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Created: 2015-01-25
 # Updated: 2016-01-12

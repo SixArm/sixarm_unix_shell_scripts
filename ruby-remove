@@ -8,7 +8,7 @@ set -euf -o pipefail
 #   cd /usr/local/bin
 #   rm-ruby
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

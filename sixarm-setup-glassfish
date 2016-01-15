@@ -15,7 +15,7 @@ set -euf -o pipefail
 # From http://skytteren.blogspot.com/2009/05/installing-glassfish-v3-on-ubuntu.html
 # Customized a bit with the downloadable init.d by joelparkerhenderson@gmail.com
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

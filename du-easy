@@ -10,7 +10,7 @@ set -euf -o pipefail
 #
 # Note: the /root directory will not be shown.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

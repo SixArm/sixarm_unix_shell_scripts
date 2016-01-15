@@ -30,7 +30,7 @@ set -euf -o pipefail
 #   * "+x" means save the file and exit.
 #
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

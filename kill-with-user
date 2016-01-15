@@ -4,7 +4,7 @@ set -euf -o pipefail -o xtrace
 ##
 # Kill a process with a given user.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

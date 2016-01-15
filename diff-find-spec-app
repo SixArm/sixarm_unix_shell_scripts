@@ -10,7 +10,7 @@ set -euf -o pipefail
 # This trims off the leading directory name (i.e. "app/" or "spec/"),
 # and also trims off the basename suffix (e.g. "_spec.rb" or ".rb")
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

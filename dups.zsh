@@ -39,7 +39,7 @@
 # If you use bash instead of zsh,
 # see our repo for a bash version.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: Any of BSD, MIT, GPL.
 # Repo: https://github.com/SixArm/sixarm_unix_shell_scripts
 ##

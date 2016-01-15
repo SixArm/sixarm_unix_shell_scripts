@@ -37,7 +37,7 @@ set -euf -o pipefail
 #   * !($0 in a) is true when we have not seen the line text
 #   * awk default is to print the line text
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

@@ -16,7 +16,7 @@ set -euf -o pipefail
 #     -F key2=value2 \
 #     http://example.com/items
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

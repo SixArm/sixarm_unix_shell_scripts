@@ -47,7 +47,7 @@ set -euf -o pipefail
 #   * Skip prices greater than $10000 because these are typically home purchases.
 #   * Skip any listings after "Few LOCAL results found".
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Download: https://github.com/sixarm/sixarm_unix_shell_scripts
 ##

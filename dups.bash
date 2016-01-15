@@ -40,7 +40,7 @@
 # If you use zsh instead of bash,
 # see our repo for a zsh version.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

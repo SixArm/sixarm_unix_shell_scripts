@@ -11,7 +11,7 @@
 # Version: 1.5.0
 # Created: 2012-02-17
 # Updated: 2016-01-15
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 ##
 set -euf

@@ -23,7 +23,7 @@ set -euf -o pipefail
 #     ... | sed 's/^@fa-var-/:/; s/-/_/g; s/"\\/"0x/; s/;/,/'
 #     :foo_bar: "0xf166",
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

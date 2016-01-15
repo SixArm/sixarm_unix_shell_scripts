@@ -8,7 +8,7 @@ set -euf -o pipefail
 #
 # From http://blog.urfix.com/25-%E2%80%93-sick-linux-commands/
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

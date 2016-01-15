@@ -3,7 +3,7 @@
 ##
 # For each input file name, get the header comments and emit rdoc format.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

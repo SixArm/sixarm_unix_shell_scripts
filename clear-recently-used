@@ -4,7 +4,7 @@ set -euf -o pipefail
 ##
 # Clear recently-used file list.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

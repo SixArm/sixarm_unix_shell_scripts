@@ -19,7 +19,7 @@ set -euf -o pipefail
 # which are GNU options that handle file names with atypical characters.
 # Acceptable tradeoffs are the options are slower (~2x) and not POSIX.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-07-13
 ##

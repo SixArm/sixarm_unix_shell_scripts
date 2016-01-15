@@ -5,7 +5,7 @@ set -euf -o pipefail -o xtrace
 # Rails script to do a simple deployment from the command line.
 #
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

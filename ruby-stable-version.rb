@@ -10,7 +10,7 @@
 # This implementation fetches the Ruby website download page,
 # and parses the result to find the file download link and version.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 #
 puts Net::HTTP.get(URI("https://www.ruby-lang.org/en/downloads/"))[/http.*ruby-(.*).tar.gz/,1]

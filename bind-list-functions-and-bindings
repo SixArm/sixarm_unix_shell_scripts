@@ -27,7 +27,7 @@ set -euf -o pipefail
 #     backward-char ⌃b ⎋OD ⎋[D
 #     …
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Created: 2015-06-02
 # Updated: 2015-06-03

@@ -19,7 +19,7 @@ set -euf -o pipefail
 #   * `pmset-drawing-ac`
 #   * `pmset-drawing-battery`
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-06-30
 ##

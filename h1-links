@@ -5,7 +5,7 @@ set -euf -o pipefail
 # Convert the first <h1> link in a stream to an HTML list item.
 # This is useful for building a table of contents for a bunch of files.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

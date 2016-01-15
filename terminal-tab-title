@@ -29,7 +29,7 @@ set -euf -o pipefail
 #
 # Thanks to http://superuser.com/questions/292652/change-iterm2-window-and-tab-titles-in-zsh
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-02-18
 ##

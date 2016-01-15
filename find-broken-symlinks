@@ -6,7 +6,7 @@ set -euf -o pipefail
 #
 # From http://scotgate.org/2007/03/04/howto-find-broken-symbolic-links-gentoo-linux-wiki/
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

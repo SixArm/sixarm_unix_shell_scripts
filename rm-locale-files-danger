@@ -18,7 +18,7 @@ set -euf -o pipefail
 #   ! -name 'en' ! -name 'es*' ! -name 'zh*' \
 #   | xargs rm -r
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

@@ -24,7 +24,7 @@ out () { printf %s\\n "$*" ; }
 #   * ^6:server = rails server
 #   * &6:deploy = rake deploy
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-02-16
 ##

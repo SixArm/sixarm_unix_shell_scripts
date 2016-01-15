@@ -4,7 +4,7 @@ set -euf -o pipefail
 ##
 # Shorthand to use netstat to listen and print our typical output.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

@@ -7,7 +7,7 @@ out () { printf %s\\n "$*" ; }
 #
 # From http://grml.org/zsh/zsh-lovers.html
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

@@ -21,7 +21,7 @@ set -euf -o pipefail
 #    special "last line in file" meaning.
 #
 # Credit: http://unix.stackexchange.com/questions/31947/how-to-add-a-newline-to-the-end-of-a-file
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

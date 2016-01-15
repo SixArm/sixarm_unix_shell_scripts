@@ -14,7 +14,7 @@ set -euf -o pipefail
 # This works on a typical MacBook Pro Retina from approximately 2012.
 # We welcome improvements for newer MacBooks, newer OS versions, etc.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-01-25
 ##

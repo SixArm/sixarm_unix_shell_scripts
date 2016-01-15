@@ -4,7 +4,7 @@ set -euf -o pipefail
 ##
 # GPG script to decrypt a file with our typical settings.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 # Updated: 2015-12-20
 ##
