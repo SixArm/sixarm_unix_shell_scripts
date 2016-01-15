@@ -1,8 +1,5 @@
-#!/bin/bash
-set -euf -o pipefail
-out () { printf %s\\n "$*" ; }
-
-##
+#!/bin/sh
+#
 # uri-scheme
 #
 # Output the URI scheme parts.
@@ -66,7 +63,14 @@ out () { printf %s\\n "$*" ; }
 #
 # TODO: improve parsing; improve standards; improve speed.
 #
+# Version: 1.6.0
+# Created: 2015-05-31
+# Updated: 2016-01-15
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
+set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 read uri
 out "uri:$uri"

@@ -1,7 +1,5 @@
 #!/bin/bash
-set -euf -o pipefail
-
-##
+#
 # Find TODO lines in files.
 #
 # This script searches for all of these:
@@ -51,9 +49,11 @@ set -euf -o pipefail
 # If you prefer using the _grep_ command, or _ack_ command,
 # then you can easily edit this script to your taste.
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Version: 1.5.0
+# Created: 2014-02-12
 # Updated: 2015-01-25
+# License: GPL
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-
+set -euf
 ag "# *(TODO|FIX|FIXME|OPTIMIZE|DEPRECATE|REFACTOR|DELETE|AUDIT|DANGER|WTF)\b" "$@"

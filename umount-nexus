@@ -1,14 +1,15 @@
 #!/bin/bash
-set -euf -o pipefail
-out () { printf %s\\n "$*" ; }
-
-##
-# Unmount a Nexus 4 phone.
 #
+# Unmount a Nexus phone.
+#
+# Version: 1.2.0
+# Created: 2014-05-26
+# Updated: 2015-01-25
 # Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
 ##
+set -euf -o pipefail
+out () { printf %s\\n "$*" ; }
 
 dir=/media/nexus4
 test -e $dir && sudo umount $dir

@@ -1,7 +1,5 @@
 #!/bin/sh
-set -euf -o pipefail
-
-##
+#
 # Convert a SmugMug.com web page URI to the corresponding image URI.
 #
 # This is useful for viewing the full size image, without using a slideshow.
@@ -10,13 +8,15 @@ set -euf -o pipefail
 #
 # Example:
 #
-#   $ echo "http://foo.smugmug.com/goo/i-9999/A" |
-#     smugmug-page-uri-to-image-uri
-#   http://foo.smugmug.com/goo/i-9999/0/X3/untitled-9980-X3.jpg
+#     $ echo "http://foo.smugmug.com/goo/i-9999/A" |
+#       smugmug-page-uri-to-image-uri
+#     http://foo.smugmug.com/goo/i-9999/0/X3/untitled-9980-X3.jpg
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Version: 1.1.0
 # License: GPL
+# Created: 2015-01-25
 # Updated: 2015-01-25
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-
+set -euf
 sed 's#A$#0/X3/untitled-9980-X3.jpg#'

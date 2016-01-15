@@ -1,7 +1,5 @@
-#!/bin/bash
-set -euf -o pipefail
-
-##
+#!/bin/sh
+#
 # Change smart characters into simple characters.
 #
 # Items:
@@ -11,9 +9,11 @@ set -euf -o pipefail
 #   * n-dash => "-"
 #   * m-dash => " -- "
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Version: 1.7.0
+# Created: 2011-08-18
 # Updated: 2015-01-25
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-
+set -euf
 sed "s/[”“]/\"/g; s/’/'/g; s/–/-/g; s/—/ -- /g"

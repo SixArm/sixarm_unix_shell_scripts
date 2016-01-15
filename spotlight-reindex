@@ -1,6 +1,5 @@
 #!/bin/sh
-
-##
+#
 # Trigger the OSX Spotlight search tool to reindex.
 #
 # Example:
@@ -14,7 +13,13 @@
 #     spotlight-reindex /Volumes/MyHardDrive
 #
 # Cite: http://www.maclife.com/article/columns/terminal_101_rebuild_spotlight_index_fly
+#
+# Version: 1.2.0
+# Created: 2015-04-15
+# Updated: 2016-01-15
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-
+set -euf
 [[ $# -eq 0 ]] && args="/" || args="$@"
 sudo mdutil -E "$args"

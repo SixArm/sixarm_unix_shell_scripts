@@ -1,15 +1,14 @@
-#!/bin/bash
-set -euf -o pipefail
-
-##
+#!/bin/sh
+#
 # Use tmux to send keys to a new window.
 #
-#
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Version: 1.2.0
+# Created: 2013-09-09
 # Updated: 2015-01-25
+# License: GPL
+# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-
+set -euf
 window=$1
 shift
 tmux new-window -n "$window"

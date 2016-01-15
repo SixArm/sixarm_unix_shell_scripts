@@ -1,8 +1,8 @@
 #!/bin/sh
 set -euf
-
 help(){
 cat <<EOF
+
 $0
 
 Parse the FTP transfer log to date summary statitics.
@@ -21,5 +21,4 @@ Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 EOF
 }
 
-
-ice cat xferlog | nice awk '{ date=$2 " " $3; date_count[date]++; date_bytes[date]+=$8 } END { for (date in date_count) print date " " date_count[date] " " date_bytes[date] }'
+nice cat xferlog | nice awk '{ date=$2 " " $3; date_count[date]++; date_bytes[date]+=$8 } END { for (date in date_count) print date " " date_count[date] " " date_bytes[date] }'

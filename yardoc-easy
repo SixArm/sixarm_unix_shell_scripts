@@ -1,12 +1,14 @@
-#!/bin/bash
-set -euf -o pipefail
+#!/bin/sh
+set -euf
 
 ##
 # Run yardoc on all our lib files.
 #
-# Author: Joel Parker Henderson
+# Version: 1.0.0
+# Created: 2010-05-20
+# Updated: 2016-01-15
 # License: GPL
-# Updated: 2015-01-25
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 
 yardoc lib/**/*.rb

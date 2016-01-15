@@ -1,7 +1,5 @@
-#!/bin/bash
-set -euf -o pipefail
-
-##
+#!/bin/sh
+#
 # Wipe free disk space by overwriting it with zero bytes.
 #
 # Syntax:
@@ -25,10 +23,13 @@ set -euf -o pipefail
 #
 # See http://superuser.com/questions/19326/how-to-wipe-free-disk-space-in-linux
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Version: 2.0.0
+# Created: 2013-03-11
 # Updated: 2015-01-25
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
 ##
+set -euf
 
 ################################################################################
 #

@@ -1,8 +1,5 @@
 #!/bin/bash
-set -euf -o pipefail
-out () { printf %s\\n "$*" ; }
-
-##
+#
 # Xcode build script to clean, archive, and export an ipa file.
 #
 # This automatically detects the project name and parameters:
@@ -13,10 +10,14 @@ out () { printf %s\\n "$*" ; }
 #   * The scheme: the name
 #   * The exportPath: the name
 #
-# Author: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Version: 1.0.0
+# Created: 2015-01-22
 # Updated: 2015-12-22
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
+set -euf -o
+out () { printf %s\\n "$*" ; }
 
 base=$(basename $(find . -regex '.*\.xcodeproj' | head -1 | sed 's/\.xcodeproj$//' ))
 project="$base.xcodeproj"
