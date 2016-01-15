@@ -74,6 +74,18 @@ Why use `$()` instead of backticks? Because parentheses are nestable, such as:
 
    $(foo $(goo $(hoo))
 
+Be aware that escaping characters is slightly different, such as:
+
+     echo $(echo \$abc)
+     echo `echo \$abc`
+
+Differences also exist for:
+
+     $(echo \`)
+     $(echo \\)
+
+Thanks to http://stackoverflow.com/users/313821/peter-o
+
 
 ### Temporary files and trap
 

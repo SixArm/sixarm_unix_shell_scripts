@@ -2,42 +2,6 @@
 
 This repo has lots of Unix shell scripts that are utilities.
 
-## Overview
-
-Style:
-
-  * Use POSIX when possible because it is portable.
-  * Start with `set -euf` for POSIX scripts.
-  * Start with `set -euf -o pipefail` for bash scripts, zsh scripts, etc.
-  * Quote liberally such as `"$var"` instead of just `$var`, for safety.
-  * Bulletproof for characters such as quote, newline, leading dash, etc.
-  * Prefer dates and times using UTC and formatted using ISO standards.
-  * Executables should have no extension (strongly preferred).
-  * Use `printf` instead of `echo` because `printf` is more stable/secure.
-  * Use `$()` instead of backticks for subshell commands.
-  * Use `mktemp` instead of `tempfile`, and instead of ad hoc $$, RANDOM, etc.
-  * Use `trap "..." EXIT` instead of TERM, INT, HUP, etc.
-
-Messages:
-
-  * Output messages should use `out()` which prints to STDOUT.
-  * Error messages should use `err()` which prints to STDERR.
-  * Time messages may use `now()` which uses UTC and ISO 8601:2004.
-  * Log messages may use `log()` which prepends a time stamp and PID.
-
-Functions:
-
-    out () { printf %s\\n "$*" ; }
-    err () { >&2 printf %s\\n "$*" ; }
-    log () { printf '%s %s %s\n' $( now ) $$ "$*" ; }
-    now () { date -u "+%Y-%m-%dT%H:%M:%S,%NZ" ; }
-
-Advice:
-
-  * [Writing safe shell scripts](https://sipb.mit.edu/doc/safe-shell/)
-  * [Rich’s sh (POSIX shell) tricks](http://www.etalabs.net/sh_tricks.html)
-  * [Google Shell Script Style Guide](https://google.github.io/styleguide/shell.xml])
-
 
 ## Command line boosters
 
