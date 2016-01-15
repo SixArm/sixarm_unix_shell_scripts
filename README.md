@@ -289,6 +289,12 @@ File scripts to print a given `ls` field:
  * `easytether-connecting`: Run the easytether dhclient; call this after easytether-connect.
 
 
+### FTP xferlog
+
+ * `xferlog-stats-count`: Count the FTP transfer log items by date, with options for filtering.
+ * `xferlog-stats-date-summary`: Print statistics with date summary information.
+
+
 ### SixArm Setup
 
  * `openssl-req-new-key-pem-for-sixarm`: OpenSSL script to generate a new key file for SixArm.com
