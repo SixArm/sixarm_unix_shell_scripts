@@ -30,9 +30,20 @@ For bash/zsh scripts, please start with:
     set -euf -o pipefail
 
 
+### Help
+
+Example help function that uses a heredoc:
+
+    help(){
+    cat << EOF
+    ... help text here ...
+    EOF
+    }
+
+
 ### General purpose functions
 
-Our scripts may use general purpose functions:
+Our scripts may use these general purpose functions:
 
   * `out()` is for output messages; it prints to STDOUT.
   * `err()` is for error messages; it prints to STDERR.
