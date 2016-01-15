@@ -15,7 +15,7 @@ Style:
   * Executables should have no extension (strongly preferred).
   * Use `printf` instead of `echo` because `printf` is more stable/secure.
   * Use `$()` instead of backticks for subshell commands.
-  * Use `mktemp` paths instead of ad-hoc paths such as $$, RANDOM, etc.
+  * Use `mktemp` instead of `tempfile`, and instead of ad hoc $$, RANDOM, etc.
   * Use `trap "..." EXIT` instead of TERM, INT, HUP, etc.
 
 Messages:

@@ -63,10 +63,31 @@ Example:
     esac
 
 
-### temporary file and trap
+### Subshell syntax
 
-To create a temporary file, and guarantee it is removed:
+To write a subshell command, you can use parentheses or backticks, such as:
+
+   $(foo)  # yes
+   `foo`   # no
+
+Why use `$()` instead of backticks? Because parentheses are nestable, such as:
+
+   $(foo $(goo $(hoo))
+
+
+### Temporary files and trap
+
+To create a temporary file:
 
     file=$(mktemp)
-    trap "rm -f $file" 
+
+Why use `mktemp` instead of `tempfile`? Because `mktemp` is available on more systems.
+
+To remove a temporary file when the program exist:
+
+    trap "rm -f $file" EXIT
+
+Why trap on EXIT, instead of TERM, INT, HUP? Because EXIT covers all the cases.
+
+
 
