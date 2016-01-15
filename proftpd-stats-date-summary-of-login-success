@@ -1,0 +1,24 @@
+#!/bin/sh
+set -euf;
+help(){ cat <<EOF
+
+$0 options
+
+Parse a ProFTPd log to create statistics by date of successful logins.
+
+Example:
+
+    cat proftpd.log | proftp-stats-date-summary-of-login-success
+
+Version: 1.0.0
+Created: 2016-01-14
+Updated: 2016-01-15
+License: GPL
+Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+
+EOF
+}
+
+nice cat proftpd.log |
+nice grep "USER .*: Login successful." |
+nice awk '{ date=$1; date_count[date]++;} END { for (date in date_count) print date " " date_count[date] }'

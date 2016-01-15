@@ -289,9 +289,10 @@ File scripts to print a given `ls` field:
  * `easytether-connecting`: Run the easytether dhclient; call this after easytether-connect.
 
 
-### FTP xferlog
+### FTP, ProFTPD, and xferlog
 
- * `xferlog-stats-count`: Count the FTP transfer log items by date, with options for filtering.
+ * `proftpd-stats-date-summary-of-login-success`: Count successful logins per date.
+ * `xferlog-stats-count`: Count FTP transfer log items per date, with options for filtering.
  * `xferlog-stats-date-summary`: Print statistics with date summary information.
 
 
