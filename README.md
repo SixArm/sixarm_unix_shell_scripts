@@ -9,11 +9,14 @@ Style:
   * Use POSIX when possible because it is portable.
   * Start with `set -euf` for POSIX scripts.
   * Start with `set -euf -o pipefail` for bash scripts, zsh scripts, etc.
-  * Use `printf` instead of `echo` because `printf` is more stable/secure.
   * Quote liberally such as `"$var"` instead of just `$var`, for safety.
   * Bulletproof for characters such as quote, newline, leading dash, etc.
   * Prefer dates and times using UTC and formatted using ISO standards.
   * Executables should have no extension (strongly preferred).
+  * Use `printf` instead of `echo` because `printf` is more stable/secure.
+  * Use `$()` instead of backticks for subshell commands.
+  * Use `mktemp` paths instead of ad-hoc paths such as $$, RANDOM, etc.
+  * Use `trap "..." EXIT` instead of TERM, INT, HUP, etc.
 
 Messages:
 

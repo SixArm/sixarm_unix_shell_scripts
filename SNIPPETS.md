@@ -61,3 +61,12 @@ Example:
         -*) echo "a single dash is an option" ;;
          *)  echo "anything else is an argument" ;;
     esac
+
+
+### temporary file and trap
+
+To create a temporary file, and guarantee it is removed:
+
+    file=$(mktemp)
+    trap "rm -f $file" 
+
