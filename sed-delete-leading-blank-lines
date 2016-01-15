@@ -1,13 +1,13 @@
 #!/bin/bash
-set -euf -o pipefail
-
-##
+#
 # Delete all leading blank lines at top of file.
 # From http://sed.sourceforge.net/sed1line.txt
 #
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Version: 1.0.0
+# Created: 2011-01-02
 # Updated: 2015-01-25
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-
+set -euf
 sed '/./,$!d'

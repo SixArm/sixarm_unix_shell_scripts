@@ -1,15 +1,15 @@
 #!/bin/bash
-set -euf -o pipefail
-
-##
+#
 # Delete duplicate, nonconsecutive lines from a file.
 #
 # Beware not to overflow the buffer size of the hold space.
 # From http://sed.sourceforge.net/sed1line.txt
 #
-# Maintainer: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Version: 1.5.0
+# Created: 2011-01-02
 # Updated: 2015-01-25
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-
+set -euf
 sed -n 'G; s/\n/&&/; /^\([ -~]*\n\).*\n\1/d; s/\n//; h; P'

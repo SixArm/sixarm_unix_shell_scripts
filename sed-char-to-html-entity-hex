@@ -1,12 +1,13 @@
-#!/bin/bash
-set -euf -o pipefail
-
+#!/bin/sh
 ##
-#  Replace unusual characters with their HTML entity codes.
+# Replace unusual characters with their HTML entity codes.
 #
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Version: 1.1.0
+# Created: 2012-04-01
 # Updated: 2015-01-25
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
+set -euf
 
 sed 's/ƒ/&#x192;/g;s/Α/&#x391;/g;s/Β/&#x392;/g;s/Γ/&#x393;/g;s/Δ/&#x394;/g;s/Ε/&#x395;/g;s/Ζ/&#x396;/g;s/Η/&#x397;/g;s/Θ/&#x398;/g;s/Ι/&#x399;/g;s/Κ/&#x39A;/g;s/Λ/&#x39B;/g;s/Μ/&#x39C;/g;s/Ν/&#x39D;/g;s/Ξ/&#x39E;/g;s/Ο/&#x39F;/g;s/Π/&#x3A0;/g;s/Ρ/&#x3A1;/g;s/Σ/&#x3A3;/g;s/Τ/&#x3A4;/g;s/Υ/&#x3A5;/g;s/Φ/&#x3A6;/g;s/Χ/&#x3A7;/g;s/Ψ/&#x3A8;/g;s/Ω/&#x3A9;/g;s/α/&#x3B1;/g;s/β/&#x3B2;/g;s/γ/&#x3B3;/g;s/δ/&#x3B4;/g;s/ε/&#x3B5;/g;s/ζ/&#x3B6;/g;s/η/&#x3B7;/g;s/θ/&#x3B8;/g;s/ι/&#x3B9;/g;s/κ/&#x3BA;/g;s/λ/&#x3BB;/g;s/μ/&#x3BC;/g;s/ν/&#x3BD;/g;s/ξ/&#x3BE;/g;s/ο/&#x3BF;/g;s/π/&#x3C0;/g;s/ρ/&#x3C1;/g;s/ς/&#x3C2;/g;s/σ/&#x3C3;/g;s/τ/&#x3C4;/g;s/υ/&#x3C5;/g;s/φ/&#x3C6;/g;s/χ/&#x3C7;/g;s/ψ/&#x3C8;/g;s/ω/&#x3C9;/g;s/ϑ/&#x3D1;/g;s/ϒ/&#x3D2;/g;s/ϖ/&#x3D6;/g;s/•/&#x2022;/g;s/…/&#x2026;/g;s/′/&#x2032;/g;s/″/&#x2033;/g;s/‾/&#x203E;/g;s/⁄/&#x2044;/g;s/℘/&#x2118;/g;s/ℑ/&#x2111;/g;s/ℜ/&#x211C;/g;s/™/&#x2122;/g;s/ℵ/&#x2135;/g;s/←/&#x2190;/g;s/↑/&#x2191;/g;s/→/&#x2192;/g;s/↓/&#x2193;/g;s/↔/&#x2194;/g;s/↵/&#x21B5;/g;s/⇐/&#x21D0;/g;s/⇑/&#x21D1;/g;s/⇒/&#x21D2;/g;s/⇓/&#x21D3;/g;s/⇔/&#x21D4;/g;s/∀/&#x2200;/g;s/∂/&#x2202;/g;s/∃/&#x2203;/g;s/∅/&#x2205;/g;s/∇/&#x2207;/g;s/∈/&#x2208;/g;s/∉/&#x2209;/g;s/∋/&#x220B;/g;s/∏/&#x220F;/g;s/∑/&#x2211;/g;s/−/&#x2212;/g;s/∗/&#x2217;/g;s/√/&#x221A;/g;s/∝/&#x221D;/g;s/∞/&#x221E;/g;s/∠/&#x2220;/g;s/∧/&#x2227;/g;s/∨/&#x2228;/g;s/∩/&#x2229;/g;s/∪/&#x222A;/g;s/∫/&#x222B;/g;s/∴/&#x2234;/g;s/∼/&#x223C;/g;s/≅/&#x2245;/g;s/≈/&#x2248;/g;s/≠/&#x2260;/g;s/≡/&#x2261;/g;s/≤/&#x2264;/g;s/≥/&#x2265;/g;s/⊂/&#x2282;/g;s/⊃/&#x2283;/g;s/⊄/&#x2284;/g;s/⊆/&#x2286;/g;s/⊇/&#x2287;/g;s/⊕/&#x2295;/g;s/⊗/&#x2297;/g;s/⊥/&#x22A5;/g;s/⋅/&#x22C5;/g;s/⌈/&#x2308;/g;s/⌉/&#x2309;/g;s/⌊/&#x230A;/g;s/⌋/&#x230B;/g;s/〈/&#x2329;/g;s/〉/&#x232A;/g;s/◊/&#x25CA;/g;s/♠/&#x2660;/g;s/♣/&#x2663;/g;s/♥/&#x2665;/g;s/♦/&#x2666;/g;'

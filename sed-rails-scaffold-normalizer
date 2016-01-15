@@ -1,7 +1,5 @@
 #!/bin/sh
-set -euf -o pipefail
-
-##
+#
 # Rails scaffold normalizer sets typical fields to our typical types.
 #
 # Standard fields:
@@ -26,10 +24,11 @@ set -euf -o pipefail
 #     latitude:decimal{13-10}:index
 #     longitude:decimal{13-10}:index
 #
-#
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Version: 1.3.0
+# Created: 2013-08-17
 # Updated: 2015-01-25
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-
+set -euf
 sed 's/\baltitude:.* /altitude:decimal{8,2}:index /; s/\bemail:.* /email:string{254}:index /; s/\b\(latitude\|longitude\):.* /\1:decimal{13,10}:index /; s/\bnote:.* /note:text /; s/\bparent_id:.* /parent_id:integer:index /; s/\bposition:.* /position:integer:index /; s/\bstatus:.* /status:integer:index /; s/\btype:.* /type:string:index /; s/\buuid:.* /uuid:string{36}:uniq /;'

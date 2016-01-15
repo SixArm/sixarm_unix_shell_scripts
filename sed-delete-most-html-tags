@@ -1,16 +1,16 @@
-#!/bin/bash
-set -euf -o pipefail
-
-##
+#!/bin/sh
+#
 # Delete most HTML tags.
 #
 # This accommodates multiple-line tags.
 #
 # From http://sed.sourceforge.net/sed1line.txt
 #
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Version: 1.7.0
+# Created: 2011-01-02
 # Updated: 2015-01-25
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-
+set -euf
 sed -e :a -e 's/<[^>]*>//g;/</N;//ba'
