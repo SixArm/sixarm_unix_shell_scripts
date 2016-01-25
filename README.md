@@ -113,16 +113,6 @@ File scripts to print a given `ls` field:
  * `wc-l`: Print the number of lines of a file.
 
 
-### random text generators for special needs
-
- * `random-facebook-app-id`: Facebook App Id: digits, 15 chars.
- * `random-facebook-app-api-secret`: Facebook App API Secret: M5 sum.
- * `random-linkedin-app-api-key`: LinkedIn App API Key: alphanum, 12 chars lowercase.
- * `random-linkedin-app-secret-key`: LinkedIn App Secret Key: alphanum, 16 chars.
- * `random-twitter-app-consumer-key`: Twitter App Consumer Key: alphanum, 21 chars.
- * `random-twitter-app-consumer-secret`: Twitter App Consumer Secret: alphanum, 42 chars.
-
-
 ### random passwords
 
  * `random-password-encrypt`: Generate a random password and encrypt it.
@@ -133,6 +123,7 @@ File scripts to print a given `ls` field:
  * `kill-with-user`: Kill a process with a given user.
  * `kill-all-zombie-parents`: Kill all processes that are parents of zombies.
  * `ps-top-mem`: Print the processes that are using the most RAM.
+ * `shell-command`: Print the current running shell command e.g. '/bin/bash'.
 
 
 ### copying
