@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# shell-command: show the current shell command i.e. what shell am I using?
+#
+# Example:
+#
+#     shell-command
+#     /bin/bash
+#
+# This script gets the current process id (a.k.a. PID)
+# then uses the `ps` command to look up the process id,
+# then uses the `sed` command to strip the header row.
+#
+# This script is useful if you want to know which shell you're using,
+# for example if you're using bash shell, zsh shell, fish shell, etc.
+#
+# ## Comparisons
+#
+# The $SHELL environment variable is similar but not identical.
+# SHELL stores your preferred login shell at the last login time.
+# This variable is never modified by your parent or current shell.
+#
+# Running the `echo $0` command is similar but not identical.
+# The `echo $0` typically prints the path of the running program,
+# however a program can change its own $0 to something else,
+# such as by overriding its own $0 when calling execve(2).
+#
+# If `echo $0` prints a leading hyphen such as `-bash` then the shell
+# was invoked as a login shell; otherwise you are in a non-login shell.
+#
+# Note that bash will initialise differently depending on it's argv[0].
+# If the string starts with a hyphen `-` as in `-bash` then bash will run
+# as a login shell; if not then bash will run as an interactive shell.
+# Bash can also run as a non-interactive shell (i.e. in a shell script).
+#
+# Credit:
+#
+#   * http://unix.stackexchange.com/questions/45458/why-shell-doesnt-change-when-i-run-new-shell
+#   * http://unix.stackexchange.com/questions/114058/why-echo-0-gives-different-result-for-two-different-terminals
+#
+# Version: 1.1.0
+# Created: 2016-01-22
+# Updated: 2016-01-24
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# License: GPL
+##
+
+ps -p "$$" -o command | sed 1d
