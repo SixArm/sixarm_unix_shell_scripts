@@ -208,8 +208,6 @@ File scripts to print a given `ls` field:
  * `airport-ssid`: Show the Airport SSID, i.e. current Wi-Fi network name.
  * `brew-cask-repair`: Repair Homebrew manager on OSX.
  * `macbook-pro-retina-screen-manufacturer`: Show the manfacturer ID on a Macbook Pro Retina screen.
- * `spotlight-reindex`: Trigger Spotlight to reindex of all files on the drive.
- * `spotlight-usage`: Show the current Spotlight system resource usage.
 
 
 ### OS X Power Manager
@@ -259,18 +257,6 @@ File scripts to print a given `ls` field:
 
  * `youtube-scrape-mysmarthands-asl-sign`: YouTube script to scrape the "MySmartHands" American Sign Language videos.
  * `youtube-scrape-watch-title`: YouTube script to get the "watch" title.
-
-
-### Maildir
-
- * `maildirmake-for-all-new-users`: Make the typical Maildir directories in /etc/skel
- * `maildirmaker`: Make a typical user's mail directory for qmail or postfix.
-
-
-### EasyTether
-
- * `easytether-connect`: Run the easytether connect command; after this, run easytether-connecting.
- * `easytether-connecting`: Run the easytether dhclient; call this after easytether-connect.
 
 
 ### FTP, ProFTPD, and xferlog
