@@ -129,11 +129,6 @@ File scripts to print a given `ls` field:
 ### copying
 
  * `cp-progress`: Copy files using a command-line progress bar.
- * `rsync-merge`: rsync the sources into the destination, suitable for merging.
- * `rsync-mirror`: rsync with our preferences for mirroring.
- * `rsync-mirror-exact`: rsync-mirror and delete extraneous items.
- * `rsync-mirror-update`: rsync-mirror and skip files newer on the destination.
- * `rsync-mirror-public-content`: rsync-mirror public content.
 
 
 ### networking
