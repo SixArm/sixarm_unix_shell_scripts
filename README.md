@@ -253,8 +253,6 @@ File scripts to print a given `ls` field:
 ### Ubuntu
 
  * `empty-trash`: Empty the trash on an Ubuntu system.
- * `ubuntu-login-sound-off`: Ubuntu script to turn off the login sound.
- * `ubuntu-login-sound-on`: Ubuntu script to turn on the login sound.
 
 
 ### YouTube scrape
