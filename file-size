@@ -1,7 +1,5 @@
 #/bin/sh
-out () { printf %s\\n "$*" ; }
-
-##
+#
 # File size in bytes, using the apparent size.
 #
 # This script has a goal to be cross-platform,
@@ -77,10 +75,14 @@ out () { printf %s\\n "$*" ; }
 #
 #     export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 #
+# Program: file-size
+# Version: 1.1.8
+# Created: 2014-12-02
+# Updated: 2016-02-04
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
-# Updated: 2015-07-16
 ##
+set -euf
+out () { printf %s\\n "$*" ; }
 
 size=$(
   ${DU:-du}  --apparent-size --block-size=1 "$1" 2>/dev/null ||

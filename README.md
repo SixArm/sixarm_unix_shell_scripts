@@ -208,7 +208,7 @@ File scripts to print a given `ls` field:
  * `stty-list-functions-and-bindings`: List Bash stty keyboard shortcuts.
 
 
-### OSX
+### OS X
 
  * `airport-ssid`: Show the Airport SSID, i.e. current Wi-Fi network name.
  * `brew-cask-repair`: Repair Homebrew manager on OSX.
@@ -217,7 +217,7 @@ File scripts to print a given `ls` field:
  * `spotlight-usage`: Show the current Spotlight system resource usage.
 
 
-### OSX Power Manager
+### OS X Power Manager
 
  * `pmset-drawing`: What is the power manager drawing from?
  * `pmset-drawing-ac`: Is the system is drawing from AC power?

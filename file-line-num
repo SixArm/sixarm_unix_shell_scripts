@@ -1,8 +1,5 @@
-#!/bin/bash
-set -euf -o pipefail
-out () { printf %s\\n "$*" ; }
-
-##
+#!/bin/sh
+#
 # Print a file's line at a given line number.
 #
 # Syntax:
@@ -19,10 +16,15 @@ out () { printf %s\\n "$*" ; }
 #     file-line-num myfile.txt 10 20 30
 #     => prints line 10 of myfile.txt then line 20 then line 30
 #
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Program: file-line-num
+# Version: 1.1.8
+# Created: 2011-11-19
+# Updated: 2016-02-04
 # License: GPL
-# Updated: 2015-01-25
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
+set -euf
+out () { printf %s\\n "$*" ; }
 
 file_path="$1"
 shift

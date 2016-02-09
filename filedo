@@ -1,15 +1,16 @@
-#!/bin/bash
-set -euf -o pipefail
-out () { printf %s\\n "$*" ; }
-
-##
+#!/bin/sh
+#
 # For each file name, run a command with the file name.
 #
-#
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Program: filedo
+# Version: 1.1.3
+# Created: 2012-05-26
+# Updated: 2016-02-04
 # License: GPL
-# Updated: 2015-01-25
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
+set -euf
+out () { printf %s\\n "$*" ; }
 
 unset CDPATH
 while read file_name
