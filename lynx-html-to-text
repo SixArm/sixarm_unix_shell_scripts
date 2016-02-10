@@ -1,1 +1,0 @@
-lynx -dump -stdin -force_html -width=10000 -nolist -nobold -nocolor "$@"
