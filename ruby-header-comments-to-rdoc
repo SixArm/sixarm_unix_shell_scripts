@@ -1,14 +1,15 @@
 #!/usr/bin/env ruby
-
-##
+#
 # For each input file name, get the header comments and emit rdoc format.
 #
+# Program: ruby-header-comments-to-rdoc
+# Version: 2.0.0
+# Created: 2010-10-16
+# Updated: 2016-02-09
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
 ##
 
-set -euf -o pipefail
 input_ruby_filename=ARGV[0]
 
 File.exist?(input_ruby_filename) or raise "File #{input_ruby_filename} does not exist"

@@ -253,12 +253,6 @@ File scripts to print a given `ls` field:
  * `empty-trash`: Empty the trash on an Ubuntu system.
 
 
-### YouTube scrape
-
- * `youtube-scrape-mysmarthands-asl-sign`: YouTube script to scrape the "MySmartHands" American Sign Language videos.
- * `youtube-scrape-watch-title`: YouTube script to get the "watch" title.
-
-
 ### FTP, ProFTPD, and xferlog
 
  * `proftpd-stats-date-summary-of-login-success`: Count successful logins per date.
