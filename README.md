@@ -205,7 +205,6 @@ File scripts to print a given `ls` field:
 
 ### OS X
 
- * `airport-ssid`: Show the Airport SSID, i.e. current Wi-Fi network name.
  * `brew-cask-repair`: Repair Homebrew manager on OSX.
 
 
