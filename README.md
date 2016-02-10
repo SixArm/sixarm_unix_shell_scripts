@@ -208,15 +208,6 @@ File scripts to print a given `ls` field:
  * `brew-cask-repair`: Repair Homebrew manager on OSX.
 
 
-### OS X Power Manager
-
- * `pmset-drawing`: What is the power manager drawing from?
- * `pmset-drawing-ac`: Is the system is drawing from AC power?
- * `pmset-drawing-battery`: Is the system drawing from battery power?
- * `pmset-battery-percent`: Show the internal battery % charged.
- * `pmset-battery-full`: Is the battery fully charged?
-
-
 ## Specific needs
 
 
