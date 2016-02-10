@@ -223,7 +223,6 @@ File scripts to print a given `ls` field:
 
 ### Applications
 
- * `firefox-optimize`: Optimize Firefox by scrubbing old data.
  * `gimp-2.7.1`: Launch GIMP 2.7.1 from our /opt directory with our library path settings.
  * `gmail`: Check your unread gmail from the command line.
  * `gravatar`: Gravatar: generate a gravatar URI for a given email address.
@@ -288,7 +287,6 @@ File scripts to print a given `ls` field:
  * `ruby-build-install`: Install `ruby-build` where we want it.
  * `ruby-install-install`: Install `ruby-install` where we want it.
  * `ruby-build-update`: Use `ruby-build` to update Ruby in our preferred locations.
- * `rvm-uninstall-danger`: Uninstall RVM (Ruby Version Manager). THIS IS DANGEROUS.
 
 
 ### Ruby testing and documentating
