@@ -207,7 +207,6 @@ File scripts to print a given `ls` field:
 
  * `airport-ssid`: Show the Airport SSID, i.e. current Wi-Fi network name.
  * `brew-cask-repair`: Repair Homebrew manager on OSX.
- * `macbook-pro-retina-screen-manufacturer`: Show the manfacturer ID on a Macbook Pro Retina screen.
 
 
 ### OS X Power Manager
