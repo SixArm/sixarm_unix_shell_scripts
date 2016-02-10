@@ -1,2 +1,0 @@
-iconv -f UTF-8 -t US-ASCII $@
-
