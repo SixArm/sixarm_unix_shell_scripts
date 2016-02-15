@@ -1,37 +1,105 @@
 #!/bin/sh
-#
-# convert-ico-to-png
-#
-# Convert an ICO image file to a PNG image file.
-#
-# Syntax:
-#
-#   convert-ico-to-png [ico input file name] [png output file name] [pixel width]
-#
-# Example:
-#
-#   convert-ico-to-png foo.ico foo.png 32
-#
-# Options:
-#
-#   * ico file name: default is "favicon.ico"
-#   * png file name: default is "favicon.png"
-#   * pixel width: default is 16.
-#
-# Requirements:
-#
-#   * The `convert` command, typically provided by ImageMagick.
-#
-# Command: convert-ico-to-png
-# Version: 1.2.0
-# Created: 2015-05-30
-# Updated: 2016-02-14
-# License: GPL
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
-##
 set -euf
 
-input_file_name=${1-"favicon.ico"}
-output_file_name=${2-"favicon.png"}
-pixel_width=${3:-"16"}
+## Program Tracking ##
+
+program_command="convert-ico-to-png"
+program_version="2.0.0"
+program_created="2015-05-30"
+program_updated="2016-02-14"
+program_license="GPL"
+program_contact="Joel Parker Henderson (joel@joelparkerhenderson.com)"
+program_variant="$program_command version $program_version updated $program_updated"
+
+## Help ##
+
+help(){
+cat <<END
+convert-ico-to-png:
+convert an ICO image file to a PNG image file.
+
+Syntax:
+
+    convert-ico-to-png
+      [--input <input ico file name>]
+      [--output <output png file name]
+      [--size <pixel width>]
+
+Example with defaults:
+
+    convert-ico-to-png
+
+Example with specifics:
+
+    convert-ico-to-png --input favicon.ico --output favicon.png --size 16
+
+Options:
+
+  * input ico file name: default is "favicon.ico"
+  * output png file name: default is "favicon.png"
+  * size as a pixel width: default is 16.
+
+Requirements:
+
+  * The `convert` command, typically provided by ImageMagick.
+
+Command: $program_command
+Version: $program_version
+Created: $program_created
+Updated: $program_updated
+License: $program_licence
+Contact: $program_contact
+END
+}
+
+## Essential Functions ##
+
+out () { printf %s\\n "$*" ; }
+err () { >&2 printf %s\\n "$*" ; }
+die () { >&2 printf %s\\n "$*" ; exit 1 ; }
+die_opt_unk() { die "Option $1 is unknown" ; }
+die_opt_arg() { die "Option $1 needs an argument" ; }
+
+## Options ##
+
+while [ $# -gt 0 ]; do
+  case $1 in
+    -- )
+      shift
+      break
+      ;;
+    -h | --help )
+      help
+      ;;
+    -V | --version )
+      out $program_variant
+      ;;
+    -i | --input )
+      [ $# -le 1 ] && die_opt_arg $1
+      input_file_name=$2
+      shift
+      ;;
+    -o | --output )
+      [ $# -le 1 ] && die_opt_arg $1
+      output_file_name=$2
+      shift
+      ;;
+    -s | --size )
+      [ $# -le 1 ] && die_opt_arg $1
+      pixel_width=$2
+      shift
+      ;;
+    -?*)
+      die_opt_unk $1
+      ;;
+    *)
+      break
+  esac
+  shift
+done
+
+[ $# -eq 0 ] && help && exit 0
+
+## Main ##
+
 convert "$input_file_name" -thumbnail "${pixel_width}x${pixel_width}" -alpha on -background none -flatten "$output_file_name"
