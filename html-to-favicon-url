@@ -1,7 +1,5 @@
 #!/bin/sh
-set -euf -o pipefail
-
-##
+#
 # Parse HTML to extract the favicon URL.
 #
 # Syntax:
@@ -12,6 +10,8 @@ set -euf -o pipefail
 #
 #     wget http://example.com | html-to-favicon-href
 #     => http://example.com/favicon.ico
+#
+# ## Implementation
 #
 # This implementation requires Ruby and the Nokogiri gem.
 #
@@ -36,11 +36,16 @@ set -euf -o pipefail
 #
 #   * An implmentation using ruby succeeds, but needs nokogiri:
 #
-#         ... | ruby -rnokogiri -p -e 'd=Nokogiri::HTML(STDIN.read); $_=""; puts d.xpath("//link[contains(concat(\" \", @rel, \" \"), \" icon \")]").first["href"]'
+#         ... | ruby -rnokogiri -p -e \
+#         'd=Nokogiri::HTML(STDIN.read); $_=""; puts d.xpath("//link[contains(concat(\" \", @rel, \" \"), \" icon \")]").first["href"]'
 #
+# Command: html-to-favicon-url
+# Version: 1.3.0
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-05-25
+# Created: 2015-05-31
+# Updated: 2016-02-09
 ##
+set -euf
 
 pup 'link[rel~="icon"] attr{href}' | head -1

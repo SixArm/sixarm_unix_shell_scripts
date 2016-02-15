@@ -4,7 +4,7 @@ set -euf
 ## Program Tracking ##
 
 program_command="convert-ico-to-png"
-program_version="2.0.0"
+program_version="3.0.0"
 program_created="2015-05-30"
 program_updated="2016-02-14"
 program_license="GPL"
@@ -24,6 +24,7 @@ Syntax:
       [--input <input ico file name>]
       [--output <output png file name]
       [--size <pixel width>]
+      [--srcset]
 
 Example with defaults:
 
@@ -35,19 +36,59 @@ Example with specifics:
 
 Options:
 
-  * input ico file name: default is "favicon.ico"
-  * output png file name: default is "favicon.png"
-  * size as a pixel width: default is 16.
+  * \`-i\`, \`--input\`: input file name; default is "favicon.ico"
+  * \`-o\`, \`--output\`: output file name; default is "favicon.png"
+  * \`-s\`, \`--size\`: size as a pixel width; default is 16.
+  * \`--srcset\`: generate a source set of icons using sizes 16, 32, 48, 64, and symlines.
 
-Requirements:
+## Source set details ##
 
-  * The `convert` command, typically provided by ImageMagick.
+The \`--srcset\` option generates our preferred image source set,
+
+The goal is to make the files work with this kind of HTML that provides four image scales:
+
+    <img src="foo.png" srcset="foo-1x.png 1x, foo-2x.png 2x, foo-3x.png 3x, foo-4x.png 4x">
+
+We prefer this file naming convention for source set image files:
+
+  * append the base pixel size
+  * such as "16x16", "32x32", "48x48", "64x64"
+
+We prefer this file naming convention for source set image symlinks:
+
+  * append the scale multiplier
+  * such as "1x", "2x", "3x", "4x".
+
+This tool generates these files:
+
+  * \`foo-16x16.png\`
+  * \`foo-32x32.png\`
+  * \`foo-48x48.png\`
+  * \`foo-64x64.png\`
+
+This tool generates these symlinks:
+
+  * \`foo-16x16-1x.png\` => \`foo-16x16-1x.png\`
+  * \`foo-16x16-2x.png\` => \`foo-16x16-1x.png\`
+  * \`foo-16x16-3x.png\` => \`foo-16x16-1x.png\`
+  * \`foo-16x16-4x.png\` => \`foo-16x16-1x.png\`
+
+If you prefer other conventions, then please let us know, and we'll do
+our best to add your conventions as options in this tool.
+
+Pull requests are welcome.
+
+## Requirements ##
+
+This script needs:
+
+  * The \`convert\` command, typically provided by ImageMagick, or GraphicsMagick, or any command-line compatible graphics tool.
 
 Command: $program_command
 Version: $program_version
 Created: $program_created
 Updated: $program_updated
-License: $program_licence
+License: $program_license
 Contact: $program_contact
 END
 }
@@ -59,6 +100,12 @@ err () { >&2 printf %s\\n "$*" ; }
 die () { >&2 printf %s\\n "$*" ; exit 1 ; }
 die_opt_unk() { die "Option $1 is unknown" ; }
 die_opt_arg() { die "Option $1 needs an argument" ; }
+
+## Defaults ##
+
+input_file_name="favicon.ico"
+output_file_name="favicon.png"
+pixel_width=16
 
 ## Options ##
 
@@ -89,6 +136,9 @@ while [ $# -gt 0 ]; do
       pixel_width=$2
       shift
       ;;
+    --srcset )
+      srcset_flag=1
+      ;;
     -?*)
       die_opt_unk $1
       ;;
@@ -98,8 +148,17 @@ while [ $# -gt 0 ]; do
   shift
 done
 
-[ $# -eq 0 ] && help && exit 0
-
 ## Main ##
 
-convert "$input_file_name" -thumbnail "${pixel_width}x${pixel_width}" -alpha on -background none -flatten "$output_file_name"
+if [[ -n ${srcset_flag:-} ]]; then
+    output_file_base="${output_file_name%.*}"
+    for n in 1 2 3 4; do
+        size=$(($n * $pixel_width))
+        output_file_name_now="${output_file_base}-${size}x${size}.png"
+        output_symlink_now="${output_file_base}-${pixel_width}x${pixel_width}-${n}x.png"
+        convert "$input_file_name" -thumbnail "${size}x${size}" -alpha on -background none -flatten "$output_file_name_now"
+        ln -sfn "$output_file_name_now" "$output_symlink_now"
+    done
+else
+    convert "$input_file_name" -thumbnail "${pixel_width}x${pixel_width}" -alpha on -background none -flatten "$output_file_name"
+fi

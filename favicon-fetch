@@ -1,0 +1,67 @@
+#!/bin/sh
+set -euf
+
+## Program Tracking ##
+
+program_command="favicon-fetch"
+program_version="1.5.0"
+program_created="2015-05-31"
+program_updated="2016-02-11"
+program_license="GPL"
+program_contact="Joel Parker Henderson (joel@joelparkerhenderson.com)"
+program_variant="$program_command version $program_version updated $program_updated"
+
+## Help Function ##
+
+help(){
+cat <<EOF
+favicon-fetch:
+connect to a web site or web page then download its favicon.ico file.
+
+Syntax:
+
+    favicon-fetch <url>
+
+Example:
+
+    favicon-fetch https://www.example.com
+    => download favicon.ico file
+
+Command: $program_command
+Version: $program_version
+Created: $program_created
+Updated: $program_updated
+License: $program_licence
+Contact: $program_contact
+EOF
+}
+
+## Essential Functions ##
+
+out () { printf %s\\n "$*" ; }
+err () { >&2 printf %s\\n "$*" ; }
+die () { >&2 printf %s\\n "$*" ; exit 1 ; }
+die_opt_unk() { die "Option $1 is unknown" ; }
+die_opt_arg() { die "Option $1 needs an argument" ; }
+
+
+if [ $# -eq 0 ]
+then
+  out "Syntax: fetch-favicon <url>"
+  out "Example: fetch-favicon www.example.com"
+  exit
+fi
+
+page_url=$1
+out "page_url:$page_url"
+
+icon_url=$(curl -s -S -L "$page_url" | pup 'link[rel~="icon"] attr{href}' | head -1)
+out "icon_url:$icon_url"
+
+icon_file_name=$(out "$icon_url" | uri-scheme file)
+out "icon_file_name:$icon_file_name"
+
+icon_abs_url=$(uri-relate "$page_url" "$icon_url")
+out "icon_abs_url:$icon_abs_url"
+
+curl -s -S -L "$icon_abs_url" -o "$icon_file_name"

@@ -225,9 +225,9 @@ File scripts to print a given `ls` field:
  * `glue-sprites`: Use the `glue` command to compress a directory of images to sprites.
 
 
-### Favicons
+### Favicon
 
- * `fetch-favicon`: Download a web page's favicon.
+ * `favicon-fetch`: Download a web page's favicon.
  * `html-to-favicon-url`: Parse HTML to extract the favicon URL.
 
 
