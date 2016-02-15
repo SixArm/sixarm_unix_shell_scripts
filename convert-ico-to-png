@@ -1,7 +1,5 @@
-#!/bin/bash
-set -euf -o pipefail
-
-##
+#!/bin/sh
+#
 # convert-ico-to-png
 #
 # Convert an ICO image file to a PNG image file.
@@ -24,10 +22,14 @@ set -euf -o pipefail
 #
 #   * The `convert` command, typically provided by ImageMagick.
 #
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# Command: convert-ico-to-png
+# Version: 1.2.0
+# Created: 2015-05-30
+# Updated: 2016-02-14
 # License: GPL
-# Updated: 2015-05-30
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
+set -euf
 
 input_file_name=${1-"favicon.ico"}
 output_file_name=${2-"favicon.png"}
