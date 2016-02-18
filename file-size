@@ -90,7 +90,7 @@ size=$(
   ${FIND:-find} "$1" -printf "%s" 2>/dev/null ||
   ${GFIND:-gfind} "$1" -printf "%s" 2>/dev/null ||
   ${STAT:-stat} --printf="%s" "$1" 2>/dev/null ||
-  ${STAT:-stat} -f%z "$file" 2>/dev/null ||
+  ${STAT:-stat} -f%z "$1" 2>/dev/null ||
   ${WC:-wc} -c <"$1" 2>/dev/null
 )
 q=$?; [ $q -eq 0 ] || exit $q
