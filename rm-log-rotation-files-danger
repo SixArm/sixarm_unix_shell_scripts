@@ -1,38 +1,58 @@
 #!/bin/bash
-set -euf -o pipefail
-
-##
+#
 # Remove log rotation files -- DANGER.
 #
 # Please be certain you don't need
 # these log files before you run this.
 #
-# This removes these kinds of log files from /var/log
+# This removes these kinds of log files from the `/var/log` directory:
 #
-# Ending in:
+# File names that end with:
 #
+#   * .bz2
 #   * .gz
 #   * .old
 #   * .log.[0-9]*
 #   * .[0-9]*.log
 #
-# Any of these logfiles if there's a number suffix:
+# File names that match:
 #
 #   * btmp.[0-9]*
+#   * dmesg.[0-9]*
 #   * mail.err.[0-9]*
 #   * syslog.[0-9]*
+#   * wtmp.[0-9]*
 #
+# Any `atop` files - warning - this will delete the current file too;
+# this is a known issue of this script, and is on the roadmap to fix.
+#
+#   * atop/atop_[0-9]*
+#
+# Command: rm-log-rotation-files-danger
+# Version: 2.0.0
+# Created: 2012-12-09
+# Updated: 2016-02-29
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
 ##
+set -euf
 
-rm -f /var/log/*.{gz,old}
+## Remove top level files because this reclaims space immediately
+rm -f /var/log/*.bz2
+rm -f /var/log/*.gz
+rm -f /var/log/*.old
 rm -f /var/log/*.log.[0-9]*
-rm -f /var/log/**/*.{gz,old}
-rm -f /var/log/**/*.log.[0-9]*
-rm -f /var/log/**/*.[0-9].log
-rm -f /var/log/{btmp,dmesg,mail.err,syslog,wtmp}.[0-9]*
+rm -f /var/log/*.[0-9].log
+
+## Remove specific application log files
+rm -f /var/log/btmp.[0-9]*
+rm -f /var/log/dmesg.[0-9]*
+rm -f /var/log/mail.err.[0-9]*
+rm -f /var/log/syslog.[0-9]*
+rm -f /var/log/wtmp.[0-9]*
 
 # TODO: preserve the most recent atop file.
 rm -f /var/log/atop/atop_[0-9]*
+
+## Find any remaining files by matching exenstions
+find /var/log -type f \( -name "*.bz2" -o -name "*.gz" -o -name "*.old" -o -name "*.log.[0-9]*" -o -name "*.[0-9].log" \) -exec rm {} \;
