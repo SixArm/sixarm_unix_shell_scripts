@@ -137,7 +137,7 @@ while [ $# -gt 0 ]; do
       shift
       ;;
     --srcset )
-      srcset_flag=1
+      srcset=true
       ;;
     -?*)
       die_opt_unk $1
@@ -150,7 +150,7 @@ done
 
 ## Main ##
 
-if [[ -n ${srcset_flag:-} ]]; then
+if [ "$srcset" = true ]; then
     output_file_base="${output_file_name%.*}"
     for n in 1 2 3 4; do
         size=$(($n * $pixel_width))
