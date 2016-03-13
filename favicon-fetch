@@ -31,7 +31,7 @@ Command: $program_command
 Version: $program_version
 Created: $program_created
 Updated: $program_updated
-License: $program_licence
+License: $program_license
 Contact: $program_contact
 EOF
 }
