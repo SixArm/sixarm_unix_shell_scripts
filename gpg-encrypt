@@ -24,7 +24,7 @@
 #    --cipher-algo aes256          Use AES256 as the cipher algorithm
 #    --digest-algo sha256          Use SHA256 as the digest algorithm.
 #    --cert-digest-algo sha256     Use SHA256 as the message digest algorithm used when signing a key.
-#    --compress-algo uncompressed  Do not compress the file
+#    --compress-algo none          Do not compress the file.
 #    -z 0                          Compression level set to 0, i.e. set to no compression.
 #    --no-use-agent                Do not use a system agent such as Ubuntu's gnome-keyring process.
 #
@@ -36,4 +36,4 @@
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 set -euf
-gpg --quiet --no-greeting --symmetric --cipher-algo aes256 --digest-algo sha256 --cert-digest-algo sha256 -z 0 --compress-algo uncompressed --no-use-agent "$@"
+gpg --quiet --no-greeting --symmetric --cipher-algo aes256 --digest-algo sha256 --cert-digest-algo sha256 -z 0 --compress-algo none --no-use-agent "$@"
