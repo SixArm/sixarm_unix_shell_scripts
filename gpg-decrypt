@@ -1,14 +1,15 @@
 #!/bin/sh
-set -euf
-
-##
+#
 # GPG script to decrypt a file with our typical settings.
 #
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Command: gpg-decrypt
+# Version: 2.0.0
+# Created: 2010-05-20
 # Updated: 2015-12-20
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-
+set -euf
 umask_save=`umask`
 umask 0077
 gpg -d --no-greeting --no-use-agent --quiet "$@"
