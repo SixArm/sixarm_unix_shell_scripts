@@ -35,4 +35,4 @@ set -euf -o pipefail
 # Updated: 2015-01-25
 ##
 
-gpg --quiet --no-greeting --symmetric --cipher-algo aes256 --digest-algo sha256 --cert-digest-algo sha256 -z 0 --compress-algo uncompressed --no-use-agent $@
+gpg --quiet --no-greeting --symmetric --cipher-algo aes256 --digest-algo sha256 --cert-digest-algo sha256 -z 0 --compress-algo uncompressed --no-use-agent "$@"

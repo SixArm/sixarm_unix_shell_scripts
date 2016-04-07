@@ -11,5 +11,5 @@ set -euf -o pipefail
 
 umask_save=`umask`
 umask 0077
-gpg -d --no-greeting --no-use-agent --quiet $@
+gpg -d --no-greeting --no-use-agent --quiet "$@"
 umask $umask_save
