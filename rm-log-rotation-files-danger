@@ -55,4 +55,4 @@ rm -f /var/log/wtmp.[0-9]*
 rm -f /var/log/atop/atop_[0-9]*
 
 ## Find any remaining files by matching exenstions
-find /var/log -type f \( -name "*.bz2" -o -name "*.gz" -o -name "*.old" -o -name "*.log.[0-9]*" -o -name "*.[0-9].log" \) -exec rm {} \;
+find /var/log -type f \( -name "*.bz2" -o -name "*.gz" -o -name "*.old" -o -name "*.log.[0-9]*" -o -name "*.[0-9].log" -o -name "xferlog.[0-9]*" \) -exec rm {} \;
