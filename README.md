@@ -184,6 +184,7 @@ File scripts to print a given `ls` field:
 
   * `font-file-to-family`: Parse a font file to the preferred family string.
   * `font-file-to-full-name`: Parse a font file to the full name string.
+  * `font-unzip`: Unzip a font zip file and move fonts to a family directory
 
 
 ### sysadmin

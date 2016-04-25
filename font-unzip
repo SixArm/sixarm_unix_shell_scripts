@@ -1,0 +1,67 @@
+#!/bin/sh
+#
+# font-unzip:
+# unzip a font zip file and move fonts to a family directory.
+#
+# Syntax:
+#
+#     font-unzip <file> [destination]
+#
+# Example:
+#
+#     font-unzip example.zip ~/fonts/
+#
+# This script is implemented on OS X by using `otfinfo`.
+# To get this, use `brew install lcdf-typetools`.
+#
+# To Do:
+#
+#   * Implement on Linux and Windows
+#   * Get other font fields
+#
+# Command: font-unzip
+# Version: 1.1.0
+# Created: 2015-12-19
+# Updated: 2016-04-24
+# Command: font-zip-to-family
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+me=`basename $0`
+font_zip_file="$1"
+font_top_dir=${2:-.}
+font_tmp_dir=$(mktemp -d -t "$me")
+unzip -qq "$font_zip_file" -d "$font_tmp_dir"
+
+# Find font files that we want to process.
+find_font_files(){
+    find "$1" -type f \( -name "*.otf" -o -name "*.ttf" \) -exec printf %s\\0 '{}' \;
+}
+
+# Remove any superfluous files that we know about and don't need to move.
+scrub_font_remnants(){
+    rm -f "$1/Font Bundles - The Best Free and Premium Fonts.url"
+    rm -f "$1/FontBundlesLicense.pdf"
+}
+
+# Warn the user about any remaining files, so the user can take action.
+print_font_remnants(){
+    find "$1" -type f
+}
+
+each_font_file(){
+    font_file="$1"
+    font_base_dir="$2"
+    family=$(font-file-to-family "$font_file")
+    dst="$font_base_dir/$family/"
+    mkdir -p "$dst"
+    echo "mv \"$font_file\" \"$dst\""
+    mv "$font_file" "$dst"
+}
+
+find_font_files "$font_tmp_dir" | while read -d $'\0' file; do
+    each_font_file "$file" "$font_top_dir"
+done
+scrub_font_remnants "$font_tmp_dir"
+print_font_remnants "$font_tmp_dir"
