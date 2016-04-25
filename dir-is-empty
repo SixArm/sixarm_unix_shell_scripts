@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# Is a directory empty?
+#
+# This code uses the magic 3 globs which are needed to match all possible
+# names except “.” and “..”, and also handles the cases where the glob
+# matches a literal name identical to the glob string.
+#
+# Credit: http://www.etalabs.net/sh_tricks.html
+#
+dir_is_empty () (
+  cd "$1"
+  set -- .[!.]* ; test -f "$1" && return 1
+  set -- ..?* ; test -f "$1" && return 1
+  set -- * ; test -f "$1" && return 1
+  return 0
+)

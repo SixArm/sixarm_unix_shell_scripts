@@ -30,6 +30,11 @@ This repo has lots of Unix shell scripts that are utilities.
  * `sed-uncolor`: sed script to uncolor lines by removing ascii color characters.
 
 
+### directory
+
+ * `dir-is-empty`: Detect if a directory is empty or not.
+
+
 ### file
 
 File scripts to print a given `ls` field:
