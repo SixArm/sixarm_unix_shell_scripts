@@ -1,0 +1,7 @@
+# Select abbreviations:
+#
+#   1. Split text on non-alnum
+#   2. Omit text that is only lowercase and/or digits
+#   3. Omit wordcap words.
+#   4. Select text that is two or more capital letters
+sed 's#[^[:alnum:]]\+# #g; s#\b[[:lower:]\|[:digit:]]\+\b# #g; s#[[:upper:]][[:lower:]]\+# #g; s# \+#\n#g;' | grep '^[[:upper:]]{2,}$' | sort -u
