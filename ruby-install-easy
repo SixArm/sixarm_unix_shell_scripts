@@ -13,7 +13,7 @@ out () { printf %s\\n "$*" ; }
 # Example to install the current typical Ruby:
 #
 #     ruby-install-easy
-#     #=> installs /opt/ruby/kri/2.2.1
+#     #=> installs /opt/ruby/mri/2.3.1
 #
 # Example to install the current typical JRuby:
 #
@@ -22,15 +22,15 @@ out () { printf %s\\n "$*" ; }
 #
 # Example to install an older version:
 #
-#     ruby-install-easy kri 2.0.0
-#     #=> installs /opt/ruby/kri/2.0.0
+#     ruby-install-easy mri 2.0.0
+#     #=> installs /opt/ruby/mri/2.0.0
 #
 # ## Locations
 #
 # We put our Ruby VMs in this directory tree:
 #
 #     /opt/ruby/jruby/x.y.z
-#     /opt/ruby/kri/x.y.z
+#     /opt/ruby/mri/x.y.z
 #     /opt/ruby/rbx/x.y.z
 #
 # ## Implemenation
@@ -43,16 +43,21 @@ out () { printf %s\\n "$*" ; }
 # This script does a `git pull` to update the repo,
 # which includes downloading any new VM version info.
 #
+# ## Tracking
+#
+# Command: ruby-install-easy
+# Version: 3.0.0
+# Created: 2014-11-09
+# Updated: 2016-09-02
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
 ##
-vm=${1-kri}
+vm=${1-mri}
 
 # Adjust the VM name as needed to be compatible with `ruby-install`:
-# we use the name "kri" whereas `ruby-install` uses the name "ruby".
+# we use the name "mri" whereas `ruby-install` uses the name "ruby".
 case "$vm" in
-    kri) vm2="ruby" ;;
+    mri) vm2="ruby" ;;
     *) vm2="$vm" ;;
 esac
 
