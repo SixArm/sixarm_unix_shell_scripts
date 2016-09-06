@@ -1,0 +1,1 @@
+grep -l "print0" "$1" && print "Change \"find path -print0\" to \"find path -exec printf %s\\0 '{}' ;"
