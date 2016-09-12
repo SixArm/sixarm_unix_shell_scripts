@@ -1,0 +1,17 @@
+#!/bin/bash
+set -euf -o pipefail
+
+##
+# URI script to encode text, for example a CGI query string.
+#
+# This implementation works by using perl and the URI::Escape module.
+#
+# Command: uri-encode-by-perl
+# Version: 2.0.0
+# Created: 2010-05-20
+# Updated: 2016-09-12
+# License: BSD, GPL, MIT
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+perl -MURI::Escape -lne 'print uri_escape($_)'
