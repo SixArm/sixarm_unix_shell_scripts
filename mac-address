@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# Print the host's MAC address
+#
+# Syntax:
+#
+#     mac-address
+#
+# Example:
+#
+#     $ mac-address
+#     721ab4c5287a
+#
+# A media access control address (MAC address) of a computer 
+# is a unique identifier assigned to network interfaces for 
+# communications at the data link layer of a network segment.
+#
+# https://en.wikipedia.org/wiki/MAC_address
+#
+# ## Implementation
+#
+# This script is intended to run on any Unix-like system.
+#
+# We have tested it on a typical MacBook macOS 10.12 systme
+# and a typical Ubuntu Linux 16.04 system.
+#
+# ## Tracking
+#
+# * Command: mac-address
+# * Version: 1.1.0
+# * Created: 2016-10-01
+# * Updated: 2016-10-02
+# * License: GPL
+# * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+/sbin/ifconfig -a | grep -m1 "[[:space:]]\(HWaddr\|ether\)[[:space:]]" | sed 's/[[:space:]]\+$//; s/.*[[:space:]]//; s/://g'
