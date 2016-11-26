@@ -1,0 +1,30 @@
+#!/bin/sh
+#
+# Change each HTML link to markdown format.
+#
+# Syntax:
+#
+#   ... | sed-html-link-to-markdown
+#
+# Example:
+#
+#   $ echo "<a href="foo">Foo</a> |
+#     sed-html-link-to-markdown
+#   [Foo](https://foo)
+#
+# This implementation handles simple links,
+# with just the href attribute in double quotes.
+# We want to improve this implementation in the
+# future to handle more syntax and to be smarter.
+#
+#
+# ## Tracking
+#
+# * Command: sed-html-link-to-markdown
+# * Version: 1.1.0
+# * Created: 2016-09-17
+# * Updated: 2015-09-18
+# * License: GPL
+# * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+sed 's#<a href="\([^"]*\)"[^>]*>\(.*\)</a>#[\2](\1\)#'

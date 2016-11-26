@@ -1,0 +1,13 @@
+#!/bin/sh
+#
+# Fetch a web page by using curl, then extract a specific attribute.
+#
+# Example:
+#
+#   fetch-to-attr http://example.com foo
+#
+##
+set -euf
+uri="$1"
+attr="$2"
+curl -L -s "$uri" | sed -n "s/.*\b$attr *= *['\"]\([^'\"\]*\)'.*/\1/p"

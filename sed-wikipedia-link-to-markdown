@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# Change each wikipedia link to markdown format.
+#
+# Syntax:
+#
+#   ... | sed-wikipedia-link-to-markdown
+#
+# Example:
+#
+#   $ echo "https://wikipedia.org/wiki/Foo" |
+#     sed-wikipedia-link-to-markdown
+#   [Foo_Bar](https://wikipedia.org/wiki/Foo)
+#
+# This script also makes opinionated autocorrections:
+#
+#   * Strip any language subdomain, such as "en" for English.
+#   * Change "http" to "https".
+#
+# Example:
+#
+#   * Input: http://en.wikipedia.org/wiki/Foo
+#   * Output: https://wikipedia.org/wiki/Foo
+#
+# ## Tracking
+#
+# * Command: sed-wikipedia-link-to-markdown
+# * Version: 1.1.0
+# * Created: 2016-09-17
+# * Updated: 2015-09-18
+# * License: GPL
+# * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+sed 's#https://[[:alpha:]]*.*\(wikipedia.org/wiki/\)\([^[:space:]]*\)#[\2](https://\1\2)#'

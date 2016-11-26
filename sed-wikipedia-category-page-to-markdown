@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# Change a Wikipedia category page to markdown.
+#
+# Syntax:
+#
+#   ... | sed-wikipedia-category-page-to-markdown
+#
+# Example:
+#
+#   $ cat page.html |
+#     sed-wikipedia-category-page-to-markdown
+#
+#
+# Steps:
+#
+#   * Select lines that begin with a Wikipedia link.
+#   * Strip out HTML tags
+#   * Flip the HTML link to be markdown
+#
+#
+# ## Tracking
+#
+# * Command: sed-wikipedia-category-page-to-markdown
+# * Version: 1.1.0
+# * Created: 2016-09-17
+# * Updated: 2015-09-18
+# * License: GPL
+# * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+sed -n '/^\(<ul>\)\?<li><a href="\/wiki\//p' |
+sed 's#<ul>##g; s#</ul>.*##g; s#<li>##g; s#</li>.*##g; s#</div>##g;' |
+sed 's#<a href="\([^"]*\)"[^>]*>\(.*\)</a>#* [\2](https://wikipedia.org\1\)#'
+
