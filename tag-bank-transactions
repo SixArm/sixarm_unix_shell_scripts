@@ -1,0 +1,80 @@
+#!/usr/local/bin/awk -f
+#
+# Parse a typical bank transactions spreadsheet.
+#
+# Our actual sheets always use CSV and never use embedded quotes,
+# so we believe it is safe to use the field separator ",".
+#
+# The fields in order are:
+#
+#   * The date in "MM/DD/YY"
+#   * The transaction amount in USD; deposits are postive, withdrawls are negatives.
+#   * An asterisk; we do not know what this means.
+#   * A blank field; we do not know what this means.
+#   * A text note that typically explains the vendor, purpose, etc.
+#
+BEGIN {
+    FS="\",\""
+    IGNORECASE = 1
+}
+{
+    tags=""
+
+    # Skip irrelevant transactions
+    if (/ATM ACCESS FEE |eDeposit in Branch|INTERNATIONAL PURCHASE TRANSACTION |ONLINE TRANSFER |RECURRING PAYMENT INTL /) next
+
+    # Skip irrelevant companies
+    if (/ 646-450-7073 | CONTAINERSTORESANF | COSMO VESPER | EMBASSY NETWORK | MACY\*S EAST #0142 CLAY NY | \*THINK BLEECKER New York NY | SQ \*PALENQUE New York NY/) next
+
+    # Skip gifts
+    if (/ LULULEMON | TRILLIUM INTEGRATI | WPY\*A Room to Brea | WPY\*Mama Art Your /) next
+
+    # Skip tickets to events
+    if (/ METREON | PREKINDLE EVENTS | STATE FAIR OF TEXA | TFI\*TICKETFLY /) next
+
+    # Skip non-work lodging
+    if (/ COSMO VESPER | EMBASSY NETWORK /) next
+
+    # Skip irrelevant cities
+    if (/ BEACON NY | LAS VEGAS NV/) next
+
+    # Skip San Francisco Bay Area mass transit
+    if (/ BART SFIA | BART-POWELL | CALTRAIN | CLIPPER SERVICE | COACHUSA\/MEGABUS/) next
+
+    # Skip crowdfunding
+    if (/ INDIEGOGO | KICKSTARTER | KICKSTARTERCOM | KICKSTARTER.COM | PATREON.COM /) next
+
+    # Skip brands in cities that I know well
+    if (/( BOW K | BRISTOL FARMS | CANYON MARKET | CHIPOTLE | DELAROSA | DOGPATCH BAKEHOUSE | HACIENDA GRILL | HAIGHT & FILLMORE WHOL | HAIGHT STREET MARK | HENRY'S HUNAN | HOMESPUN FOODS | KLEIN DELI | MIXT GREENS | PEET'S | SALATA | SQ \*CESCO PIZZA | SQ \*GOTHAM ENTERPR | SQ \*ROCKIT SWIRL | STARBUCKS | TARGET | THE IRISH BANK | THE GROVE YERBA | TOP BAR | W-K MARKET | WHOLEFDS | YELLOW CARD ).*(LAS VEGAS NV |LOS ANGELES CA |LOS GATOS CA|SAN FRANCISCO CA )/) next
+
+    # Skip rare travel items
+    if (/ PILOT .* LOST HILLS CA /) next
+
+    # Defer companies that need better categorization
+    if (/ Amazon | Amazon.com | AMAZON | AMAZON.COM |KINDLE-/) next
+    if (/ APPLE STORE | APL\* ITUNES.COM| AT&T\*BILL PAYMENT /) next
+    if (/ WALGREENS /) next
+    if (/ MICROSOFT \*STORE ) next
+
+    # Tag by type
+    if (/ CAFE | CAFFE | COFFEE | STARBUCKS /) tags = $tags "#cafe "
+    if (/ CAB | CITI BIKE | TAXI | LYFT | NYC-TAXI | UBER /) tags = $tags "#taxi "
+    if (/ AIRBNB | HOTEL | MOTEL | COURTYARD BY MARRI | HAWTHORN SUITES | HOTELTONIGHT| RITZ CARLTON | THE MANSFIELD HOTE /) tags = $tags "#lodge"
+    if (/ GRUBHUB.COM | IDA CLAIRE | IN \*TILLYS OLD FAS | POST OAK SMOKE | SALATA | WHOLEFDS /) tags = $tags "#food"
+    if (/ DELTA AIR | JETBLUE | SPIRIT AIRL | UNITED 016260 /) tags = $tags "#travel-air"
+
+    # Tag by purpose
+    if (/ ATLASSIAN | BACKBLAZE | WWW.CLEVERBRIDGE.N | FULLCONTACT.COM | OMNI DEVELOPMENT | PAW.CLOUD | PRAGMATIC PROGRAMM | RACKSPACE CLOUD | REPORT.COM /) tags = $tags "#online-services"
+
+    # Tag by metropolitan area
+    if (/ BROOKLYN NY | NEW YORK NY | NYC-TAXI /) tags = $tags "#new-york-city-metro-area "
+    if (/ ADDIS 0001 TX | ADDISON TX | DALLAS TX | DENTON TX | IRVING TX /) tags = $tags "#dallas-metro-area "
+    if (/ HOUSTON TX /) tags = $tags "#houston-metro-area "
+    if (/ LOS ANGELES CA | SANTA MONICA CA /) tags = $tags "#los-angeles-metro-area "
+
+    # Done
+    if (tags != "") next
+    print
+}
+END {
+}
