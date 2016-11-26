@@ -14,67 +14,84 @@
 #   * A text note that typically explains the vendor, purpose, etc.
 #
 BEGIN {
-    FS="\",\""
+    FS=OFS="\",\""
     IGNORECASE = 1
 }
 {
+    gsub(/^"/,"")
+    gsub(/"$/,"")
+
+    use=1 # true
+    site=""
     tags=""
 
     # Skip irrelevant transactions
-    if (/ATM ACCESS FEE |eDeposit in Branch|INTERNATIONAL PURCHASE TRANSACTION |ONLINE TRANSFER |RECURRING PAYMENT INTL /) next
+    if (/ATM ACCESS |ATM DEPOSIT |ATM WITHDRAWAL |eDeposit |eWithdrawal |INTERNATIONAL PURCHASE TRANSACTION |ONLINE TRANSFER |RECURRING PAYMENT /) next
 
     # Skip irrelevant companies
-    if (/ 646-450-7073 | CONTAINERSTORESANF | COSMO VESPER | EMBASSY NETWORK | MACY\*S EAST #0142 CLAY NY | \*THINK BLEECKER New York NY | SQ \*PALENQUE New York NY/) next
-
-    # Skip gifts
-    if (/ LULULEMON | TRILLIUM INTEGRATI | WPY\*A Room to Brea | WPY\*Mama Art Your /) next
+    if (/ 646-450-7073 | AETHER APPARE | CONTAINERSTORESANF | JOURNEYS | LULULEMON | MACY.S | MERIT CLEANERS | MOMA BOOKSTORE | NORDSTROM | NORTH FACE | \*THINK BLEECKER New York NY | REI | SQ \*PALENQUE New York NY | THE UPS STORE | TRILLIUM INTEGRATI | WPY\*A Room to Brea | WPY\*Mama Art Your /) next
 
     # Skip tickets to events
-    if (/ METREON | PREKINDLE EVENTS | STATE FAIR OF TEXA | TFI\*TICKETFLY /) next
+    if (/ METREON | PREKINDLE EVENTS | STATE FAIR | TFI\*TICKETFLY /) next
 
     # Skip non-work lodging
     if (/ COSMO VESPER | EMBASSY NETWORK /) next
 
     # Skip irrelevant cities
-    if (/ BEACON NY | LAS VEGAS NV/) next
-
-    # Skip San Francisco Bay Area mass transit
-    if (/ BART SFIA | BART-POWELL | CALTRAIN | CLIPPER SERVICE | COACHUSA\/MEGABUS/) next
-
-    # Skip crowdfunding
-    if (/ INDIEGOGO | KICKSTARTER | KICKSTARTERCOM | KICKSTARTER.COM | PATREON.COM /) next
-
-    # Skip brands in cities that I know well
-    if (/( BOW K | BRISTOL FARMS | CANYON MARKET | CHIPOTLE | DELAROSA | DOGPATCH BAKEHOUSE | HACIENDA GRILL | HAIGHT & FILLMORE WHOL | HAIGHT STREET MARK | HENRY'S HUNAN | HOMESPUN FOODS | KLEIN DELI | MIXT GREENS | PEET'S | SALATA | SQ \*CESCO PIZZA | SQ \*GOTHAM ENTERPR | SQ \*ROCKIT SWIRL | STARBUCKS | TARGET | THE IRISH BANK | THE GROVE YERBA | TOP BAR | W-K MARKET | WHOLEFDS | YELLOW CARD ).*(LAS VEGAS NV |LOS ANGELES CA |LOS GATOS CA|SAN FRANCISCO CA )/) next
+    if (/ BEACON NY | LAS VEGAS NV | LOS ANGELES CA /) next
 
     # Skip rare travel items
     if (/ PILOT .* LOST HILLS CA /) next
 
-    # Defer companies that need better categorization
-    if (/ Amazon | Amazon.com | AMAZON | AMAZON.COM |KINDLE-/) next
-    if (/ APPLE STORE | APL\* ITUNES.COM| AT&T\*BILL PAYMENT /) next
-    if (/ WALGREENS /) next
-    if (/ MICROSOFT \*STORE ) next
+    # Defer crowdfunding
+    if (/ INDIEGOGO /)                      { use = 0; site = "indiegogo.com";   tags = tags "#crowdfunding"; }
+    if (/ KICKSTARTER | KICKSTARTER.?COM /) { use = 0; site = "kickstarter.com"; tags = tags "#crowdfunding"; }
+    if (/ PATREON.COM /)                    { use = 0; site = "patreon.com";     tags = tags "#crowdfunding"; }
 
-    # Tag by type
-    if (/ CAFE | CAFFE | COFFEE | STARBUCKS /) tags = $tags "#cafe "
-    if (/ CAB | CITI BIKE | TAXI | LYFT | NYC-TAXI | UBER /) tags = $tags "#taxi "
-    if (/ AIRBNB | HOTEL | MOTEL | COURTYARD BY MARRI | HAWTHORN SUITES | HOTELTONIGHT| RITZ CARLTON | THE MANSFIELD HOTE /) tags = $tags "#lodge"
-    if (/ GRUBHUB.COM | IDA CLAIRE | IN \*TILLYS OLD FAS | POST OAK SMOKE | SALATA | WHOLEFDS /) tags = $tags "#food"
-    if (/ DELTA AIR | JETBLUE | SPIRIT AIRL | UNITED 016260 /) tags = $tags "#travel-air"
+    # Defer companies that need better categorization
+    if (/ AMAZON | AMAZON.COM |KINDLE-/)    { use = 0; site = "amazon.com" }
+    if (/ APPLE STORE | APL\* ITUNES.COM/)  { use = 0; site = "apple.com"; }
+    if (/ AT&T | AT&T\*BILL PAYMENT /)      { use = 0; site = "att.com"; }
+    if (/ BARNES & NOBLE /)                 { use = 0; site = "barnesandnoble.com"; }
+    if (/ BEST BUY /)                       { use = 0; site = "bestbuy.com"; }
+    if (/ MICROSOFT /)                      { use = 0; site = "microsoft.com"; }
+    if (/ MMA KIOSK ADMISSIO NEW YORK /)    { use = 0; site = "metmusuem.org" }
+    if (/ TARGET /)                         { use = 0; site = "target.com"; }
+    if (/ WALMART /)                        { use = 0; site = "walmart.com"; }
+
+    # Unknown & minor
+    if (/ SQ \*GOTHAM ENTERPR | WALLSTREETST2563 HOUSTON | YELLOW CARD SERVIC SAN FRANCISCO CA /) { use = 0; }
+
+    # Specific food
+    if (/ 7-ELEVEN | ANDALOUS MEDITERRA | AU BON PAIN | BLANK SLATE | BOW K | BREAD & BUTTER | CAFETAL | CHIPOTLE | CHOZA | CREAMLINE | CROOKED KNIFE | DELAROSA | DIG INN | EATZI'S | EINSTEIN BROS | ESSEN | EUROPA | GRUBHUB.COM | HAIGHT & FILLMORE WHOL | HAIGHT STREET MARK | HURLEYS | IDA CLAIRE | IN \*TILLYS OLD FAS | JUPITER HOUSE | KOFFEECAKE | MADHUFALLA,INC. | MANHATTAN FRUIT | MARCHE MADISON | MINUTI DOWNTOWN HOUSTON | NO TSU OH HOUSTON TX | PEET'S | PINKBERRY | PRET A MANGER | POST OAK SMOKE | QUESA | SALATA | SMASHBURGER | SOCARRAT NOLITA | SOPHIE'S CUBAN | STARBUCKS | SQ \*MADISON SQUARE | SQ \*NO 7 SUB | SQ \*PLATE AND SIMP | SQ \*ROCKIT SWIRL | SUNAC NEW YORK | SUSHIRO | TACOMBI | TGI FRIDAY'?S | THE GREGORY BAR | THE GROVE YERBA | THE IRISH BANK | THE LONG ROOM | THE SMITH NOMAD | TOP BAR | TOUT SUITE LLC HOUSTON TX | WHOLEFDS /) tags = tags "#food"
+
+    # Generic food
+    if (/ BAKE | BAKERY | BAKING | BAKEHOUSE | BBQ | BEER | BREW | BURGER | CAFE | CAFFE | COFFEE | COFFEESHOP | DELI | EAT | EATERY | EATS | FARM | FARMS | FOOD | FOODS | GASTROPUB | GREENS | GRILL | GROCER | GROCERY | HUNAN | JUICE | KITCHEN | MARKET | PIZZA | PUB | RESTAURANT | SALAD | SALOON | SNACK | SUSHI | TAVERN | TACO | THAI | WOK /) tags = tags "#food"
+
+    if (/ CAB | CITI BIKE | TAXI | LYFT | NYC-TAXI | UBER /) tags = tags "#taxi"
+    if (/ CVS.PHARMACY | DUANE READE | WALGREENS /) tags = tags "#drugstore"
+    if (/ AIRBNB | ANDAZ FIFTH AVENUE | HOTEL | MOTEL | COURTYARD | SUITES | HOTELTONIGHT| MANHATTAN NYC NEW YORK NY | NOMO SOHO | RESIDENCE INN | RITZ CARLTON | THE MANSFIELD HOTE | THE REDBURY | WARWICK MELROSE HO /) tags = tags "#lodge"
+    if (/ DELTA AIR | JETBLUE | SPIRIT AIRL | UNITED 016260 /) tags = tags "#travel-air"
+    if (/ AMTRAK | BART SFIA | BART-POWELL | CALTRAIN | CLIPPER SERVICE | COACHUSA\/MEGABUS | DART TICKET | MTA MVM\*G001-CONEY | METRO-NORTH /) tags = tags "#travel-train"
+    if (/ MUJI JFK JAMAICA NY | OTG JFK T5 VENTURE JAMAICA NY /) tags = tags "#travel-food"
+    if (/ NEIMAN MARCUS /) tags = tags "#neimanmarcus"
+    if (/ NUTHOUSE HARDWARE /) tags = "#hardware"
 
     # Tag by purpose
-    if (/ ATLASSIAN | BACKBLAZE | WWW.CLEVERBRIDGE.N | FULLCONTACT.COM | OMNI DEVELOPMENT | PAW.CLOUD | PRAGMATIC PROGRAMM | RACKSPACE CLOUD | REPORT.COM /) tags = $tags "#online-services"
+    if (/ ATLASSIAN | BACKBLAZE | WWW.CLEVERBRIDGE.N | FULLCONTACT.COM | OMNI DEVELOPMENT | PAW.CLOUD | PRAGMATIC PROGRAMM | RACKSPACE CLOUD | REPORT.COM /) tags = tags "#online-services"
 
     # Tag by metropolitan area
-    if (/ BROOKLYN NY | NEW YORK NY | NYC-TAXI /) tags = $tags "#new-york-city-metro-area "
-    if (/ ADDIS 0001 TX | ADDISON TX | DALLAS TX | DENTON TX | IRVING TX /) tags = $tags "#dallas-metro-area "
-    if (/ HOUSTON TX /) tags = $tags "#houston-metro-area "
-    if (/ LOS ANGELES CA | SANTA MONICA CA /) tags = $tags "#los-angeles-metro-area "
+    #if (/ BROOKLYN NY | JAMAICA NY | NEW YORK NY | NYC-TAXI /) tags = tags "#new-york-city-metro-area "
+    #if (/ ADDIS 0001 TX | ADDISON TX | DALLAS TX | DENTON TX | IRVING TX /) tags = tags "#dallas-metro-area "
+    #if (/ HOUSTON TX /) tags = tags "#houston-metro-area "
+    #if (/ LOS ANGELES CA | SANTA MONICA CA /) tags = tags "#los-angeles-metro-area "
+    #if (/ BERKELEY CA | DALY CITY CA | OAKLAND CA | PALO ALTO CA | SAN FRANCISCO CA | SANTA CLARA CA /) tags = tags "#san-francisco-metro-area "
 
     # Done
-    if (tags != "") next
-    print
+    if (!use) next
+    #if (tags != "") next
+    $5 = $5 " " tags
+    print "\"" $0 "\""
 }
 END {
 }
