@@ -1,0 +1,148 @@
+#!/usr/bin/env ruby
+
+##
+# Parse a LinkedIn Sales Navigator HTML page of people to TSV.
+#
+# This script converts HTML to TSV (Tab Separated Values),
+# which can be useful for spreadsheets such as Microsoft Excel.
+#
+# You can also edit this script to customize it for your needs,
+# such as exporting CSV (Comma Separated Values), JSON, or text.
+#
+# This script is not affiliated with the LinkedIn company in any way.
+# Please limit your use of this script to only your own valid uses.
+# Use at your own risk. There is no warranty, express or implied.
+#
+# Version: 1.0.0
+# Created: 2016-12-10
+# Updated: 2016-12-10
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+require 'cgi'
+require 'nokogiri'
+
+public 
+
+# Create namespaces
+module LinkedIn
+  module SalesNavigator
+  end
+end
+
+class LinkedIn::SalesNavigator::Page
+
+  attr_accessor :html, :entities
+
+  def initialize(html)
+    @html = html
+  end
+
+  
+  def scrub
+    html.css('path').remove
+    html.css('svg').remove
+    html.css('nav').remove
+    html.css('button').remove
+    html.css('input').remove
+    html.css('*[class~="sublinks-container"]').remove
+    html.css('*[class~="secondary-action-item"]').remove
+    html.css('*[class~="secondary-actions-container"]').remove 
+    html.css('*[class~="hover-border"]').remove
+    html.css('*[class~="custom-badges-wrapper"]').remove
+    html.css('*[class~="a11y-hidden"]').remove
+  end
+
+  def entities
+    @entities = html.css('div[class~="entity-info"]')
+  end
+
+end
+
+class LinkedIn::SalesNavigator::User
+  
+  attr_accessor \
+    :html,
+    :person_name, 
+    :company_name, 
+    :title,
+    :employment_duration,
+    :geo_area,
+    :info_values
+
+  def initialize(html)
+    @html = html
+  end
+
+  def to_s
+    html.to_xhtml(indent: 2)
+  end
+
+  def to_h
+    return {
+      "person_name" => person_name,
+      "company_name" => company_name,
+      "title" => title,
+      "employment_duration" => employment_duration,
+      "geo_area" => geo_area,
+    }
+  end
+
+  def to_tsv
+    [
+      person_name, 
+      company_name, 
+      title,
+      employment_duration,
+      geo_area,
+    ].join("\t")    
+  end
+
+  def person_name
+    @person_name ||= person_name_tags&.text.sub(/, (Esq|MD|PhD)\.?$/,'')
+  end
+
+  def person_name_tags
+    html.css('*[class~="name-link"]')&.first
+  end
+
+  def company_name
+    @company_name ||= company_name_tags&.first&.text
+  end
+
+  def company_name_tags
+    html.css('*[class~="company-name"]')
+  end
+
+  def title
+    @title ||= info_values[0]
+  end
+
+  def employment_duration
+    @employment_duration ||= info_values[1]
+  end
+
+  def geo_area
+    @geo_area ||= info_values[2]
+  end
+
+  def info_values
+    @info_values ||= info_value_tags&.map{|tag| tag.text }
+  end
+
+  def info_value_tags
+    html.css('*[class~="info-value"]')
+  end
+
+end
+
+def main
+  s=$stdin.read
+  html=Nokogiri::HTML(s)
+  page=LinkedIn::SalesNavigator::Page.new(html)
+  users=page.entities.map{|entity| LinkedIn::SalesNavigator::User.new(entity) }
+  users.each{|user| puts user.to_tsv }
+end
+
+main
