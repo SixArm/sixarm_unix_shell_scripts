@@ -23,7 +23,7 @@
 require 'cgi'
 require 'nokogiri'
 
-public 
+public
 
 # Create namespaces
 module LinkedIn
@@ -39,7 +39,7 @@ class LinkedIn::SalesNavigator::Page
     @html = html
   end
 
-  
+
   def scrub
     html.css('path').remove
     html.css('svg').remove
@@ -48,7 +48,7 @@ class LinkedIn::SalesNavigator::Page
     html.css('input').remove
     html.css('*[class~="sublinks-container"]').remove
     html.css('*[class~="secondary-action-item"]').remove
-    html.css('*[class~="secondary-actions-container"]').remove 
+    html.css('*[class~="secondary-actions-container"]').remove
     html.css('*[class~="hover-border"]').remove
     html.css('*[class~="custom-badges-wrapper"]').remove
     html.css('*[class~="a11y-hidden"]').remove
@@ -61,11 +61,11 @@ class LinkedIn::SalesNavigator::Page
 end
 
 class LinkedIn::SalesNavigator::User
-  
+
   attr_accessor \
     :html,
-    :person_name, 
-    :company_name, 
+    :person_name,
+    :company_name,
     :title,
     :employment_duration,
     :geo_area,
@@ -82,6 +82,7 @@ class LinkedIn::SalesNavigator::User
   def to_h
     return {
       "person_name" => person_name,
+      "graph_distance" => graph_distance,
       "company_name" => company_name,
       "title" => title,
       "employment_duration" => employment_duration,
@@ -91,16 +92,17 @@ class LinkedIn::SalesNavigator::User
 
   def to_tsv
     [
-      person_name, 
-      company_name, 
+      person_name,
+      graph_distance,
+      company_name,
       title,
       employment_duration,
       geo_area,
-    ].join("\t")    
+    ].join("\t")
   end
 
   def person_name
-    @person_name ||= person_name_tags&.text.sub(/, (Esq|MD|PhD)\.?$/,'')
+    @person_name ||= person_name_tags&.text.sub(/,.*$/,'')
   end
 
   def person_name_tags
@@ -119,8 +121,16 @@ class LinkedIn::SalesNavigator::User
     @title ||= info_values[0]
   end
 
+  def graph_distance
+    @graph_distance ||= graph_distance_tags&.first&.text&.to_i
+  end
+
+  def graph_distance_tags
+    html.css('*[class~="degree-icon"]')
+  end
+
   def employment_duration
-    @employment_duration ||= info_values[1]
+    @employment_duration ||= info_values[1].sub(/^\|/,'').sub(/\|/,' | ')
   end
 
   def geo_area
