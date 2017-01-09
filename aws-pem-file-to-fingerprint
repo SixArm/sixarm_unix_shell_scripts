@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# Given a AWS PEM key pair file, print the fingerprint.
+#
+# Example:
+#
+#     $ aws-pem-file-to-fingerprint foo.pem
+#     af:6f:ff:6f:0f:ff:f9:6f:31:40:f9:4f:f4:96:71:ff:0f:25:76:f5
+#
+# Command: aws-pem-file-to-fingerprint
+# Created: 2017-01-08
+# Updated: 2017-01-08
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+openssl pkcs8 -in "$1" -inform PEM -outform DER -topk8 -nocrypt | openssl sha1 -c
