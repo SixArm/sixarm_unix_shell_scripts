@@ -70,7 +70,7 @@ File scripts to print a given [ls](ls) field:
 
  * [history-count-commands](history-count-commands): Count your history commands.
  * [history-rank](history-rank): List your most-frequent history commands.
-
+ * [history-clear](history-clear): Clear the history in bash and zsh.
 
 ### grep
 

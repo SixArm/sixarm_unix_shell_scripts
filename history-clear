@@ -1,0 +1,6 @@
+history -c
+for x in ~/.zhistory ~/.zsh_history ~/.bash_history $HISTFILE; do
+  echo "rm $x"
+  rm -f "$x"
+done
+echo "Now quit all shells."
