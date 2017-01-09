@@ -302,3 +302,8 @@ File scripts to print a given `ls` field:
  * `rails-test-unit`: Run our typical test files
  * `rails-word-count`: Shows the word count of each file in a Rails app subdirectory.
  * `rails_root_vendor_plugins`: Print a list of the Rails plugins in ./vendor/plugins
+
+
+## Amazon Web Services
+
+ * `aws-pem-file-to-fingerprint`: Given a AWS PEM key pair file, print the fingerprint.
