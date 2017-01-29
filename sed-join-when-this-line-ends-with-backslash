@@ -6,11 +6,38 @@
 #
 # From http://sed.sourceforge.net/sed1line.txt
 #
+# ## Explanation
+#
+# The command works like this:
+#
+#     :a
+#     |---> create label
+#      |--> label name `a`
+#
+#     /\\$/N
+#     |-------> match
+#      |------> backslash
+#        |----> end of line
+#          |--> next
+#
+#     s/\\\n//
+#     |---------> search for
+#       |-------> backslash and newline
+#           |---> replace with
+#            |--> nothing
+#
+#     ta
+#     |---> if replace is true
+#      |--> go to label `a`
+#
+# ## Tracking
+#
+# Command: sed-join-when-this-line-ends-with-backslash
 # Version: 1.2.0
 # Created: 2013-08-19
-# Updated: 2015-01-25
+# Updated: 2017-01-28
 # License: GPL
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 set -euf
-sed -e :a -e '/\\$/N; s/\\\n//; ta' file##
+sed -e :a -e '/\\$/N; s/\\\n//; ta'
