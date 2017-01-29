@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# sed script to join each line that starts with an equal sign.
+# sed script to join each line that starts with a blank.
 #
-# If a line begins with an equal sign, append it to the
-# previous line and replace the "=" with a single space.
+# If a line begins with a blank, then append it to the
+# previous line and replace leading blanks with a single space.
 #
 # From http://sed.sourceforge.net/sed1line.txt
 #
@@ -19,12 +19,13 @@
 #     |----> if not the last line
 #       |--> then append the next line
 #
-#     s/\n=/ /
-#     |--------> search for
-#       |------> newline
-#         |----> equal sign
-#          |---> replace with
-#           |--> space
+#     s/\n[[:blank:]]*/ /
+#     |-------------------> search for
+#       |-----------------> newline
+#         |---------------> blank whitespace
+#                    |----> match 0 or more
+#                     |---> replace with
+#                      |--> space
 #
 #     ta
 #     |---> if replace is true
@@ -36,7 +37,7 @@
 #
 # ## Tracking
 #
-# Command: sed-join-when-next-line-starts-with-equal
+# Command: sed-join-when-next-line-starts-with-blanks
 # Version: 1.2.0
 # Created: 2013-08-19
 # Updated: 2017-01-28
@@ -44,4 +45,4 @@
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 set -euf
-sed -e :a -e '$!N; s/\n=/ /; ta' -e 'P;D'
+sed -e :a -e '$!N; s/\n[[:blank:]]\+/ /; ta' -e 'P;D'

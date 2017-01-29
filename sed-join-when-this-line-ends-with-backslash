@@ -1,8 +1,8 @@
 #!/bin/sh
 #
-# sed script to join lines that end with equal signs.
+# sed script to join each line that ends with a backslash.
 #
-# If a line ends with a backslash, join it to the next line.
+# If a line ends with a backslash, then join it to the next line.
 #
 # From http://sed.sourceforge.net/sed1line.txt
 #
