@@ -1,0 +1,36 @@
+#!/bin/sh
+#
+# Print lines that are not in the first set.
+#
+# Syntax:
+#
+#     extra <(...) <(...)
+#
+# Example:
+#
+#     extras <(ls -1 foo) <(ls -1 bar)
+#     => list of files that are in bar, not foo.
+#
+# ## Specifics
+#
+# The order does not matter.
+#
+# ## Notes
+#
+# In set theory, this is (B minus A) a.k.a. (B except A).
+#
+# This command is similar to the `diff` command or `compare` command.
+#
+# This command is currently implemented using `awk`.
+#
+# ## Tracking
+#
+# Program: extra
+# Version: 2.0.0
+# Created: 2017-01-30
+# Updated: 2017-01-30
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+awk 'FNR==NR{a[$0];next}!($0 in a)' "$@"
