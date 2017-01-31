@@ -1,19 +1,18 @@
 #!/bin/sh
 #
-# Print lines that are not in the sets so far.
+# Print the lines that are in all of the inputs.
 #
 # Syntax:
 #
-#     extra <input> ...
+#     intersect <input> ...
 #
 # Examples:
 #
-#     extra a.txt b.txt
-#     => lines that are not in a.txt but are in b.txt
+#     intersect a.txt b.txt
+#     => lines that are in both of the files.
 #
-#     extra a.txt b.txt c.txt
-#     => lines that are not in a.txt but in b.txt,
-#        then lines that are not in a.txt or b.txt but in c.txt.
+#     intersect a.txt b.txt c.txt
+#     => lines that are in all of the files.
 #
 # ## Specifics
 #
@@ -30,15 +29,15 @@
 #
 # ## Notes
 #
-# In set theory, this is (B minus A) a.k.a. (B except A).
+# In set theory, this is (A intersect B).
 #
-# This command aims to be fast; it does not sort.
+# This command aims to be fast, not to sort.
 #
 # This command is currently implemented using `awk`.
 #
 # ## Tracking
 #
-# Program: extra
+# Program: intersect
 # Version: 2.0.2
 # Created: 2017-01-30
 # Updated: 2017-01-30
@@ -46,4 +45,4 @@
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 set -eu
-awk 'FNR==NR{seen[$0];next}!($0 in seen)' "$@"
+awk 'FNR==1{f+=1} seen[$0]+=1 {next} END { for (key in seen) { if (seen[key]==f) { print key } } }' "$@"

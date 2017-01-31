@@ -1,37 +1,48 @@
 #!/bin/sh
 #
-# Print the set union, i.e. unique lines.
+# Print the lines that are in any of the inputs.
 #
 # Syntax:
 #
-#     union < <
+#     union <input> ...
 #
-# Example:
+# Examples:
 #
-#     union <(cat foo) <(cat bar)
-#     => unique lines in foo and/or bar.
+#     union a.txt b.txt
+#     => lines that are in either of the files.
+#
+#     union a.txt b.txt c.txt
+#     => lines that are in any of the files.
 #
 # ## Specifics
 #
 # The order does not matter.
 #
+# ## Related
+#
+# These commands are related:
+#
+#   * `union`: print lines in (A union B)
+#   * `intersect`: print lines in (A intersect B)
+#   * `except`: print lines in (A except B) a.k.a. (A - B)
+#   * `extra` : print lines in (A extra B) a.k.a. (B - A)
+#
 # ## Notes
 #
 # In set theory, this is (A union B).
 #
-# This command is currently implemented using `awk`.
+# This command aims to be fast, not to sort.
 #
-# This implementation is generally much faster than doing `sort -u`
-# because this implementation doesn't do any sorting.
+# This command is currently implemented using `awk`.
 #
 # ## Tracking
 #
 # Program: union
-# Version: 2.0.0
+# Version: 2.0.2
 # Created: 2017-01-30
 # Updated: 2017-01-30
 # License: GPL
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-set -euf
-awk '!seen[$0] {print} {++seen[$0]}' "$0"
+set -eu
+awk '!seen[$0] {print} {seen[$0]=1}' "$@"
