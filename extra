@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Print lines that are not in the sets so far.
+# Print the lines that are in the last input, not other inputs.
 #
 # Syntax:
 #
@@ -12,8 +12,7 @@
 #     => lines that are not in a.txt but are in b.txt
 #
 #     extra a.txt b.txt c.txt
-#     => lines that are not in a.txt but in b.txt,
-#        then lines that are not in a.txt or b.txt but in c.txt.
+#     => lines that are not in a.txt nor b.txt but are in c.txt.
 #
 # ## Specifics
 #
@@ -34,7 +33,7 @@
 #
 # This command aims to be fast; it does not sort.
 #
-# This command is currently implemented using `awk`.
+# This command is currently implemented using `awk` and POSIX.
 #
 # ## Tracking
 #
@@ -46,4 +45,4 @@
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 set -eu
-awk 'FNR==NR{seen[$0];next}!($0 in seen)' "$@"
+awk 'BEGIN{argindmax=ARGC-1} FNR==1{argind+=1} argind<argindmax {seen[$0]; next}!($0 in seen)' "$@"

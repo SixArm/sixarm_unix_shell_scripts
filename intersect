@@ -33,7 +33,7 @@
 #
 # This command aims to be fast, not to sort.
 #
-# This command is currently implemented using `awk`.
+# This command is currently implemented using `awk` and POSIX.
 #
 # ## Tracking
 #
@@ -45,4 +45,4 @@
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 set -eu
-awk 'FNR==1{f+=1} seen[$0]+=1 {next} END { for (key in seen) { if (seen[key]==f) { print key } } }' "$@"
+awk 'FNR==1{argind+=1} seen[$0]+=1 {next} END { for (key in seen) { if (seen[key]==argind) { print key } } }' "$@"

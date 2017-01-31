@@ -33,7 +33,7 @@
 #
 # This command aims to be fast, not to sort.
 #
-# This command is currently implemented using `awk`.
+# This command is currently implemented using `awk` and POSIX.
 #
 # ## Tracking
 #
