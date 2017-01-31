@@ -1,0 +1,37 @@
+#!/bin/sh
+#
+# Print the set union, i.e. unique lines.
+#
+# Syntax:
+#
+#     union < <
+#
+# Example:
+#
+#     union <(cat foo) <(cat bar)
+#     => unique lines in foo and/or bar.
+#
+# ## Specifics
+#
+# The order does not matter.
+#
+# ## Notes
+#
+# In set theory, this is (A union B).
+#
+# This command is currently implemented using `awk`.
+#
+# This implementation is generally much faster than doing `sort -u`
+# because this implementation doesn't do any sorting.
+#
+# ## Tracking
+#
+# Program: union
+# Version: 2.0.0
+# Created: 2017-01-30
+# Updated: 2017-01-30
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+awk '!seen[$0] {print} {++seen[$0]}' "$0"
