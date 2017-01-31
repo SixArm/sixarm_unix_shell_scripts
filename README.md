@@ -65,7 +65,6 @@ File scripts to print a given [ls](ls) field:
  * [date-stamp-shortest](date-stamp-shortest): Print the current date stamp UTC in the shortest format.
 
 
-
 ### history
 
  * [history-count-commands](history-count-commands): Count your history commands.
@@ -175,6 +174,14 @@ File scripts to print a given [ls](ls) field:
 
  * [uuid-line-fill](uuid-line-fill): uuid-filler reads input lines and fills in secure random UUIDs.
  * [version-file-text-changer](version-file-text-changer): Search-and-replace the VERSION number in a text file.
+
+
+## text sets
+
+ * [union](union): set "union" of the inputs' lines.
+ * [intersect](intersect): set "intersect" of the inputs' lines.
+ * [except](except): set "except" of the inputs' lines a.k.a. set (A - B).
+ * [extra](extra): set "extra" of the inputs' lines, a.k.a. set (B - A).
 
 
 ### media
