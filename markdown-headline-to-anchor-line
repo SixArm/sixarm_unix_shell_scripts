@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+ARGF.each_line do |e|
+  e.gsub!(/^(#+)(.*)/){
+    depth = Regexp.last_match(1).length
+    h="h" + depth.to_s
+    headline = Regexp.last_match(2).strip
+    name=headline.downcase.gsub(/'+/,'').gsub(/-*[^[:alnum:]]-*/,'-').gsub(/^-+|-+$/,'')
+    toc=("  " * (depth - 1)) + "* [#{headline}](#{name})"
+    anchor="<#{h}><a name=\"#{name}\">#{headline}</a></#{h}>"
+  }
+  puts e
+end
