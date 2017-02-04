@@ -1,1 +1,0 @@
-redcarpet "$1" | cat _header.html - _footer.html > "${1%.*}.html"
