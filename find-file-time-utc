@@ -1,0 +1,3 @@
+find "$@" -print0 |
+xargs -0 stat -f"%m␟%N" |
+awk -F ␟ '{ s = "date -r " $1 " -u +\"%Y-%m-%dT%H:%M:%SZ\""; (s | getline t); close(s); $1=t; print}'
