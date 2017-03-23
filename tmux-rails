@@ -3,41 +3,91 @@ set -euf -o pipefail
 out () { printf %s\\n "$*" ; }
 
 ##
-# Launch tmux suitable for Rails development.
+# Launch tmux with a sesson and windows suitable for Rails development.
 #
 # Syntax:
 #
 #     tmux-rails [session-name]
 #
-# This script attaches to session-name (and creates it if needed).
+# Example:
 #
-# The _session-name_ defaults to the basename of the pwd.
+#     cd myapp
+#     tmux-rails
 #
 #
-# This launches these windows with these commands:
+# ## What this does
+#
+# The script attaches to session-name.
+#
+#   * If the session doesn't exist, then this creates it.
+#   * The _session-name_ defaults to the basename of the pwd.
+#
+# The script launches these windows with these commands:
 #
 #   * !1:edit = $EDITOR
-#   * @2:test = bundle exec bin/rake test
-#   * #3:log = cd log && tail -f log/development.log
+#   * @2:test = rake test
+#   * #3:log = cd log && tail -f development.log
 #   * $4:con = rails console
 #   * %5:db = rails db
 #   * ^6:server = rails server
 #   * &6:deploy = rake deploy
 #
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+#
+# ## Commands
+#
+# This script will choose the "rails" command:
+#
+#   * If the $RAILS env var is set, then use it.
+#   * If "bin/rails" is runnable, then use it.
+#   * If "bundle" command is runnable, then use "bundle exec rails".
+#
+# This script will do the same as above for the "rake" command.
+#
+#
+# ## Tracking
+#
+# Program: tmux-rails
+# Version: 3.0.0
+# Created: 2013-08-02
+# Updated: 2017-03-33
 # License: GPL
-# Updated: 2015-02-16
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 
-if [ -z ${TMUX+x} ]; then
+# We expect the TMUX environment variable to be unset.
+if [ -z ${TMUX+_} ]; then
     # noop
 else
     out "TMUX environment variable is alread set, so exit"
     exit 1
 fi
 
+# Choose a commmand for rails.
+if [ -z ${RAILS+_} ]; then
+  if [ -x 'bin/rails' ]; then
+    RAILS="bin/rails"
+  elif command -v bundle >/dev/null 2>&1; then
+    RAILS="bundle exec rails"
+  else
+    RAILS="rails"
+  fi
+fi
+
+# Choose a commmand for rake.
+if [ -z ${RAKE+_} ]; then
+  if [ -x 'bin/rake' ]; then
+    RAKE="bin/rake"
+  elif command -v bundle >/dev/null 2>&1; then
+    RAKE="bundle exec rake"
+  else
+    RAKE="rake"
+  fi
+fi
+
+
 # The session name defaults to the current directory's basename.
 s=${1-`basename \`pwd\``}
+
 
 # Set the name the terminal window to the session name.
 # This line is optional -- you may comment it out if you prefer.
@@ -50,20 +100,20 @@ echo -e "\033]1;$s\007"
 tmux new-session -d -s "$s"
 
 # Create the windows.
-tmux rename-window  "ed"
-tmux new-window -d -n "qa"
+tmux rename-window  "edit"
+tmux new-window -d -n "test"
 tmux new-window -d -n "log"
 tmux new-window -d -n "console"
 tmux new-window -d -n "db"
 tmux new-window -d -n "server"
 
 # Send keys.
-tmux send-keys -t "ed" "$EDITOR" C-m
-tmux send-keys -t "qa" "bundle exec rake spec" C-m
+tmux send-keys -t "edit" "$EDITOR" C-m
+tmux send-keys -t "test" "$RAKE spec" C-m
 tmux send-keys -t "log" "cd log && tail -f development.log" C-m
-tmux send-keys -t "console" "bundle exec rails console" C-m
-tmux send-keys -t "db" "bundle exec rails db" C-m
-tmux send-keys -t "server" "bundle exec rails server" C-m
+tmux send-keys -t "console" "$RAILS console" C-m
+tmux send-keys -t "db" "$RAILS db" C-m
+tmux send-keys -t "server" "$RAILS server" C-m
 
 # Last step: attatch to the session.
 tmux -2 attach-session -d
