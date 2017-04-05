@@ -1,0 +1,23 @@
+#!/usr/bin/env ruby
+
+##
+# xml-to-json converts text from XML to JSON.
+#
+# Example:
+#
+#     cat example.xml | xml-to-json > example.json
+#
+# Command: xml-to-json
+# Version: 3.0.0
+# Created: 2011-10-30
+# Updated: 2017-04-05
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+require 'json'
+require 'xmlsimple'
+text = ARGF.read
+hash = XmlSimple.xml_in(text)
+json = hash.to_json
+puts json

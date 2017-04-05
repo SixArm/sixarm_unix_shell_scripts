@@ -7,11 +7,13 @@
 #
 #     cat example.json | json-to-xml > example.xml
 #
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
+# Command: json-to-xml
+# Version: 3.0.0
+# Created: 2011-10-30
 # Updated: 2015-03-24
-##
-
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+#
 require 'json'
 require 'xmlsimple'
 text = ARGF.read
