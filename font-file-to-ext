@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# font-file-to-ext:
+# given a font file, output the file name extension.
+#
+# ## Tracking
+#
+# * Command: font-file-to-ext
+# * Version: 1.1.1
+# * Created: 2015-12-19
+# * Updated: 2017-04-12
+# * Command: font-file-to-ext
+# * License: GPL
+# * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+basename=`basename "$1"`
+ext=${basename//*.}
+ext=`echo $ext | tr '[:upper:]' '[:lower:]'`

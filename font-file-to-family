@@ -11,13 +11,15 @@
 #   * Implement on Linux and Windows
 #   * Get other font fields
 #
-# Command: font-file-to-family
-# Version: 1.1.0
-# Created: 2015-12-19
-# Updated: 2016-01-02
-# Command: font-file-to-family
-# License: GPL
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# ## Tracking
+#
+# * Command: font-file-to-family
+# * Version: 1.1.1
+# * Created: 2015-12-19
+# * Updated: 2017-04-12
+# * Command: font-file-to-family
+# * License: GPL
+# * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 set -euf
 otfinfo --info "$1"| sed -n 's/^Preferred family: */1/p; s/^Family: */2/p' | sort -u | head -1 | sed 's/^.//'

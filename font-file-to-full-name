@@ -11,12 +11,14 @@
 #   * Implement on Linux and Windows
 #   * Get other font fields
 #
-# Command: font-file-to-full-name
-# Version: 1.1.0
-# Created: 2015-12-19
-# Updated: 2016-02-16
-# License: GPL
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+# ## Tracking
+#
+# * Command: font-file-to-full-name
+# * Version: 1.1.1
+# * Created: 2015-12-19
+# * Updated: 2017-04-12
+# * License: GPL
+# * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 set -euf -o pipefail
 otfinfo --info "$1" | sed -n 's/Full name: *//p'`

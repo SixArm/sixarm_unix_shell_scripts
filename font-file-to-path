@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# font-file-to-path:
+# given a font file, print the canonical path.
+#
+# The canonical path syntax is:
+#
+#   ~~~sh
+#   <family>/<fullname>.<ext>
+#   ~~~
+#
+# Example:
+#
+#   ~~~sh
+#   $ font-file-to-path HELV-BI.OTF
+#   Helvetica/Helvetica Bold Italic.otf
+#   ~~~~
+# 
+# ## Tracking
+#
+# * Command: font-file-to-path
+# * Version: 1.1.1
+# * Created: 2015-12-19
+# * Updated: 2017-04-12
+# * Command: font-file-to-ext
+# * License: GPL
+# * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+src="$1"
+family=`font-file-to-family "$src"`
+fullname=`font-file-to-full-name "$src"`
+ext=`font-file-to-ext "$src"`
+echo "$family/$fullname.$ext"
