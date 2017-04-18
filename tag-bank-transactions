@@ -13,6 +13,14 @@
 #   * A blank field; we do not know what this means.
 #   * A text note that typically explains the vendor, purpose, etc.
 #
+# This script iterates on the input lines. For each line, this script
+# does a bunch of text searches that we have hand-coded to our needs,
+# and if any match is found then this script can set a `site` variable
+# and a `tags` variable.
+#
+# A line may match zero or more text searches. For example, one line could be
+# recognized as a taxi company (such as Lyft) and also as a metro area (such as NYC).
+#
 BEGIN {
     FS=OFS="\",\""
     IGNORECASE = 1
@@ -21,15 +29,17 @@ BEGIN {
     gsub(/^"/,"")
     gsub(/"$/,"")
 
-    use=1 # true
-    site=""
-    tags=""
+    use=1 # 1=true 0=false
+    site="?"
+    tags="?"
 
-    # Skip irrelevant transactions
-    if (/ATM ACCESS |ATM DEPOSIT |ATM WITHDRAWAL |eDeposit |eWithdrawal |INTERNATIONAL PURCHASE TRANSACTION |ONLINE TRANSFER |RECURRING PAYMENT /) next
+    # Deposits, withdrawals, transfers, etc.
+    if (/ATM ACCESS |ATM DEPOSIT |ATM WITHDRAWAL |eDeposit |eWithdrawal |INTERNATIONAL PURCHASE TRANSACTION |ONLINE TRANSFER |RECURRING PAYMENT /) {
+        next  # Personally I skip these
+    }
 
-    # Skip irrelevant companies
-    if (/ 646-450-7073 | AETHER APPARE | CONTAINERSTORESANF | JOURNEYS | LULULEMON | MACY.S | MERIT CLEANERS | MOMA BOOKSTORE | NORDSTROM | NORTH FACE | \*THINK BLEECKER New York NY | REI | SQ \*PALENQUE New York NY | THE UPS STORE | TRILLIUM INTEGRATI | WPY\*A Room to Brea | WPY\*Mama Art Your /) next
+    # Skip items that I know I personally don't care about
+    if (/ AETHER APPARE | CONTAINERSTORESANF | JOURNEYS | LULULEMON | MACY.S | MERIT CLEANERS | MOMA BOOKSTORE | NORDSTROM | NORTH FACE | \*THINK BLEECKER New York NY | REI | SQ \*PALENQUE New York NY | THE UPS STORE | TRILLIUM INTEGRATI | WPY\*A Room to Brea | WPY\*Mama Art Your /) next
 
     # Skip tickets to events
     if (/ METREON | PREKINDLE EVENTS | STATE FAIR | TFI\*TICKETFLY /) next
@@ -37,19 +47,13 @@ BEGIN {
     # Skip non-work lodging
     if (/ COSMO VESPER | EMBASSY NETWORK /) next
 
-    # Skip irrelevant cities
-    if (/ BEACON NY | LAS VEGAS NV | LOS ANGELES CA /) next
-
-    # Skip rare travel items
-    if (/ PILOT .* LOST HILLS CA /) next
-
     # Defer crowdfunding
     if (/ INDIEGOGO /)                      { use = 0; site = "indiegogo.com";   tags = tags "#crowdfunding"; }
     if (/ KICKSTARTER | KICKSTARTER.?COM /) { use = 0; site = "kickstarter.com"; tags = tags "#crowdfunding"; }
     if (/ PATREON.COM /)                    { use = 0; site = "patreon.com";     tags = tags "#crowdfunding"; }
 
     # Defer companies that need better categorization
-    if (/ AMAZON | AMAZON.COM |KINDLE-/)    { use = 0; site = "amazon.com" }
+    if (/ AMAZON | AMAZON.COM |KINDLE-/)    { use = 0; site = "amazon.com"; }
     if (/ APPLE STORE | APL\* ITUNES.COM/)  { use = 0; site = "apple.com"; }
     if (/ AT&T | AT&T\*BILL PAYMENT /)      { use = 0; site = "att.com"; }
     if (/ BARNES & NOBLE /)                 { use = 0; site = "barnesandnoble.com"; }
@@ -74,23 +78,29 @@ BEGIN {
     if (/ DELTA AIR | JETBLUE | SPIRIT AIRL | UNITED 016260 /) tags = tags "#travel-air"
     if (/ AMTRAK | BART SFIA | BART-POWELL | CALTRAIN | CLIPPER SERVICE | COACHUSA\/MEGABUS | DART TICKET | MTA MVM\*G001-CONEY | METRO-NORTH /) tags = tags "#travel-train"
     if (/ MUJI JFK JAMAICA NY | OTG JFK T5 VENTURE JAMAICA NY /) tags = tags "#travel-food"
-    if (/ NEIMAN MARCUS /) tags = tags "#neimanmarcus"
     if (/ NUTHOUSE HARDWARE /) tags = "#hardware"
 
     # Tag by purpose
-    if (/ ATLASSIAN | BACKBLAZE | WWW.CLEVERBRIDGE.N | FULLCONTACT.COM | OMNI DEVELOPMENT | PAW.CLOUD | PRAGMATIC PROGRAMM | RACKSPACE CLOUD | REPORT.COM /) tags = tags "#online-services"
+    if (/ ATLASSIAN /)          { site = "atlassian.com";    tags = tags "#webservice"; }
+    if (/ BACKBLAZE /)          { site = "backblaze.com";    tags = tags "#webservice"; }
+    if (/ WWW.CLEVERBRIDGE.N /) { site = "cleverbridge.com"; tags = tags "#webservice"; }
+    if (/ FULLCONTACT.COM /)    { site = "fullcontact.com";  tags = tags "#webservice"; }
+    if (/ OMNI DEVELOPMENT /)   { site = "omnigroup.com";    tags = tags "#webservice"; }
+    if (/ PAW.CLOUD /)          { site = "paw.cloud";        tags = tags "#webservice"; }
+    if (/ PRAGMATIC PROGRAMM /} { site = "pragprog.com";     tags = tags "#webservice"; }
+    if (/ RACKSPACE CLOUD /)    { site = "rackspace.com";    tags = tags "#webservice"; }
+    if (/ REPORT.COM /)         { site = "report.com";       tags = tags "#webservice"; }
 
-    # Tag by metropolitan area
-    #if (/ BROOKLYN NY | JAMAICA NY | NEW YORK NY | NYC-TAXI /) tags = tags "#new-york-city-metro-area "
-    #if (/ ADDIS 0001 TX | ADDISON TX | DALLAS TX | DENTON TX | IRVING TX /) tags = tags "#dallas-metro-area "
-    #if (/ HOUSTON TX /) tags = tags "#houston-metro-area "
-    #if (/ LOS ANGELES CA | SANTA MONICA CA /) tags = tags "#los-angeles-metro-area "
-    #if (/ BERKELEY CA | DALY CITY CA | OAKLAND CA | PALO ALTO CA | SAN FRANCISCO CA | SANTA CLARA CA /) tags = tags "#san-francisco-metro-area "
+        # Tag by metropolitan area, using the format #metro-<country>-<region>-<locality> 
+    if (/ BROOKLYN NY | JAMAICA NY | NEW YORK NY | NYC-TAXI /) tags = tags "#metro-us-tx-new-york-city"
+    if (/ ADDIS 0001 TX | ADDISON TX | DALLAS TX | DENTON TX | IRVING TX /) tags = tags "#metro-us-tx-dallas "
+    if (/ HOUSTON TX /) tags = tags "#metro-us-tx-houston "
+    if (/ LOS ANGELES CA | SANTA MONICA CA /) tags = tags "#metro-us-ca-los-angeles "
+    if (/ BERKELEY CA | DALY CITY CA | OAKLAND CA | PALO ALTO CA | SAN FRANCISCO CA | SANTA CLARA CA /) tags = tags "#metro-us-ca-san-francisco-metro-area "
 
     # Done
     if (!use) next
-    #if (tags != "") next
-    $5 = $5 " " tags
+    $5 = $5 " " site " " tags
     print "\"" $0 "\""
 }
 END {
