@@ -287,9 +287,9 @@ File scripts to print a given [ls](ls) field:
 
 ### Ruby managers
 
- * [ruby-build-install`: Install `ruby-build](ruby-build-install`: Install `ruby-build) where we want it.
- * [ruby-install-install`: Install `ruby-install](ruby-install-install`: Install `ruby-install) where we want it.
- * [ruby-build-update`: Use `ruby-build](ruby-build-update`: Use `ruby-build) to update Ruby in our preferred locations.
+* [ruby-build-install](ruby-build-install): Install `ruby-build` where we want it.
+ * [ruby-build-update](ruby-build-update): Use `ruby-build` to update Ruby in our preferred locations.
+ * [ruby-install-install](ruby-install-install): Install `ruby-install`` where we want it.
 
 
 ### Ruby testing and documentating
