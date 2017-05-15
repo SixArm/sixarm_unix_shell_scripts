@@ -1,0 +1,32 @@
+#!/bin/bash
+#
+# Split a text file to unique words; print one per line.
+#
+# Example:
+#
+#   ```shell
+#   $ cat example.txt | text-to-unique-words-per-ilne
+#   hello
+#   world
+#   ```
+#
+# Example for lowercase:
+#
+#   ```shell
+#   $ cat example.txt | tr '[:upper:]' '[:lower:]' | ... 
+#
+# Steps for each line:
+#
+#    * Delete non-alphanum characters
+#    * Remember each word
+#
+# This script has a goal to run fast, so it does not sort.
+#
+# Version: 1.0.0
+# Created: 2017-05-13
+# Updated: 2017-05-13
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+awk '{ gsub(/[^[:alnum:][:blank:]]/, ""); for(i=1;i<=NF;i++) words[$i]=1} END { for (word in words) { print word; } }'

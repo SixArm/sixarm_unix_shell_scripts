@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Split a text file to words; print one per line.
+#
+# Version: 1.0.0
+# Created: 2017-05-13
+# Updated: 2017-05-13
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+awk 'awk '{ gsub(/[^[:alnum:][:blank:]]/, ""); for(i=1;i<=NF;i++) print $i }'
