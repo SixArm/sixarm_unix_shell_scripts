@@ -2,6 +2,12 @@
 #
 # Normalize a shopping title string, suitable for alphabetizing and comparing.
 #
+# Example:
+#
+#   ```shell
+#   $ echo "The Shops at Alpha Bravo Center" | normalize-shop-title
+#   Alpha Bravo
+#
 # This script processes each input line and massages it.
 #
 # Step 1: run generic `normalize-title` items.
@@ -41,6 +47,6 @@ s/ *[™©®] *//g; \
 s/^ *(A|An|The) +//; s/ *, *(A|An|The) *$//; \
   s/^ *(Centers?|Centres?|Malls?|Shops?|Shoppes?|Shopping Centers?|Stores?|Theaters?|Theatres?) +(at|by|for|in|near|of) +//; \
 s/ *, *(Centers?|Centres?|Malls?|Shops?|Shoppes?|Shopping Centers?|Stores?|Theaters?|Theatres?) +(at|by|for|in|near|of) *$//; \
-  s/^ *(Centers?|Centres?|Malls?|Shops?|Shoppes?|Shopping Centers?|Stores?|Theaters?|Theatres?) +$//; 
-   s/ *(Centers?|Centres?|Malls?|Shops?|Shoppes?|Shopping Centers?|Stores?|Theaters?|Theatres?) *$/; 
+  s/^ *(Centers?|Centres?|Malls?|Shops?|Shoppes?|Shopping Centers?|Stores?|Theaters?|Theatres?) +$//; \
+   s/ *(Centers?|Centres?|Malls?|Shops?|Shoppes?|Shopping Centers?|Stores?|Theaters?|Theatres?) *$//; \
 "
