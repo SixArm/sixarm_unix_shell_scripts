@@ -1,0 +1,46 @@
+#!/bin/sh
+#
+# Normalize a shopping title string, suitable for alphabetizing and comparing.
+#
+# This script processes each input line and massages it.
+#
+# Step 1: run generic `normalize-title` items.
+#
+#   * Smush whitespace runs to one space.
+#   * Strip leading/trailing whitespace.
+#   * Strip extraneous characters: ™ © ®
+#   * Strip leading stop words: A, The, etc.
+#   * Strip trailing stop words after a comma.
+#
+# Step 2: run shopping-related items.
+#
+#   * Strip leading/trailing ornaments: "Mall at", "Shops by", etc.
+#
+# Ornament words:
+#
+#   * Center, Centre
+#   * Mall
+#   * Shop, Shoppe
+#   * Shopping Center
+#   * Theater, Theatre
+#   * Prepositions: at, by, for, in, near, of
+#
+# ## Tracking
+#
+# Command: normalize-title
+# Version: 1.0.0
+# Created: 2017-05-27
+# Updated: 2017-06-01
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+
+sed -E " \
+s/[[:space:]]+/ /g; \
+s/^[[:space:]]+//; s/[[:space:]]+$//; \
+s/ *[™©®] *//g; \
+s/^ *(A|An|The) +//; s/ *, *(A|An|The) *$//; \
+  s/^ *(Centers?|Centres?|Malls?|Shops?|Shoppes?|Shopping Centers?|Stores?|Theaters?|Theatres?) +(at|by|for|in|near|of) +//; \
+s/ *, *(Centers?|Centres?|Malls?|Shops?|Shoppes?|Shopping Centers?|Stores?|Theaters?|Theatres?) +(at|by|for|in|near|of) *$//; \
+  s/^ *(Centers?|Centres?|Malls?|Shops?|Shoppes?|Shopping Centers?|Stores?|Theaters?|Theatres?) +$//; 
+   s/ *(Centers?|Centres?|Malls?|Shops?|Shoppes?|Shopping Centers?|Stores?|Theaters?|Theatres?) *$/; 
+"
