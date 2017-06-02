@@ -4,12 +4,11 @@
 #
 # This script processes each input line and massages it like this:
 #
-#   * Smush whitespace runs (e.g. tabs, spaces) to one space.
+#   * Smush whitespace runs to one space.
 #   * Strip leading/trailing whitespace.
 #   * Strip extraneous characters: ™ © ®
 #   * Strip leading stop words: A, The, etc.
 #   * Strip trailing stop words after a comma.
-#   * Smush multiple spaces to one space.
 #
 # ## Tracking
 #
