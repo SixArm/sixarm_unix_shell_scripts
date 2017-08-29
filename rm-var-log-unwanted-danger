@@ -9,16 +9,19 @@ set -euf -o pipefail
 # Remove these files:
 #
 #   * Compressed files, i.e. end in .bz2, .bzip, .gz, .tgz, .zip
-#   * End in .log.123 (any digits)
-#   * End in _log.123 (any digits)
+#   * Sequence files, e.g. end in ".log.1", "-err.2", etc.
 #   * dist-upgrade/*
 #   * nagios3/archives/*
 #   * samba/log*
+#   * unattended-upgrades/unattended-upgrades-dpkg_*.log
+#
+# Note: we prefer to delete files by using `-exec rm` vs. `-delete`.
+# The former is more compatible, the latter is faster.
 #
 # Tracking:
 #
 #   * Command: rm-log-files-danger
-#   * Version: 1.2.0
+#   * Version: 1.3.0
 #   * Created: 2013-12-09
 #   * Updated: 2017-08-29
 #   * License: GPL
@@ -26,8 +29,9 @@ set -euf -o pipefail
 ##
 
 dir=/var/log
-find $dir \( -name "*.bz2" -o -name "*.bzip" -o -name "*.gz" -o -name "*.tgz" -o -name "*.zip" \) -delete
-find $dir | grep '\([\._]log\.[[:digit:]]+\)$' | xargs -I{} rm "{}"
+find $dir \( -name "*.bz2" -o -name "*.bzip" -o -name "*.gz" -o -name "*.tgz" -o -name "*.zip" -o -regex ".*[-_.]\(log\|err\).[1234567890]+" \) -exec rm {} \;
 rm -rf $dir/dist-upgrade/*
 rm -rf $dir/log/samba/log*
 rm -rf $dir/log/nagios3/archives/*
+rm -rf $dir/unattended-upgrades/unattended-upgrades-dpkg_*.log
+
