@@ -15,9 +15,14 @@ set -euf -o pipefail
 #   * nagios3/archives/*
 #   * samba/log*
 #
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
-# License: GPL
-# Updated: 2015-01-25
+# Tracking:
+#
+#   * Command: rm-log-files-danger
+#   * Version: 1.2.0
+#   * Created: 2013-12-09
+#   * Updated: 2017-08-29
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 
 dir=/var/log
