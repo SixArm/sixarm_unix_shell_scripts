@@ -8,7 +8,7 @@ set -euf -o pipefail
 #
 # Remove these files:
 #
-#   * End in .gz
+#   * Compressed files, i.e. end in .bz2, .bzip, .gz, .tgz, .zip
 #   * End in .log.123 (any digits)
 #   * End in _log.123 (any digits)
 #   * dist-upgrade/*
@@ -20,7 +20,9 @@ set -euf -o pipefail
 # Updated: 2015-01-25
 ##
 
-find /var/log | grep '\(\.gz\|[\._]log\.[[:digit:]]+\)$' | xargs -I{} rm "{}"
-rm -rf /var/log/dist-upgrade/*
-rm -rf /var/log/samba/log*
-rm -rf /var/log/nagios3/archives/*
+dir=/var/log
+find $dir \( -name "*.bz2" -o -name "*.bzip" -o -name "*.gz" -o -name "*.tgz" -o -name "*.zip" \) -delete
+find $dir | grep '\([\._]log\.[[:digit:]]+\)$' | xargs -I{} rm "{}"
+rm -rf $dir/dist-upgrade/*
+rm -rf $dir/log/samba/log*
+rm -rf $dir/log/nagios3/archives/*
