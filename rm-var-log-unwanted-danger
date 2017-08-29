@@ -6,14 +6,26 @@ set -euf -o pipefail
 #
 # We use this to clean up drive space.
 #
-# Remove these files:
+# Remove log rotation files:
 #
-#   * Compressed files. These end in .bz2, .bzip, .gz, .tgz, .zip.
-#   * Rotation files. These end in .1, .2, .3, etc.
+#   * Compressed files: these end in .bz2, .bzip, .gz, .tgz, .zip.
+#   * Sequence files: these end in .1, .2, .3, etc.
+#
+# Remove Unix system upgrade logs:
+#
 #   * dist-upgrade/*
+#   * unattended-upgrades/unattended-upgrades-dpkg_*.log
+#
+# Remove specific programs' logs:
+#
 #   * nagios3/archives/*
 #   * samba/log*
-#   * unattended-upgrades/unattended-upgrades-dpkg_*.log
+#
+# Remove macOS logs:
+#
+#   * asl/Logs/*
+#   * DiagnosticMessages/*.asl
+#   * powermanagement/*.asl
 #
 # Compatibility:
 #
@@ -28,7 +40,7 @@ set -euf -o pipefail
 # Tracking:
 #
 #   * Command: rm-log-files-danger
-#   * Version: 1.4.0
+#   * Version: 1.5.0
 #   * Created: 2013-12-09
 #   * Updated: 2017-08-29
 #   * License: GPL
@@ -37,8 +49,16 @@ set -euf -o pipefail
 
 dir=/var/log
 find $dir \( -name "*.bz2" -o -name "*.bzip" -o -name "*.gz" -o -name "*.tgz" -o -name "*.zip" -o -regex ".*\.[0123456789][0123456789]*" \) -exec rm {} \;
+
+## Unix system upgrades
 rm -rf $dir/dist-upgrade/*
-rm -rf $dir/log/samba/log*
-rm -rf $dir/log/nagios3/archives/*
 rm -rf $dir/unattended-upgrades/unattended-upgrades-dpkg_*.log
 
+## Specific programes
+rm -rf $dir/log/samba/log*
+rm -rf $dir/log/nagios3/archives/*
+
+## macOS
+rm -rf $dir/asl/Logs/*
+rm -rf $dir/DiagnosticMessages/*.asl
+rm -rf $dir/powermanagement/*.asl
