@@ -1,0 +1,43 @@
+ rsync -auvi \
+  --include ".ssh/"
+  --include ".config/"
+  --exclude ".CFUserTextEncoding" \ 
+  --exclude ".DS_Store" \
+  --exclude ".atom/" \
+  --exclude ".bash_history/" \
+  --exclude ".bash_sessions/" \    
+  --exclude ".cocoapods/" \
+  --exclude ".dropbox/" \
+  --exclude ".gnupg/" \
+  --exclude ".Xauthority/" \
+  --exclude ".cache/" \
+  --exclude ".emacs.d/" \
+  --exclude ".gem/" \
+  --exclude ".gitconfig/" \
+  --exclude ".lesshst/" \
+  --exclude ".local/" \
+  --exclude ".npm/" \
+  --exclude ".viminfo/" \                
+  --exclude ".wget-hsts/" \
+  --exclude ".local/share/Trash/" \
+  --exclude ".Trash/" \
+  --exclude ".CFUserTextEncoding/" \  
+  --exclude "Applications/" \
+  --exclude "backup/" \
+  --exclude "backups/" \
+  --exclude "backup-from-freeagent/" \
+  --exclude "Dropbox/" \
+  --exclude "git/" \
+  --exclude "Library/" \
+  --exclude "Movies/iMovie Library.imovielibrary/" \
+  --exclude "look/cache/" \
+  --exclude "me/icons/nuvola/" \
+  --exclude "Music/iTunes/iTunes Media/" \
+  --exclude "Music/iTunes/iTunes Media/Music/" \
+  --exclude "trash/" \
+  --exclude "trashable/" \
+  --exclude "virtual/" \
+  --exclude "virtuals/" \
+  --exclude "VirtualBox/" \
+  --exclude "VirtualBox VMs/" \
+  "$1" "$2"
