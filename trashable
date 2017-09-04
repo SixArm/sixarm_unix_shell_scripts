@@ -1,0 +1,25 @@
+#!/bin/sh
+set -euf
+
+cd ~/.trashable || exit 1
+
+# Delete known file names
+find . -type f \( -name .DS_Store -o -name desktop.ini -o -name Picasa.ini -o -name Thumbs.db  \) -delete
+
+# Delete empty items, before the main loop
+find . -depth -empty -delete
+
+# Find files > 100 bytes, that are not dot files
+find . -type f -size +100c \( ! -iname ".*" \) -print0 | 
+while read -r -d $'\0' x; do 
+  name=$(basename "$x")
+  size=$(file-size "$x")
+  sha=$(shasum -a 512 "$x" | awk '{print $1}')
+  printf "%s\n" "$sha" >> ~/.trashable.txt
+done
+
+# Delete the files
+find . -type f -size +100c \( ! -iname ".*" \) -delete
+
+# Delete empty items, after the main loop
+find . -depth -empty -delete
