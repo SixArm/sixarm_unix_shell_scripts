@@ -1,0 +1,17 @@
+awk '{
+  a[$0]++; 
+  n++;
+} 
+END {
+  expected = n / length(a);
+  sqrt_expected = sqrt(expected);
+  degrees_of_freedom = length(a) - 1;
+  chi_square = 0; 
+  for(i in a){ 
+    observed=a[i]; 
+    chi_gram = (observed-expected) / sqrt_expected; 
+    chi_square = chi_square + (((observed - expected) ^ 2) / expected);
+    print i, observed, expected, chi_gram;
+  }
+  print "n:", n, "chi_square:", chi_square, "degrees_of_freedom:", degrees_of_freedom
+}'
