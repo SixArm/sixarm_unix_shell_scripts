@@ -1,0 +1,31 @@
+#!/bin/sh
+set -euf
+
+##
+# Find all music files where there's an OGG file and corresponding MP3 file.
+# In my files, I want to keep the OGG file, and delete the MP3 file.
+# 
+# I test for a file name match:
+#
+#   ```shell
+#   ogg/Artist/Album/Artist = Album = 01 Song.ogg
+#   mp3/Artist/Album/Artist = Album = 01 Song.mp3
+#
+# I also test for a file name match where the MP3 file song number is "00",
+# which is what happened when I ripped my CDs without using the number.
+#
+##
+
+cd ~/look/music || exit 1
+
+find ogg -type f -name "*.ogg" | 
+sed 's#^ogg/#mp3/#; s#.ogg$#.mp3#;' | 
+while read x; do 
+  test -f "$x" && mv "$x" ~/.trashable/
+  x=`echo "$x" | sed 's/ = [[:digit:]][[:digit:]] / = 00 /'`
+  test -f "$x" && mv "$x" ~/.trashable/
+done
+
+cd mp3
+find . -type f \( -name .DS_Store -o -name desktop.ini -o -name Picasa.ini -o -name Thumbs.db  \) -delete
+find . -depth -empty -delete
