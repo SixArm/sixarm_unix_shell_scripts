@@ -1,0 +1,62 @@
+#!/bin/sh
+#
+# Normalize a shopping title string, suitable for alphabetizing and comparing.
+#
+# Example:
+#
+#   ```shell
+#   $ echo "The Shops at Alpha Bravo Center" | normalize-shop-title
+#   Alpha Bravo
+#
+# This script processes each input line and massages it.
+#
+# Step 1: run generic `normalize-title` items.
+#
+#   * Smush whitespace runs to one space.
+#   * Strip leading/trailing whitespace.
+#   * Strip parentheticals.
+#   * Strip extraneous characters: ™ © ®
+#   * Strip leading stop words: A, The, etc.
+#   * Strip trailing stop words after a comma.
+#
+# Step 2: run shopping-related items.
+#
+#   * Strip leading/trailing ornaments: "Mall at", "Shops by", etc.
+#
+# Ornament words:
+#
+#   * Center, Centre
+#.  * Court
+#.  * Food Court
+#.  * Inc, Incorporated
+#   * Mall
+#.  * Outlet
+#.  * Premium Outlets
+#.  * Restaurant
+#   * Shop, Shoppe
+#   * Shopping Center
+#.  * Square
+#   * Theater, Theatre
+#   * Prepositions: at, by, for, in, near, of
+#
+# ## Tracking
+#
+# Command: normalize-shop-title
+# Version: 1.2.0
+# Created: 2017-05-27
+# Updated: 2017-06-17
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+
+sed -E " \
+s/[[:space:]]+/ /g; \
+s/^[[:space:]]+//; s/[[:space:]]+$//; \
+s/\([^\)]*\)//g; \
+s/ *[™©®] *//g; \
+s/^[- ]*(A|An|The)[- ,]+//i; \
+s/[- ,]+(A|An|The)[- ,]*$//i; \
+s/^[- ]*(Centers?|Centres?|Courts?|Food[- ]Courts?|Inc\.?|Incorporated|Malls?|Outlets?|Premium[- ]Outlets?|Restaurants?|Shops?|Shoppes?|Shopping[- ]Centers?|Squares?|Stores?|Theaters?|Theatres?)[- ]+(at|by|for|in|near|of)[- ]+//gi; \
+s/[- ,]+(Centers?|Centres?|Courts?|Food[- ]Courts?|Inc\.?|Incorporated|Malls?|Outlets?|Premium[- ]Outlets?|Restaurants?|Shops?|Shoppes?|Shopping[- ]Centers?|Squares?|Stores?|Theaters?|Theatres?)[- ]+(at|by|for|in|near|of)[- ]*$//gi; \
+s/^[- ]*(Centers?|Centres?|Courts?|Food[- ]Courts?|Inc\.?|Incorporated|Malls?|Outlets?|Premium[- ]Outlets?|Restaurants?|Shops?|Shoppes?|Shopping[- ]Centers?|Squares?|Stores?|Theaters?|Theatres?)[- ]+//gi; \
+s/[- ,]+(Centers?|Centres?|Courts?|Food[- ]Courts?|Inc\.?|Incorporated|Malls?|Outlets?|Premium[- ]Outlets?|Restaurants?|Shops?|Shoppes?|Shopping[- ]Centers?|Squares?|Stores?|Theaters?|Theatres?)[- ]*$//gi; \
+"
