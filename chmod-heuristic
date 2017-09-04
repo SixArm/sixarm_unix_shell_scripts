@@ -4,26 +4,45 @@ path="$2"
 find "$path" -type f \( \
   -name '*.css' -o \
   -name '.document' -o \
-  -name '*.gemspec' -o \
-  -name '*.gemtest' -o \
+  -name '.gemspec' -o \
+  -name '.gemtest' -o \
+  -name '.gitattributes' -o \
+  -name '.gitignore' -o \
+  -name 'config.ru' -o \
+  -name 'Brewfile' -o \
+  -name 'Gemfile' -o \
+  -name 'Gemfile.lock' -o \
+  -name 'Podfile' -o \
+  -name 'Podfile.lock' -o \
+  -name 'Makefile' -o \
+  -name 'Rakefile' -o \
+  -name 'VERSION' -o \
+  -name '*.erb' -o \
   -name '*.gif' -o \
-  -name '*.gitattributes' -o \
-  -name '*.gitignore' -o \
+  -name '*/.gitkeep' -o \
+  -name '*.htm' -o \
   -name '*.html' -o \
+  -name '*.ico' -o \
   -name '*.jpg' -o \
   -name '*.js' -o \
   -name '*.log' -o \
   -name '*.md' -o \
+  -name '*.markdown' -o \
   -name '*.png' -o \
+  -name '*.rake' -o \
   -name '*.rspec' -o \
-  -name 'Gemfile' -o \
-  -name 'Rakefile' -o \
-  -name 'Brewfile' -o \
-  -name 'Makefile' -o \
-  -name 'VERSION' -o \
+  -name '*.txt' -o \
+  -name '*.text' -o \
+  -name '*.yaml' -o \
+  -name '*.yml' -o \
   -name '*.txt' -o \
   -name '*_test.rb' -o \
-  -regex '.*/config/.*.rb$' -o \
-  -regex '.*/lib/.*.rb$' -o \
-  -regex '.*/test/.*.rb$' \
+  -regex '.*README.*' -o \
+  -regex '.*/app/.*.rb' -o \
+  -regex '.*/config/.*.rb' -o \
+  -regex '.*/db/seeds.rb' -o \
+  -regex '.*/features/.*.rb' -o \
+  -regex '.*/lib/.*.rb' -o \
+  -regex '.*/spec/.*.rb' -o \
+  -regex '.*/test/.*.rb' \
 \) -exec chmod "$mods" {} \;
