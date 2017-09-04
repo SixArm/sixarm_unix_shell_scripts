@@ -1,0 +1,29 @@
+mods="$1"
+path="$2"
+
+find "$path" -type f \( \
+  -name '*.css' -o \
+  -name '.document' -o \
+  -name '*.gemspec' -o \
+  -name '*.gemtest' -o \
+  -name '*.gif' -o \
+  -name '*.gitattributes' -o \
+  -name '*.gitignore' -o \
+  -name '*.html' -o \
+  -name '*.jpg' -o \
+  -name '*.js' -o \
+  -name '*.log' -o \
+  -name '*.md' -o \
+  -name '*.png' -o \
+  -name '*.rspec' -o \
+  -name 'Gemfile' -o \
+  -name 'Rakefile' -o \
+  -name 'Brewfile' -o \
+  -name 'Makefile' -o \
+  -name 'VERSION' -o \
+  -name '*.txt' -o \
+  -name '*_test.rb' -o \
+  -regex '.*/config/.*.rb$' -o \
+  -regex '.*/lib/.*.rb$' -o \
+  -regex '.*/test/.*.rb$' \
+\) -exec chmod "$mods" {} \;
