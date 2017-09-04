@@ -28,4 +28,4 @@ mods="$1"
 path="$2"
 type="$3"
 
-find "$path" -type "$type" -print0 | xargs -0 chmod "mods" --
+find "$path" -type "$type" -print0 | xargs -0 chmod "$mods" --
