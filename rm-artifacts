@@ -1,0 +1,12 @@
+find "$1" \( \
+  -regex '.*/_build/.*' -o \
+  -regex '.*/build/.*' -o \
+  -regex '.*/Build/.*' -o \
+  -regex '.*/_checkouts/.*' -o \
+  -regex '.*/checkouts/.*' -o \
+  -regex '.*/Checkouts/.*' -o \    
+  -regex '.*/coverage/assets/.*' -o \
+  -regex '.*/node_modules/.*' -o \
+  -regex '.*/vendor/bundle/.*' -o \
+  -regex '.*/vendor/Pods/.*' \
+\)  -delete
