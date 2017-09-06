@@ -84,6 +84,7 @@
 ##
 set -euf
 out () { printf %s\\n "$*" ; }
+arg_file="$1"
 
 file_size() {
   file="$1"
@@ -99,6 +100,9 @@ file_size() {
   q=$?; [ $q -eq 0 ] || exit $q
   out "$size" | awk '{print $1}'
 }
+
+file_size "$arg_file"
+exit 0
 
 ##
 # Function library that can be useful for other projects.
