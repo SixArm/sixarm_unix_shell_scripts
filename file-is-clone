@@ -1,0 +1,68 @@
+#!/bin/sh
+
+##
+# file-is-clone:
+# return true iff a file is a clone
+#
+# Syntax:
+#
+#     file-is-clone <file1> <file2>
+#
+# Example:
+#
+#     $ file-is-clone foo.txt bar.txt
+#
+# To be a clone, the second file must be a file (not a directory or link),
+# and have the same bytes.
+#
+#
+# ## Implementation
+#
+# When the script compares two files, the script does this:
+#
+#   * Is each file a real file and not directory, symlink, etc.?
+#   * Are the two files the same size?
+#   * Do the two files have the same content, i.e. same bytes?
+#   * If the file is a clone, then exit 0.
+#   * If the file is not a clone, then exit nonzero.
+#
+# ## Tracking
+#
+#   * Program: file-is-clone
+#   * Version: 2.0.0
+#   * Created: 2014-12-02
+#   * Updated: 2017-09-06
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+out () { printf %s\\n "$*" ; }
+
+file1="$1"
+file2="$2"
+
+file_size() {
+  file="$1"
+  size=$(
+    ${DU:-du}  --apparent-size --block-size=1 "$1" 2>/dev/null ||
+    ${GDU:-gdu} --apparent-size --block-size=1 "$1" 2>/dev/null ||
+    ${FIND:-find} "$1" -printf "%s" 2>/dev/null ||
+    ${GFIND:-gfind} "$1" -printf "%s" 2>/dev/null ||
+    ${STAT:-stat} --printf="%s" "$1" 2>/dev/null ||
+    ${STAT:-stat} -f%z "$1" 2>/dev/null ||
+    ${WC:-wc} -c <"$1" 2>/dev/null
+  )
+  q=$?; [ $q -eq 0 ] || exit $q
+  out "$size" | awk '{print $1}'
+}
+
+file_is_clone() {
+  a="$1"; b="$2"
+  [ -f "$a" ] && [ ! -L "$a" ] &&
+  [ -f "$b" ] && [ ! -L "$b" ] &&
+  [ $(file_size "$a") == $(file_size "$b") ] &&
+  cmp "$a" "$b"
+  return
+}
+
+file_is_clone "$file1" "$file2"
