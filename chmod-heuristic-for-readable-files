@@ -8,6 +8,7 @@ find "$path" -type f \( \
   -name '.gemtest' -o \
   -name '.gitattributes' -o \
   -name '.gitignore' -o \
+  -name '.travis.yml' -o \
   -name 'config.ru' -o \
   -name 'Brewfile' -o \
   -name 'Gemfile' -o \
@@ -44,5 +45,6 @@ find "$path" -type f \( \
   -regex '.*/features/.*.rb' -o \
   -regex '.*/lib/.*.rb' -o \
   -regex '.*/spec/.*.rb' -o \
-  -regex '.*/test/.*.rb' \
+  -regex '.*/test/.*.rb' -o \
+  -regex '.*/.yarddoc/.*' \
 \) -exec chmod "$mods" {} \;
