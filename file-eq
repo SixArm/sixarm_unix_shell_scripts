@@ -1,0 +1,73 @@
+#!/bin/sh
+
+##
+# file-eq:
+# return true iff two files are equal.
+#
+# Syntax:
+#
+#     file-eq <file1> <file2>
+#
+# Example:
+#
+#     $ file-eq foo.txt bar.txt
+#
+# How the script compares the files:
+#
+#   * Is each file a real file and not directory, symlink, etc.?
+#   * Are the two files the same size, and do they have the same content?
+#   * If the files are equal, then exit 0, else nonzero.
+#
+#
+# ## Customization
+#
+# To calculate file size we try to use the `du` command, then try others.
+#
+# To do file comparisons, we use the `cmp` command.
+#
+# You can customize the commands by using environment variables:
+#
+#     DU=/foo/du CMP=/goo/cmp
+#
+#
+# ## Tracking
+#
+#   * Program: file-eq
+#   * Version: 2.0.0
+#   * Created: 2014-12-02
+#   * Updated: 2017-09-06
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+
+arg_file1="$1"
+arg_file2="$2"
+
+out () { printf %s\\n "$*" ; }
+
+file_size() {
+  file="$1"
+  size=$(
+    ${DU:-du}  --apparent-size --block-size=1 "$1" 2>/dev/null ||
+    ${GDU:-gdu} --apparent-size --block-size=1 "$1" 2>/dev/null ||
+    ${FIND:-find} "$1" -printf "%s" 2>/dev/null ||
+    ${GFIND:-gfind} "$1" -printf "%s" 2>/dev/null ||
+    ${STAT:-stat} --printf="%s" "$1" 2>/dev/null ||
+    ${STAT:-stat} -f%z "$1" 2>/dev/null ||
+    ${WC:-wc} -c <"$1" 2>/dev/null
+  )
+  q=$?; [ $q -eq 0 ] || exit $q
+  out "$size" | awk '{print $1}'
+}
+
+file_eq() {
+  file1="$1"; file2="$2"
+  [ -f "$file1" ] && [ ! -L "$file1" ] &&
+  [ -f "$file2" ] && [ ! -L "$file2" ] &&
+  [ $(file_size "$file1") == $(file_size "$file2") ] &&
+  ${CMP:-cmp} -s "$file1" "$file2"
+  return
+}
+
+file_eq "$arg_file1" "$arg_file2"
