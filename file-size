@@ -76,22 +76,87 @@
 #     export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
 #
 # Program: file-size
-# Version: 1.1.8
+# Version: 2.0.0
 # Created: 2014-12-02
-# Updated: 2016-02-04
+# Updated: 2017-09-06
+# License: GPL
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 set -euf
 out () { printf %s\\n "$*" ; }
 
-size=$(
-  ${DU:-du}  --apparent-size --block-size=1 "$1" 2>/dev/null ||
-  ${GDU:-gdu} --apparent-size --block-size=1 "$1" 2>/dev/null ||
-  ${FIND:-find} "$1" -printf "%s" 2>/dev/null ||
-  ${GFIND:-gfind} "$1" -printf "%s" 2>/dev/null ||
-  ${STAT:-stat} --printf="%s" "$1" 2>/dev/null ||
-  ${STAT:-stat} -f%z "$1" 2>/dev/null ||
-  ${WC:-wc} -c <"$1" 2>/dev/null
-)
-q=$?; [ $q -eq 0 ] || exit $q
-out "$size" | awk '{print $1}'
+file_size() {
+  file="$1"
+  size=$(
+    ${DU:-du}  --apparent-size --block-size=1 "$1" 2>/dev/null ||
+    ${GDU:-gdu} --apparent-size --block-size=1 "$1" 2>/dev/null ||
+    ${FIND:-find} "$1" -printf "%s" 2>/dev/null ||
+    ${GFIND:-gfind} "$1" -printf "%s" 2>/dev/null ||
+    ${STAT:-stat} --printf="%s" "$1" 2>/dev/null ||
+    ${STAT:-stat} -f%z "$1" 2>/dev/null ||
+    ${WC:-wc} -c <"$1" 2>/dev/null
+  )
+  q=$?; [ $q -eq 0 ] || exit $q
+  out "$size" | awk '{print $1}'
+}
+
+##
+# Function library that can be useful for other projects.
+# These functions are not needed by the code above here.
+##
+
+file_size_via_du() {
+  ${DU:-du}  --apparent-size --block-size=1 "$1"
+}
+
+file_size_via_du_ok() {
+  ${DU:-du}  --apparent-size --block-size=1 "$1" 2>/dev/null; return
+}
+
+file_size_via_gdu() {
+  ${GDU:-gdu} --apparent-size --block-size=1 "$1"
+}
+
+file_size_via_gdu_ok() {
+  ${GDU:-gdu} --apparent-size --block-size=1 "$1" 2>/dev/null; return
+}
+
+file_size_via_find() {
+  ${FIND:-find} "$1" -printf "%s"
+}
+
+file_size_via_find_ok() {
+  ${FIND:-find} "$1" -printf "%s" 2>/dev/null; return
+}
+
+file_size_via_gfind() {
+  ${GFIND:-gfind} "$1" -printf "%s"
+}
+
+file_size_via_gfind_ok() {
+  ${GFIND:-gfind} "$1" -printf "%s" 2>/dev/null; return
+}
+
+file_size_via_stat_printf() {
+  ${STAT:-stat} --printf="%s" "$1"
+}
+
+file_size_via_stat_printf_ok() {
+  ${STAT:-stat} --printf="%s" "$1" 2>/dev/null; return
+}
+
+file_size_via_stat_fz
+  ${STAT:-stat} -f%z "$1"
+}
+
+file_size_via_stat_fz_ok
+  ${STAT:-stat} -f%z "$1" 2>/dev/null; return
+}
+
+file_size_via_wc
+  ${WC:-wc} -c <"$1"
+}
+
+file_size_via_wc_ok
+  ${WC:-wc} -c <"$1" 2>/dev/null; return
+}
