@@ -1,0 +1,2 @@
+killall gpg-agent
+gpg-agent --daemon --pinentry-program /usr/local/bin/pinentry
