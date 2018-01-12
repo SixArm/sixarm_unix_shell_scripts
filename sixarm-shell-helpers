@@ -1,0 +1,21 @@
+## 
+# SixArm.com shell script helper functions
+#
+# ## Tracking
+#
+#   * Package: sixarm-shell-helpers
+#   * Version: 3.2.1
+#   * Created: 2017-08-22
+#   * Updated: 2018-01-11
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+out() { printf %s\\n "$*" ; }
+err() { >&2 printf %s\\n "$*" ; }
+die() { >&2 printf %s\\n "$*" ; exit 1 ; }
+cmd() { command -v $1 >/dev/null 2>&1 ; }
+die_cmd() { die "Command needed: $1" ; }
+die_var() { die "Variable needed: $1" ; }
+
+true
