@@ -26,27 +26,27 @@
 # Ornament words:
 #
 #   * Center, Centre
-#.  * Court
-#.  * Food Court
-#.  * Inc, Incorporated
+#   * Court
+#   * Food Court
+#   * Inc, Incorporated
 #   * Mall
-#.  * Outlet
-#.  * Premium Outlets
-#.  * Restaurant
+#   * Outlet
+#   * Premium Outlets
+#   * Restaurant
 #   * Shop, Shoppe
 #   * Shopping Center
-#.  * Square
+#   * Square
 #   * Theater, Theatre
 #   * Prepositions: at, by, for, in, near, of
 #
 # ## Tracking
 #
-# Command: normalize-shop-title
-# Version: 1.2.0
-# Created: 2017-05-27
-# Updated: 2017-06-17
-# License: GPL
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+#   * Command: normalize-shop-title
+#   * Version: 1.2.0
+#   * Created: 2017-05-27
+#   * Updated: 2017-06-17
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 
 sed -E " \
 s/[[:space:]]+/ /g; \

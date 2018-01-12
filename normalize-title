@@ -6,19 +6,19 @@
 #
 #   * Smush whitespace runs to one space.
 #   * Strip leading/trailing whitespace.
-#.  * Strip parentheticals.
+#   * Strip parentheticals.
 #   * Strip extraneous characters: ™ © ®
 #   * Strip leading stop words: A, The, etc.
 #   * Strip trailing stop words after a comma.
 #
 # ## Tracking
 #
-# Command: normalize-title
-# Version: 1.1.0
-# Created: 2017-05-27
-# Updated: 2017-06-17
-# License: GPL
-# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+#   * Command: normalize-title
+#   * Version: 1.1.0
+#   * Created: 2017-05-27
+#   * Updated: 2017-06-17
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 #
 sed -E " \
 s/[[:space:]]+/ /g; \
