@@ -1,0 +1,26 @@
+#!/bin/sh
+
+##
+# Get the Code Climate badge unique indentifier for a given repo.
+#
+# Syntax:
+#
+#    codeclimate-url-to-badge-id <url>
+#
+# Example:
+#
+#    codeclimate-url-to-badge-id https://codeclimate.com/github/SixArm/sixarm_ruby_application_controller_starter/badges
+#
+# ## Tracking
+#
+#   * Command: codeclimate-report-to-badge-id
+#   * Version: 1.0.0
+#   * Created: 2018-02-06
+#   * Updated: 2018-02-06
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+
+url="$1"
+curl -sSL "$url" | sed -n 's#.*/v1/badges/\([0-9a-f]*\)/.*#\1#p' | head -1
