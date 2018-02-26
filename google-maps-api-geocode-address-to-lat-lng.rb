@@ -4,13 +4,21 @@
 # Google Maps API ruby command line script to geocode
 # from an arbritray address to latitude and longitude
 #
+# Syntax:
+#
+#     google-maps-api-geocode-address-to-lat-lng <address> 
+#
 # Example:
 #
-#     geocode-address-to-lat-lng "1 Main St, San Francisco CA 94111" 
-#     => 37.7931108 -122.3964898
+#     $ export GOOGLE_MAPS_API_KEY=abcdefghijklm
+#     $ google-maps-api-geocode-address-to-lat-lng "1 Main St, San Francisco CA 94111" 
+#     37.7931108 -122.3964898
 #
 # This script uses the free Google geocoding API here:
 # http://code.google.com/apis/maps/documentation/geocoding/
+#
+#
+# ## Related
 #
 # You may want to compare these two implemenations:
 #
@@ -32,19 +40,9 @@ require 'net/http'
 require 'cgi'
 require 'json'
 
-google_maps_api_key=ENV["GOOGLE_MAPS_API_KEY"]
-address = ARGV.shift
+google_maps_api_key = ENV["GOOGLE_MAPS_API_KEY"] or raise "Need ENV[\"GOOGLE_MAPS_API_KEY\"]"
+address = ARGV.shift or raise "Need address"
 
-# Tweak Ruby's built-in HTTP module so it can handle HTTPS GET
-def https_get_uri(uri)
-  http = Net::HTTP.new(uri.host, uri.port)
-  http.use_ssl = true
-  http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-  request = Net::HTTP::Get.new(uri.request_uri)
-  response = http.get(request)
-  return response
-end
-  
 begin
 
   # Google provides a geocoder web service that can process an address into a location.

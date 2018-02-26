@@ -17,6 +17,9 @@
 # This script uses the free Google geocoding API here:
 # http://code.google.com/apis/maps/documentation/geocoding/
 #
+#
+# ## Related
+#
 # You may want to compare these two implemenations:
 #
 #  * google-maps-api-geocode-address-to-lat-lng.rb (Ruby)
@@ -34,7 +37,14 @@
 ##
 
 set -euf
-. sixarm-shell-functions
+
+## SixArm shell functions
+out() { printf %s\\n "$*" ; }
+err() { >&2 printf %s\\n "$*" ; }
+die() { >&2 printf %s\\n "$*" ; exit 1 ; }
+cmd() { command -v $1 >/dev/null 2>&1 ; }
+die_cmd() { die "Command needed: $1" ; }
+die_var() { die "Variable needed: $1" ; }
 
 CURL=${CURL:-curl}; cmd "$CURL" || die_cmd "$CURL"
 JQ=${JQ:-jq}; cmd "$JQ" || die_cmd "$JQ"

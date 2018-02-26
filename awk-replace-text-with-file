@@ -1,0 +1,21 @@
+#!/bin/sh
+set -euf
+
+##
+# Replace a text string with the contents of a text file.
+#
+# Example:
+#
+#     awk-replace-text-with-file hello demo.txt
+#
+# ## Tracking
+#
+#   * Command: awk-replace-text-with-file
+#   * Version: 1.0.0
+#   * Created: 2018-02-17
+#   * Updated: 2018-02-17
+#   * License: GPL
+#   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+
+awk "/$1/{print; system(\"cat $file_path\"); next}1"
