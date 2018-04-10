@@ -4,18 +4,42 @@
 # ## Tracking
 #
 #   * Package: sixarm-shell-helpers
-#   * Version: 3.2.1
+#   * Version: 4.0.0
 #   * Created: 2017-08-22
-#   * Updated: 2018-01-11
+#   * Updated: 2018-04-09
 #   * License: GPL
 #   * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 
-out() { printf %s\\n "$*" ; }
-err() { >&2 printf %s\\n "$*" ; }
-die() { >&2 printf %s\\n "$*" ; exit 1 ; }
-cmd() { command -v $1 >/dev/null 2>&1 ; }
-die_cmd() { die "Command needed: $1" ; }
-die_var() { die "Variable needed: $1" ; }
+## Output helpers
+out() { printf %s\\n "$*" ; }; export -f out
+err() { >&2 printf %s\\n "$*" ; }; export -f err
+die() { >&2 printf %s\\n "$*" ; exit 255 ; }; export -f die
+log() { printf '%s %s %s\n' "$( now )" $$ "$*" ; }; export -f log
+
+## Time helpers
+now() { date -u "+%Y-%m-%dT%H:%M:%S.%NZ" ; }; export -f now
+sec() { date "+%s" ; }; export -f sec
+
+## Misc helpers
+zid() { hexdump -n 16 -v -e '16/1 "%02x" "\n"' /dev/random ; }; export -f zid
+cmd() { command -v $1 >/dev/null 2>&1 ; }; export -f cmd
+
+## Number helpers
+int() { awk '{ print int($1) }' ; }; export -f int
+sum() { awk '{for(i=1; i<=NF; i++) sum+=$i; } END {print sum}' ; }; export -f sum
+
+## Array helpers
+ari() { [ $# == 3 ] && awk -F "$2" "{print \$$3}" <<< "$1" || awk "{print \$$2}" <<< "$1" ; }; export -f ari
+arn() { [ $# == 2 ] && awk -F "$2" "{print NF}"   <<< "$1" || awk "{print NF}"   <<< "$1" ; }; export -f arn
+
+## Directory helpers
+config_dir() { out "${XDG_CONFIG_HOME:-$HOME/.config}" ; }; export -f config_dir;
+temp_dir() { out $(mktemp -d -t "${1:-$(zid)}"); }; export -f temp_dir;
+
+## Assert helper
+assert_empty() { [ -z "$1" ]      || err $FUNCNAME "$@" ; }; export -f assert_empty
+assert_equal() { [ "$1" = "$2" ]  || err $FUNCNAME "$@" ; }; export -f assert_equal
+assert_match() { [[ "$2" =~ $1 ]] || err $FUNCNAME "$@" ; }; export -f assert_match
 
 true
