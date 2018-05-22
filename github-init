@@ -1,0 +1,111 @@
+#/bin/sh
+set -euf
+
+## Tracking
+
+program_command="github-init"
+program_version="4.0.0"
+program_updated="2018-05-22"
+program_license="GPL"
+program_contact="Joel Parker Henderson (joel@joelparkerhenderson.com)"
+
+## Help
+
+help(){
+cat << CAT
+
+github-init: run git-init then clone any files in a config directory.
+
+Syntax:
+
+    github-init
+
+Typical result:
+
+    $ git init
+    $ rsync -av ~/.github-start/ .
+
+Implementation:
+
+  * If necessary commands are missing, then exit.
+  * If the directory `.git` already exists, then do not init.
+  * Sync files yet do not overwrite any existing files.
+  * Add any GitHub special files as needed.
+
+GitHub special files:
+
+  * README.md
+  * LICENSE.md
+  * CONTRIBUTING.md
+  * CODE_OF_CONDUCT.md
+  * ISSUE_TEMPLATE.md 
+  * PULL_REQUEST_TEMPLATE.md
+  * CODEOWNERS
+
+Conventions:
+
+  * This script creates Markdown files.
+  * Headlines use first letter uppercase, not every-word uppercase.
+  * The CODEOWNERS special file uses its own syntax, not Markdown.
+
+Known issues:
+
+  * None
+
+Future goals:
+
+  * Enable configuration of Markdown vs. ASCIIDOC vs. text.
+
+CAT
+}
+
+if [ "$#" -eq 1 ]; then
+  case "$1" in
+    -h|--help)
+      help; exit 0
+      ;;
+  esac
+fi
+
+## Toolkit 
+
+out() { printf %s\\n "$*" ; }
+err() { >&2 printf %s\\n "$*" ; }
+die() { err $(log) "$*" ; exit 255 ; }
+cmd() { command -v $1 >/dev/null 2>&1 ; }
+
+## Functions
+
+# Configuration
+config_dir() { out "${XDG_CONFIG_HOME:-$HOME/.config/$program_command}" ; }
+
+# Preflight
+cmd_git { cmd "git" || die "Command missing: git" }
+cmd_rsync { cmd "rsync" || die "Command missing: rsync" }
+
+# Initialize
+git_init() { -e .git || git init ; }
+clone_files { rsync -av --ignore-existing "$(config_dir)/" . || die "Cannot rsync" ; }
+
+# Add GitHub special files as needed
+add_readme { -e README.md || out "# Read me" > README.md ; }
+add_license { -e LICENSE.md || out "# Licence" > LICENSE.md ; }
+add_contributing { -e CONTRIBUTING.md || out "# Contributing" > CONTRIBUTING.md ; }
+add_code_of_conduct { -e CODE_OF_CONDUCT.md || out "# Code of conduct" > CODE_OF_CONDUCT.md ; }
+add_code_owners { -e CODEOWNERS || out "* example@example.com" > CODEOWNERS ; }
+add_issue_template { -e ISSUE_TEMPLATE.md || out "# Issue template" > ISSUE_TEMPLATE.md ; }
+add_pull_request_template { -e PULL_REQUEST_TEMPLATE.md || out "# Pull request template" > PULL_REQUEST_TEMPLATE.md ; }
+
+## Main
+
+cmd_git
+cmd_rysnc
+git_init
+clone_files
+add_readme
+add_license
+add_contributing
+add_code_of_conduct
+add_code_owners
+add_issue_template
+add_pull_request_template
