@@ -1,0 +1,47 @@
+Todos test file
+
+Examples of all comment styles...
+
+Alpha
+# TODO alpha
+Bravo
+// TODO bravo
+Charlie
+/* TODO charlie
+Delta
+* TODO delta
+Echo
+-- TODO echo
+
+Examples of all keywords...
+
+Lorem
+# TODO hello
+Lorem
+# DO hello
+Lorem
+# DOABLE hello
+Lorem
+# DOING hello
+Lorem
+# DONE hello
+Lorem
+# REDO hello
+Lorem
+# FIX hello
+Lorem
+# FIXME hello
+Lorem
+# OPTIMIZE hello
+Lorem
+# DEPRECATE hello
+Lorem
+# REFACTOR hello
+Lorem
+# DELETE hello
+Lorem
+# AUDIT hello
+Lorem
+# DANGER hello
+Lorem
+# WTF hello

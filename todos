@@ -2,22 +2,9 @@
 #
 # Find TODO lines in files.
 #
-# This script searches for all of these:
-#
-#    #TODO
-#    #FIX
-#    #FIXME
-#    #OPTIMIZE
-#    #DEPRECATE
-#    #REFACTOR
-#    #DELETE
-#    #AUDIT
-#    #DANGER
-#    #WTF
-#
 # Syntax:
 #
-#   todos [options that are passed along to _ag_]
+#   todos [options that are passed along to _ripgrep_]
 #
 # Example:
 #
@@ -27,15 +14,37 @@
 #
 #   todos -C 2
 #
-# The hash can have an optional space after it;
-# this is so the search finds code comments too.
+# This script searches a comment string and keyword string.
 #
-# If you're writing TODO lines, please use no space
-# because this is more like our preferred tag style.
+# Comment string:
 #
-# The search the _ag_ command a.k.a. "the silver searcher".
-# The _ag_ command is a lot like the _grep_ command.
-# See https://github.com/ggreer/the_silver_searcher
+#   * `#` typical shell, Perl, Ruby, etc.
+#   * `//` typical single-line comment in C, Java, etc.
+#   * `/*` typical multi-line comment in C, Java, etc.
+#   * `*` typical ongoing comment
+#   * `--` typical SQL
+#
+# Keyword string:
+#
+#   * TODO
+#   * DO
+#   * DOABLE
+#   * DOING
+#   * DONE
+#   * REDO
+#   * FIX
+#   * FIXME
+#   * OPTIMIZE
+#   * DEPRECATE
+#   * REFACTOR
+#   * DELETE
+#   * AUDIT
+#   * DANGER
+#   * WTF
+#
+# The search uses the command `ripgrep`, which is
+# a lot like the command `grep` plus faster and friendlier
+# for source code such as code within git repositories.
 #
 # The output will show the file names, line numbers,
 # and colorize the match hits if you have color set up.
@@ -44,16 +53,16 @@
 # such as ".git", and skips some files such as binary blogs.
 #
 # You can tune the behavior as you like by using any
-# of the _ag_ options; this script passes the options along.
+# of the `ripgrep` options; this script passes the options along.
 #
 # If you prefer using the _grep_ command, or _ack_ command,
 # then you can easily edit this script to your taste.
 #
-# Version: 1.5.0
+# Version: 2.0.0
 # Created: 2014-02-12
 # Updated: 2015-01-25
 # License: GPL
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
 set -euf
-ag "# *(TODO|FIX|FIXME|OPTIMIZE|DEPRECATE|REFACTOR|DELETE|AUDIT|DANGER|WTF)\b" "$@"
+rg "(#|//|/\*|\*|--) *(TODO|FIX|FIXME|OPTIMIZE|DEPRECATE|REFACTOR|DELETE|AUDIT|DANGER|WTF)\b" "$@"
