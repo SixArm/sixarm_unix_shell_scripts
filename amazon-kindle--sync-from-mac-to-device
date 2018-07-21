@@ -1,0 +1,4 @@
+#!/bin/sh
+dir=${1:-.}
+name=${2:-*mobi}
+find "$dir" -name "$name" -exec rsync -av {} /Volumes/Kindle/documents/ \;
