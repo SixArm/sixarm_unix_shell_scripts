@@ -1,0 +1,7 @@
+#!/bin/sh
+set -euf
+file="$1"
+test -r "$file"
+now=$(date -u "+%Y%m%d%H%M%S")
+cp "$file" "$file.$now"
+truncate -s 0 "$file"
