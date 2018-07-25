@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# Dash app multi-user directory is in /Library
+main_dir="/Library/Application\ Support/Dash"
+user_dir="$HOME/Library/Application\ Support/Dash"
+
+# If the main dir exists, and the user dir is a symlink,
+# then we have already accomplished our goal, so exit.
+test -d "$main_dir" && test -L "$user_dir" && exit 0
+
+# If the main dir is missing, and the user dir exists,
+# then move the existing user dir to become the main dir,
+# then also adjust the permissions to be group writeable.
+test -e "$main_dir" || test -e "$user_dir" && sudo mv "$user_dir" "$main_dir" && sudo find "$main_dir" -exec chmod g+w {} \;
+
+# If the main dir exists, and the user dir exists and is not a symlink, 
+# then delete the user dir because it's now superflous.
+test -e "$main_dir" && test -d "$user_dir" && test -L "$user_dir" || rm -rf "$user_dir"
+
+# If the main dir exists, and the user dir is missing,
+# then symlink the main dir to the user dir.
+test -e "$main_dir" && test -e "$user_dir" || sudo ln -s "$main_dir" "$user_dir"
