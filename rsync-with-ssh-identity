@@ -1,0 +1,1 @@
+rsync -e "ssh -i $1"

@@ -1,0 +1,16 @@
+path="$1"
+expect_user_name="$2"
+expect_group_name="$3"
+expect_access_rights_in_octal="$4"
+actual_owner_name=$(stat -c%U "$path")
+actual_group_name=$(stat -c%G "$path")
+actual_access_rights_in_octal=$(stat -c%a "$path")
+if [ "$expect_owner_name" != "$actual_owner_name" ]; then 
+  echo "vet path:$d owner name expect:$expect_owner_name actual:$actual_owner_name"
+fi
+if [ "$expect_group_name" != "$actual_group_name" ]; then 
+  echo "vet path:$d group name expect:$expect_group_name actual:$actual_group_name"
+fi
+if [ "$expect_access_rights_in_octal" != "$actual_access_rights_in_octal" ]; then 
+  echo "vet path:$d access rights expect:$expect_access_rights_in_octal actual:$actual_access_rights_in_octal" 
+fi
