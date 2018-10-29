@@ -67,6 +67,11 @@ repo = g.get_repo(owner_repo)
 print(repo.name)
 
 for issue in repo.get_issues():
-	print(issue.title)
+	print(f"title:{issue.title}")
+	#print(issue.body)
+	labels = issue.labels
+	for label in labels:
+		print(f"label:{label.name} color:{label.color}")
+
 
 

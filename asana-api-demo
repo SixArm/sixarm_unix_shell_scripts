@@ -1,0 +1,2 @@
+#!/bin/sh
+curl -H "Authorization: Bearer $ASANA_PERSONAL_ACCESS_TOKEN" https://app.asana.com/api/1.0/users/me
