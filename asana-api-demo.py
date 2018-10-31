@@ -17,6 +17,11 @@
 #
 # ## Setup
 #
+# Introductions:
+#
+#   * See https://asana.com/developers
+#   * See https://asana.com/guide/help/api/api
+#
 # To generate your own Asana personal access token:
 #
 #   * Go to Asana https://asana.com
@@ -46,4 +51,3 @@ me = client.users.me()
 print("Hello world!")
 print(f" My name is {me['name']}")
 print(f" and my primary Asana workspace is {me['workspaces'][0]['name']}")
-
