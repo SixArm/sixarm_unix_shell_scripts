@@ -3,8 +3,6 @@
 ##
 # Asana API demo
 #
-# Asana API demonstration.
-#
 # Syntax:
 #
 #     asana-api-demo
@@ -12,15 +10,23 @@
 # Example:
 #
 #     $ ASANA_PERSONAL_ACCESS_TOKEN="0/ca581dda1b807b654e09b05bd8a8c70" \
-#       asana-api-demo
+#       asana-api-demo.py
+#
+#
+# ## Introduction
+#
+# Developers: see https://asana.com/developers
+#
+# API: https://asana.com/guide/help/api/api
+#
+# Clients: https://asana.com/developers/documentation/getting-started/client-libraries
 #
 #
 # ## Setup
 #
-# Introductions:
+# To install dependencies:
 #
-#   * See https://asana.com/developers
-#   * See https://asana.com/guide/help/api/api
+#     $ pip install asana
 #
 # To generate your own Asana personal access token:
 #
@@ -28,8 +34,8 @@
 #   * Sign in as usual
 #   * Go to your settings
 #   * Tap "Create New Personal Access Token"
-#   
-###
+#
+##
 
 import os
 import sys
