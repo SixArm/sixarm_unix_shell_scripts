@@ -50,11 +50,13 @@ import asana
 #
 ##
 
-# Read the Asasa personal access token via the environment.
-token = os.getenv("ASANA_PERSONAL_ACCESS_TOKEN", os.getenv("TOKEN"))
-if token is None:
-    print("This script needs an Asana personal access token.", file=sys.stderr)
-    quit()
+def asana_personal_access_token():
+    """Read the Asasa personal access token via the environment."""
+    x = os.getenv("ASANA_PERSONAL_ACCESS_TOKEN")
+    if x is None:
+        print("This script needs an Asana personal access token.", file=sys.stderr)
+        quit()
+    return x
 
 # Construct an Asana client.
 client = asana.Client.access_token(token)
