@@ -1,0 +1,18 @@
+#!/bin/sh
+
+##
+# We want JetBrains tools to work for all users on a system.
+#
+# To do this, we use JetBrains Toolbox, and we set the installation
+# location to a custom directory that all users can access:
+#
+#     /Applications/JetBrains
+#
+#
+##
+
+dir="/Applications/JetBrains"
+sudo mkdir "$dir"
+sudo chown $USER "$dir"
+sudo chgrp admin "$dir"
+sudo chmod 775 "$dir"

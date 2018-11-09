@@ -1,0 +1,1 @@
+jq --arg name "example.com." -r '.HostedZones | .[] | select(.Name=="\($name)") | .Id' | sed 's/^\/hostedzone\///'
