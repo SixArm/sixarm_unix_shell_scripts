@@ -1,0 +1,2 @@
+aws route53 list-hosted-zones-by-name |
+jq --arg name "example.com." -r '.HostedZones | .[] | select(.Name=="\($name)") | .Id' | sed 's/^\/hostedzone\///'
