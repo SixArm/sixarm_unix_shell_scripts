@@ -1,0 +1,2 @@
+aws route53 list-resource-record-sets --hosted-zone-id "/hostedzone/ABCDEF123456789" |
+jq '.ResourceRecordSets[] | select(.Name == "foo.example.com.")'
