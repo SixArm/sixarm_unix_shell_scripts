@@ -1,0 +1,4 @@
+aws cloudfront list-distributions |
+jq --arg name "example.com" -r '.DistributionList.Items[] | select(.Aliases.Items[] == ($name))'
+
+
