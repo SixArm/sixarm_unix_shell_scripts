@@ -1,2 +1,24 @@
-aws route53 list-resource-record-sets --hosted-zone-id "/hostedzone/ABCDEF123456789" |
-jq '.ResourceRecordSets[] | select(.Name == "foo.example.com.")'
+#!/bin/sh
+
+##
+# Use AWS Route 53 list resource record sets,
+# then select a specific record set by its name.
+#
+# Syntax:
+#
+#     aws-route53-list-resource-record-sets-then-select-by-name \
+#       <hosted zone id> \
+#       <record set name>
+#
+# Example:
+#
+#     aws-route53-list-resource-record-sets-then-select-by-name \
+#       "/hostedzone/ABCDEF123456789" \
+#       "foo.example.com."
+##
+
+hosted_zone_id="$1"
+name="$2"
+
+aws route53 list-resource-record-sets --hosted-zone-id "$hosted_zone_id" |
+jq --arg name "$name" '.ResourceRecordSets[] | select(.Name == "\($name)")'

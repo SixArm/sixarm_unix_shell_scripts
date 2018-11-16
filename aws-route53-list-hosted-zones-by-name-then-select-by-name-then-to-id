@@ -1,2 +1,21 @@
+#!/bin/sh
+
+##
+# Use AWS Route 53 list hosted zones by name,
+# then select a specific zone by its name.
+#
+# Syntax:
+#
+#     aws-route53-list-hosted-zones-by-name-then-select-by-name-then-to-id \
+#       <hosted zone name> 
+#
+# Example:
+#
+#     aws-route53-list-resource-record-sets-then-select-by-name \
+#       "example.com."
+##
+
+name="$1"
+
 aws route53 list-hosted-zones-by-name |
-jq --arg name "example.com." -r '.HostedZones | .[] | select(.Name=="\($name)") | .Id'
+jq --arg name "$name" -r '.HostedZones | .[] | select(.Name=="\($name)") | .Id'
