@@ -1,0 +1,85 @@
+#!/bin/sh
+
+show_beanstalk(){
+  echo "\n### Applications ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-applications
+
+  echo "\n### Application Versions ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-application-versions
+
+  echo "\n### Environments ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environments
+
+  echo "\n### Platform ARNs ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environments |
+  jq -r '[.Environments[].PlatformArn] | unique[]'
+
+  echo "\n### Account Attributes ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-account-attributes
+
+  echo "\n### Events ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-events
+}
+
+show_environment(){
+  name="$1"
+  echo "\n### Environment: $name ###\n"
+
+  echo "\n### Environment Health ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environment-health --environment-name "$name" --attribute-names All
+
+  echo "\n### Instances Health ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-instances-health --environment-name "$name" --attribute-names All
+
+  echo "\n### Environment Resources ###\n" 
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environment-resources --environment-name "$name"
+
+  echo "\n### Environment Managed Actions ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environment-managed-actions --environment-name "$name"
+ 
+  echo "\n### Environment Managed Action History (max items 10) ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environment-managed-action-history --environment-name "$name" --max-items 10
+}
+
+show_platform(){
+  name="$1"
+  echo "\n### Platform: $name ###\n"
+
+  echo "\n### Platform Version ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-platform-version --platform-arn "$name"
+}
+
+show_application(){
+  name="$1"
+  echo "\n### Application: $name ###\n"
+
+  echo "\n### Application Version ###\n"
+  aws --profile "$AWS_PROFILE" elasticbeanstalk describe-application-versions --application-name "$name"
+}
+
+main(){
+  if [ -z ${var+x} ]; then
+    echo "AWS_PROFILE is unset. Please set it then rerun."
+    exit 1
+  else
+    echo "AWS_PROFILE=$AWS_PROFILE"
+  fi    
+  
+  echo "\n### AWS Elastic Beanstalk - describe everything ###\n"
+
+  show_beanstalk
+
+  for name in $(aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environments | jq -r '.Environments[].EnvironmentName'); do
+    show_environment $name 
+  done
+
+  for name in $(aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environments | jq -r '[.Environments[].PlatformArn] | unique[]'); do
+    show_platform_arn $name
+  done
+
+  for name in $(aws --profile "$AWS_PROFILE" elasticbeanstalk describe-applications | jq -r '.Applications[].ApplicationName'); do 
+    show_application $name
+  done
+}
+
+main
