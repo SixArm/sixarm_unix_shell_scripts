@@ -10,7 +10,7 @@ show_beanstalk(){
   echo "\n### Environments ###\n"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environments
 
-  echo "\n### Platform ARNs ###\n"
+  echo "\n### Platforms ###\n"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environments |
   jq -r '[.Environments[].PlatformArn] | unique[]'
 
@@ -90,7 +90,7 @@ main(){
   done
 
   for name in $(aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environments | jq -r '[.Environments[].PlatformArn] | unique[]'); do
-    show_platform_arn $name
+    show_platform $name
   done
 
   for name in $(aws --profile "$AWS_PROFILE" elasticbeanstalk describe-applications | jq -r '.Applications[].ApplicationName'); do 
