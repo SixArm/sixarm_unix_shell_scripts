@@ -1,59 +1,63 @@
 #!/bin/sh
 
+banner(){
+  echo "\n### $1 ###\n"
+}
+ 
 show_beanstalk(){
-  echo "\n### Applications ###\n"
+  banner "Applications"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-applications
 
-  echo "\n### Application Versions ###\n"
+  banner "Application Versions"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-application-versions
 
-  echo "\n### Environments ###\n"
+  banner "Environments"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environments
 
-  echo "\n### Platforms ###\n"
+  banner "Platforms"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environments |
   jq -r '[.Environments[].PlatformArn] | unique[]'
 
-  echo "\n### Account Attributes ###\n"
+  banner "Account Attributes"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-account-attributes
 
-  echo "\n### Events ###\n"
+  banner "Events"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-events
 }
 
 show_environment(){
   name="$1"
-  echo "\n### Environment: $name ###\n"
+  banner "Environment: $name"
 
-  echo "\n### Environment Health ###\n"
+  banner "Environment Health"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environment-health --environment-name "$name" --attribute-names All
 
-  echo "\n### Instances Health ###\n"
+  banner "Instances Health"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-instances-health --environment-name "$name" --attribute-names All
 
-  echo "\n### Environment Resources ###\n" 
+  banner "Environment Resources" 
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environment-resources --environment-name "$name"
 
-  echo "\n### Environment Managed Actions ###\n"
+  banner "Environment Managed Actions"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environment-managed-actions --environment-name "$name"
  
-  echo "\n### Environment Managed Action History (max items 10) ###\n"
+  banner "Environment Managed Action History (max items 10)"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environment-managed-action-history --environment-name "$name" --max-items 10
 }
 
 show_platform(){
   name="$1"
-  echo "\n### Platform: $name ###\n"
+  banner "Platform: $name"
 
-  echo "\n### Platform Version ###\n"
+  banner "Platform Version"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-platform-version --platform-arn "$name"
 }
 
 show_application(){
   name="$1"
-  echo "\n### Application: $name ###\n"
+  banner "Application: $name"
 
-  echo "\n### Application Version ###\n"
+  banner "Application Version"
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-application-versions --application-name "$name"
 }
 
@@ -81,7 +85,7 @@ preflight(){
 }
     
 main(){
-  echo "\n### AWS Elastic Beanstalk - describe everything ###\n"
+  banner "AWS Elastic Beanstalk - describe everything"
   preflight
   show_beanstalk
 
