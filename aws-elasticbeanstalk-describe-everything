@@ -57,16 +57,32 @@ show_application(){
   aws --profile "$AWS_PROFILE" elasticbeanstalk describe-application-versions --application-name "$name"
 }
 
-main(){
+preflight(){
   if [ -z ${var+x} ]; then
     echo "AWS_PROFILE is unset. Please set it then rerun."
+    echo ""
+    echo "For typical use, you can manage your AWS profiles"
+    echo "by using the default file ~/.aws/credenetials"
+    echo ""
+    echo "For example suppose your file contains:"
+    echo ""
+    echo "    [demo]"
+    echo "    aws_access_key_id=OSK7IKZINO2LF0BKT4A6"
+    echo "    aws_secret_access_key=bdJi8RCbvYUEKU1pZbqmcYeFSyTKSZkVPbpYL0pY"
+    echo ""
+    echo "You do this:"
+    echo ""
+    echo "    export AWS_PROFILE=demo"
+    echo ""
     exit 1
   else
     echo "AWS_PROFILE=$AWS_PROFILE"
   fi    
-  
+}
+    
+main(){
   echo "\n### AWS Elastic Beanstalk - describe everything ###\n"
-
+  preflight
   show_beanstalk
 
   for name in $(aws --profile "$AWS_PROFILE" elasticbeanstalk describe-environments | jq -r '.Environments[].EnvironmentName'); do
