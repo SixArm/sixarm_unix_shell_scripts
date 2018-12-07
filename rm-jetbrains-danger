@@ -1,0 +1,4 @@
+sudo rm -rf /Users/*/Applications/JetBrains*
+sudo rm -rf /Users/*/Library/Application Support/JetBrains*
+sudo rm -rf /Applications/JetBrains*
+sudo rm -rf /Library/Application\ Support/JetBrains*
