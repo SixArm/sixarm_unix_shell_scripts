@@ -27,4 +27,4 @@ dst=$2
 megabytes=$3
 
 VBoxManage clonehd "$src" "$dst" –format vdi
-VBoxManage modifyhd "$dst" --resize $megabytes
+VBoxManage modifyhd "$dst" --resize "$megabytes"
