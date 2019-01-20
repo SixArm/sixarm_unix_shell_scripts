@@ -1,0 +1,1 @@
+/sbin/ifconfig -a | sed -n "s/^\([[:alpha:]]\+[[:digit:]]\+\).*/\1/p"
