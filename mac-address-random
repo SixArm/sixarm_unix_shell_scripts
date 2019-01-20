@@ -1,0 +1,40 @@
+#!/bin/sh
+#
+# Randomize the host's MAC address
+#
+# Syntax:
+#
+#     mac-address
+#
+# Example:
+#
+#     $ mac-address
+#     721ab4c5287a
+#     $ mac-address-random
+#     $ mac-address
+#     3912dea7bb06
+#
+# A media access control address (MAC address) of a computer 
+# is a unique identifier assigned to network interfaces for 
+# communications at the data link layer of a network segment.
+#
+# https://en.wikipedia.org/wiki/MAC_address
+#
+# ## Implementation
+#
+# This script is intended to run on any Unix-like system.
+#
+# We have tested it on a typical MacBook macOS 10.13.6 system.
+#
+# ## Tracking
+#
+# * Command: mac-address-random
+# * Version: 1.1.0
+# * Created: 2016-10-01
+# * Updated: 2019-01-20
+# * License: GPL
+# * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+network_interface=$(/sbin/ifconfig -a | grep -m1 "^\(\(eth\|en\)[[:digit:]]\+\)" | sed 's/[^[[:alnum:]]].*//')
+random_mac_address=$(hexdump -n 6 -e "$len/1 \"%02x:\"" /dev/urandom | sed 's/:$//')
+/sbin/ifconfig "$network_interface" "$random_mac_address"
