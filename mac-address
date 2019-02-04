@@ -33,4 +33,4 @@
 # * License: GPL
 # * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-/sbin/ifconfig -a | grep -m1 "[[:space:]]\(HWaddr\|ether\)[[:space:]]" | sed 's/[[:space:]]\+$//; s/.*[[:space:]]//; s/://g'
+/sbin/ifconfig -a | grep -m1 "^[[:space:]]\+\(HWaddr\|ether\)[[:space:]]" | sed 's/[[:space:]]\+$//; s/.*[[:space:]]//; s/://g'

@@ -10,6 +10,41 @@
 # Example:
 #
 #     entr-rclone ~/foo dropbox
+#
+# See http://lpan.io/one-liner-dropbox-client/
+#
+#
+# ## Make the script into a daemon
+#
+# For example you can create a systemd service file:
+#
+#     ~/.config/systemd/user/dropbox.service
+#
+# Example file:
+#
+#     [Unit]
+#     Description=Dropbox Daemon
+#
+#     [Service]
+#     ExecStart=/home/lpan/sync_dropbox.sh
+#     Restart=always
+#
+#     [Install]
+#     WantedBy=default.target
+#
+# Then you can manage the daemon with the following commands:
+#
+#     # reload the service file
+#     systemctl --user daemon-reload
+#
+#     # start the daemon
+#     systemctl --user start dropbox.service
+#
+#     # start the daemon on login
+#     systemctl --user enable dropbox.service
+#
+#     # inspect the status of the daemon
+#     systemctl --user status dropbox.service
 ##
 
 dir="$1"

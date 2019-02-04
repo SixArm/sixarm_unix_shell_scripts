@@ -35,6 +35,8 @@
 # * License: GPL
 # * Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 ##
-network_interface=$(/sbin/ifconfig -a | grep -m1 "^\(\(eth\|en\)[[:digit:]]\+\)" | sed 's/[^[[:alnum:]]].*//')
+network_interface=$(/sbin/ifconfig -a | grep -m1 "^\(\(eth\|en\)[[:digit:]]\+\)" | sed 's/[^[:alnum:]].*//')
 random_mac_address=$(hexdump -n 6 -e "$len/1 \"%02x:\"" /dev/urandom | sed 's/:$//')
-/sbin/ifconfig "$network_interface" "$random_mac_address"
+echo "network_interface:$network_interface"
+echo "random_mac_address:$random_mac_address"
+sudo /sbin/ifconfig "$network_interface" ether "$random_mac_address"
