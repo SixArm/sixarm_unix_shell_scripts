@@ -1,0 +1,17 @@
+#!/bin/sh
+
+##
+# Sync files via the commands `entr` and `rclone`.
+#
+# Syntax:
+#
+#     entr-rclone <dir> <service>
+#
+# Example:
+#
+#     entr-rclone ~/foo dropbox
+##
+
+dir="$1"
+remote="$2"
+find "$dir" | entr -r rclone sync -v "$dir" "$remote:org"
