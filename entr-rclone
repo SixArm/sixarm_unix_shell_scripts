@@ -45,6 +45,13 @@
 #
 #     # inspect the status of the daemon
 #     systemctl --user status dropbox.service
+#
+# ## incron alternative
+#
+# Instead of using entr and systemd, you can use incron to
+# watch for file changes, and use rclone in incrontab for syncing.
+#
+# See  https://kanihal.wordpress.com/2018/12/21/incron-and-rclone-for-syncing-screenshots-to-google-drive/
 ##
 
 dir="$1"
