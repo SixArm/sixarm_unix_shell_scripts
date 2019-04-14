@@ -1,0 +1,47 @@
+#!/bin/sh
+
+##
+# Brew uninstall MySQL database
+#
+# See guide https://gist.github.com/brandonsimpson/5204ce8a46f7a20071b5
+#
+# Before you run this script, you may want to backup
+# all your local MySQL databases:
+#
+#     $ mysqldump -uroot -p \
+#       --all-databases \
+#       --flush-logs \
+#       --master-data=2 \
+#       > all_databases.sql
+#
+##
+
+# Stop servers
+sudo mysql.server stop
+sudo /usr/local/mysql/support-files/mysql.server stop
+
+# Remove files
+sudo rm /usr/local/mysql
+sudo rm -rf /usr/local/mysql*
+
+sudo rm      /Library/LaunchAgents/homebrew.mxcl.mysql.plist
+sudo rm     ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+sudo rm -rf  /Library/PreferencePanes/MySQL*
+sudo rm -rf ~/Library/PreferencePanes/MySQL*
+sudo rm -rf  /Library/Receipts/mysql*
+sudo rm -rf ~/Library/Receipts/mysql*
+sudo rm -rf  /Library/Receipts/MySQL*
+sudo rm -rf ~/Library/Receipts/MySQL*
+sudo rm -rf  /Library/StartupItems/MySQL*
+sudo rm -rf ~/Library/StartupItems/MySQL*
+
+sudo rm -rf /private/var/db/receipts/*mysql*
+sudo rm -rf /private/var/db/receipts/*MySQL*
+
+echo "edit /etc/hostconfig and remove the line MYSQLCOM=-YES-"
+
+brew uninstall mysql
+brew cleanup
+launchctl unload -w ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+
+mv /etc/my.cnf /etc/my.cnf.backup
