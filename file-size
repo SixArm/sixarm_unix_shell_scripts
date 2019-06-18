@@ -1,0 +1,166 @@
+#!/bin/sh
+#
+# File size in bytes, using the apparent size.
+#
+# This script has a goal to be cross-platform,
+# so it tries a variety of strategies, in order:
+#
+#   * Try `du --apparent-size`. Standard on Linux.
+#   * Try `gdu --apparent-size`. Available in GNU coreutils.
+#   * Try `find -printf` Standard on Linux, and likely on others.
+#   * Try `gfind -printf`. Available in GNU fileutils.
+#   * Try `stat --printf ...`. Not on standard OSX or Solaris.
+#   * Try `stat -f%z ...`. Standard on OSX, maybe BSD, and others.
+#   * Try `wc -c`. Fast on some systems, but slow on others.
+#
+# Example:
+#
+#     file-size example.txt
+#     1234
+#
+# Exit:
+#
+#   * 0 is success
+#   * Anything else is the error code of the command that failed.
+#
+# ## Environment Variables
+#
+# This script tries environment variables for command paths:
+#
+#   * DU: `du` command. Example: `DU=/usr/bin/du`
+#   * GDU: `gdu` command. Example: `GDU=/usr/local/bin/gdu`
+#   * FIND: `find -printf` command. Example: `FIND=/usr/bin/find`
+#   * GFIND: `gfind` command: Example: `GFIND=/usr/local/bin/gfind`
+#   * STAT: `stat` command. Example: `STAT=//usr/bin/stat`
+#   * WC: `wc` command. Example: `WC=/usr/bin/wc`
+#
+# Example to provide a custom `du` command path:
+#
+#     DU=/foo/du file-size example.txt
+#
+# Example to export a custom `du` command path:
+#
+#     export DU=/foo/du
+#     file-size example.txt
+#
+# Using an environment variable can boost the speed of this script,
+# because it able to use the correct command first, rather than probing.
+#
+# For example a typical BSD or OSX system has a system `du` that
+# doesn't have any option for `--apparent-size` or `--block-size`.
+#
+# On our systems, we install GNU `du` that does have these options,
+# and we call the command `gdu`, and we set the environment variable:
+#
+#    export DU=/usr/local/bin/gdu
+#    file-size example.txt
+#
+# We typically set our command variables in our /etc/environment file,
+# and similar startup files such as our ~/.bashrc file and ~/.zshrc file,
+# so our command variables are available for all of our shell scripts.
+#
+# ## For OSX users
+#
+# If your system is a typical OSX system, a way to get the GNU commands
+# is by using the `brew` package manager and installing GNU packages:
+#
+#     brew install coreutils findutil
+#
+# If you want to use the GNU commands without a `g` prefix,
+# instead of your default system commands, one way is this:
+#
+#     brew install --default-names coreutils findutil
+#
+# Another way is to add the GNU commands to your PATH, such as:
+#
+#     export PATH=/usr/local/opt/coreutils/libexec/gnubin:$PATH
+#
+# Program: file-size
+# Version: 2.0.1
+# Created: 2014-12-02
+# Updated: 2019-06-18
+# License: GPL
+# Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
+##
+set -euf
+out () { printf %s\\n "$*" ; }
+arg_file="$1"
+
+file_size() {
+  file="$1"
+  size=$(
+    ${DU:-du}  --apparent-size --block-size=1 "$file" 2>/dev/null ||
+    ${GDU:-gdu} --apparent-size --block-size=1 "$file" 2>/dev/null ||
+    ${FIND:-find} "$file" -printf "%s" 2>/dev/null ||
+    ${GFIND:-gfind} "$file" -printf "%s" 2>/dev/null ||
+    ${STAT:-stat} --printf="%s" "$file" 2>/dev/null ||
+    ${STAT:-stat} -f%z "$file" 2>/dev/null ||
+    ${WC:-wc} -c <"$file" 2>/dev/null
+  )
+  q=$?; [ $q -eq 0 ] || exit $q
+  out "$size" | awk '{print $1}'
+}
+
+file_size "$arg_file"
+exit 0
+
+##
+# Function library that can be useful for other projects.
+# These functions are not needed by the code above here.
+##
+
+file_size_via_du() {
+  ${DU:-du}  --apparent-size --block-size=1 "$1"
+}
+
+file_size_via_du_ok() {
+  ${DU:-du}  --apparent-size --block-size=1 "$1" 2>/dev/null; return
+}
+
+file_size_via_gdu() {
+  ${GDU:-gdu} --apparent-size --block-size=1 "$1"
+}
+
+file_size_via_gdu_ok() {
+  ${GDU:-gdu} --apparent-size --block-size=1 "$1" 2>/dev/null; return
+}
+
+file_size_via_find() {
+  ${FIND:-find} "$1" -printf "%s"
+}
+
+file_size_via_find_ok() {
+  ${FIND:-find} "$1" -printf "%s" 2>/dev/null; return
+}
+
+file_size_via_gfind() {
+  ${GFIND:-gfind} "$1" -printf "%s"
+}
+
+file_size_via_gfind_ok() {
+  ${GFIND:-gfind} "$1" -printf "%s" 2>/dev/null; return
+}
+
+file_size_via_stat_printf() {
+  ${STAT:-stat} --printf="%s" "$1"
+}
+
+file_size_via_stat_printf_ok() {
+  ${STAT:-stat} --printf="%s" "$1" 2>/dev/null; return
+}
+
+file_size_via_stat_fz() {
+  ${STAT:-stat} -f%z "$1"
+}
+
+file_size_via_stat_fz_ok() {
+  ${STAT:-stat} -f%z "$1" 2>/dev/null; return
+}
+
+file_size_via_wc() {
+  ${WC:-wc} -c <"$1"
+}
+
+file_size_via_wc_ok() {
+  ${WC:-wc} -c <"$1" 2>/dev/null; return
+}
