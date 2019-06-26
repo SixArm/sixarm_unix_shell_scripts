@@ -1,0 +1,1 @@
+find . -depth -exec rename --lower-case --force {} \;
