@@ -1,0 +1,44 @@
+#!/bin/sh
+
+##
+# Diff two Rust files that we typical use for our apps.
+#
+# Syntax:
+#
+#     rust-diff-model-and-parse <file 1> <file 2>
+#
+# Example:
+#
+#     rust-diff-model-and-parse item.rs item_parse.rs
+#
+#
+# ## Purpose ##
+#
+# We use this script to verify that our model file has the
+# same field names in the same order as in the parse file.
+#
+# File 1 is a Diesel model file. The file contains a struct.
+#
+# Example file `item.rs`:
+#
+#     ...
+#     pub struct Item {
+#         pub id: uuid::Uuid,
+#         pub name: Option<String>,
+#         pub updated: Option<NaiveDateTime>,
+#     ...
+#
+# File 2 is a corresponding model parse file. The file contains parsing functions.
+#
+# Example file `item_parse.rs`:
+#
+#     ...
+#     use super::super::helpers::parse;
+#     pub fn to_id(s: Option<&str>) -> Option<Uuid> { return parse::to_option_uuid(s); }
+#     pub fn to_name(s: Option<&str>) -> Option<String> { return parse::to_option_string(s); }
+#     pub fn to_updated_at_timestamp_utc(s: Option<&str>) -> Option<NaiveDateTime> { return parse::to_option_naive_date_time(s); }
+#     ...
+#
+##
+
+diff <(cat "$1.rs" | rust-sed-print-struct-fields-and-function-names | sed 's/^to_//') <(cat "$1_parse.rs" | rust-sed-print-struct-fields-and-function-names | sed 's/^to_//')
