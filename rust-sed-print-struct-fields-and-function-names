@@ -1,0 +1,1 @@
+sed -n 's/^ *pub  *fn  */⊤/p; s/^ *pub  */⊤/p' | sed 's/^⊤\([_[:alnum:]]*\).*/\1/'
