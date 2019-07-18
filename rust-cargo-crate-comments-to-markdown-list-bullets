@@ -1,0 +1,1 @@
+cat Cargo.toml | sed -n 's/^# \([-_[:alnum:]]\{1,\}\): /  * [\1](https:\/\/crates.io\/crates\/\1): /p'

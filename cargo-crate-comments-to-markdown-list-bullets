@@ -1,1 +1,0 @@
-cat Cargo.toml | sed -n 's/^# \([-_[:alnum:]]\{1,\}\): /  * \1: /p'

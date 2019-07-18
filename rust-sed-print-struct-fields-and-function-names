@@ -1,1 +1,64 @@
-sed -n 's/^ *pub  *struct  *.*//; s/^ *pub  *fn  */⊤/p; s/^ *pub  */⊤/p' | sed 's/^⊤\([_[:lower:][:digit:]]*\).*/\1/'
+#!/bin/sh
+
+## 
+# Process a Rust file's lines to print just items we want.
+# 
+# This script prints struct fields and function names,
+# and similar meaninful items from schema.rs files.
+#
+# Example Rust Diesel model file:
+#
+#     ...
+#     pub struct Item {
+#         pub id: uuid::Uuid,
+#         pub name: Option<String>,
+#         pub updated: Option<NaiveDateTime>,
+#     ...
+#
+# Example Rust app parser file:
+#
+#     ...
+#     use super::super::helpers::parse;
+#     pub fn to_id(s: Option<&str>) -> Option<Uuid> { return parse::to_option_uuid(s); }
+#     pub fn to_name(s: Option<&str>) -> Option<String> { return parse::to_option_string(s); }
+#     pub fn to_updated_at_timestamp_utc(s: Option<&str>) -> Option<NaiveDateTime> { return parse::to_option_naive_date_time(s); }
+#     ...
+#
+# Example Rust Diesel schema file:
+#
+#     ...
+#     table! {
+#         items (id) {
+#             id -> Uuid,
+#             name -> Nullable<Text>,
+#             updated -> Nullable<Timestamp>,
+#     ...
+#
+#
+# ## Implementation ##
+#
+# This script aims to be POSIX compliant. 
+#
+#   * The `sed` command uses solely POSIX capabilities.
+#
+#   * We work around the lack of regex `+`` by using `\{1,\}`.
+#
+#   * We work around the lack of group alternate `|` by using multiple 
+#     selections, and each selection marks the line with a character `⊤`
+#     to indicate true. This enables us to run on a wide range of systems.
+#
+# The `sed` command does matching and munging:
+#
+#   * `s/^ *pub  *struct  *.*//` ~ Reject Diesel model line "pub struct ..." 
+#
+#   * `s/^ *pub  *fn  */⊤/p` ~ Select Diesel parse line function "pub fn ..."
+#
+#   * `s/^ *pub  */⊤/p` ~ Select Diesel model line struct field "pub ..."
+#
+#   * `s/^ *\([_[:lower:][:digit:]]\{1,\}\) *-> *Nullable<.*>,/⊤\1/p` ~ Select Rust Diesel schema.rs line
+#
+#   * `grep -v '^id$'` ~ Reject "id" because its superfluous, and some of our files need it, and others don't.
+#
+##
+
+sed -n 's/^ *pub  *struct  *.*//; s/^ *pub  *fn  */⊤/p; s/^ *pub  */⊤/p; s/^ *\([_[:lower:][:digit:]]\{1,\}\) *-> *Nullable<.*>,/⊤\1/p' | sed 's/^⊤\([_[:lower:][:digit:]]*\).*/\1/' | grep -v '^id$' | grep -v '^to_id'
