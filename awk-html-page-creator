@@ -1,0 +1,78 @@
+# awk HTML page creator
+#
+# This script is a quick and dirty way to create simple HTML pages,
+# such as from a pipe of text tab separated value, such as spreadsheet.
+#
+# The line fields are:
+#
+#    * path: the relative file path, such as "example.html".
+#
+#    * name: the page name, which is output as the title and headline.
+#
+#    * text: the page text, which is output as is, after the headline.
+#
+# The output text is a simple HTML page that has these notable areas:
+#
+#    * The input line's name and text.
+#
+#    * A typical doctype, favicon link, stylesheet link, nav link, etc.
+#
+#    * A body div that makes it convenient to do CSS for the entire page.
+#
+# Input example file `input.tsv`:
+#
+#     hello.html \t Hello world \t This is example text.
+#
+# Command:
+#
+#     cat input.tsv | awk-html-page-creator
+#
+# Output example file `hello.html`:
+#
+#     <!DOCTYPE html>
+#     <html>
+#         <head>
+#             <title>Hello world</title>
+#             <link rel="shortcut icon" type="image/x-icon" href="/favicon" />
+#             <link rel="stylesheet" type="text/css" href="css/main.css" />
+#         </head>
+#         <body>
+#             <div id="body">
+#                 <header>
+#                     <nav><a href="/">Home</a></nav>
+#                 </header>
+#                 <h1>Hello world</h1>
+#                 This is example text.
+#             </div>
+#         </body>
+#    </html>
+#
+#
+awk -F '\t' ' \
+BEGIN { \
+  indent="    "; \
+} \
+{ \
+  path=$1; \
+  name=$2; \
+  text=$3; \
+  system("rm -f " path); \
+  system("touch " path); \
+  print "<!DOCTYPE html>" >> path; \
+  print "<html>" >> path; \
+  print indent "<head>" >> path; \
+  print indent indent "<title>" name "</title>" >> path; \
+  print indent indent "<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"/favicon\" />" >> path; \
+  print indent indent "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/main.css\" />" \; >> path; \
+  print indent "</head>" >> path; \
+  print indent "<body>" >> path; \
+  print indent indent "<div class=\"body\">" >> path; \
+  print indent indent indent "<header>" >> path; \
+  print indent indent indent indent "<nav><a href=\"/">Home</a></nav>" >> path; \
+  print indent indent indent "</header>" >> path; \
+  print indent indent indent "<h1>" name "</h1>" >> path; \
+  print indent indent indent text >> path; \
+  print indent indent "</div>" >> path; \
+  print indent "</body>" >> path; \
+  print "</html>" >> path; \
+}'
