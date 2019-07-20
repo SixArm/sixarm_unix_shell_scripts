@@ -1,3 +1,6 @@
+#!/bin/sh
+
+##
 # awk HTML page creator
 #
 # This script is a quick and dirty way to create simple HTML pages,
@@ -63,12 +66,12 @@ BEGIN { \
   print indent "<head>" >> path; \
   print indent indent "<title>" name "</title>" >> path; \
   print indent indent "<link rel=\"shortcut icon\" type=\"image/x-icon\" href=\"/favicon\" />" >> path; \
-  print indent indent "<link rel=\"stylesheet\" type=\"text/css\" href=\"css/main.css\" />" \; >> path; \
+  print indent indent "<link rel=\"stylesheet\" type=\"text/css\" href=\"/css/main.css\" />" >> path; \
   print indent "</head>" >> path; \
   print indent "<body>" >> path; \
   print indent indent "<div class=\"body\">" >> path; \
   print indent indent indent "<header>" >> path; \
-  print indent indent indent indent "<nav><a href=\"/">Home</a></nav>" >> path; \
+  print indent indent indent indent "<nav><a href=\"/\">Home</a></nav>" >> path; \
   print indent indent indent "</header>" >> path; \
   print indent indent indent "<h1>" name "</h1>" >> path; \
   print indent indent indent text >> path; \
