@@ -1,0 +1,83 @@
+#!/bin/sh
+
+##
+# linkedin-job-description-convert-html-to-markdown
+#
+# This script attempts to process a LinkedIn job description example,
+# to convert the text from HTML format to Markdown format.
+#
+#
+# ## Implementation
+#
+# Delete all lines after these matches:
+#
+#    /For additional data-backed insights/,$d;
+#    /Keep building your skills/,$d;
+#
+# Delete these lines:
+#
+#    /Need help in your recruitment efforts/d;
+#    /CDATA/d;
+#    /\/\/\]\]/d;
+#    /function()/d;
+#
+# Delete these HTML tags:
+#
+#    s/<\/\{0,1\}\(div\|header\|img\|picture\|script\|section\|source\|video\)[^>]*>//g; s/<![^>]*>//g;
+#    s/<[[:alnum:]]*><\/[[:alnum:]]*>//g;
+#
+# Delete these HTML attributes:
+#
+#    s/ \(class\|style\)="[^"]*"//g; 
+#
+# Convert these:
+#
+#    h1 => #
+#    h2 => ##
+#    h3 => ###
+#    ul => new line
+#    li => new line with *
+#    p => new lines
+#    br => new line
+#
+# Pad headlines with some blank lines before and after:
+#
+#    s/^#\(.*\)$/\n\n#\1\n\n/
+#
+# Delete successive blank lines:
+#
+#    /./,/^$/!d
+#
+# Adjust specific headlines:
+#
+#    /^## \(Objectives \|Daily \|Skills \|Preferred \)/### \1/
+#    
+# Reword text:
+#
+#    "[CompanyX]" => "our company"
+#
+##
+
+gsed \
+-e '/For additional data-backed insights/,$d' \
+-e '/Keep building your skills/,$d' \
+-e '/Need help in your recruitment efforts/d' \
+-e '/CDATA/d'
+-e '/\/\/\]\]/d' \
+-e 's/<[[:alnum:]]*><\/[[:alnum:]]*>//g' \
+-e '/function()/d' \
+-e 's/ \(class\|style\)="[^"]*"//g' \
+-e 's/<\/\{0,1\}\(div\|header\|img\|picture\|script\|section\|source\|strong\|video\)[^>]*>//g; s/<![^>]*>//g' \
+-e 's/ *<h1> */\n\n# /g; s/ *<\/h1> */\n\n/g' \
+-e 's/ *<h2> */\n\n## /g; s/ *<\/h2> */\n\n/g' \
+-e 's/ *<h3> */\n\n### /g; s/ *<\/h3> */\n\n/g' \
+-e 's/ *<ul> */\n\n /g; s/ *<\/ul> */\n\n/g' \
+-e 's/ *<li> */\n\n* /g; s/ *<\/li> */\n\n/g' \
+-e 's/ *<p> */\n\n/g; s/ *<\/p> */\n\n/g' \
+-e 's/ *<br\/> */\n/g' \
+-e '/./,/^$/!d'
+-e 's/ *$//'
+-e '/^## \(Objectives \|Daily \|Skills \|Preferred \)/### \1/'
+-e '/^#/\n\n#/'
+-e 's/^#\(.*\)$/\n\n#\1\n\n/'
+-e 's/\[CompanyX\]/our company/'
