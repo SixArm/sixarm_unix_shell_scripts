@@ -1,0 +1,21 @@
+#!/bin/sh
+sed \
+-e '0,/<!-- WP Content -->/d; /<!-- \/ WP Content -->/,$d' \
+-e 's/ *<h1> */\n\n# /g; s/ *<\/h1> */\n\n/g' \
+-e 's/ *<h2> */\n\n## /g; s/ *<\/h2> */\n\n/g' \
+-e 's/ *<h3> */\n\n### /g; s/ *<\/h3> */\n\n/g' \
+-e 's/ *<ul> */\n\n /g; s/ *<\/ul> */\n\n/g' \
+-e 's/ *<li> */\n\n* /g; s/ *<\/li> */\n\n/g' \
+-e 's/ *<p> */\n\n/g; s/ *<\/p> */\n\n/g' \
+-e 's/ *<br \{0,\}\/> */\n/g' \
+-e 's/ *$//' \
+-e '/monster.com/d'
+-e '/Monster/d'
+-e '/<em>This/d'
+-e '/Learn more about/d'
+-e 's/&#x2014;{2,}//g;'
+-e 's/&#160;/ /g; s/&#xA0;/ /g;'
+-e 's/[[:space:]]\{1,\}$//'
+-e 's/^\(#\{1,\} .*\):/\n\n\1\n\n/'
+-e 's/^## \(.*\) Job Responsibilities/\1\n\n## Job Responsibilities/'
+-e 's/^## \(.*\) \(Job Responsibilities\|Skills and Qualifications\|Job Duties\|Job Responsibilities\)/## \2/'
