@@ -1,0 +1,7 @@
+#!/bin/sh
+
+sed \
+-e '0,/>Job descriptions</d' \
+-e '/>Share</,$d' \
+-e 's/&nbsp;/ /g' \
+-e '/ template is optimized /d' \
