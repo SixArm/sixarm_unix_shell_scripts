@@ -1,0 +1,13 @@
+#!/usr/bin/awk -f
+
+BEGIN {
+    FS=OFS="\t"
+}
+{ 
+    tally[$0]+=1
+} 
+END { 
+    for (x in tally) { 
+        print tally[x], x
+    }
+}
