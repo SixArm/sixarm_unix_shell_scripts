@@ -16,19 +16,22 @@
 #
 # Delete these lines:
 #
-#    /Need help in your recruitment efforts/d;
-#    /CDATA/d;
-#    /\/\/\]\]/d;
-#    /function()/d;
+#    /Need help in your recruitment efforts/d
+#    /CDATA/d
+#    /\/\/\]\]/d
+#    /function()/d
 #
 # Delete these HTML tags:
 #
-#    s/<\/\{0,1\}\(div\|header\|img\|picture\|script\|section\|source\|video\)[^>]*>//g; s/<![^>]*>//g;
-#    s/<[[:alnum:]]*><\/[[:alnum:]]*>//g;
+#    body, div, header, img, link, meta, picture, script, section, source, span, video
+#
+# Delete any empty HTML tag pairs:
+#
+#    s/<\([[:alnum:]]{1,}\)[^>]*><\/\1>//g
 #
 # Delete these HTML attributes:
 #
-#    s/ \(class\|style\)="[^"]*"//g; 
+#    class, style
 #
 # Convert these:
 #
@@ -64,17 +67,18 @@ gsed \
 -e '/Need help in your recruitment efforts/d' \
 -e '/CDATA/d'
 -e '/\/\/\]\]/d' \
--e 's/<[[:alnum:]]*><\/[[:alnum:]]*>//g' \
+-e 's/<\([[:alnum:]]{1,}\)[^>]*><\/\1>//g' \
 -e '/function()/d' \
 -e 's/ \(class\|style\)="[^"]*"//g' \
--e 's/<\/\{0,1\}\(div\|header\|img\|picture\|script\|section\|source\|strong\|video\)[^>]*>//g; s/<![^>]*>//g' \
--e 's/ *<h1> */\n\n# /g; s/ *<\/h1> */\n\n/g' \
--e 's/ *<h2> */\n\n## /g; s/ *<\/h2> */\n\n/g' \
--e 's/ *<h3> */\n\n### /g; s/ *<\/h3> */\n\n/g' \
--e 's/ *<ul> */\n\n /g; s/ *<\/ul> */\n\n/g' \
--e 's/ *<li> */\n\n* /g; s/ *<\/li> */\n\n/g' \
--e 's/ *<p> */\n\n/g; s/ *<\/p> */\n\n/g' \
--e 's/ *<br\/> */\n/g' \
+-e 's/<\/\{0,1\}\(body\|div\|header\|img\|link\|meta\|picture\|script\|section\|source\|span\|strong\|video\)[^>]*>//g' \
+-e 's/<![^>]*>//g' \
+-e 's/ *<h1 \{0,\}[^>]*> */\n\n# /g; s/ *<\/h1> */\n\n/g' \
+-e 's/ *<h2 \{0,\}[^>]*> */\n\n## /g; s/ *<\/h2> */\n\n/g' \
+-e 's/ *<h3 \{0,\}[^>]*> */\n\n### /g; s/ *<\/h3> */\n\n/g' \
+-e 's/ *<ul \{0,\}[^>]*> */\n\n /g; s/ *<\/ul> */\n\n/g' \
+-e 's/ *<li \{0,\}[^>]*> */\n\n* /g; s/ *<\/li> */\n\n/g' \
+-e 's/ *<p \{0,\}[^>]*> */\n\n/g; s/ *<\/p> */\n\n/g' \
+-e 's/ *<br \{0,\}[^>]*> */\n/g' \
 -e '/./,/^$/!d'
 -e 's/ *$//'
 -e '/^## \(Objectives \|Daily \|Skills \|Preferred \)/### \1/'
