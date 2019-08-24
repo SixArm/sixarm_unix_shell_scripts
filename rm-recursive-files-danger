@@ -1,0 +1,1 @@
+find . -type f | while read x; do [ -e "../$x" ] && [ ! "$x" -ef "../$x" ] && diff "$x" "../$x" && echo "dupe $x" && rm "$x"; done
