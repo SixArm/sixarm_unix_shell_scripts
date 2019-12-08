@@ -1,0 +1,8 @@
+sed ' \
+/^--liquibase /d; \
+/^--changeset /d; \ 
+/^--preconditions /d; \
+/www.liquibase.org/d; \
+/^--precondition-sql-check /d; \
+/^--rollback /d; \
+'
