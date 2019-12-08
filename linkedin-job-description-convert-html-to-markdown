@@ -79,9 +79,10 @@ gsed \
 -e 's/ *<li \{0,\}[^>]*> */\n\n* /g; s/ *<\/li> */\n\n/g' \
 -e 's/ *<p \{0,\}[^>]*> */\n\n/g; s/ *<\/p> */\n\n/g' \
 -e 's/ *<br \{0,\}[^>]*> */\n/g' \
--e '/./,/^$/!d'
--e 's/ *$//'
--e '/^## \(Objectives \|Daily \|Skills \|Preferred \)/### \1/'
--e '/^#/\n\n#/'
--e 's/^#\(.*\)$/\n\n#\1\n\n/'
--e 's/\[CompanyX\]/our company/'
+-e '/./,/^$/!d' \
+-e 's/ *$//' \
+-e '/^## \(Objectives \|Daily \|Skills \|Preferred \)/### \1/' \
+-e '/^#/\n\n#/' \
+-e 's/^#\(.*\)$/\n\n#\1\n\n/' \
+-e 's/\[CompanyX\]/our company/' \
+
