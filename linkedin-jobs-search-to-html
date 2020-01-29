@@ -48,9 +48,17 @@ driver = webdriver.Chrome(driver_path)
 query_string = urllib.parse.urlencode({'keywords': args.keywords})
 driver.get('https://www.linkedin.com/jobs/search?' + query_string)
 
-# Scope to the results list
-e = driver.find_element_by_class_name('jobs-search__results-list')
-html = e.get_attribute('innerHTML')
+# Find the results list and items
+results_list = driver.find_element_by_class_name('jobs-search__results-list')
+items = results_list.find_elements_by_tag_name("li")
 
-# Output
+# Iterate on the items to print each job id
+for item in items:
+    job_id = item.get_attribute('data-id')
+    print(job_id)
+
+# Find the job detail
+detail_view = driver.find_element_by_class_name("results__detail-view")
+description = detail_view.find_element_by_class_name("description__text--rich")
+html = description.get_attribute('innerHTML')
 print(html)
