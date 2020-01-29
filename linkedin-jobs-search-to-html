@@ -48,5 +48,9 @@ driver = webdriver.Chrome(driver_path)
 query_string = urllib.parse.urlencode({'keywords': args.keywords})
 driver.get('https://www.linkedin.com/jobs/search?' + query_string)
 
+# Scope to the results list
+e = driver.find_element_by_class_name('jobs-search__results-list')
+html = e.get_attribute('innerHTML')
+
 # Output
-print(driver.page_source)
+print(html)
