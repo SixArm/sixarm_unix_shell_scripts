@@ -1,0 +1,14 @@
+#!/bin/sh
+
+##
+# Remove GoogleSoftwareupdate app because we prefer to not send its data
+# to Google, and we prefer not to get its popups on macOS Catalina.
+##
+
+sudo rm -rf ~/Library/Google/GoogleSoftwareUpdate
+sudo touch ~/Library/Google/GoogleSoftwareUpdate
+sudo chmod 444 ~/Library/Google/GoogleSoftwareUpdate
+
+sudo rm -rf ~/Library/Google/GoogleSoftwareUpdate
+sudo touch /Library/Google/GoogleSoftwareUpdate
+sudo chmod 444 /Library/Google/GoogleSoftwareUpdate
