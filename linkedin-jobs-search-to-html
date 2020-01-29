@@ -1,0 +1,52 @@
+#!/usr/bin/env python3
+
+##
+# LinkedIn jobs search to HTML
+#
+# Syntax:
+#
+#     linkedin-jobs-search-to-html <keywords>
+#
+# Example:
+#
+#     linkedin-jobs-search-to-html programmer
+#
+# Example URL:
+#
+#   * https://www.linkedin.com/jobs/search?keywords=programmer
+#
+# Based on work by:
+#
+#   * https://www.linkedin.com/pulse/how-easy-scraping-data-from-linkedin-profiles-david-craven/
+#
+# Preflight:
+#
+# ```sh
+# pip3 install ipython 
+# pip3 install selenium  
+# pip3 install time 
+# pip3 install parsel
+# pip3 install csv
+# ```
+##
+
+import argparse
+import pathlib
+import sys
+import urllib
+from selenium import webdriver
+
+parser = argparse.ArgumentParser(description="LinkedIn jobs search to JSON")
+parser.add_argument("keywords", help="jobs search keywords")
+args = parser.parse_args()
+
+# Specify the path to the chromedriver.exe
+driver_path = "/usr/local/bin/chromedriver"
+driver = webdriver.Chrome(driver_path)
+
+# Navigate to a page given by the URL address
+query_string = urllib.parse.urlencode({'keywords': args.keywords})
+driver.get('https://www.linkedin.com/jobs/search?' + query_string)
+
+# Output
+print(driver.page_source)
