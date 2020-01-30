@@ -11,9 +11,13 @@
 #
 #     linkedin-jobs-search-to-html programmer
 #
-# Example URL:
+# Example URL of a search:
 #
 #   * https://www.linkedin.com/jobs/search?keywords=programmer
+#
+# Example URL of a result:
+#
+#   * https://www.linkedin.com/jobs/search?currentJobId=100000000
 #
 # Based on work by:
 #
@@ -31,34 +35,80 @@
 ##
 
 import argparse
+import os
 import pathlib
 import sys
 import urllib
 from selenium import webdriver
 
-parser = argparse.ArgumentParser(description="LinkedIn jobs search to JSON")
-parser.add_argument("keywords", help="jobs search keywords")
-args = parser.parse_args()
+def parse_args():
+    parser = argparse.ArgumentParser(description="LinkedIn jobs search to JSON")
+    parser.add_argument("keywords", help="jobs search keywords")
+    args = parser.parse_args()
 
-# Specify the path to the chromedriver.exe
-driver_path = "/usr/local/bin/chromedriver"
-driver = webdriver.Chrome(driver_path)
+def create_driver():
+    # Configure Chrome browser options
+    chrome_options = webdriver.chrome.options.Options()
+    chrome_options.add_argument("--disable-extensions")
+    chrome_options.add_argument("--incognito")
 
-# Navigate to a page given by the URL address
-query_string = urllib.parse.urlencode({'keywords': args.keywords})
-driver.get('https://www.linkedin.com/jobs/search?' + query_string)
+    # Create a Chrome web driver
+    driver_path = "/usr/local/bin/chromedriver"
+    driver = webdriver.Chrome(driver_path, options=chrome_options)
+    return driver
 
-# Find the results list and items
-results_list = driver.find_element_by_class_name('jobs-search__results-list')
-items = results_list.find_elements_by_tag_name("li")
+def drive_home():
+    driver.get("https://www.linkedin.com/")
 
-# Iterate on the items to print each job id
-for item in items:
-    job_id = item.get_attribute('data-id')
-    print(job_id)
+def drive_login(username, password):
+    drive_home()
+    driver.find_element_by_link_text("Sign in").click()
+    form = driver.find_element_by_class_name("login__form")
+    form.find_element_by_id("username").send_keys(os.environ["LINKEDIN_USERNAME"])
+    form.find_element_by_id("password").send_keys(os.environ["LINKEDIN_PASSWORD"])
+    form.find_element_by_xpath("//button[@type='submit']").click()
 
-# Find the job detail
-detail_view = driver.find_element_by_class_name("results__detail-view")
-description = detail_view.find_element_by_class_name("description__text--rich")
-html = description.get_attribute('innerHTML')
-print(html)
+def drive_search(keywords):
+    query_string = urllib.parse.urlencode({"keywords": args.keywords})
+    driver.get("https://www.linkedin.com/jobs/search?" + query_string)
+
+def find_job_list_items():
+    list = driver.find_element_by_class_name("jobs-search__results-list")
+    items = list.find_elements_by_tag_name("li")
+    return items
+
+def find_job_ids():
+    items = find_job_list_items()
+    job_ids = map(element_data_id, items)
+    return job_ids
+               
+def find_job_description():
+    return driver.find_element_by_class_name("results__detail-view") \
+                 .find_element_by_class_name("description__text--rich")
+
+def element_data_id(element):
+    return element.get_attribute("data-id")
+
+driver = create_driver()
+
+def main():
+    parse_args()
+    drive_login(os.environ["LINKEDIN_USERNAME"], os.environ["LINKEDIN_PASSWORD"])
+    drive_search(args.keywords)
+
+    print("==== ids =====")
+    ids = find_job_ids()
+    print(ids)
+
+    # Click the button to see more jobs
+    button = driver.find_element_by_class_name("see-more-jobs")
+    button.click()
+
+    print("==== ids =====")
+    ids = find_job_ids()
+    print(ids)
+
+    html = find_job_description.get_attribute("innerHTML")
+    print(html)
+
+main()
