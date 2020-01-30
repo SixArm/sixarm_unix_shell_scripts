@@ -26,9 +26,9 @@
 # Preflight:
 #
 # ```sh
-# pip3 install ipython 
-# pip3 install selenium  
-# pip3 install time 
+# pip3 install ipython
+# pip3 install selenium
+# pip3 install time
 # pip3 install parsel
 # pip3 install csv
 # ```
@@ -45,6 +45,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="LinkedIn jobs search to JSON")
     parser.add_argument("keywords", help="jobs search keywords")
     args = parser.parse_args()
+    return args
 
 def create_driver():
     # Configure Chrome browser options
@@ -69,7 +70,7 @@ def drive_login(username, password):
     form.find_element_by_xpath("//button[@type='submit']").click()
 
 def drive_search(keywords):
-    query_string = urllib.parse.urlencode({"keywords": args.keywords})
+    query_string = urllib.parse.urlencode({"keywords": keywords})
     driver.get("https://www.linkedin.com/jobs/search?" + query_string)
 
 def find_job_list_items():
@@ -81,7 +82,7 @@ def find_job_ids():
     items = find_job_list_items()
     job_ids = map(element_data_id, items)
     return job_ids
-               
+
 def find_job_description():
     return driver.find_element_by_class_name("results__detail-view") \
                  .find_element_by_class_name("description__text--rich")
@@ -92,7 +93,7 @@ def element_data_id(element):
 driver = create_driver()
 
 def main():
-    parse_args()
+    args = parse_args()
     drive_login(os.environ["LINKEDIN_USERNAME"], os.environ["LINKEDIN_PASSWORD"])
     drive_search(args.keywords)
 
