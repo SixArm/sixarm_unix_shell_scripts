@@ -41,7 +41,18 @@ import random
 import sys
 import time
 import urllib
+
+from dataclasses import dataclass
 from selenium import webdriver
+from typing import List
+
+@dataclass
+class Job:
+    id: str
+    description: str = ""
+        
+    def __str__(self):
+        return f'{self.id} {self.description}'
 
 def sleeper():
     time.sleep(random.random * 10)
@@ -103,7 +114,14 @@ def main():
 
     print("==== ids =====")
     ids = find_job_ids()
-    print(ids)
+    print(*ids)
+
+    print("==== jobs =====")
+    jobs = list(map(lambda id: Job(id=id), ids))
+    print("jobs len:", len(jobs))
+    print(*jobs)
+
+    return
 
     # Click the button to see more jobs
     button = driver.find_element_by_class_name("see-more-jobs")
