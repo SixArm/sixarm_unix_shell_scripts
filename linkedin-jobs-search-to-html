@@ -37,9 +37,14 @@
 import argparse
 import os
 import pathlib
+import random
 import sys
+import time
 import urllib
 from selenium import webdriver
+
+def sleeper():
+    time.sleep(random.random * 10)
 
 def parse_args():
     parser = argparse.ArgumentParser(description="LinkedIn jobs search to JSON")
@@ -51,25 +56,24 @@ def create_driver():
     # Configure Chrome browser options
     chrome_options = webdriver.chrome.options.Options()
     chrome_options.add_argument("--disable-extensions")
-    chrome_options.add_argument("--incognito")
 
     # Create a Chrome web driver
     driver_path = "/usr/local/bin/chromedriver"
     driver = webdriver.Chrome(driver_path, options=chrome_options)
     return driver
 
-def drive_home():
+def do_home():
     driver.get("https://www.linkedin.com/")
 
-def drive_login(username, password):
-    drive_home()
+def do_login(username, password):
+    do_home()
     driver.find_element_by_link_text("Sign in").click()
     form = driver.find_element_by_class_name("login__form")
     form.find_element_by_id("username").send_keys(os.environ["LINKEDIN_USERNAME"])
     form.find_element_by_id("password").send_keys(os.environ["LINKEDIN_PASSWORD"])
     form.find_element_by_xpath("//button[@type='submit']").click()
 
-def drive_search(keywords):
+def do_search(keywords):
     query_string = urllib.parse.urlencode({"keywords": keywords})
     driver.get("https://www.linkedin.com/jobs/search?" + query_string)
 
@@ -94,8 +98,8 @@ driver = create_driver()
 
 def main():
     args = parse_args()
-    drive_login(os.environ["LINKEDIN_USERNAME"], os.environ["LINKEDIN_PASSWORD"])
-    drive_search(args.keywords)
+    #do_login(os.environ["LINKEDIN_USERNAME"], os.environ["LINKEDIN_PASSWORD"]) and sleeper()    
+    do_search(args.keywords) and sleeper()
 
     print("==== ids =====")
     ids = find_job_ids()
@@ -103,13 +107,14 @@ def main():
 
     # Click the button to see more jobs
     button = driver.find_element_by_class_name("see-more-jobs")
-    button.click()
+    button.click() and sleeper()
 
     print("==== ids =====")
     ids = find_job_ids()
     print(ids)
 
-    html = find_job_description.get_attribute("innerHTML")
+    description = find_job_description()
+    html = description.get_attribute("innerHTML")
     print(html)
 
 main()
