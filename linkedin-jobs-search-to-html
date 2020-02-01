@@ -46,16 +46,58 @@ from dataclasses import dataclass
 from selenium import webdriver
 from typing import List
 
+##
+#
+# Data class section
+#
+##
+
 @dataclass
 class Job:
-    id: str
+    id: int
     description: str = ""
+
+    def __str__(self):
         
+        self.x = 'Hello'
     def __str__(self):
         return f'{self.id} {self.description}'
 
-def sleeper():
+##
+#
+# Global
+#
+##
+
+db = {'jobs': {}}  # Store of global data for lookups
+driver = None  # Selenium Chrome web driver
+
+
+##
+#
+# Language
+#
+##
+
+def each(function, iterable):
+    for element in iterable:
+        function(element)
+
+def sleepy(seconds = 10):
     time.sleep(random.random * 10)
+
+def db_get(key, id):
+    return db[key][id]
+
+def db_set(key, id, object):
+    print("db_set", id, object)
+    db[key][id] = object
+
+##
+#
+# CLI
+#
+##
 
 def parse_args():
     parser = argparse.ArgumentParser(description="LinkedIn jobs search to JSON")
@@ -73,19 +115,29 @@ def create_driver():
     driver = webdriver.Chrome(driver_path, options=chrome_options)
     return driver
 
-def do_home():
+##
+#
+# Web interaction
+#
+##
+
+def go_home():
     driver.get("https://www.linkedin.com/")
 
-def do_login(username, password):
-    do_home()
+def go_login(username, password):
+    go_home()
     driver.find_element_by_link_text("Sign in").click()
     form = driver.find_element_by_class_name("login__form")
     form.find_element_by_id("username").send_keys(os.environ["LINKEDIN_USERNAME"])
     form.find_element_by_id("password").send_keys(os.environ["LINKEDIN_PASSWORD"])
     form.find_element_by_xpath("//button[@type='submit']").click()
 
-def do_search(keywords):
+def go_search(keywords):
     query_string = urllib.parse.urlencode({"keywords": keywords})
+    driver.get("https://www.linkedin.com/jobs/search?" + query_string)
+
+def go_job(id):
+    query_string = urllib.parse.urlencode({"currentJobId": id})
     driver.get("https://www.linkedin.com/jobs/search?" + query_string)
 
 def find_job_list_items():
@@ -95,7 +147,7 @@ def find_job_list_items():
 
 def find_job_ids():
     items = find_job_list_items()
-    job_ids = map(element_data_id, items)
+    job_ids = list(map(int, map(element_data_id, items)))
     return job_ids
 
 def find_job_description():
@@ -109,23 +161,24 @@ driver = create_driver()
 
 def main():
     args = parse_args()
-    #do_login(os.environ["LINKEDIN_USERNAME"], os.environ["LINKEDIN_PASSWORD"]) and sleeper()    
-    do_search(args.keywords) and sleeper()
+    #go_login(os.environ["LINKEDIN_USERNAME"], os.environ["LINKEDIN_PASSWORD"]) and sleepy()    
+    go_search(args.keywords) and sleepy()
 
     print("==== ids =====")
     ids = find_job_ids()
     print(*ids)
 
     print("==== jobs =====")
-    jobs = list(map(lambda id: Job(id=id), ids))
-    print("jobs len:", len(jobs))
+    jobs = list(map(lambda x: Job(x), ids))
+    for job in jobs:
+        db_set('jobs', job.id, job)
     print(*jobs)
 
     return
 
     # Click the button to see more jobs
     button = driver.find_element_by_class_name("see-more-jobs")
-    button.click() and sleeper()
+    button.click() and sleepy()
 
     print("==== ids =====")
     ids = find_job_ids()
