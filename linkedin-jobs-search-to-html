@@ -15,9 +15,17 @@
 #
 #   * https://www.linkedin.com/jobs/search?keywords=programmer
 #
+# Example URL of a search with "for time posted is within past 1 day":
+#
+#   * https://www.linkedin.com/jobs/search?keywords=programmer&f_TP=1
+#
 # Example URL of a result:
 #
 #   * https://www.linkedin.com/jobs/search?currentJobId=100000000
+#
+# Example URL of an API call that also works incognito:
+#
+#   * https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/100000000
 #
 # Based on work by:
 #
@@ -32,6 +40,13 @@
 # pip3 install parsel
 # pip3 install csv
 # ```
+#
+# LinkedIn URLs that we may want to use in the future:
+#
+#   * https://www.linkedin.com/checkpoint/lg/login?...
+#
+#   * ... (for security challenge)
+#
 ##
 
 import argparse
@@ -42,8 +57,15 @@ import sys
 import time
 import urllib
 
+from contextlib import contextmanager
 from dataclasses import dataclass
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import TimeoutException
 from typing import List
 
 ##
@@ -57,9 +79,6 @@ class Job:
     id: int
     description: str = ""
 
-    def __str__(self):
-        
-        self.x = 'Hello'
     def __str__(self):
         return f'{self.id} {self.description}'
 
@@ -86,12 +105,132 @@ def each(function, iterable):
 def sleepy(seconds = 10):
     time.sleep(random.random * 10)
 
+##
+#
+# Data store
+#
+##
+
 def db_get(key, id):
     return db[key][id]
 
 def db_set(key, id, object):
-    print("db_set", id, object)
     db[key][id] = object
+
+##
+#
+# Selenium extras
+#
+##
+
+# Credit: http://www.obeythetestinggoat.com/how-to-get-selenium-to-wait-for-page-load-after-a-click.html
+def link_is_stale(link):
+    try:
+        link.find_elements_by_id('x') # poll the link with an arbitrary call
+        return False
+    except StaleElementReferenceException:
+        return True
+
+# Credit: http://www.obeythetestinggoat.com/how-to-get-selenium-to-wait-for-page-load-after-a-click.html
+def link_click_fresh(link):
+    link.click()
+    wait_for(link_has_gone_stale(link))
+
+##
+#
+# Selenium expectations
+#
+##
+
+class expect_current_url_starts_with(object):
+    """An expectation for checking that the current URL starts with text.
+
+    Example: wait until the current URL starts with 'https://example.com'
+
+        wait = WebDriverWait(driver, 10)
+        element = wait.until(expect_current_url_starts_with('https://example.com'))
+
+    text - any text
+    """
+    def __init__(self, text):
+        self.text = text
+
+    def __call__(self, driver):
+        """Return true iff the current URL starts with the text."""
+        return driver.current_url.startswith(self.text)
+
+# Credit: https://selenium-python.readthedocs.io/waits.html
+class expect_element_has_css_class(object):
+    """An expectation for checking that an element has a particular css class.
+
+    Example: wait until an element with id='myId' has CSS class 'myClass':
+
+        wait = WebDriverWait(driver, 10)
+        element = wait.until(expect_element_has_css_class((By.ID, 'myId'), 'myClass')
+
+    locator - used to find the element
+    css_class - a CSS class name
+    returns the WebElement once it has the particular css class
+    """
+    def __init__(self, locator, css_class):
+        self.locator = locator
+        self.css_class = css_class
+
+    def __call__(self, driver):
+        element = driver.find_element(*self.locator)   # Finding the referenced element
+        if self.css_class in element.get_attribute("class"):
+            return element
+        else:
+            return False
+
+# Credit: https://www.fomfus.com/articles/make-selenium-wait-for-anything-you-want-before-continuing
+class expect_element_by_css_selector(object):
+    """An expectation for checking that an element exists.
+
+    Example: wait until an element exists with CSS selector 'mySelector':
+
+        wait = WebDriverWait(driver, 10)
+        element = wait.until(expect_element_expect_element_by_css_selector('mySelector'))
+
+    css_selector - a CSS selector
+    returns the WebElement once it has the particular css class
+    """
+    def __init__(self, css_selector):
+        self.css_selector = css_selector
+
+    def __call__(self, driver):
+        """Search for element; return true iff found."""
+        try:
+            driver.find_elements_by_css_selector(self.css_selector)
+            return True
+        except NoSuchElementException:
+            return False
+
+# Credit: https://www.fomfus.com/articles/make-selenium-wait-for-anything-you-want-before-continuing
+class expect_elements_by_css_selector(object):
+    """An expectation for checking that an element exists "number" times.
+
+    Example: wait until an element with CSS selector 'mySelector' exists 3 times:
+
+        wait = WebDriverWait(driver, 10)
+        element = wait.until(expect_element_expect_element_by_css_selector('mySelector', 3))
+
+    css_selector - a CSS selector
+    returns the WebElement once it has the particular css class
+    """
+    def __init__(self, css_selector, number):
+        self.css_selector = css_selector
+        self.number = number
+
+    def __call__(self, driver):
+        """Search for element, and return true when found self.number times."""
+        try:
+            found = len(driver.find_elements_by_css_selector(self.css_selector))
+        except NoSuchElementException:
+            found = 0
+
+        return found == self.number
+
 
 ##
 #
@@ -125,12 +264,20 @@ def go_home():
     driver.get("https://www.linkedin.com/")
 
 def go_login(username, password):
-    go_home()
-    driver.find_element_by_link_text("Sign in").click()
-    form = driver.find_element_by_class_name("login__form")
-    form.find_element_by_id("username").send_keys(os.environ["LINKEDIN_USERNAME"])
-    form.find_element_by_id("password").send_keys(os.environ["LINKEDIN_PASSWORD"])
+    driver.get("https://www.linkedin.com/login")
+    form = driver.find_element_by_css_selector("form.login__form")
+    form.find_element_by_css_selector("input#username").send_keys(username)
+    form.find_element_by_css_selector("input#password").send_keys(password)
     form.find_element_by_xpath("//button[@type='submit']").click()
+
+def go_security_verification():
+    try:
+        WebDriverWait(driver,10).until(expect_current_url_starts_with('https://www.linkedin.com/checkpoint/challenge'))
+        form = driver.find_element_by_css_selector('form#two-step-challenge')
+        form.find_element_by_css_selector('input#input__phone_verification_pin').send_keys('0')
+        WebDriverWait(driver,600).until(expect_current_url_starts_with('https://www.linkedin.com/feed/'))
+    except TimeoutException:
+        pass
 
 def go_search(keywords):
     query_string = urllib.parse.urlencode({"keywords": keywords})
@@ -161,29 +308,24 @@ driver = create_driver()
 
 def main():
     args = parse_args()
-    #go_login(os.environ["LINKEDIN_USERNAME"], os.environ["LINKEDIN_PASSWORD"]) and sleepy()    
+    username = os.environ["LINKEDIN_USERNAME"]
+    password = os.environ["LINKEDIN_PASSWORD"]
+    go_login(username, password) and sleepy() 
+    go_security_verification()
     go_search(args.keywords) and sleepy()
 
-    print("==== ids =====")
-    ids = find_job_ids()
-    print(*ids)
+    for _ in range(2):
+        print("==== loop =====")
+        ids = find_job_ids()
+        jobs = list(map(lambda x: Job(x), ids))
+        for job in jobs:
+            db_set('jobs', job.id, job)
 
-    print("==== jobs =====")
-    jobs = list(map(lambda x: Job(x), ids))
-    for job in jobs:
-        db_set('jobs', job.id, job)
-    print(*jobs)
+        # Click the button to see more jobs
+        button = driver.find_element_by_class_name("see-more-jobs")
+        button.click() and sleep(5)
 
     return
-
-    # Click the button to see more jobs
-    button = driver.find_element_by_class_name("see-more-jobs")
-    button.click() and sleepy()
-
-    print("==== ids =====")
-    ids = find_job_ids()
-    print(ids)
-
     description = find_job_description()
     html = description.get_attribute("innerHTML")
     print(html)
