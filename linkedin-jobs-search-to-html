@@ -55,6 +55,7 @@ import pathlib
 import random
 import sys
 import time
+import unittest
 import urllib
 
 from contextlib import contextmanager
@@ -88,9 +89,7 @@ class Job:
 #
 ##
 
-db = {'jobs': {}}  # Store of global data for lookups
 driver = None  # Selenium Chrome web driver
-
 
 ##
 #
@@ -102,14 +101,16 @@ def each(function, iterable):
     for element in iterable:
         function(element)
 
-def sleepy(seconds = 10):
-    time.sleep(random.random * 10)
+def sleepy(seconds = 10.0):
+    time.sleep(random.random() * seconds)
 
 ##
 #
 # Data store
 #
 ##
+
+db = {'jobs': {}}  # Store of global data for lookups
 
 def db_get(key, id):
     return db[key][id]
@@ -135,6 +136,12 @@ def link_is_stale(link):
 def link_click_fresh(link):
     link.click()
     wait_for(link_has_gone_stale(link))
+
+def map_element_to_attribute(element, attribute):
+    return element.get_attribute(attribute)
+
+def map_element_to_attribute_list(element, attribute):
+    return map(lambda x: map_element_to_attribute(x, attribute), element.find_elements_by_xpath('./*[@' + attribute + ']'))
 
 ##
 #
@@ -231,7 +238,6 @@ class expect_elements_by_css_selector(object):
 
         return found == self.number
 
-
 ##
 #
 # CLI
@@ -283,17 +289,20 @@ def go_search(keywords):
     query_string = urllib.parse.urlencode({"keywords": keywords})
     driver.get("https://www.linkedin.com/jobs/search?" + query_string)
 
+
 def go_job(id):
     query_string = urllib.parse.urlencode({"currentJobId": id})
     driver.get("https://www.linkedin.com/jobs/search?" + query_string)
 
 def find_job_list_items():
-    list = driver.find_element_by_class_name("jobs-search__results-list")
+    list = driver.find_element_by_css_selector("ul.jobs-search__results-list")
     items = list.find_elements_by_tag_name("li")
     return items
 
 def find_job_ids():
     items = find_job_list_items()
+
+    map()
     job_ids = list(map(int, map(element_data_id, items)))
     return job_ids
 
@@ -301,17 +310,20 @@ def find_job_description():
     return driver.find_element_by_class_name("results__detail-view") \
                  .find_element_by_class_name("description__text--rich")
 
-def element_data_id(element):
-    return element.get_attribute("data-id")
 
-driver = create_driver()
+def map_job_list_item_to_job_id(job_list_item):
+    urn = job_list_item.find_element_by_xpath('./*[@data-job-id]').get_attribute('data-job-id')
+    job_id = int(urn.split(':')[-1])
+    return job_id
 
-def main():
+def cli_main():
+    global driver
+    driver = create_driver()
     args = parse_args()
     username = os.environ["LINKEDIN_USERNAME"]
     password = os.environ["LINKEDIN_PASSWORD"]
     go_login(username, password) and sleepy() 
-    go_security_verification()
+    #go_security_verification()
     go_search(args.keywords) and sleepy()
 
     for _ in range(2):
@@ -330,4 +342,99 @@ def main():
     html = description.get_attribute("innerHTML")
     print(html)
 
-main()
+##
+#
+# Test
+#
+##
+
+class TestDB(unittest.TestCase):
+
+    def test_db_get(self):
+        db_set('jobs', 'id', 'object')
+        self.assertEqual(db_get('jobs', 'id'), 'object')
+
+    def test_db_set(self):
+        db_set('jobs', 'id', 'object')
+        self.assertEqual(db_get('jobs', 'id'), 'object')
+
+class TestAll(unittest.TestCase):
+
+    def test_each(self):
+        pass
+
+    def test_sleepy(self):
+        sleepy(0)
+
+    def test_link_is_stale(self):
+        pass
+
+    def test_link_click_fresh(self):
+        pass
+
+    def test_map_element_to_attribute(self):
+        html = '<html><body><p id="alpha" name="bravo"></p></body></html>'
+        driver.get("data:text/html;charset=utf-8," + html)
+        element = driver.find_element_by_id('alpha')
+        self.assertEqual(map_element_to_attribute(element, 'name'), 'bravo')
+
+    def test_map_element_to_attribute_list(self):
+        html = '<html><body id="body"><p id="alpha" name="bravo"></p><p id="charlie" name="delta"></p></body></html>'
+        driver.get("data:text/html;charset=utf-8," + html)
+        element = driver.find_element_by_id('body')
+        self.assertEqual(list(map_element_to_attribute_list(element, 'name')), ['bravo', 'delta'])
+
+    def test_expect_current_url_starts_with(self):
+        pass
+    
+    def test_expect_element_has_css_class(self):
+        pass
+
+    def test_expect_element_by_css_selector(self):
+        pass
+
+    def test_expect_elements_by_css_selector(self):
+        pass
+    
+    def test_parse_args(self):
+        pass
+
+    def test_create_driver(self):
+        pass
+
+class TestLinkedInWebInterations(unittest.TestCase):
+
+    def test_go_home(self):
+        pass
+
+    def test_go_login(self):
+        pass
+
+    def test_go_security_verification(self):
+        pass
+
+    def test_go_search(self):
+        pass
+
+    def test_go_job(self):
+        pass
+
+    def test_find_job_list_items(self):
+        pass
+
+    def test_find_job_ids(self):
+        pass
+
+    def test_find_job_description(self):
+        pass
+
+    def test_map_job_list_item_to_job_id(self):
+        pass
+
+driver = create_driver()
+
+if __name__ == '__main__':
+    if os.environ["ENV"] == "TEST":
+        unittest.main()
+    else:
+        cli_main()
