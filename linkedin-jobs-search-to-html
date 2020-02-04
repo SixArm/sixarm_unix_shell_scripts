@@ -91,6 +91,7 @@ class Job:
 ##
 
 driver = None  # Selenium Chrome web driver
+online = True  # True means use online real site; False means use offline local cache
 
 ##
 #
@@ -267,11 +268,23 @@ def create_driver():
 #
 ##
 
+def url_base():
+    if env == 'PRODUCTION':
+        return 'https://www.linkedin.com'
+    else:
+        return 'file://cache'
+
+def url_job_search(keywords):
+    if env == 'PRODUCTION':
+        return url_base + '/jobs/search?' + urllib.parse.urlencode({'keywords': keywords})
+    else:
+        return '/linkedin_jobs_search.html'
+
 def go_home():
-    driver.get("https://www.linkedin.com/")
+    driver.get(url_base)
 
 def go_login(username, password):
-    driver.get("https://www.linkedin.com/login")
+    driver.get(url_base + '/login')
     form = driver.find_element_by_css_selector("form.login__form")
     form.find_element_by_css_selector("input#username").send_keys(username)
     form.find_element_by_css_selector("input#password").send_keys(password)
@@ -279,20 +292,19 @@ def go_login(username, password):
 
 def go_security_verification():
     try:
-        WebDriverWait(driver,10).until(expect_current_url_starts_with('https://www.linkedin.com/checkpoint/challenge'))
+        WebDriverWait(driver,10).until(expect_current_url_starts_with(url_base + '/checkpoint/challenge'))
         form = driver.find_element_by_css_selector('form#two-step-challenge')
         form.find_element_by_css_selector('input#input__phone_verification_pin').send_keys('0')
-        WebDriverWait(driver,600).until(expect_current_url_starts_with('https://www.linkedin.com/feed/'))
+        WebDriverWait(driver,600).until(expect_current_url_starts_with(url_base + '/feed/'))
     except TimeoutException:
         pass
 
-def go_search(keywords):
-    query_string = urllib.parse.urlencode({"keywords": keywords})
-    driver.get("https://www.linkedin.com/jobs/search?" + query_string)
+def go_jobs_search(keywords):
+    driver.get(url_jobs_search(keywords))
 
 def go_job(id):
     query_string = urllib.parse.urlencode({"currentJobId": id})
-    driver.get("https://www.linkedin.com/jobs/search?" + query_string)
+    driver.get(url_base + '/jobs/search?' + query_string)
 
 def find_job_list():
     return driver.find_element_by_css_selector("ul.jobs-search-results__list")
@@ -311,9 +323,8 @@ def map_job_list_item_to_job_id(job_list_item):
     return job_id
 
 def find_job_description():
-    return driver.find_element_by_class_name("results__detail-view") \
-                 .find_element_by_class_name("description__text--rich")
-
+    return driver.find_element_by_class_name('results__detail-view') \
+                 .find_element_by_class_name('description__text--rich')
 
 def cli_main():
     global driver
@@ -323,22 +334,23 @@ def cli_main():
     password = os.environ["LINKEDIN_PASSWORD"]
     go_login(username, password) and sleepy() 
     #go_security_verification()
-    go_search(args.keywords) and sleepy()
+    go_jobs_search(args.keywords) and sleepy()
 
     for _ in range(2):
-        print("==== loop =====")
+        print('==== loop =====')
         ids = find_job_ids()
         jobs = list(map(lambda x: Job(x), ids))
         for job in jobs:
             db_set('jobs', job.id, job)
 
         # Click the button to see more jobs
-        button = driver.find_element_by_class_name("see-more-jobs")
-        button.click() and sleep(5)
+        button = driver.find_element_by_class_name('see-more-jobs')
+        button.click() 
+        sleep(5)
 
     return
     description = find_job_description()
-    html = description.get_attribute("innerHTML")
+    html = description.get_attribute('innerHTML')
     print(html)
 
 ##
@@ -407,6 +419,14 @@ class TestStartup(unittest.TestCase):
     def test_create_driver(self):
         pass
 
+class TestLinkedInURLs(unittest.TestCase):
+
+    def test_url_base(self):
+        assertEquals(url_base(), 'https://linkedin.com')
+
+    def test_url_jobs_search(self):
+        assertEquals(url_jobs_search('alpha bravo'), 'https://linkedin.com/jobs/search?keywords=alpha+bravo')
+
 class TestLinkedInWebInterations(unittest.TestCase):
 
     DATA = "data:text/html;charset=utf-8," 
@@ -432,7 +452,7 @@ class TestLinkedInWebInterations(unittest.TestCase):
     def test_go_security_verification(self):
         pass
 
-    def test_go_search(self):
+    def test_go_jobs_search(self):
         pass
 
     def test_go_job(self):
@@ -458,7 +478,8 @@ class TestLinkedInWebInterations(unittest.TestCase):
 
 if __name__ == '__main__':
     driver = create_driver()
-    if os.environ["ENV"] == "UNITTEST":
+    env = os.environ.get('ENV', 'DEVELOPMENT')
+    if env == 'UNITTEST':
         unittest.main()
     else:
         cli_main()
