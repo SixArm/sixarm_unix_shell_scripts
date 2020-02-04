@@ -95,6 +95,21 @@ online = True  # True means use online real site; False means use offline local 
 
 ##
 #
+# System
+#
+##
+
+def app_path():
+    'linkedin-jobs-search-to-html'
+
+def cache_home():
+    return os.environ.get('XDG_CACHE_HOME', (os.environ.get('HOME', '~/') + '/.cache'))
+
+def cache_dir():
+    cache_home() + '/' + app_path()
+
+##
+#
 # Language
 #
 ##
@@ -119,6 +134,7 @@ def db_get(key, id):
 
 def db_set(key, id, object):
     db[key][id] = object
+
 
 ##
 #
@@ -264,27 +280,57 @@ def create_driver():
 
 ##
 #
-# Web interaction
+# URLs with environments
 #
 ##
 
 def url_base():
     if env == 'PRODUCTION':
-        return 'https://www.linkedin.com'
+        return url_base_with_env_production()
     else:
-        return 'file://cache'
+        return url_base_with_env_development()
 
-def url_job_search(keywords):
+def url_base_with_env_production():
+    return 'https://www.linkedin.com'
+
+def url_base_with_env_development():
+    return 'file://cache'
+
+def url_login():
     if env == 'PRODUCTION':
-        return url_base + '/jobs/search?' + urllib.parse.urlencode({'keywords': keywords})
+        return url_login_with_env_production()
     else:
-        return '/linkedin_jobs_search.html'
+        return url_login_with_env_development()
+
+def url_login_with_env_production():
+    return url_base() + '/login'
+
+def url_login_with_env_development():
+    return '/login.html'
+
+def url_jobs_search(keywords):
+    if env == 'PRODUCTION':
+        return url_jobs_search_with_env_production()
+    else:
+        return url_jobs_search_with_env_development()
+
+def url_jobs_search_with_env_production(keywords):
+    return url_base() + '/jobs/search?' + urllib.parse.urlencode({'keywords': keywords})
+
+def url_jobs_search_with_env_development(keywords):
+    return url_base() + '/jobs_search.html'
+
+##
+#
+# Web interaction
+#
+##
 
 def go_home():
     driver.get(url_base)
 
 def go_login(username, password):
-    driver.get(url_base + '/login')
+    driver.get(url_login())
     form = driver.find_element_by_css_selector("form.login__form")
     form.find_element_by_css_selector("input#username").send_keys(username)
     form.find_element_by_css_selector("input#password").send_keys(password)
@@ -422,10 +468,31 @@ class TestStartup(unittest.TestCase):
 class TestLinkedInURLs(unittest.TestCase):
 
     def test_url_base(self):
-        assertEquals(url_base(), 'https://linkedin.com')
+        pass
+
+    def test_url_base_with_env_production(self):
+        self.assertEqual(url_base_with_env_production(), 'https://linkedin.com')
+
+    def test_url_base_with_env_development(self):
+        self.assertEqual(url_base_with_env_development(), 'file://')
+
+    def test_url_login(self):
+        pass
+
+    def test_url_login_with_env_production(self):
+        self.assertEqual(url_login_with_env_production(), 'https://linkedin.com/login')
+
+    def test_url_login_with_env_development(self):
+        self.assertEqual(url_base_with_env_development(), 'file://.cache/linkedin-jobs-search-to-html/linkedin.com/login.html')
 
     def test_url_jobs_search(self):
-        assertEquals(url_jobs_search('alpha bravo'), 'https://linkedin.com/jobs/search?keywords=alpha+bravo')
+        pass
+
+    def test_url_jobs_search_with_env_production(self):
+        self.assertEqual(url_jobs_search('alpha bravo'), 'https://linkedin.com/jobs/search?keywords=alpha+bravo')
+
+    def test_url_jobs_search_with_env_development(self):
+        self.assertEqual(url_jobs_search('alpha bravo'), 'file://.cache/linkedin-jobs-search-to-html/linkedin.com/jobs/search.html')
 
 class TestLinkedInWebInterations(unittest.TestCase):
 
