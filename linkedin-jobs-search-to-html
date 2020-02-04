@@ -54,6 +54,7 @@ import os
 import pathlib
 import random
 import sys
+import textwrap
 import time
 import unittest
 import urllib
@@ -289,32 +290,30 @@ def go_search(keywords):
     query_string = urllib.parse.urlencode({"keywords": keywords})
     driver.get("https://www.linkedin.com/jobs/search?" + query_string)
 
-
 def go_job(id):
     query_string = urllib.parse.urlencode({"currentJobId": id})
     driver.get("https://www.linkedin.com/jobs/search?" + query_string)
 
+def find_job_list():
+    return driver.find_element_by_css_selector("ul.jobs-search-results__list")
+
 def find_job_list_items():
-    list = driver.find_element_by_css_selector("ul.jobs-search__results-list")
-    items = list.find_elements_by_tag_name("li")
-    return items
+    return find_job_list().find_elements_by_tag_name("li")
 
 def find_job_ids():
     items = find_job_list_items()
-
-    map()
-    job_ids = list(map(int, map(element_data_id, items)))
+    job_ids = list(map(int, map(map_job_list_item_to_job_id, items)))
     return job_ids
-
-def find_job_description():
-    return driver.find_element_by_class_name("results__detail-view") \
-                 .find_element_by_class_name("description__text--rich")
-
 
 def map_job_list_item_to_job_id(job_list_item):
     urn = job_list_item.find_element_by_xpath('./*[@data-job-id]').get_attribute('data-job-id')
     job_id = int(urn.split(':')[-1])
     return job_id
+
+def find_job_description():
+    return driver.find_element_by_class_name("results__detail-view") \
+                 .find_element_by_class_name("description__text--rich")
+
 
 def cli_main():
     global driver
@@ -372,6 +371,8 @@ class TestAll(unittest.TestCase):
     def test_link_click_fresh(self):
         pass
 
+class TestSeleniumMaps(unittest.TestCase):
+
     def test_map_element_to_attribute(self):
         html = '<html><body><p id="alpha" name="bravo"></p></body></html>'
         driver.get("data:text/html;charset=utf-8," + html)
@@ -383,6 +384,8 @@ class TestAll(unittest.TestCase):
         driver.get("data:text/html;charset=utf-8," + html)
         element = driver.find_element_by_id('body')
         self.assertEqual(list(map_element_to_attribute_list(element, 'name')), ['bravo', 'delta'])
+
+class TestSeleniumExpectations(unittest.TestCase):
 
     def test_expect_current_url_starts_with(self):
         pass
@@ -396,6 +399,8 @@ class TestAll(unittest.TestCase):
     def test_expect_elements_by_css_selector(self):
         pass
     
+class TestStartup(unittest.TestCase):
+
     def test_parse_args(self):
         pass
 
@@ -403,6 +408,20 @@ class TestAll(unittest.TestCase):
         pass
 
 class TestLinkedInWebInterations(unittest.TestCase):
+
+    DATA = "data:text/html;charset=utf-8," 
+
+    JOB_HTML = textwrap.dedent('''\
+    <html>
+        <body>
+            <ul class="jobs-search-results__list">
+                <li><div data-job-id="urn:li:x:123">Alpha</div></li>
+                <li><div data-job-id="urn:li:x:456">Bravo</div></li>
+                <li><div data-job-id="urn:li:x:789">Bravo</div></li>
+            </ul>
+        </body>
+    </html>
+    ''')
 
     def test_go_home(self):
         pass
@@ -419,11 +438,17 @@ class TestLinkedInWebInterations(unittest.TestCase):
     def test_go_job(self):
         pass
 
+    def test_find_job_list(self):
+        driver.get(self.DATA + self.JOB_HTML)
+        self.assertIsNotNone(find_job_list())
+
     def test_find_job_list_items(self):
-        pass
+        driver.get(self.DATA + self.JOB_HTML)
+        self.assertEqual(len(find_job_list_items()), 3)
 
     def test_find_job_ids(self):
-        pass
+        driver.get(self.DATA + self.JOB_HTML)
+        self.assertEqual(find_job_ids(), [123, 456, 789])
 
     def test_find_job_description(self):
         pass
@@ -431,10 +456,9 @@ class TestLinkedInWebInterations(unittest.TestCase):
     def test_map_job_list_item_to_job_id(self):
         pass
 
-driver = create_driver()
-
 if __name__ == '__main__':
-    if os.environ["ENV"] == "TEST":
+    driver = create_driver()
+    if os.environ["ENV"] == "UNITTEST":
         unittest.main()
     else:
         cli_main()
