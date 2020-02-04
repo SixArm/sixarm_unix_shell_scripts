@@ -135,7 +135,6 @@ def db_get(key, id):
 def db_set(key, id, object):
     db[key][id] = object
 
-
 ##
 #
 # Selenium extras
@@ -291,10 +290,10 @@ def url_base():
         return url_base_with_env_development()
 
 def url_base_with_env_production():
-    return 'https://www.linkedin.com'
+    return 'https://linkedin.com'
 
 def url_base_with_env_development():
-    return 'file://cache'
+    return 'http://0.0.0.0:8000'
 
 def url_login():
     if env == 'PRODUCTION':
@@ -303,22 +302,22 @@ def url_login():
         return url_login_with_env_development()
 
 def url_login_with_env_production():
-    return url_base() + '/login'
+    return url_base_with_env_production() + '/login'
 
 def url_login_with_env_development():
-    return '/login.html'
+    return url_base_with_env_development() + '/login.html'
 
 def url_jobs_search(keywords):
     if env == 'PRODUCTION':
-        return url_jobs_search_with_env_production()
+        return url_jobs_search_with_env_production(keywords)
     else:
-        return url_jobs_search_with_env_development()
+        return url_jobs_search_with_env_development(keywords)
 
 def url_jobs_search_with_env_production(keywords):
-    return url_base() + '/jobs/search?' + urllib.parse.urlencode({'keywords': keywords})
+    return url_base_with_env_production() + '/jobs/search?' + urllib.parse.urlencode({'keywords': keywords})
 
 def url_jobs_search_with_env_development(keywords):
-    return url_base() + '/jobs_search.html'
+    return url_base_with_env_development() + '/jobs/search.html'
 
 ##
 #
@@ -330,6 +329,8 @@ def go_home():
     driver.get(url_base)
 
 def go_login(username, password):
+    url = url_login()
+    print(url)
     driver.get(url_login())
     form = driver.find_element_by_css_selector("form.login__form")
     form.find_element_by_css_selector("input#username").send_keys(username)
@@ -474,7 +475,7 @@ class TestLinkedInURLs(unittest.TestCase):
         self.assertEqual(url_base_with_env_production(), 'https://linkedin.com')
 
     def test_url_base_with_env_development(self):
-        self.assertEqual(url_base_with_env_development(), 'file://')
+        self.assertEqual(url_base_with_env_development(), 'http://0.0.0.0:8000')
 
     def test_url_login(self):
         pass
@@ -483,16 +484,16 @@ class TestLinkedInURLs(unittest.TestCase):
         self.assertEqual(url_login_with_env_production(), 'https://linkedin.com/login')
 
     def test_url_login_with_env_development(self):
-        self.assertEqual(url_base_with_env_development(), 'file://.cache/linkedin-jobs-search-to-html/linkedin.com/login.html')
+        self.assertEqual(url_login_with_env_development(), 'http://0.0.0.0:8000/login.html')
 
     def test_url_jobs_search(self):
         pass
 
     def test_url_jobs_search_with_env_production(self):
-        self.assertEqual(url_jobs_search('alpha bravo'), 'https://linkedin.com/jobs/search?keywords=alpha+bravo')
+        self.assertEqual(url_jobs_search_with_env_production('alpha bravo'), 'https://linkedin.com/jobs/search?keywords=alpha+bravo')
 
     def test_url_jobs_search_with_env_development(self):
-        self.assertEqual(url_jobs_search('alpha bravo'), 'file://.cache/linkedin-jobs-search-to-html/linkedin.com/jobs/search.html')
+        self.assertEqual(url_jobs_search_with_env_development('alpha bravo'), 'http://0.0.0.0:8000/jobs/search.html')
 
 class TestLinkedInWebInterations(unittest.TestCase):
 
