@@ -300,6 +300,9 @@ class Env(ABC):
     def url_jobs_search_by_id(self, job_id):
         pass
 
+    def url_checkpoint_challenge(self):
+        pass
+
 class EnvProduction(Env):
 
     def url_base(self):
@@ -314,19 +317,25 @@ class EnvProduction(Env):
     def url_jobs_search_by_id(self, job_id):
         return self.url_base() + '/jobs/search?' + urllib.parse.urlencode({"currentJobId": id})
 
+    def url_checkpoint_challenge(self):
+        return self.url_base() + '/checkpoint/challenge'
+
 class EnvDevelopment(Env):
 
     def url_base(self):
         return 'http://0.0.0.0:8000'
 
     def url_login(self):
-        return self.url_base() + '/login.html'
+        return self.url_base() + '/login/index.html'
 
     def url_jobs_search_by_keywords(self, keywords):
-        return self.url_base() + '/jobs/search/keywords.html'
+        return self.url_base() + '/jobs/search/keywords/index.html'
 
     def url_jobs_search_by_id(self, job_id):
-        return self.url_base() + '/jobs/search/id.html'
+        return self.url_base() + '/jobs/search/id/index.html'
+
+    def url_checkpoint_challenge(self):
+        return self.url_base() + '/checkpoint/challenge/index.html'
 
 ##
 #
@@ -346,7 +355,7 @@ def go_login(username, password):
 
 def go_security_verification():
     try:
-        WebDriverWait(driver,10).until(expect_current_url_starts_with(env.url_base() + '/checkpoint/challenge'))
+        WebDriverWait(driver,10).until(expect_current_url_starts_with(env.url_checkpoint/challenge()))
         form = driver.find_element_by_css_selector('form#two-step-challenge')
         form.find_element_by_css_selector('input#input__phone_verification_pin').send_keys('0')
         WebDriverWait(driver,600).until(expect_current_url_starts_with(env.url_base() + '/feed/'))
@@ -478,13 +487,16 @@ class TestEnv(unittest.TestCase):
         self.assertEqual(env.url_base(), 'http://0.0.0.0:8000')
 
     def test_url_login(self):
-        self.assertEqual(env.url_login(), 'http://0.0.0.0:8000/login.html')
+        self.assertEqual(env.url_login(), 'http://0.0.0.0:8000/login/index.html')
 
     def test_url_jobs_search_by_keywords(self):
-        self.assertEqual(env.url_jobs_search_by_keywords('alpha bravo'), 'http://0.0.0.0:8000/jobs/search/keywords.html')
+        self.assertEqual(env.url_jobs_search_by_keywords('alpha bravo'), 'http://0.0.0.0:8000/jobs/search/keywords/index.html')
 
-    def url_jobs_search_by_id(self, job_id):
-        self.assertEqual(env.url_jobs_search_by_id(123), 'http://0.0.0.0:8000/jobs/search/id.html')
+    def test_url_jobs_search_by_id(self):
+        self.assertEqual(env.url_jobs_search_by_id(123), 'http://0.0.0.0:8000/jobs/search/id/index.html')
+
+    def test_url_checkpoint_challenge(self):
+        self.assertEqual(env.url_checkpoint_challenge(), 'http://0.0.0.0:8000/checkpoint/challenge/index.html')
 
 class TestLinkedInWebInterations(unittest.TestCase):
 
