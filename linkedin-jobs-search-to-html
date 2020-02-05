@@ -300,7 +300,7 @@ class Env(ABC):
     def url_feed(self):
         pass
 
-    def url_jobs_search_by_keyworkds(self, keywords):
+    def url_jobs_search_by_keywords(self, keywords, start = None):
         pass
 
     def url_jobs_search_by_id(self, job_id):
@@ -320,8 +320,11 @@ class EnvProduction(Env):
     def url_feed(self):
         return self.url_base() + '/feed'
 
-    def url_jobs_search_by_keywords(self, keywords):
-        return self.url_base() + '/jobs/search?' + urllib.parse.urlencode({'keywords': keywords})
+    def url_jobs_search_by_keywords(self, keywords, start = None):
+        query = {'keywords': keywords}
+        if start and start > 0:
+            query.update({'start': start})
+        return self.url_base() + '/jobs/search?' + urllib.parse.urlencode(query)
 
     def url_jobs_search_by_id(self, job_id):
         return self.url_base() + '/jobs/search?' + urllib.parse.urlencode({"currentJobId": id})
@@ -340,8 +343,8 @@ class EnvDevelopment(Env):
     def url_checkpoint_challenge(self):
         return self.url_base() + '/checkpoint/challenge/index.html'
 
-    def url_jobs_search_by_keywords(self, keywords):
-        return self.url_base() + '/jobs/search/keywords/index.html'
+    def url_jobs_search_by_keywords(self, keywords, start = None):
+        return self.url_base() + f'/jobs/search/keywords/start/{start or 0}/index.html'
 
     def url_jobs_search_by_id(self, job_id):
         return self.url_base() + '/jobs/search/id/index.html'
@@ -375,27 +378,60 @@ def go_jobs_search_by_keywords(keywords):
     driver.get(env.url_jobs_search_by_keywords(keywords))
 
 def go_jobs_search_by_id(job_id):
-    driver.get(env.go_jobs_search_by_id(job_id))
+    driver.get(env.url_jobs_search_by_id(job_id))
 
 def find_job_list():
-    return driver.find_element_by_css_selector("ul.jobs-search-results__list")
+    # print("find_job_list")
+    element = driver.find_element_by_css_selector("ul.jobs-search-results__list")
+    # if element != None:
+    #     print("find_job_list OK")
+    return element
 
 def find_job_list_items():
-    return find_job_list().find_elements_by_tag_name("li")
+    # print("find_job_list_items")
+    elements = find_job_list().find_elements_by_tag_name("li")
+    # if elements != None:
+    #     print("find_job_list_items OK")
+    #     print("find_job_list_items len:", len(elements))
+    return elements
 
 def find_job_ids():
+    # print("find_job_ids")
     items = find_job_list_items()
-    job_ids = list(map(int, map(map_job_list_item_to_job_id, items)))
+    # if items != None:
+    #     print("find_job_ids items OK")
+    #     print("find_job_ids items len:", len(items))
+    #     print(items[0].get_attribute("outerHTML"))
+    job_ids = list(filter(None, map(map_job_list_item_to_job_id, items)))
+    print("find_job_ids job_ids", *job_ids)
     return job_ids
 
 def map_job_list_item_to_job_id(job_list_item):
-    urn = job_list_item.find_element_by_xpath('./*[@data-job-id]').get_attribute('data-job-id')
-    job_id = int(urn.split(':')[-1])
+    print("job_list_item")
+    job_id = None
+    elements = job_list_item.find_elements_by_tag_name('div')
+    if elements == None or len(elements) == 0:
+        print("job_list_item elements == None")
+        print(job_list_item.get_attribute("outerHTML"))
+    elif len(elements) == 0:
+        print("job_list_item len(elements) == 0")
+        print(job_list_item.get_attribute("outerHTML"))
+    else:
+        div = elements[0]
+        urn = div.get_attribute('data-job-id')
+        job_id = int(urn.split(':')[-1])
+        print("job_list_item job_id:", job_id)
     return job_id
 
 def find_job_description():
     return driver.find_element_by_class_name('results__detail-view') \
                  .find_element_by_class_name('description__text--rich')
+
+def find_jobs_search_pagination_list():
+    return driver.find_element_by_css_selector('ul.artdeco-pagination__pages')
+
+def find_jobs_search_pagination_list_items():
+    return find_jobs_search_pagination_list().find_elements_by_css_selector('li.artdeco-pagination__indicator--number')
 
 def cli_main():
     global driver
@@ -505,7 +541,10 @@ class TestEnv(unittest.TestCase):
         self.assertEqual(env.url_feed(), 'http://0.0.0.0:8000/feed/index.html')
 
     def test_url_jobs_search_by_keywords(self):
-        self.assertEqual(env.url_jobs_search_by_keywords('alpha bravo'), 'http://0.0.0.0:8000/jobs/search/keywords/index.html')
+        self.assertEqual(env.url_jobs_search_by_keywords('alpha bravo'), 'http://0.0.0.0:8000/jobs/search/keywords/start/0/index.html')
+
+    def test_url_jobs_search_by_keywords_with_start(self):
+        self.assertEqual(env.url_jobs_search_by_keywords('alpha bravo', 25), 'http://0.0.0.0:8000/jobs/search/keywords/start/25/index.html')
 
     def test_url_jobs_search_by_id(self):
         self.assertEqual(env.url_jobs_search_by_id(123), 'http://0.0.0.0:8000/jobs/search/id/index.html')
@@ -525,6 +564,8 @@ class TestLinkedInWebInterations(unittest.TestCase):
         </body>
     </html>
     ''')
+
+    JOB_IDS = [123, 456, 789]
 
     def test_go_home(self):
         pass
@@ -551,12 +592,18 @@ class TestLinkedInWebInterations(unittest.TestCase):
 
     def test_find_job_ids(self):
         driver.get(self.DATA + self.JOB_HTML)
-        self.assertEqual(find_job_ids(), [123, 456, 789])
+        self.assertEqual(find_job_ids(), self.JOB_IDS)
 
     def test_find_job_description(self):
         pass
 
     def test_map_job_list_item_to_job_id(self):
+        pass
+
+    def test_find_jobs_search_pagination_list(self):
+        pass
+
+    def find_jobs_search_pagination_list_items(self):
         pass
 
 if __name__ == '__main__':
