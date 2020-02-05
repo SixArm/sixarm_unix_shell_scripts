@@ -47,12 +47,33 @@
 #
 #   * ... (for security challenge)
 #
+# ## Cache
+#
+# To use an existing list job ids to download job postings to a local cache:
+#
+# ```sh
+# mkdir -p downloads && cd !$
+# cat ids.txt |
+# while read id; do
+#   test -e "$id" || wget -q "https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/$id" -O "id"
+#   sleep 10
+# done
+# ```
+# 
+# To reformat email addresses to TSV file:
+#
+# ```sh
+# cat emails.txt | 
+# gsed 's/^\(.\+\)\.\(.\+\)@\(.\+\)/\0\t\1\t\2/i; s/\t\(.\)/\t\u\1/g' > 
+# email-first-last.tsv
+# 
 ##
 
 import argparse
 import os
 import pathlib
 import random
+import selenium
 import sys
 import textwrap
 import time
@@ -68,6 +89,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from typing import List
 
@@ -348,7 +370,6 @@ class EnvDevelopment(Env):
 
     def url_jobs_search_by_id(self, job_id):
         return self.url_base() + '/jobs/search/id/index.html'
-
 ##
 #
 # Web interaction
@@ -374,8 +395,8 @@ def go_security_verification():
     except TimeoutException:
         pass
 
-def go_jobs_search_by_keywords(keywords):
-    driver.get(env.url_jobs_search_by_keywords(keywords))
+def go_jobs_search_by_keywords(keywords, start = None):
+    driver.get(env.url_jobs_search_by_keywords(keywords, start))
 
 def go_jobs_search_by_id(job_id):
     driver.get(env.url_jobs_search_by_id(job_id))
@@ -407,20 +428,25 @@ def find_job_ids():
     return job_ids
 
 def map_job_list_item_to_job_id(job_list_item):
-    print("job_list_item")
+    #print("job_list_item")
     job_id = None
-    elements = job_list_item.find_elements_by_tag_name('div')
-    if elements == None or len(elements) == 0:
-        print("job_list_item elements == None")
-        print(job_list_item.get_attribute("outerHTML"))
-    elif len(elements) == 0:
-        print("job_list_item len(elements) == 0")
-        print(job_list_item.get_attribute("outerHTML"))
-    else:
-        div = elements[0]
-        urn = div.get_attribute('data-job-id')
-        job_id = int(urn.split(':')[-1])
-        print("job_list_item job_id:", job_id)
+    try:
+        elements = job_list_item.find_elements_by_tag_name('div')
+        if elements == None or len(elements) == 0:
+            pass
+            # print("job_list_item elements == None")
+            # print(job_list_item.get_attribute("outerHTML"))
+        elif len(elements) == 0:
+            pass
+            # print("job_list_item len(elements) == 0")
+            # print(job_list_item.get_attribute("outerHTML"))
+        else:
+            div = elements[0]
+            urn = div.get_attribute('data-job-id')
+            job_id = int(urn.split(':')[-1])
+            print("job_list_item job_id:", job_id)
+    except StaleElementReferenceException:
+        pass #TODO
     return job_id
 
 def find_job_description():
@@ -433,6 +459,33 @@ def find_jobs_search_pagination_list():
 def find_jobs_search_pagination_list_items():
     return find_jobs_search_pagination_list().find_elements_by_css_selector('li.artdeco-pagination__indicator--number')
 
+##
+#
+# Control
+#
+##
+
+def scan_jobs(keywords):
+    for start in range(0, 1000, 25):
+        print(f'==== loop start:{start} =====')
+        go_jobs_search_by_keywords(keywords, start)
+        ids = find_job_ids()
+        jobs = list(map(lambda x: Job(x), ids))
+        for job in jobs:
+            db_set('jobs', job.id, job)
+        sleepy(60)
+
+def print_job_description():
+    pass
+    # description = find_job_description()
+    # html = description.get_attribute('innerHTML')
+    # print(html)
+
+def print_results():
+    print('==== output ====')
+    for key in db['jobs'].keys():
+        print(key)
+
 def cli_main():
     global driver
     driver = create_driver()
@@ -441,24 +494,8 @@ def cli_main():
     password = os.environ["LINKEDIN_PASSWORD"]
     go_login(username, password) and sleepy() 
     #go_security_verification()
-    go_jobs_search_by_keywords(args.keywords) and sleepy()
-
-    for _ in range(2):
-        print('==== loop =====')
-        ids = find_job_ids()
-        jobs = list(map(lambda x: Job(x), ids))
-        for job in jobs:
-            db_set('jobs', job.id, job)
-
-        # Click the button to see more jobs
-        button = driver.find_element_by_class_name('see-more-jobs')
-        button.click() 
-        time.sleep(5)
-
-    return
-    description = find_job_description()
-    html = description.get_attribute('innerHTML')
-    print(html)
+    scan_jobs(args.keywords)
+    print_results()
 
 ##
 #
