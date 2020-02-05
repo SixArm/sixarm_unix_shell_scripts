@@ -59,6 +59,7 @@ import time
 import unittest
 import urllib
 
+from abc import ABC
 from contextlib import contextmanager
 from dataclasses import dataclass
 from selenium import webdriver
@@ -279,45 +280,53 @@ def create_driver():
 
 ##
 #
-# URLs with environments
+# Environments for production, development, test, etc.
 #
 ##
 
-def url_base():
-    if env == 'PRODUCTION':
-        return url_base_with_env_production()
-    else:
-        return url_base_with_env_development()
+env = None
 
-def url_base_with_env_production():
-    return 'https://linkedin.com'
+class Env(ABC):
 
-def url_base_with_env_development():
-    return 'http://0.0.0.0:8000'
+    def url_base(self):
+        pass
 
-def url_login():
-    if env == 'PRODUCTION':
-        return url_login_with_env_production()
-    else:
-        return url_login_with_env_development()
+    def url_login(self):
+        pass
 
-def url_login_with_env_production():
-    return url_base_with_env_production() + '/login'
+    def url_jobs_search_by_keyworkds(self, keywords):
+        pass
 
-def url_login_with_env_development():
-    return url_base_with_env_development() + '/login.html'
+    def url_jobs_search_by_id(self, job_id):
+        pass
 
-def url_jobs_search(keywords):
-    if env == 'PRODUCTION':
-        return url_jobs_search_with_env_production(keywords)
-    else:
-        return url_jobs_search_with_env_development(keywords)
+class EnvProduction(Env):
 
-def url_jobs_search_with_env_production(keywords):
-    return url_base_with_env_production() + '/jobs/search?' + urllib.parse.urlencode({'keywords': keywords})
+    def url_base(self):
+        return 'https://linkedin.com'
 
-def url_jobs_search_with_env_development(keywords):
-    return url_base_with_env_development() + '/jobs/search.html'
+    def url_login(self):
+        return self.url_base() + '/login'
+
+    def url_jobs_search_by_keywords(self, keywords):
+        return self.url_base() + '/jobs/search?' + urllib.parse.urlencode({'keywords': keywords})
+
+    def url_jobs_search_by_id(self, job_id):
+        return self.url_base() + '/jobs/search?' + urllib.parse.urlencode({"currentJobId": id})
+
+class EnvDevelopment(Env):
+
+    def url_base(self):
+        return 'http://0.0.0.0:8000'
+
+    def url_login(self):
+        return self.url_base() + '/login.html'
+
+    def url_jobs_search_by_keywords(self, keywords):
+        return self.url_base() + '/jobs/search/keywords.html'
+
+    def url_jobs_search_by_id(self, job_id):
+        return self.url_base() + '/jobs/search/id.html'
 
 ##
 #
@@ -326,12 +335,10 @@ def url_jobs_search_with_env_development(keywords):
 ##
 
 def go_home():
-    driver.get(url_base)
+    driver.get(env.url_base())
 
 def go_login(username, password):
-    url = url_login()
-    print(url)
-    driver.get(url_login())
+    driver.get(env.url_login())
     form = driver.find_element_by_css_selector("form.login__form")
     form.find_element_by_css_selector("input#username").send_keys(username)
     form.find_element_by_css_selector("input#password").send_keys(password)
@@ -339,19 +346,18 @@ def go_login(username, password):
 
 def go_security_verification():
     try:
-        WebDriverWait(driver,10).until(expect_current_url_starts_with(url_base + '/checkpoint/challenge'))
+        WebDriverWait(driver,10).until(expect_current_url_starts_with(env.url_base() + '/checkpoint/challenge'))
         form = driver.find_element_by_css_selector('form#two-step-challenge')
         form.find_element_by_css_selector('input#input__phone_verification_pin').send_keys('0')
-        WebDriverWait(driver,600).until(expect_current_url_starts_with(url_base + '/feed/'))
+        WebDriverWait(driver,600).until(expect_current_url_starts_with(env.url_base() + '/feed/'))
     except TimeoutException:
         pass
 
-def go_jobs_search(keywords):
-    driver.get(url_jobs_search(keywords))
+def go_jobs_search_by_keywords(keywords):
+    driver.get(env.url_jobs_search_by_keywords(keywords))
 
-def go_job(id):
-    query_string = urllib.parse.urlencode({"currentJobId": id})
-    driver.get(url_base + '/jobs/search?' + query_string)
+def go_jobs_search_by_id(job_id):
+    driver.get(env.go_jobs_search_by_id(job_id))
 
 def find_job_list():
     return driver.find_element_by_css_selector("ul.jobs-search-results__list")
@@ -381,7 +387,7 @@ def cli_main():
     password = os.environ["LINKEDIN_PASSWORD"]
     go_login(username, password) and sleepy() 
     #go_security_verification()
-    go_jobs_search(args.keywords) and sleepy()
+    go_jobs_search_by_keywords(args.keywords) and sleepy()
 
     for _ in range(2):
         print('==== loop =====')
@@ -393,7 +399,7 @@ def cli_main():
         # Click the button to see more jobs
         button = driver.find_element_by_class_name('see-more-jobs')
         button.click() 
-        sleep(5)
+        time.sleep(5)
 
     return
     description = find_job_description()
@@ -466,34 +472,19 @@ class TestStartup(unittest.TestCase):
     def test_create_driver(self):
         pass
 
-class TestLinkedInURLs(unittest.TestCase):
+class TestEnv(unittest.TestCase):
 
     def test_url_base(self):
-        pass
-
-    def test_url_base_with_env_production(self):
-        self.assertEqual(url_base_with_env_production(), 'https://linkedin.com')
-
-    def test_url_base_with_env_development(self):
-        self.assertEqual(url_base_with_env_development(), 'http://0.0.0.0:8000')
+        self.assertEqual(env.url_base(), 'http://0.0.0.0:8000')
 
     def test_url_login(self):
-        pass
+        self.assertEqual(env.url_login(), 'http://0.0.0.0:8000/login.html')
 
-    def test_url_login_with_env_production(self):
-        self.assertEqual(url_login_with_env_production(), 'https://linkedin.com/login')
+    def test_url_jobs_search_by_keywords(self):
+        self.assertEqual(env.url_jobs_search_by_keywords('alpha bravo'), 'http://0.0.0.0:8000/jobs/search/keywords.html')
 
-    def test_url_login_with_env_development(self):
-        self.assertEqual(url_login_with_env_development(), 'http://0.0.0.0:8000/login.html')
-
-    def test_url_jobs_search(self):
-        pass
-
-    def test_url_jobs_search_with_env_production(self):
-        self.assertEqual(url_jobs_search_with_env_production('alpha bravo'), 'https://linkedin.com/jobs/search?keywords=alpha+bravo')
-
-    def test_url_jobs_search_with_env_development(self):
-        self.assertEqual(url_jobs_search_with_env_development('alpha bravo'), 'http://0.0.0.0:8000/jobs/search.html')
+    def url_jobs_search_by_id(self, job_id):
+        self.assertEqual(env.url_jobs_search_by_id(123), 'http://0.0.0.0:8000/jobs/search/id.html')
 
 class TestLinkedInWebInterations(unittest.TestCase):
 
@@ -546,8 +537,14 @@ class TestLinkedInWebInterations(unittest.TestCase):
 
 if __name__ == '__main__':
     driver = create_driver()
-    env = os.environ.get('ENV', 'DEVELOPMENT')
-    if env == 'UNITTEST':
+    os_environ_env = os.environ.get('ENV', 'DEVELOPMENT')
+    if os_environ_env == 'DEVELOPMENT':
+        env = EnvDevelopment()
+    elif os_environ_env == 'TEST':
+        env = EnvDevelopment()
+    elif os_environ_env == 'PRODUCTION':
+        env = EnvProduction()
+    if os_environ_env == 'TEST':
         unittest.main()
     else:
         cli_main()
