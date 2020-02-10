@@ -5,31 +5,39 @@
 #
 # Syntax:
 #
-#     linkedin-jobs-search-to-html <keywords>
+#     linkedin-jobs-search-to-html <query>
 #
-# Example:
+# Example of a search query:
 #
-#     linkedin-jobs-search-to-html programmer
+#     linkedin-jobs-search-to-html keywords=programmer
 #
-# Example URL of a search:
+# Example result URL:
 #
-#   * https://www.linkedin.com/jobs/search?keywords=programmer
+#     https://www.linkedin.com/jobs/search?keywords=programmer
 #
-# Example URL of a search with "for time posted is within past 1 day":
+# Example of a search with "for time posted within 1 day":
 #
-#   * https://www.linkedin.com/jobs/search?keywords=programmer&f_TP=1
+#     linkedin-jobs-search-to-html keywords=programmer&f_TP=1
+#
+# Example result URL:
+#
+#     https://www.linkedin.com/jobs/search?keywords=programmer&f_TP=1
 #
 # Example URL of a result:
 #
-#   * https://www.linkedin.com/jobs/search?currentJobId=100000000
+#     https://www.linkedin.com/jobs/search?currentJobId=100000000
 #
 # Example URL of an API call that also works incognito:
 #
-#   * https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/100000000
+#     https://www.linkedin.com/jobs-guest/jobs/api/jobPosting/100000000
 #
 # Based on work by:
 #
-#   * https://www.linkedin.com/pulse/how-easy-scraping-data-from-linkedin-profiles-david-craven/
+#     https://www.linkedin.com/pulse/how-easy-scraping-data-from-linkedin-profiles-david-craven/
+#
+#
+# ## Setup
+#
 #
 # Preflight:
 #
@@ -41,13 +49,8 @@
 # pip3 install csv
 # ```
 #
-# LinkedIn URLs that we may want to use in the future:
-#
-#   * https://www.linkedin.com/checkpoint/lg/login?...
-#
-#   * ... (for security challenge)
-#
 # ## Cache
+#
 #
 # To use an existing list job ids to download job postings to a local cache:
 #
@@ -66,7 +69,53 @@
 # cat emails.txt | 
 # gsed 's/^\(.\+\)\.\(.\+\)@\(.\+\)/\0\t\1\t\2/i; s/\t\(.\)/\t\u\1/g' > 
 # email-first-last.tsv
-# 
+#
+#
+# ## Facet search
+#
+#
+# LinkedIn provides facet search. This section has examples.
+#
+# Time:
+#
+#   * f_TPR=r86400 = Past 24 hours
+#
+#   * f_TPR=r604800 = Past week
+#
+# Features:
+#
+#   * f_LF=f_JIYN = Jobs In Your Network
+#
+#   * f_LF=f_FCE = Fair Chance Employer
+#
+# Geography:
+#
+#   * geoId=102571732 = New York, NY, US
+#
+#   * geoId=102448103 = Los Angeles, CA, US
+#
+# Distance:
+#
+#   * distance=10 = 10 miles (16 km)
+#
+#   * distance=100 = 100 miles (160 km)
+#
+# Sort:
+#
+#   * sortBy=DD = Recency
+#
+#   * sortBy=R = Relevance
+#
+#
+# ## Future
+#
+#
+# LinkedIn URLs that we may want to use in the future:
+#
+#   * https://www.linkedin.com/checkpoint/lg/login?...
+#
+#   * ... (for security challenge)
+#
 ##
 
 import argparse
@@ -89,6 +138,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import StaleElementReferenceException
 from selenium.common.exceptions import TimeoutException
 from typing import List
@@ -286,7 +336,7 @@ class expect_elements_by_css_selector(object):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="LinkedIn jobs search to JSON")
-    parser.add_argument("keywords", help="jobs search keywords")
+    parser.add_argument("query", help="jobs search query")
     args = parser.parse_args()
     return args
 
@@ -322,7 +372,7 @@ class Env(ABC):
     def url_feed(self):
         pass
 
-    def url_jobs_search_by_keywords(self, keywords, start = None):
+    def url_jobs_search_by_query(self, query, strt = None):
         pass
 
     def url_jobs_search_by_id(self, job_id):
@@ -342,12 +392,11 @@ class EnvProduction(Env):
     def url_feed(self):
         return self.url_base() + '/feed'
 
-    def url_jobs_search_by_keywords(self, keywords, start = None):
-        query = {'keywords': keywords}
+    def url_jobs_search_by_query(self, query, start = None):
         if start and start > 0:
             query.update({'start': start})
         return self.url_base() + '/jobs/search?' + urllib.parse.urlencode(query)
-
+    
     def url_jobs_search_by_id(self, job_id):
         return self.url_base() + '/jobs/search?' + urllib.parse.urlencode({"currentJobId": id})
 
@@ -365,8 +414,8 @@ class EnvDevelopment(Env):
     def url_checkpoint_challenge(self):
         return self.url_base() + '/checkpoint/challenge/index.html'
 
-    def url_jobs_search_by_keywords(self, keywords, start = None):
-        return self.url_base() + f'/jobs/search/keywords/start/{start or 0}/index.html'
+    def url_jobs_search_by_query(self, query, start = None):
+        return self.url_base() + f'/jobs/search/query/start/{start or 0}/index.html'
 
     def url_jobs_search_by_id(self, job_id):
         return self.url_base() + '/jobs/search/id/index.html'
@@ -395,8 +444,8 @@ def go_security_verification():
     except TimeoutException:
         pass
 
-def go_jobs_search_by_keywords(keywords, start = None):
-    driver.get(env.url_jobs_search_by_keywords(keywords, start))
+def go_jobs_search_by_query(query, start = None):
+    driver.get(env.url_jobs_search_by_query(query, start))
 
 def go_jobs_search_by_id(job_id):
     driver.get(env.url_jobs_search_by_id(job_id))
@@ -465,10 +514,10 @@ def find_jobs_search_pagination_list_items():
 #
 ##
 
-def scan_jobs(keywords):
+def scan_jobs(query):
     for start in range(0, 1000, 25):
         print(f'==== loop start:{start} =====')
-        go_jobs_search_by_keywords(keywords, start)
+        go_jobs_search_by_query(query, start)
         ids = find_job_ids()
         jobs = list(map(lambda x: Job(x), ids))
         for job in jobs:
@@ -494,7 +543,7 @@ def cli_main():
     password = os.environ["LINKEDIN_PASSWORD"]
     go_login(username, password) and sleepy() 
     #go_security_verification()
-    scan_jobs(args.keywords)
+    scan_jobs(args.query)
     print_results()
 
 ##
@@ -577,11 +626,11 @@ class TestEnv(unittest.TestCase):
     def test_url_feed(self):
         self.assertEqual(env.url_feed(), 'http://0.0.0.0:8000/feed/index.html')
 
-    def test_url_jobs_search_by_keywords(self):
-        self.assertEqual(env.url_jobs_search_by_keywords('alpha bravo'), 'http://0.0.0.0:8000/jobs/search/keywords/start/0/index.html')
+    def test_url_jobs_search_by_query(self):
+        self.assertEqual(env.url_jobs_search_by_query({'keywords': 'alpha bravo'}), 'http://0.0.0.0:8000/jobs/search/query/start/0/index.html')
 
-    def test_url_jobs_search_by_keywords_with_start(self):
-        self.assertEqual(env.url_jobs_search_by_keywords('alpha bravo', 25), 'http://0.0.0.0:8000/jobs/search/keywords/start/25/index.html')
+    def test_url_jobs_search_by_query_with_start(self):
+        self.assertEqual(env.url_jobs_search_by_query({'keywords': 'alpha bravo', 25), 'http://0.0.0.0:8000/jobs/search/query/start/25/index.html')
 
     def test_url_jobs_search_by_id(self):
         self.assertEqual(env.url_jobs_search_by_id(123), 'http://0.0.0.0:8000/jobs/search/id/index.html')

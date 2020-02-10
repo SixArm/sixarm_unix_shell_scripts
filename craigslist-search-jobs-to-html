@@ -1,0 +1,464 @@
+#!/usr/bin/env python3
+
+##
+# Craiglist search jobs to HTML
+#
+# Syntax:
+#
+#     craigslist-search-jobs-to-html <keywords>
+#
+# Example:
+#
+#     craigslist-search-jobs-to-html programmer
+#
+# Example URL of a search:
+#
+#   * https://losangeles.craigslist.org/search/jjj?query=programmer
+#
+# Example URL of a search with time frame today:
+#
+#   * https://losangeles.craigslist.org/search/jjj?query=programmer&postedToday=1
+#
+# Example URL of a result:
+#
+#   * https://losangeles.craigslist.org/sfv/mnu/d/los-angeles-cnc-mill-programmer/7069723085.html
+#
+#
+# Preflight:
+#
+# ```sh
+# pip3 install ipython
+# pip3 install selenium
+# pip3 install time
+# pip3 install parsel
+# pip3 install csv
+# ```
+#
+#
+# ## Cache
+#
+# To use an existing list job ids to download job postings to a local cache:
+#
+# ```sh
+# mkdir -p downloads && cd !$
+# cat ids.txt |
+# while read id; do
+#   test -e "$id" || wget -q "https://losangeles.craigslist.org/sfv/mnu/d/los-angeles-cnc-mill-programmer/$id.html" -O "id"
+#   sleep 10
+# done
+# ```
+# 
+# To reformat email addresses to TSV file:
+#
+# ```sh
+# cat emails.txt | 
+# gsed 's/^\(.\+\)\.\(.\+\)@\(.\+\)/\0\t\1\t\2/i; s/\t\(.\)/\t\u\1/g' > 
+# email-first-last.tsv
+# 
+##
+
+import argparse
+import os
+import pathlib
+import random
+import re
+import selenium
+import sixarmselenium
+import sys
+import textwrap
+import time
+import unittest
+import urllib
+
+from abc import ABC
+from contextlib import contextmanager
+from dataclasses import dataclass
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions
+from selenium.common.exceptions import NoAlertPresentException
+from selenium.common.exceptions import StaleElementReferenceException
+from selenium.common.exceptions import TimeoutException
+from typing import List
+
+##
+#
+# Data class section
+#
+##
+
+@dataclass
+class Job:
+    id: int
+    link: str = ""
+    description: str = ""
+
+    def __str__(self):
+        return f'{self.id} {self.description}'
+
+##
+#
+# Global
+#
+##
+
+driver = None  # Selenium Chrome web driver
+online = True  # True means use online real site; False means use offline local cache
+
+##
+#
+# System
+#
+##
+
+def app_path():
+    'craigslist-search-jobs-to-html'
+
+def cache_home():
+    return os.environ.get('XDG_CACHE_HOME', (os.environ.get('HOME', '~/') + '/.cache'))
+
+def cache_dir():
+    cache_home() + '/' + app_path()
+
+##
+#
+# Language
+#
+##
+
+def each(function, iterable):
+    for element in iterable:
+        function(element)
+
+def sleepy(seconds = 10.0):
+    time.sleep(random.random() * seconds)
+
+##
+#
+# Data store
+#
+##
+
+db = {'jobs': {}}  # Store of global data for lookups
+
+def db_get(key, id):
+    return db[key][id]
+
+def db_set(key, id, object):
+    db[key][id] = object
+
+##
+#
+# CLI
+#
+##
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="LinkedIn jobs search to JSON")
+    parser.add_argument("keywords", help="jobs search keywords")
+    args = parser.parse_args()
+    return args
+
+def create_driver():
+    # Configure Chrome browser options
+    chrome_options = webdriver.chrome.options.Options()
+    chrome_options.add_argument("--disable-extensions")
+
+    # Create a Chrome web driver
+    driver_path = "/usr/local/bin/chromedriver"
+    driver = webdriver.Chrome(driver_path, options=chrome_options)
+    return driver
+
+##
+#
+# Environments for production, development, test, etc.
+#
+##
+
+env = None
+
+class Env(ABC):
+
+    def url_base(self):
+        pass
+
+    def url_jobs_search_by_keywords(self, keywords, start = None):
+        pass
+
+    def url_job_link(self, link):
+        pass
+
+class EnvProduction(Env):
+
+    def url_base(self):
+        return 'https://losangeles.craigslist.org/'
+
+    def url_jobs_search_by_keywords(self, keywords):
+        query = {'keywords': keywords, 'postedToday': 1}
+        return self.url_base() + '/search/jjj' + urllib.parse.urlencode(query)
+
+    def url_job_link(self, link):
+        return link
+
+class EnvDevelopment(Env):
+
+    def url_base(self):
+        return 'http://0.0.0.0:8000'
+
+    def url_jobs_search_by_keywords(self, keywords, start = None):
+        return self.url_base() + f'/search/jjj/keywords/index.html'
+
+    def url_job_link(self, link):
+        return self.url_base() + f'/xxx/index.html'
+
+##
+#
+# Web interaction
+#
+##
+
+def go_home():
+    driver.get(env.url_base())
+
+def go_jobs_search_by_keywords(keywords, start = None):
+    driver.get(env.url_jobs_search_by_keywords(keywords, start))
+
+def find_job_list():
+    print("find_job_list")
+    element = driver.find_element_by_css_selector("div#sortable-results").find_element_by_css_selector("ul.rows")
+    if element == None:
+        return None
+    print("find_job_list OK")
+    return element
+
+def find_job_list_items():
+    print("find_job_list_items")
+    list = find_job_list()
+    if list == None:
+        print("ERROR: find_job_list_items list == None")
+        return []
+    elements = list.find_elements_by_css_selector("li.result-row")
+    if elements == None:
+        return []
+    print("find_job_list_items OK")
+    print("find_job_list_items len:", len(elements))
+    return elements
+
+def find_job_links():
+    print("find_job_links")
+    items = find_job_list_items()
+    if items == None:
+        print("ERROR: find_job_links items == None")
+        return []
+    job_links = list(filter(None, map(map_job_list_item_to_job_link, items)))
+    print("find_job_links job_links")
+    print(*job_links)
+    return job_links
+
+def map_job_list_item_to_job_link(job_list_item):
+    job_link = None
+    try:
+        a = job_list_item.find_element_by_tag_name('a')
+        if a == None:
+            print("ERROR: map_job_list_item_to_job_link element == None")
+            print(job_list_item.get_attribute("outerHTML"))
+            return None
+        else:
+            job_link = a.get_attribute('href')
+            print("job_link link:", job_link)
+    except StaleElementReferenceException:
+        return None
+    return job_link
+
+def map_job_link_to_job_id(job_link):
+    x = re.search(r'(\d+).html$', s)
+    if x:
+        return x.group(1)
+    else:
+        return None
+
+def map_job_link_to_job(job_link):
+    id = map_job_link_to_job_id(job_link)
+    job = Job(id)
+    job.link = job_link
+    return job
+
+##
+#
+# Control
+#
+##
+
+def scan_jobs(keywords):
+    for start in range(0, 0, 1):
+        print(f'==== loop start:{start} =====')
+        go_jobs_search_by_keywords(keywords, start)
+        links = find_job_links()
+        jobs = list(map(lambda x: map_job_link_to_job, links))
+        for job in jobs:
+            db_set('jobs', job.id, job)
+        sleepy(60)
+
+def print_results():
+    print('==== output ====')
+    for job in jobs:
+        print(job.id, job.link)
+
+def cli_main():
+    global driver
+    driver = create_driver()
+    args = parse_args()
+    scan_jobs(args.keywords)
+    print_results()
+
+##
+#
+# Test
+#
+##
+
+class TestDB(unittest.TestCase):
+
+    def test_db_get(self):
+        db_set('jobs', 'id', 'object')
+        self.assertEqual(db_get('jobs', 'id'), 'object')
+
+    def test_db_set(self):
+        db_set('jobs', 'id', 'object')
+        self.assertEqual(db_get('jobs', 'id'), 'object')
+
+class TestAll(unittest.TestCase):
+
+    def test_each(self):
+        pass
+
+    def test_sleepy(self):
+        sleepy(0)
+
+    def test_link_is_stale(self):
+        pass
+
+    def test_link_click_fresh(self):
+        pass
+
+class TestSeleniumMaps(unittest.TestCase):
+
+    def test_map_element_to_attribute(self):
+        html = '<html><body><p id="alpha" name="bravo"></p></body></html>'
+        driver.get("data:text/html;charset=utf-8," + html)
+        element = driver.find_element_by_id('alpha')
+        self.assertEqual(sixarmselenium.map_element_to_attribute(element, 'name'), 'bravo')
+
+    def test_map_element_to_attribute_list(self):
+        html = '<html><body id="body"><p id="alpha" name="bravo"></p><p id="charlie" name="delta"></p></body></html>'
+        driver.get("data:text/html;charset=utf-8," + html)
+        element = driver.find_element_by_id('body')
+        self.assertEqual(list(sixarmselenium.map_element_to_attribute_list(element, 'name')), ['bravo', 'delta'])
+
+class TestSeleniumExpectations(unittest.TestCase):
+
+    def test_expect_current_url_starts_with(self):
+        pass
+    
+    def test_expect_element_has_css_class(self):
+        pass
+
+    def test_expect_element_by_css_selector(self):
+        pass
+
+    def test_expect_elements_by_css_selector(self):
+        pass
+    
+class TestStartup(unittest.TestCase):
+
+    def test_parse_args(self):
+        pass
+
+    def test_create_driver(self):
+        pass
+
+class TestEnv(unittest.TestCase):
+
+    def test_url_base(self):
+        self.assertEqual(env.url_base(), 'http://0.0.0.0:8000')
+
+    def test_url_jobs_search_by_keywords(self):
+        self.assertEqual(env.url_jobs_search_by_keywords('alpha bravo'), 'http://0.0.0.0:8000/search/jjj/keywords/index.html')
+
+    def test_url_job_link(self):
+        self.assertEqual(env.url_job_link('http://0.0.0.0:8000/xxx/index.html'), 'http://0.0.0.0:8000/xxx/index.html')
+
+class TestLinkedInWebInterations(unittest.TestCase):
+
+    DATA = "data:text/html;charset=utf-8," 
+
+    JOB_HTML = textwrap.dedent('''\
+    <html>
+        <body>
+            <div id="sortable-results">
+                <ul class="rows">
+                    <li class="result-row"><a href="https://craigslist.org/xxx/123.html"></a></li>
+                    <li class="result-row"><a href="https://craigslist.org/xxx/456.html"></a></li>
+                    <li class="result-row"><a href="https://craigslist.org/xxx/789.html"></a></li>
+                </ul>
+            </div>
+        </body>
+    </html>
+    ''')
+
+    JOB_IDS = [123, 456, 789]
+
+    JOB_LINKS = [
+        'https://craigslist.org/xxx/123.html',
+        'https://craigslist.org/xxx/456.html',
+        'https://craigslist.org/xxx/789.html',
+    ]
+
+    def test_go_home(self):
+        pass
+
+    def test_go_jobs_search(self):
+        pass
+
+    def test_go_job(self):
+        pass
+
+    def test_find_job_list(self):
+        driver.get(self.DATA + self.JOB_HTML)
+        self.assertIsNotNone(find_job_list())
+
+    def test_find_job_list_items(self):
+        driver.get(self.DATA + self.JOB_HTML)
+        self.assertEqual(len(find_job_list_items()), 3)
+
+    def test_find_job_links(self):
+        driver.get(self.DATA + self.JOB_HTML)
+        self.assertEqual(find_job_links(), self.JOB_LINKS)
+
+    def test_find_job_description(self):
+        pass
+
+    def test_map_job_list_item_to_job_id(self):
+        pass
+
+    def test_find_jobs_search_pagination_list(self):
+        pass
+
+    def find_jobs_search_pagination_list_items(self):
+        pass
+
+if __name__ == '__main__':
+    driver = create_driver()
+    os_environ_env = os.environ.get('ENV', 'DEVELOPMENT')
+    if os_environ_env == 'DEVELOPMENT':
+        env = EnvDevelopment()
+    elif os_environ_env == 'TEST':
+        env = EnvDevelopment()
+    elif os_environ_env == 'PRODUCTION':
+        env = EnvProduction()
+    if os_environ_env == 'TEST':
+        unittest.main()
+    else:
+        cli_main()
