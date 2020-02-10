@@ -187,7 +187,7 @@ class LogFormatter(logging.Formatter):
         result = super().formatException(exc_info)
         return repr(result)
 
-def ini_log():
+def ini_logger():
     handler = logging.StreamHandler()
     formatter = LogFormatter(logging.BASIC_FORMAT)
     handler.setFormatter(formatter)
@@ -196,7 +196,7 @@ def ini_log():
     logger.setLevel(os.environ.get("LOGLEVEL", "INFO"))
     return logger
 
-logger = ini_log()
+L = ini_logger()
 
 ##
 #
@@ -481,56 +481,56 @@ def go_jobs_search_by_id(job_id):
     driver.get(env.url_jobs_search_by_id(job_id))
 
 def find_job_list():
-    logger.debug("find_job_list")
+    L.debug("find_job_list")
     element = driver.find_element_by_css_selector("ul.jobs-search-results__list")
     if element == None:
-        logger.error("find_job_list element:None")
+        L.error("find_job_list element:None")
         return None
-    logger.debug("find_job_list OK")
+    L.debug("find_job_list OK")
     return element
 
 def find_job_list_items():
-    logger.debug("find_job_list_items")
+    L.debug("find_job_list_items")
     elements = find_job_list().find_elements_by_tag_name("li")
     if elements == None:
-        logger.error("find_job_list_items elements:None")
+        L.error("find_job_list_items elements:None")
         return None
-    logger.debug("find_job_list_items OK")
-    logger.debug("find_job_list_items len:", len(elements))
+    L.debug("find_job_list_items OK")
+    L.debug("find_job_list_items len:", len(elements))
     return elements
 
 def find_job_ids():
-    logger.debug("find_job_ids")
+    L.debug("find_job_ids")
     items = find_job_list_items()
     if items == None:
-        logger.error("find_job_ids items:None")
+        L.error("find_job_ids items:None")
         return None
-    logger.debug("find_job_ids items OK")
-    logger.debug("find_job_ids items len:", len(items))
-    logger.debug(items[0].get_attribute("outerHTML"))
+    L.debug("find_job_ids items OK")
+    L.debug("find_job_ids items len:", len(items))
+    L.debug(items[0].get_attribute("outerHTML"))
     job_ids = list(filter(None, map(map_job_list_item_to_job_id, items)))
-    logger.debug("find_job_ids job_ids", *job_ids)
+    L.debug("find_job_ids job_ids", *job_ids)
     return job_ids
 
 def map_job_list_item_to_job_id(job_list_item):
-    logger.debug("map_job_list_item_to_job_id")
+    L.debug("map_job_list_item_to_job_id")
     job_id = None
     try:
         elements = job_list_item.find_elements_by_tag_name('div')
         if elements == None or len(elements) == 0:
-            logger.error("map_job_list_item_to_job_id elements:None outerHTML:", job_list_item.get_attribute("outerHTML"))
+            L.error("map_job_list_item_to_job_id elements:None outerHTML:", job_list_item.get_attribute("outerHTML"))
             return None
         elif len(elements) == 0:
-            logger.error("map_job_list_item_to_job_id len(elements):0 outerHTML:", job_list_item.get_attribute("outerHTML"))
+            L.error("map_job_list_item_to_job_id len(elements):0 outerHTML:", job_list_item.get_attribute("outerHTML"))
             return None
         else:
-            logger.debug("map_job_list_item_to_job_id OK")
+            L.debug("map_job_list_item_to_job_id OK")
             div = elements[0]
             urn = div.get_attribute('data-job-id')
             job_id = int(urn.split(':')[-1])
-            logger.debug("map_job_list_item_to_job_id job_id:", job_id)
+            L.debug("map_job_list_item_to_job_id job_id:", job_id)
     except StaleElementReferenceException as e:
-        logger.exception("map_job_list_item_to_job_id", e)
+        L.exception("map_job_list_item_to_job_id", e)
     return job_id
 
 def find_job_description():
@@ -551,7 +551,7 @@ def find_jobs_search_pagination_list_items():
 
 def scan_jobs(query_string):
     for start in range(0, 1000, 25):
-        logger.debug(f'==== loop start:{start} =====')
+        L.debug(f'==== loop start:{start} =====')
         go_jobs_search_by_query_string(query_string + f'&start={start}')
         ids = find_job_ids()
         jobs = list(map(lambda x: Job(x), ids))
@@ -566,7 +566,7 @@ def print_job_description():
     # print(html)
 
 def print_results():
-    logger.debug('==== output ====')
+    L.debug('==== output ====')
     for key in db['jobs'].keys():
         print(key)
 
