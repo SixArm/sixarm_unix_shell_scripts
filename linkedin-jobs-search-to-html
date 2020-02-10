@@ -119,6 +119,7 @@
 ##
 
 import argparse
+import logging
 import os
 import pathlib
 import random
@@ -165,6 +166,36 @@ class Job:
 
 driver = None  # Selenium Chrome web driver
 online = True  # True means use online real site; False means use offline local cache
+
+##
+#
+# Log
+#
+##
+
+class LogFormatter(logging.Formatter):
+    """Log formatter that makes an exception into one line"""
+
+    def format(self, record):
+        result = super().format(record)
+        if record.exc_text:
+            result = result.replace("\n", "")
+        return result
+ 
+    def formatException(self, exc_info):
+        result = super().formatException(exc_info)
+        return repr(result)
+
+def ini_log():
+    handler = logging.StreamHandler()
+    formatter = LogFormatter(logging.BASIC_FORMAT)
+    handler.setFormatter(formatter)
+    logger = logging.getLogger()
+    logger.addHandler(handler)
+    logger.setLevel(os.environ.get("LOGLEVEL", "INFO"))
+    return logger
+
+logger = ini_log()
 
 ##
 #
