@@ -630,7 +630,7 @@ class TestEnv(unittest.TestCase):
         self.assertEqual(env.url_jobs_search_by_query({'keywords': 'alpha bravo'}), 'http://0.0.0.0:8000/jobs/search/query/start/0/index.html')
 
     def test_url_jobs_search_by_query_with_start(self):
-        self.assertEqual(env.url_jobs_search_by_query({'keywords': 'alpha bravo', 25), 'http://0.0.0.0:8000/jobs/search/query/start/25/index.html')
+        self.assertEqual(env.url_jobs_search_by_query({'keywords': 'alpha bravo'}, 25), 'http://0.0.0.0:8000/jobs/search/query/start/25/index.html')
 
     def test_url_jobs_search_by_id(self):
         self.assertEqual(env.url_jobs_search_by_id(123), 'http://0.0.0.0:8000/jobs/search/id/index.html')
