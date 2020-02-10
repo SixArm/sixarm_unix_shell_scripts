@@ -5,7 +5,7 @@
 #
 # Syntax:
 #
-#     linkedin-jobs-search-to-html <query>
+#     linkedin-jobs-search-to-html <query_string>
 #
 # Example of a search query:
 #
@@ -17,7 +17,7 @@
 #
 # Example of a search with "for time posted within 1 day":
 #
-#     linkedin-jobs-search-to-html keywords=programmer&f_TP=1
+#     linkedin-jobs-search-to-html 'keywords=programmer&f_TP=1'
 #
 # Example result URL:
 #
@@ -372,7 +372,7 @@ class Env(ABC):
     def url_feed(self):
         pass
 
-    def url_jobs_search_by_query(self, query, strt = None):
+    def url_jobs_search_by_query_string(self, query_string):
         pass
 
     def url_jobs_search_by_id(self, job_id):
@@ -392,10 +392,8 @@ class EnvProduction(Env):
     def url_feed(self):
         return self.url_base() + '/feed'
 
-    def url_jobs_search_by_query(self, query, start = None):
-        if start and start > 0:
-            query.update({'start': start})
-        return self.url_base() + '/jobs/search?' + urllib.parse.urlencode(query)
+    def url_jobs_search_by_query_string(self, query_string):
+        return self.url_base() + '/jobs/search?' + query_string
     
     def url_jobs_search_by_id(self, job_id):
         return self.url_base() + '/jobs/search?' + urllib.parse.urlencode({"currentJobId": id})
@@ -414,8 +412,8 @@ class EnvDevelopment(Env):
     def url_checkpoint_challenge(self):
         return self.url_base() + '/checkpoint/challenge/index.html'
 
-    def url_jobs_search_by_query(self, query, start = None):
-        return self.url_base() + f'/jobs/search/query/start/{start or 0}/index.html'
+    def url_jobs_search_by_query_string(self, query_string):
+        return self.url_base() + f'/jobs/search/query/index.html'
 
     def url_jobs_search_by_id(self, job_id):
         return self.url_base() + '/jobs/search/id/index.html'
@@ -444,8 +442,8 @@ def go_security_verification():
     except TimeoutException:
         pass
 
-def go_jobs_search_by_query(query, start = None):
-    driver.get(env.url_jobs_search_by_query(query, start))
+def go_jobs_search_by_query_string(query_string):
+    driver.get(env.url_jobs_search_by_query_string(query_string))
 
 def go_jobs_search_by_id(job_id):
     driver.get(env.url_jobs_search_by_id(job_id))
@@ -514,10 +512,10 @@ def find_jobs_search_pagination_list_items():
 #
 ##
 
-def scan_jobs(query):
+def scan_jobs(query_string):
     for start in range(0, 1000, 25):
         print(f'==== loop start:{start} =====')
-        go_jobs_search_by_query(query, start)
+        go_jobs_search_by_query_string(query_string + '&start=' + start)
         ids = find_job_ids()
         jobs = list(map(lambda x: Job(x), ids))
         for job in jobs:
@@ -626,11 +624,11 @@ class TestEnv(unittest.TestCase):
     def test_url_feed(self):
         self.assertEqual(env.url_feed(), 'http://0.0.0.0:8000/feed/index.html')
 
-    def test_url_jobs_search_by_query(self):
-        self.assertEqual(env.url_jobs_search_by_query({'keywords': 'alpha bravo'}), 'http://0.0.0.0:8000/jobs/search/query/start/0/index.html')
+    def test_url_jobs_search_by_query_string(self):
+        self.assertEqual(env.url_jobs_search_by_query_string('keywords=alpha+bravo'), 'http://0.0.0.0:8000/jobs/search/query/index.html')
 
-    def test_url_jobs_search_by_query_with_start(self):
-        self.assertEqual(env.url_jobs_search_by_query({'keywords': 'alpha bravo'}, 25), 'http://0.0.0.0:8000/jobs/search/query/start/25/index.html')
+    def test_url_jobs_search_by_query_string_with_start(self):
+        self.assertEqual(env.url_jobs_search_by_query_string('keywords=alpha+bravo&start=25'), 'http://0.0.0.0:8000/jobs/search/query/index.html')
 
     def test_url_jobs_search_by_id(self):
         self.assertEqual(env.url_jobs_search_by_id(123), 'http://0.0.0.0:8000/jobs/search/id/index.html')
