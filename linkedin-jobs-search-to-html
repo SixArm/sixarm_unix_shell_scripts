@@ -368,7 +368,9 @@ class expect_elements_by_css_selector(object):
 
 def parse_args():
     parser = argparse.ArgumentParser(description="LinkedIn jobs search to JSON")
-    parser.add_argument("query", help="jobs search query")
+    parser.add_argument('query', help='jobs search query, using encoded format')
+    log_level_choices = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
+    parser.add_argument('--log-level', choices=log_level_choices, help='log level; this can also be set by env var LOGLEVEL')
     args = parser.parse_args()
     return args
 
@@ -573,7 +575,6 @@ def print_results():
 def cli_main():
     global driver
     driver = create_driver()
-    args = parse_args()
     username = os.environ["LINKEDIN_USERNAME"]
     password = os.environ["LINKEDIN_PASSWORD"]
     go_login(username, password) and sleepy() 
@@ -726,6 +727,10 @@ class TestLinkedInWebInterations(unittest.TestCase):
 
     def find_jobs_search_pagination_list_items(self):
         pass
+
+args = parse_args()
+if args.log_level:
+    L.setLevel(args.log_level)
 
 if __name__ == '__main__':
     driver = create_driver()
