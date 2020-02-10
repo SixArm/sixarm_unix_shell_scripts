@@ -515,7 +515,7 @@ def find_jobs_search_pagination_list_items():
 def scan_jobs(query_string):
     for start in range(0, 1000, 25):
         print(f'==== loop start:{start} =====')
-        go_jobs_search_by_query_string(query_string + '&start=' + start)
+        go_jobs_search_by_query_string(query_string + f'&start={start}')
         ids = find_job_ids()
         jobs = list(map(lambda x: Job(x), ids))
         for job in jobs:
