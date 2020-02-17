@@ -82,23 +82,23 @@
 #
 #   * f_TPR=r604800 = Past week
 #
-# Features:
-#
-#   * f_LF=f_JIYN = Jobs In Your Network
-#
-#   * f_LF=f_FCE = Fair Chance Employer
-#
 # Geography:
 #
-#   * geoId=102571732 = New York, NY, US
-#
 #   * geoId=102448103 = Los Angeles, CA, US
+#
+#   * geoId=102571732 = New York, NY, US
 #
 # Distance:
 #
 #   * distance=10 = 10 miles (16 km)
 #
 #   * distance=100 = 100 miles (160 km)
+#
+# Features:
+#
+#   * f_LF=f_JIYN = Jobs In Your Network
+#
+#   * f_LF=f_FCE = Fair Chance Employer
 #
 # Sort:
 #
@@ -366,13 +366,17 @@ class expect_elements_by_css_selector(object):
 #
 ##
 
-def parse_args():
+def create_parser():
     parser = argparse.ArgumentParser(description="LinkedIn jobs search to JSON")
-    parser.add_argument('query', help='jobs search query, using encoded format')
-    log_level_choices = ('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL')
-    parser.add_argument('--log-level', choices=log_level_choices, help='log level; this can also be set by env var LOGLEVEL')
-    args = parser.parse_args()
-    return args
+    parser.add_argument('--query', help='jobs search query, using encoded format')
+    parser.add_argument('--time', type=str, help='query time range for past searches, such as "day", "week", or "r000000" for seconds')
+    parser.add_argument('--geo', type=str, help='query geography code, such as "ny" meaning New York City')
+    parser.add_argument('--geo-id', type=int, help='query geography id, such as 102571732 meaning New York City')
+    parser.add_argument('--distance', type=int, help='query distance, such as 10 meaning within 10 kilomeers or miles')
+    parser.add_argument('--jobs-in-your-network', action="store_true", help='query jobs in your network')
+    parser.add_argument('--fair-chance-employer', action="store_true", help='query fair chance employer')
+    parser.add_argument('--log-level', choices=('DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'), help='log level; this can also be set by env var LOGLEVEL')
+    return parser
 
 def create_driver():
     # Configure Chrome browser options
@@ -497,8 +501,7 @@ def find_job_list_items():
     if elements == None:
         L.error("find_job_list_items elements:None")
         return None
-    L.debug("find_job_list_items OK")
-    L.debug("find_job_list_items len:", len(elements))
+    L.debug(f"find_job_list_items elements len:{len(elements)}")
     return elements
 
 def find_job_ids():
@@ -508,7 +511,7 @@ def find_job_ids():
         L.error("find_job_ids items:None")
         return None
     L.debug("find_job_ids items OK")
-    L.debug("find_job_ids items len:", len(items))
+    L.debug(f"find_job_ids items len:{len(items)}")
     L.debug(items[0].get_attribute("outerHTML"))
     job_ids = list(filter(None, map(map_job_list_item_to_job_id, items)))
     L.debug("find_job_ids job_ids", *job_ids)
@@ -519,14 +522,14 @@ def map_job_list_item_to_job_id(job_list_item):
     job_id = None
     try:
         elements = job_list_item.find_elements_by_tag_name('div')
-        if elements == None or len(elements) == 0:
+        if elements == None:
             L.error("map_job_list_item_to_job_id elements:None outerHTML:", job_list_item.get_attribute("outerHTML"))
             return None
         elif len(elements) == 0:
             L.error("map_job_list_item_to_job_id len(elements):0 outerHTML:", job_list_item.get_attribute("outerHTML"))
             return None
         else:
-            L.debug("map_job_list_item_to_job_id OK")
+            L.debug("map_job_list_item_to_job_id elements len:{len(elements)}")
             div = elements[0]
             urn = div.get_attribute('data-job-id')
             job_id = int(urn.split(':')[-1])
@@ -572,6 +575,88 @@ def print_results():
     for key in db['jobs'].keys():
         print(key)
 
+##
+#
+# Parse args
+#
+##
+
+def args_time(args):
+    if args.time:
+        if args.time == 'day':
+            return {'f_TPR': 'r86400'}
+        elif args.time == 'week':
+            return {'f_TPR': 'r604800'}
+        else:
+            return {'f_TPR': args.time}
+    return None
+
+def args_geo(args):
+    if args.geo:
+        if args.geo == 'la':
+            return {'geoId': 102448103}
+        elif args.geo == 'ny':
+            return {'geoId': 102571732}
+        else:
+            return {'geoId': int(args.geo)}
+    return None
+
+def args_geo_id(args):
+    if args.geo_id:
+        return {'geoId': args.geo_id}
+    return None
+
+def args_distance(args):
+    if args.distance:
+        return {'distance': args.distance}
+    return None
+
+def args_fair_chance_employer(args):
+    if args.fair_chance_employer:
+        return {'f_LF': 'f_FCE'}
+    return None
+
+def args_jobs_in_your_network(args):
+    if args.jobs_in_your_network:
+        return {'f_LF': 'f_JIYN'}
+    return None
+
+def args_to_query_pairs():
+    # TODO optimize
+    query_pairs = []
+    
+    q = args_time(args)
+    if q: query_pairs.append(pairs)
+    
+    q = args_geo(args)
+    if q: query_pairs.append(q)
+    
+    q = args_geo_id(args)
+    if q: query_pairs.append(q)
+
+    q = args_distance(args)
+    if q: query_pairs.append(q)
+    
+    q = args_fair_chance_employer(args)
+    if q: query_pairs.append(q)
+    
+    q = args_jobs_in_your_network(q)
+    if q: query_pairs.append(q)
+    
+    return query_pairs
+
+def parse_args_to_query_string():
+    if args.query:
+        return args.query
+    else:
+        return urllib.parse.urlencode(parse_args_to_query_pairs())
+
+##
+#
+# Main
+#
+##
+
 def cli_main():
     global driver
     driver = create_driver()
@@ -579,8 +664,37 @@ def cli_main():
     password = os.environ["LINKEDIN_PASSWORD"]
     go_login(username, password) and sleepy() 
     #go_security_verification()
-    scan_jobs(args.query)
-    print_results()
+    query_string = parse_args_to_query_string()
+    if query_string:
+        scan_jobs(query_string)
+        print_results()
+    else:
+        L.error("query missing")
+
+# Features:
+#
+#   * f_LF=f_JIYN = Jobs In Your Network
+#
+#   * f_LF=f_FCE = Fair Chance Employer
+#
+# Geography:
+#
+#   * geoId=102571732 = New York, NY, US
+#
+#   * geoId=102448103 = Los Angeles, CA, US
+#
+# Distance:
+#
+#   * distance=10 = 10 miles (16 km)
+#
+#   * distance=100 = 100 miles (160 km)
+#
+# Sort:
+#
+#   * sortBy=DD = Recency
+#
+#   * sortBy=R = Relevance
+#
 
 ##
 #
@@ -612,6 +726,76 @@ class TestAll(unittest.TestCase):
     def test_link_click_fresh(self):
         pass
 
+class TestParseArgs(unittest.TestCase):
+
+    def setUp(self):
+        self.parser = create_parser()
+
+    def test_time(self):
+        args = self.parser.parse_args(['--time', 'r123'])
+        self.assertEqual(args.time, 'r123')
+
+    def test_geo(self):
+        args = self.parser.parse_args(['--geo', 'ny'])
+        self.assertEqual(args.geo, 'ny')
+
+    def test_geo_id(self):
+        args = self.parser.parse_args(['--geo-id', '102571732'])
+        self.assertEqual(args.geo_id, 102571732)
+
+    def test_distance(self):
+        args = self.parser.parse_args(['--distance', '10'])
+        self.assertEqual(args.distance, 10)
+
+    def test_fair_chance_employer(self):
+        args = self.parser.parse_args(['--fair-chance-employer'])
+        self.assertEqual(args.fair_chance_employer, True)
+
+    def test_jobs_in_your_network(self):
+        args = self.parser.parse_args(['--jobs-in-your-network'])
+        self.assertEqual(args.jobs_in_your_network, True)
+
+class TestArgsX(unittest.TestCase):
+
+    def setUp(self):
+        self.parser = create_parser()
+
+    def test_args_time_with_id(self):
+        args = self.parser.parse_args(['--time', 'r123'])
+        self.assertEqual(args_time(args), {'f_TPR': 'r123'})
+
+    def test_args_time_with_day(self):
+        args =  self.parser.parse_args(['--time', 'day'])
+        self.assertEqual(args_time(args), {'f_TPR': 'r86400'})
+
+    def test_args_time_with_week(self):
+        args =  self.parser.parse_args(['--time', 'week'])
+        self.assertEqual(args_time(args), {'f_TPR': 'r604800'})
+
+    def test_args_geo_with_la(self):
+        args =  self.parser.parse_args(['--geo', 'la'])
+        self.assertEqual(args_geo(args), {'geoId': 102448103})
+
+    def test_args_geo_with_ny(self):
+        args = self.parser.parse_args(['--geo', 'ny'])
+        self.assertEqual(args_geo(args), {'geoId': 102571732})
+
+    def test_args_geo_with_id(self):
+        args =  self.parser.parse_args(['--geo', '102571732'])
+        self.assertEqual(args_geo(args), {'geoId': 102571732})
+
+    def test_args_distance(self):
+        args =  self.parser.parse_args(['--distance', '10'])
+        self.assertEqual(args_distance(args), {'distance': 10})
+
+    def test_args_fair_chance_employer(self):
+        args =  self.parser.parse_args(['--fair-chance-employer'])
+        self.assertEqual(args_fair_chance_employer(args), {'f_LF': 'f_FCE'})
+
+    def test_args_jobs_in_your_network(self):
+        args =  self.parser.parse_args(['--jobs-in-your-network'])
+        self.assertEqual(args_jobs_in_your_network(args), {'f_LF': 'f_JIYN'})
+
 class TestSeleniumMaps(unittest.TestCase):
 
     def test_map_element_to_attribute(self):
@@ -641,9 +825,6 @@ class TestSeleniumExpectations(unittest.TestCase):
         pass
     
 class TestStartup(unittest.TestCase):
-
-    def test_parse_args(self):
-        pass
 
     def test_create_driver(self):
         pass
@@ -728,20 +909,22 @@ class TestLinkedInWebInterations(unittest.TestCase):
     def find_jobs_search_pagination_list_items(self):
         pass
 
-args = parse_args()
+global parser
+parser = create_parser()
+args = parser.parse_args()
 if args.log_level:
     L.setLevel(args.log_level)
 
 if __name__ == '__main__':
     driver = create_driver()
-    os_environ_env = os.environ.get('ENV', 'DEVELOPMENT')
-    if os_environ_env == 'DEVELOPMENT':
+    os_environ_env = os.environ.get('ENV', 'development')
+    if os_environ_env == 'development':
         env = EnvDevelopment()
-    elif os_environ_env == 'TEST':
+    elif os_environ_env == 'test':
         env = EnvDevelopment()
-    elif os_environ_env == 'PRODUCTION':
+    elif os_environ_env == 'production':
         env = EnvProduction()
-    if os_environ_env == 'TEST':
+    if os_environ_env == 'test':
         unittest.main()
     else:
         cli_main()
