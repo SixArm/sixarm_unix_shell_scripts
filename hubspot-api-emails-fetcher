@@ -1,0 +1,15 @@
+#!/bin/sh
+
+my_json_file_to_count() {
+    jq '.objects | length' "$1"
+}
+
+uri="https://api.hubapi.com/marketing-emails/v1/emails?hapikey=$HUBSPOT_API_KEY"
+offset=0
+offset_max=1300
+limit=100
+while [ $offset -le $offset_max ]; do
+    file_name="emails-offset-$offset-limit-$limit.json"
+    test -e "$file_name" || curl -s "$uri&offset=$offset&limit=$limit" > "$file_name"
+    offset=$(( $offset + $limit ))
+done
