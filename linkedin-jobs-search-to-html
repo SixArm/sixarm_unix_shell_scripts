@@ -240,6 +240,11 @@ def db_get(key, id):
 def db_set(key, id, object):
     db[key][id] = object
 
+def db_dump():
+    for key in db.keys():
+        for id in db[key].keys():
+            print(db_key(key, id))
+
 ##
 #
 # Selenium extras
@@ -570,11 +575,6 @@ def print_job_description():
     # html = description.get_attribute('innerHTML')
     # print(html)
 
-def print_results():
-    L.debug('==== output ====')
-    for key in db['jobs'].keys():
-        print(key)
-
 ##
 #
 # Args to query pairs
@@ -667,7 +667,7 @@ def cli_main():
     query_string = parse_args_to_query_string()
     if query_string:
         scan_jobs(query_string)
-        print_results()
+        db_dump()
     else:
         L.error("query missing")
 
