@@ -657,6 +657,88 @@ def args_to_query_string(args):
 #
 ##
 
+##
+#
+# Parse args
+#
+##
+
+def args_time(args):
+    if args.time:
+        if args.time == 'day':
+            return {'f_TPR': 'r86400'}
+        elif args.time == 'week':
+            return {'f_TPR': 'r604800'}
+        else:
+            return {'f_TPR': args.time}
+    return None
+
+def args_geo(args):
+    if args.geo:
+        if args.geo == 'la':
+            return {'geoId': 102448103}
+        elif args.geo == 'ny':
+            return {'geoId': 102571732}
+        else:
+            return {'geoId': int(args.geo)}
+    return None
+
+def args_geo_id(args):
+    if args.geo_id:
+        return {'geoId': args.geo_id}
+    return None
+
+def args_distance(args):
+    if args.distance:
+        return {'distance': args.distance}
+    return None
+
+def args_fair_chance_employer(args):
+    if args.fair_chance_employer:
+        return {'f_LF': 'f_FCE'}
+    return None
+
+def args_jobs_in_your_network(args):
+    if args.jobs_in_your_network:
+        return {'f_LF': 'f_JIYN'}
+    return None
+
+def args_to_query_pairs():
+    # TODO optimize
+    query_pairs = []
+    
+    q = args_time(args)
+    if q: query_pairs.append(pairs)
+    
+    q = args_geo(args)
+    if q: query_pairs.append(q)
+    
+    q = args_geo_id(args)
+    if q: query_pairs.append(q)
+
+    q = args_distance(args)
+    if q: query_pairs.append(q)
+    
+    q = args_fair_chance_employer(args)
+    if q: query_pairs.append(q)
+    
+    q = args_jobs_in_your_network(q)
+    if q: query_pairs.append(q)
+    
+    return query_pairs
+
+def parse_args_to_query_string():
+    if args.query:
+        return args.query
+    else:
+        return urllib.parse.urlencode(parse_args_to_query_pairs())
+
+##
+#
+# Main
+#
+##
+
 def cli_main():
     global driver
     driver = create_driver()
@@ -772,33 +854,33 @@ class TestArgsX(unittest.TestCase):
         args =  self.parser.parse_args(['--time', 'week'])
         self.assertEqual(args_time(args), ('f_TPR', 'r604800'))
 
-    def test_args_geo_with_la(self):
-        args =  self.parser.parse_args(['--geo', 'la'])
-        self.assertEqual(args_geo(args), ('geoId', 102448103))
-
-    def test_args_geo_with_ny(self):
-        args = self.parser.parse_args(['--geo', 'ny'])
-        self.assertEqual(args_geo(args), ('geoId', 102571732))
-
-    def test_args_geo_with_id(self):
-        args =  self.parser.parse_args(['--geo', '102571732'])
-        self.assertEqual(args_geo(args), ('geoId', 102571732))
-
-    def test_args_distance(self):
-        args =  self.parser.parse_args(['--distance', '10'])
-        self.assertEqual(args_distance(args), ('distance', 10))
-
-    def test_args_fair_chance_employer(self):
-        args =  self.parser.parse_args(['--fair-chance-employer'])
-        self.assertEqual(args_fair_chance_employer(args), ('f_LF', 'f_FCE'))
-
-    def test_args_jobs_in_your_network(self):
-        args =  self.parser.parse_args(['--jobs-in-your-network'])
-        self.assertEqual(args_jobs_in_your_network(args), ('f_LF', 'f_JIYN'))
-
     def test_args_to_query_pairs(self):
         args =  self.parser.parse_args(['--time', 'day', '--geo', 'ny', '--distance', '10', '--fair-chance-employer', '--jobs-in-your-network'])
         self.assertEqual(args_to_query_pairs(args), [('f_TPR', 'r86400'), ('geoId', 102571732), ('distance', 10), ('f_LF', 'f_FCE'), ('f_LF', 'f_JIYN')])
+
+    def test_args_geo_with_la(self):
+        args =  self.parser.parse_args(['--geo', 'la'])
+        self.assertEqual(args_geo(args), {'geoId': 102448103})
+
+    def test_args_geo_with_ny(self):
+        args = self.parser.parse_args(['--geo', 'ny'])
+        self.assertEqual(args_geo(args), {'geoId': 102571732})
+
+    def test_args_geo_with_id(self):
+        args =  self.parser.parse_args(['--geo', '102571732'])
+        self.assertEqual(args_geo(args), {'geoId': 102571732})
+
+    def test_args_distance(self):
+        args =  self.parser.parse_args(['--distance', '10'])
+        self.assertEqual(args_distance(args), {'distance': 10})
+
+    def test_args_fair_chance_employer(self):
+        args =  self.parser.parse_args(['--fair-chance-employer'])
+        self.assertEqual(args_fair_chance_employer(args), {'f_LF': 'f_FCE'})
+
+    def test_args_jobs_in_your_network(self):
+        args =  self.parser.parse_args(['--jobs-in-your-network'])
+        self.assertEqual(args_jobs_in_your_network(args), {'f_LF': 'f_JIYN'})
 
     def test_args_to_query_string_with_text(self):
         args =  self.parser.parse_args(['--query', 'foo'])
