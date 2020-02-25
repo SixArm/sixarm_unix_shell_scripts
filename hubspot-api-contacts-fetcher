@@ -1,0 +1,49 @@
+#!/bin/sh
+
+##
+# HubSpot API contacts fetcher
+#
+# Syntax:
+#
+#     hubspot-api-contacts-fetcher
+#
+# This script downloads all the HubSpot API contacts records 
+# for a HubSpot account, by using the env var $HUBSPOT_API_KEY.
+#
+# The output is a series of JSON files with file names that
+# show the "visitor identification" (vid) offset number and
+# the requested record count limit.
+#
+# Example output file names:
+#
+#     contacts-vid-offset-0-limit-100.json
+#     contacts-vid-offset-3051-limit-100.json
+#     contacts-vid-offset-4753-limit-100.json
+#
+# To combine these files, see the corresponding script:
+#
+#     hubspot-api-contacts-joiner
+##
+
+my_json_file_to_has_more() {
+    jq '."has-more"' "$1"
+}
+
+my_json_file_to_vid_offset() {
+    jq '."vid-offset"' "$1"
+}
+
+uri="https://api.hubapi.com/contacts/v1/lists/all/contacts/all?hapikey=$HUBSPOT_API_KEY"
+offset=0
+limit=100
+while true; do
+    file_name="contacts-offset-$offset-limit-$limit.json"
+    test -e "$file_name" || curl -s "$uri&vidOffset=$offset&count=$limit&propertyMode=value_and_history&formSubmissionMode=all&showListMemberships=true" > "$file_name"
+    more=$(my_json_file_to_has_more "$file_name")
+    if [ "$more" != "true" ]; then
+        break
+    fi
+    offset=$(my_json_file_to_vid_offset "$file_name")
+done
+
+jq -s 'reduce .[].contacts as $item ([]; . + $item)' contacts-offset-*-limit-*.json > contacts.json
