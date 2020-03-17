@@ -1,1 +1,0 @@
-grep -Eio '\b[[:alnum:]\.\_\%\+\-]+@[[:alnum:]\.\-]+[[:alnum:]]+\b' 
