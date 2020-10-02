@@ -1,3 +1,4 @@
+#!/bin/bash
 
 checkFileExistorNot()
 {
@@ -6,33 +7,50 @@ checkFileExistorNot()
 InputPath=$1
 InputFilename=$2 
 
-# Checking the entered parameters from user 
-if [ -z "$InputPath" ]
+# Checking the parameters entered from user or not
+if [ -z ${InputPath} ]
 then
+    echo "Fail    : Path : $InputPath : Parameter is not defined "
+else
     echo "Success : Path : $InputPath : Parameter is defined"
-else
-    echo "Fail    : Path : $InputPath : Parameter is not defined "    
 fi 
 
-if [ -z "$InputFilename" ]
+if [ -z ${InputFilename} ]
 then
+    echo "Fail    : Path : $InputFilename : Parameter is not defined "  
+else
     echo "Success : Path : $InputFilename : Parameter is defined"
-else
-    echo "Fail    : Path : $InputFilename : Parameter is not defined "    
 fi 
 
-# Checking the file exist at path or not 
-if [  -f $InputPath/$InputFilename ] 
-then
+[ -d $InputPath ] > /dev/null
+statuschk=$?
+
+if [ $statuschk -eq 0 ]
+then 
+    
+    echo "Checking started ....."
+
+    # Checking the file exist at path or not 
+    [  -f $InputPath/$InputFilename ] > /dev/null 
+    
+    status=$?
+    if [ $status -eq 0 ]
+    then
     echo "Success : File : $InputFilename  exist at following path : $InputPath"
-else    
+    else    
     echo "Fail    : File : $InputFilename  does not exist at following path : $InputPath"
-fi       
+    fi       
+
+else
+    
+    echo "Entered path : $InputPath  does not exist, please enter valid path"
+
+fi    
 
 }
 
 # Calling function 
-checkFileExistorNot '@path' '@filename'
+checkFileExistorNot '@your_path' '@your_file_name'
 
 
 
