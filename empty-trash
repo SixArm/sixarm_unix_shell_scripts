@@ -49,4 +49,6 @@ set -euf -o pipefail
 # Updated: 2015-08-05
 ##
 
-find $HOME/.Trash/ $HOME/.local/share/Trash/files/ $HOME/.local/share/Trash/info/ -mindepth 1 -delete
+for i in $HOME/.Trash/ $HOME/.local/share/Trash/files/ $HOME/.local/share/Trash/info/; do
+    test -d "$i" && find "$i" -mindepth 1 -delete
+done
