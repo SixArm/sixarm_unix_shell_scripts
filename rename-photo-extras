@@ -1,0 +1,1 @@
+rename 's/^IMG_//; s/^MVIMG_//; s/^PANO_//; s/^PXL_//;  s/^[[:digit:]]*l?PORTRAIT_[[:digit:]]*_BURST//; s/-edited//; s/_COV.jpg$/.jpg/; s/~[[:digit:]][[:digit:]]*//'

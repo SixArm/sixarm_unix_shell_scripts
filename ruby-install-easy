@@ -8,30 +8,25 @@ out () { printf %s\\n "$*" ; }
 #
 # Syntax:
 #
-#     ruby-install-easy [vm [version]]
+#     ruby-install-easy [vm [version [install_dir]]
 #
-# Example to install the current typical Ruby:
+# Example install of typical Ruby VM using latest version:
 #
 #     ruby-install-easy
-#     #=> installs /opt/ruby/mri/2.3.1
+#     #=> installs /opt/ruby/3.0.0
 #
-# Example to install the current typical JRuby:
+# Example install of JRuby VM using a specific version and install directory:
 #
-#     ruby-install-easy jruby
-#     #=> installs /opt/ruby/jruby/1.7.19
-#
-# Example to install an older version:
-#
-#     ruby-install-easy mri 2.0.0
-#     #=> installs /opt/ruby/mri/2.0.0
+#     ruby-install-easy jruby 9.2.16.0 /opt/jruby/9.2.16.0
+#     #=> installs /opt/jruby/9.2.16.0
 #
 # ## Locations
 #
 # We put our Ruby VMs in this directory tree:
 #
-#     /opt/ruby/jruby/x.y.z
-#     /opt/ruby/mri/x.y.z
-#     /opt/ruby/rbx/x.y.z
+#     /opt/jruby/x.y.z
+#     /opt/ruby/x.y.z
+#     /opt/rbx/x.y.z
 #
 # ## Implemenation
 #
@@ -46,31 +41,28 @@ out () { printf %s\\n "$*" ; }
 # ## Tracking
 #
 # Command: ruby-install-easy
-# Version: 3.0.0
+# Version: 4.0.0
 # Created: 2014-11-09
-# Updated: 2016-09-02
+# Updated: 2021-03-09
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
 ##
-vm=${1-mri}
-
-# Adjust the VM name as needed to be compatible with `ruby-install`:
-# we use the name "mri" whereas `ruby-install` uses the name "ruby".
-case "$vm" in
-    mri) vm2="ruby" ;;
-    *) vm2="$vm" ;;
-esac
-
 out "Update ruby-install versions..."
 (cd /opt/ruby-install && exec git pull)
 
-version=${2-$(tail -1 /opt/ruby-install/share/ruby-install/$vm2/stable.txt)}
-dir="/opt/ruby/$vm/$version"
+# Identical to ruby-install source code
+ruby_install_cache_dir(){
+    echo "${XDG_CACHE_HOME:-$HOME/.cache}/ruby-install"
+}
 
-if [[ -d "$dir" ]]; then
-    out "Ruby is already installed at $dir"
-else
-    set -x
-    ruby-install $vm2 "$version" --install-dir "$dir"
-    set +x
-fi
+latest_version(){
+    tail -1 "$(ruby_install_cache_dir)/.cache/ruby-install/$1/stable.txt"
+}
+
+vm=${1-ruby}
+version=${2-$(latest_version $vm)}
+install_dir=${3-"/opt/$vm/$version"}
+
+set -x
+ruby-install $vm "$version" --install-dir "$install_dir" --no-reinstall
+set +x
