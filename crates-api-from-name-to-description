@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Print the description of a Rust crate
+curl -sSL "https://crates.io/api/v1/crates/$1" | 
+jq -r '.crate.description'
