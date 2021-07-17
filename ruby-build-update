@@ -1,52 +1,54 @@
-#!/bin/bash
-set -euf -o pipefail
+#!/bin/sh
+set -euf
 out () { printf %s\\n "$*" ; }
-
-#!/bin/bash
-#
-# Install the current Ruby MRI by using ruby-build
-# and our preferred setup:
-#
-#   * Use /opt/ruby-build and git pull and install.sh to update it.
-#   * Install ruby in /opt/ruby/x.y.z  and symlink /opt/ruby/current.
-
 
 ##
 # Use the `ruby-build` program to install Ruby in our preferred locations.
 #
-#    /opt/ruby-build is where we put the `ruby-build` GitHub repo.
-#    /opt/ruby/<vm>/<version> is where we install Ruby.
+# We put the `ruby-build` git repo here:
 #
-# Example installation directories:
+#     /opt/ruby-build
 #
-#    /opt/ruby/kri/2.0.0-p111
-#    /opt/ruby/jruby/1.7.19
+# We install Ruby MRI here:
+#
+#    /opt/ruby/<version>
+#
+# Example installation directory:
+#
+#    /opt/ruby/3.0.2
 #
 # Syntax:
 #
-#    ruby-build-opt-ruby <version> [-c]
+#    ruby-build-update [version [-c]]
 #
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
+# Updated: 2021-07-17T19:15:44Z
 ##
 
+# Get the official Ruby interpreter current version.
+#
+# Example: "3.0.2"
+#
+ruby_build_definition_of_yarv_current() {
+  ruby-build --definitions | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | tail -1
+}
 
 ## Input
 
-RUBY_VERSION=$1  # e.g. "2.0.0-p111"
-RUBY_VERSION_SANS_PATCH_LEVEL=${RUBY_VERSION%%-p*}  # e.g. "2.0.0"
-CURRENT_FLAG=$2
-
-# Get the current KRI version,such as X.Y.Z; this variable is currently unused
-RUBY_BUILD_CURRENT_DEFINITION=`ruby-build --definitions | grep "^[0-9]\+\.[0-9]\+\.[0-9]\+$" | tail -1`
-
+if [ "$#" -eq 0 ]; then
+  RUBY_VERSION=$(ruby_build_definition_of_yarv_current)
+  CREATE_CURRENT_SYMLINK=1 #true
+else
+  RUBY_VERSION=$1
+  RUBY_VERSION_SANS_SUFFIX=${RUBY_VERSION%%-p*}  # e.g. "3.0.2" but not "3.0.2-dev"
+  CREATE_CURRENT_SYMLINK=$2
+fi
 
 ## Config
 
 RUBY_BUILD_DIR=/opt/ruby-build
 RUBY_DIR=/opt/ruby
-
 
 ## Install
 
@@ -54,31 +56,19 @@ RUBY_DIR=/opt/ruby
 test -d "$RUBY_BUILD_DIR" || sudo git clone https://github.com/sstephenson/ruby-build "$RUBY_BUILD_DIR"
 
 # Update ruby-build
-cd $RUBY_BUILD_DIR && git pull && ./install.sh
+cd "$RUBY_BUILD_DIR" && git pull && ./install.sh
 
 # Create ruby directory as needed
-test -d " $RUBY_DIR" || mkdir -p $RUBY_DIR
+test -d " $RUBY_DIR" || mkdir -p "$RUBY_DIR"
 
 # Install Ruby as needed
 test -d "$RUBY_DIR/$RUBY_VERSION" || ruby-build "$RUBY_VERSION" "$RUBY_DIR/$RUBY_VERSION"
 
+# Create `current` symlink
 
-## Link
-
-if [[ "$RUBY_VERSION" != "$RUBY_VERSION_SANS_PATCH_LEVEL" ]]; then
-  cd $RUBY_DIR
-  out "Fix symlink in $RUBY_DIR: ln -nsf $RUBY_VERSION $RUBY_VERSION_SANS_PATCH_LEVEL"
-  ln -nsf $RUBY_VERSION $RUBY_VERSION_SANS_PATCH_LEVEL
-fi
-
-
-## Current
-
-if [[ "$CURRENT_FLAG" == "-c" ]]; then
-  cd $RUBY_DIR
-  ln -nsf $RUBY_VERSION current
+if [ "$CREATE_CURRENT_SYMLINK" -eq 1 ]; then
+  cd "$RUBY_DIR"
+  ln -nsf "$RUBY_VERSION" current
   source /etc/environment
   ruby -v
 fi
-
-###############
