@@ -1,0 +1,1 @@
+ls -1 *jpg | sort | sed 's/^\(.*\)$/<br><br><img src="\1\" loading="lazy" width="100%" \/>/'
