@@ -1,1 +1,67 @@
-rename 's/^IMG_//; s/^MVIMG_//; s/^PANO_//; s/^PXL_//;  s/^[[:digit:]]*l?PORTRAIT_[[:digit:]]*_BURST//; s/-edited//; s/_COV.jpg$/.jpg/; s/~[[:digit:]][[:digit:]]*//'
+#!/bin/sh
+
+##
+# rename-photo-extras
+#
+#
+# ## Delete extraneous parts
+#
+# Delete prefixes:
+#
+#   * IMG_
+#   * MVIMG_
+#   * PANO_
+#
+# Delete suffixes:
+#
+#   * _COV
+#
+# Delete anywhere:
+#
+#   * -edited
+#
+#
+# ## Reformat timestamps
+#
+# Normalize timestamp names as we prefer:
+#
+#   * omit timing in milliseconds
+#
+#   * from underscores to dashes because we prefer URLs with dashes
+#
+#   * e.g. from YYYYMMDD_HHMMSSXXX to YYYY-MM-DD-HH-MM-SS
+#
+#
+# ## Paused areas
+#
+# Delete complex prefix:
+#
+#   * 2lPORTRAIT_2_BURST
+#
+#
+# ## Specifics for Google Pixel 3a Android 12
+#
+# Format is `PXL_YYYYMMDD_HHMMSSXXX.jpg`:
+#
+#     PXL_20210715_161754067.jpg
+#
+# If the image is a copy, which tends to be common for us,
+# then the format has a version suffix "~2" or "~3" etc.
+#
+# Format is `PXL_YYYYMMDD_HHMMSSNNN~V.jpg`:
+#
+#     PXL_20210715_161754067~2.jpg
+#
+# If the image uses "Night Sight" photography, 
+# then the file name has a suffix "NIGHT".
+##
+
+rename '
+    s/^(IMG_|MVIMG_|PANO_)//;
+    s/^PXL_(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})\d{3}\./$1-$2-$3-$4-$5-$6./;
+    s/^PXL_(\d{4})(\d{2})(\d{2})_(\d{2})(\d{2})(\d{2})\d{3}~\d{1,}\./$1-$2-$3-$4-$5-$6./;
+' "$@"
+
+#    s/(_COV|~[[:digit:]]{1,})\././; \   
+#    s/-edited//;
+#    s/^[[:digit:]]*l?PORTRAIT_[[:digit:]]*_BURST//;
