@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# Configure rsync as you wish
+rsync="sudo rsync -e 'ssh -i ~/.ssh/id_rsa'"
+
+# Publish the program i.e. the runnable executable file
+"$rsync" \
+	~/virtuals/_share/my_crate/target/release/my_program \
+	user@0.0.0.0:~/deploy/my_crate/my_program
+
+# Publish the static assets e.g. images, fonts, stylesheets, etc.
+"$rsync" \
+	~/virtuals/_share/my_crate/static/ \
+	user@0.0.0.0:~/deploy/my_crate/static/
