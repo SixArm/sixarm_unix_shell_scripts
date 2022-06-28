@@ -1,0 +1,22 @@
+#!/bin/sh
+set -euf
+
+# Command: gnumeric-ssconvert-from-xls-to-usv
+
+# This script is WIP
+
+# TODO: change from \n to USV RS
+
+from_input_file_path_to_output_file_path() {
+	printf '%s' "$1" | sed 's/\.xlsx$/.usv/'
+}
+
+from_xls_to_usv() {
+	ssconvert --export-type='Gnumeric_stf:stf_assistant' --export-options='separator=␟ format=raw' "$@"
+}
+
+
+for input_file_path in "$@"; do
+	output_file_path=$(from_input_file_path_to_output_file_path "$input_file_path")
+	from_xls_to_usv "$input_file_path" "$output_file_path"
+done
