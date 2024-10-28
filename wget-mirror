@@ -2,31 +2,41 @@
 set -euf -o pipefail
 
 ##
-# wget a local mirror of a remote website.
+# wget mirror from a remote website URL into a local directory prefix.
 #
 # We use wget with these settings:
 #
-#  --mirror: turn on options suitable for mirroring.
-#            equivalent to -r -N -l inf --no-remove-listing.
+#  -m, --mirror : turn on options suitable for mirroring.
+#    equivalent to -r -N -l inf --no-remove-listing.
 #
-#  -p: download all files that are necessary to properly display a given HTML page.
+#  -c, --continue : resume getting a partially-downloaded file, site, etc.
 #
-#  --convert-links: after the download, convert the links in document for local viewing.
+#  -p, --page-requisites : download all files that are necessary to properly display a given HTML page.
 #
-#  -P ./LOCAL-DIR : save all the files and directories to the specified directory.
+#  -k, --convert-links : after the download, convert the links in document for local viewing.
+#
+#  -P, --directory-prefix./LOCAL-DIR : save all the files and directories to the specified directory.
+#
+#  -np, --no-parent : don't ascend to the parent directory
 #
 # From http://askubuntu.com/questions/20463/how-can-i-download-an-entire-website
 #
 # Some flags if you want to roll your own:
 #
-#    -m turns on mirroring options for mirroring a site locally
+#    -E, --adjust-extension : save HTML/CSS documents with proper extensions
 #
-#    -c continues a previous download in case we've already downloaded some pages
+#    --wait=SECONDS : wait wait SECONDS between retrievals
 #
-#    -k converts absolute href to point to local ones for offline viewing
+#    --random-wait : wait from 0.5*WAIT...1.5*WAIT secs between retrievals
 #
-#    -E ensures files have .html extension after download.
-#    -np only downloads objects under /a/section/i/ and does not cache the whole site.
+# Example of our typical usage to mirror a third-party website directory:
+#
+#     wget "https://www.example.com/subdirectory/" \
+#     --directory-prefix="$HOME/mirrors/www.example.com/" \
+#     --mirror --page-requisites --continue --convert-links \
+#     --level=2 --wait=2 --random-wait \
+#     --domains="www.example.com" \
+#     --include-directories="subdirectory,assets"
 #
 # N.b. another answer suggests these:
 #
@@ -42,9 +52,10 @@ set -euf -o pipefail
 #
 # Contact: Joel Parker Henderson (joel@joelparkerhenderson.com)
 # License: GPL
-# Updated: 2015-01-25
+# Created: 2012-05-06T18:17:43
+# Updated: 2024-10-28T17:32:05Z
 ##
 
-local_dir=$1
-website_url=$2
-wget --mirror -p -c --convert-links -P "$local_dir" "$website_url"
+website_url=$1
+save_to_directory_prefix=$2
+wget "$website_url" --directory-prefix="$save_to_directory_prefix" --mirror --page-requisites --continue --convert-links 
