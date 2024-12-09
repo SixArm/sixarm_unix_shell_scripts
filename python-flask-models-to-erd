@@ -1,0 +1,11 @@
+#!/bin/sh
+sed \
+-e 's/class \(.*\)(db.Model):/entity \1 {/' \
+-e 's/^ *id = db.Column(db.Integer, primary_key=True)/  id/' \
+-e 's/^ *\([[:alnum:]_]\{1,\}\) = db.Column(\([[:alnum:]_]\{1,\}\))/  \1 : \2/' \
+-e 's/^ *\([[:alnum:]_]\{1,\}\) = db.Column(\([[:alnum:]_]\{1,\}\), default=None)/  \1 : \2/' \
+-e 's/^ *\([[:alnum:]_]\{1,\}\) = db.Column(db\.\([^,]\{1,\}\))/xx   \1 : \2/' \
+-e 's/^ *\([[:alnum:]_]\{1,\}\) = db.Column(db\.\([^,]\{1,\}\), nullable=True)/* \1 : \2/' \
+-e 's/^ *\([[:alnum:]_]\{1,\}\) = db.Column(db\.\([^,]\{1,\}\), nullable=False)/  \1 : \2/' \
+-e 's/^ *\([[:alnum:]_]\{1,\}\) = db.Column(db\.\([^,]\{1,\}\), nullable=False)/  \1 : \2/' \
+-e 's/^ *\([[:alnum:]_]\{1,\}\) = db.Column(db\.\([^,]\{1,\}\), db.ForeignKey("\([^"]*\)"), nullable=False)/  \1 : \3/' 
