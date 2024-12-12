@@ -1,0 +1,7 @@
+mise-use-postgres-with-macos-brew:
+	brew install gcc readline zlib curl openssl@1.1 ossp-uuid icu4c pkg-config
+	PKG_CONFIG_PATH="$(brew --prefix)/lib/pkgconfig:$(brew --prefix icu4c)/lib/pkgconfig" \
+	LDFLAGS="-L$(brew --prefix)/lib" \
+	CPPFLAGS="-I$(brew --prefix)/include" \
+	mise use postgres --verbose
+
